@@ -1,13 +1,20 @@
 const mysql = require('mysql');
-const config = require('../config/dev_config');
+// const config = require('../config/dev_config');
 const bluebird = require('bluebird');
 
 
+// const db = mysql.createConnection({
+//     host: config.mysql.host,
+//   user: config.mysql.user,
+//   password: config.mysql.password,
+//   database: config.mysql.database
+// });
+
 const db = mysql.createConnection({
-    host: config.mysql.host,
-  user: config.mysql.user,
-  password: config.mysql.password,
-  database: config.mysql.database
+  host: 'localhost',
+user: 'root',
+password: '',
+database: 'aqua'
 });
 
 // db.on('error',(event)=>{
@@ -15,9 +22,6 @@ const db = mysql.createConnection({
 //     //假設db連線crush掉,讓其他的部分也能運作
 //     console.log(event);
 // });
-
-
-
 
 db.connect(err=>{
     if(err) {

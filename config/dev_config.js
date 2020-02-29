@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('../.env').config()
 
 module.exports = {
     mysql: {
