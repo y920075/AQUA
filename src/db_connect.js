@@ -1,20 +1,13 @@
 const mysql = require('mysql');
-// const config = require('../config/dev_config');
+const config = require('../config/dev_config');
 const bluebird = require('bluebird');
 
 
-// const db = mysql.createConnection({
-//     host: config.mysql.host,
-//   user: config.mysql.user,
-//   password: config.mysql.password,
-//   database: config.mysql.database
-// });
-
 const db = mysql.createConnection({
-  host: 'localhost',
-user: 'root',
-password: '',
-database: 'aqua'
+    host: config.mysql.host,
+  user: config.mysql.user,
+  password: config.mysql.password,
+  database: config.mysql.database
 });
 
 // db.on('error',(event)=>{
