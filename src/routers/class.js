@@ -186,18 +186,21 @@ router.get('/class/:classId',(req,res)=>{
     預計從前台接收的資料
 
     POST => /class
+    
+    課程編號由後台產生後自動存入
+    現在人數由後台預設為0
 
     req.body.className = 課程名稱(50字內)
     req.body.classTypeId = 課程類型
     req.body.classLevelId = 課程等級
     req.body.classLocation = 課程地點(縣市)
     req.body.classFullLocation = 課程地點(完整)
-    req.body.classStartDate = 開課日期(YYYY-MM-DD HH:mm)
+    req.body.classStartDate = 開課日期(input type="datetime-local")
     req.body.classPrice = 課程售價(6位數)
     req.body.classIntroduction = 課程簡介(30字內)
     req.body.classDesc = 課程說明(3000字內)
     req.body.classMAXpeople = 最大人數(3位數)
-    req.body.classImg = 課程圖片 (png,jpg)
+    req.body.classImg = 課程圖片 (png,jpg,gif)
     req.session.seller_id = 賣家ID(30字內)
 
 
@@ -211,13 +214,13 @@ router.get('/class/:classId',(req,res)=>{
 router.post('/class',upload.single('classImg'),(req,res)=>{
     const data = {
         'status' : 412,
-        'msg' : '驗證失敗'
+        'msg' : '資料驗證失敗'
     }
     switch(true){
         case !req.body.className||!req.body.classTypeId||!req.body.classLevelId||!req.body.classLocation||!req.body.classFullLocation
         ||!req.body.classStartDate||!req.body.classPrice||!req.body.classIntroduction||!req.body.classDesc||!req.body.classMAXpeople :
             data.status='400'
-            data.msg='資料缺失'
+            data.msg='有資料缺失'
             res.json(data)
             break
         case req.body.className === '' :
