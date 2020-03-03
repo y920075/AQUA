@@ -82,7 +82,7 @@ router.get('/class',(req,res)=>{
         }
     })
     .then(result=>{
-        if ( result ) {
+        if ( result.length>0 ) {
             res.json({
                 'status' :        200,
                 'msg':            '請求成功',
@@ -377,5 +377,186 @@ router.post('/class',upload.single('classImg'),(req,res)=>{
     }
 })
 
+// 賣家查詢自己的所有課程資料
+/*
+    預計從前台接收的資料
+    GET /seller/class?type=課程類型&level=課程等級&sort=排序類型(類型,方法)&page=頁碼
+
+    type =    課程類型
+    level =   課程等級
+    sort =    排序類型  (類型,方法) 
+    page =    頁碼
+    req.session.seller_id = 賣家ID
+
+    預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        searchType =    搜索的課程類型
+        searchLevel =   搜索的課程等級
+        sortType =      設定的排序類型 
+        page =          目前頁碼
+        totalRows =     總筆數
+        totalPages =    總頁數
+        seller_id =     賣家編號
+        result : [
+            {
+                classId =               課程編號
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classDate =             開課日期
+                classLocation =         開課地點(僅縣市)
+                classIntroduction =     課程簡介
+                classImg =              課程圖片連結
+                classPrice =            課程售價
+            }
+        ]
+    }
+*/
+
+router.get('/seller/class',(req,res)=>{
+    const data = {
+        'status' : '401',
+        'msg' : '尚未登入'
+    }
+    if ( !req.session.seller_id ) {
+        res.json(data)
+    } else {
+        const perPage = 6;
+        const searchType = req.query.type && !req.query.level ? `AND \`classType\` = '${req.query.type}' ` : '';
+        const searchLevel = req.query.type && req.query.level ? `AND  \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
+        const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC`
+        const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\`  WHERE \`seller_id\` = '${req.session.seller_id}' ${searchType}${searchLevel}`
+        let page = req.query.page ? parseInt(req.query.page) : 1;
+        let totalRows;
+        let totalPages;
+
+        db.queryAsync(total_sql)
+        .then(result=>{
+            totalRows = result[0].rows;
+            if ( totalRows===0 ) {
+                return false
+            } else {
+                totalPages = Math.ceil(totalRows/perPage);
+                if (page<1) page=1;
+                if (page>totalPages) page=totalPages;
+
+                const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classStartDate\`,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+                                FROM \`class_data\`
+                                WHERE \`seller_id\` = '${req.session.seller_id}'
+                                ${searchType}${searchLevel}
+                                ${sort}
+                                LIMIT  ${(page-1)*perPage}, ${perPage}`
+                return db.queryAsync(sql);
+            }
+        })
+        .then(result=>{
+            if ( result.length>0 ) {
+                res.json({
+                    'status' :        200,
+                    'msg':            '請求成功',
+                    'searchType' :    req.query.type,
+                    'searchLevel' :   req.query.level,
+                    'sortType' :      req.query.sort,
+                    'seller_id' :     req.session.seller_id,
+                    page,
+                    totalRows,
+                    totalPages,
+                    result
+            })
+            } else {
+                res.json({
+                    'status' :        404,
+                    'msg':            '查無任何資料',
+                    'searchType' :    req.query.type,
+                    'searchLevel' :   req.query.level,
+                    'sortType' :      req.query.sort,
+                    'seller_id' :     req.session.seller_id,
+                })
+            }
+        })
+    }
+})
+
+// 賣家取得單一筆課程資料(編輯用)
+/*
+    預計從前台接收的資料
+    GET /seller/class/課程編號
+
+    req.session.seller_id = 賣家編號
+    req.params.classId = 要編輯的課程編號
+    
+    預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        classCoachData : [
+            {
+                classCoachName = 教練名稱
+                classCoachLicense1 = 教練證照1
+                classCoachLicense2 = 教練證照2
+                classCoachLicense3 = 教練證照3
+            }
+        ]
+        classData : [
+            {
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classDate =             開課日期
+                classLocation =         開課地點(縣市)
+                classFullLocation =     開課地點(完整)
+                classIntroduction =     課程簡介
+                classDesc =             課程說明
+                classMAXpeople =        最大人數
+                classImg =              課程圖片連結
+                classPrice =            課程售價
+            }
+        ]
+    }
+*/
+
+router.get('/seller/class/:classId',(req,res)=>{
+    req.session.seller_id = '這裡是賣家ID'
+    const data = {
+        'status' : 404,
+        'msg' :　'查無資料',
+        'classCoachData' : '',
+        'classData' : ''
+    }
+    if ( !req.session.seller_id ) {
+        data.status = '401'
+        data.msg = '尚未登入'
+        res.json(data)
+    } else {
+        const c_sql = `SELECT \`classCoachName\`,\`classCoachLicense1\`,\`classCoachLicense2\`,\`classCoachLicense3\`
+                    FROM \`class_coach\`
+                    WHERE \`classId\` = '${req.params.classId}'`
+        const sql = `SELECT \`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classFullLocation\`,\`classStartDate\`,
+                        \`classPrice\`,\`classIntroduction\`,\`classDesc\`,\`classMAXpeople\`,\`classImg\` 
+                        FROM \`class_data\` 
+                        WHERE \`seller_id\` = '${req.session.seller_id}' AND \`classId\` = '${req.params.classId}'`
+        db.queryAsync(sql)
+        .then(result=>{
+            if ( result.length>0 ) {
+                data.classData = result;
+                return db.queryAsync(c_sql)
+            } else {
+                return false
+            }
+        })
+        .then(result=>{
+            if (result ){
+                data.status = 200
+                data.msg = '請求成功'
+                data.classCoachData = result;
+                res.json(data)
+            } else {
+                res.json(data)
+            }
+        })
+    }
+})
 
 module.exports = router;
