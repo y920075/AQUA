@@ -1,6 +1,16 @@
-const express = require('express');
-const app = express();
-
+const express =     require('express');
+const session =     require('express-session')
+const cors =        require('cors')
+const app =         express();
+app.use(session({
+    saveUninitialized: false,
+    resave: false, // 沒變更內容是否強制回存
+    // secret = 加密用的字串，透過這個值去比對，可以自訂
+    secret: '加密用的字串', 
+    cookie: {
+        maxAge: 1200000, // session的存活時間 單位毫秒
+    }
+}))
 
 
 app.use(require(__dirname+'/routers/class'))

@@ -3,8 +3,6 @@ const bodyParser =  require('body-parser')
 const moment =      require('moment-timezone');
 const multer =      require('multer');
 const fs =          require('fs')
-const session =     require('express-session')
-const cors =        require('cors')
 const db =          require(__dirname + '/../db_connect')
 const upload =      multer({dest:'tmp_uploads/'})
 const router = express.Router();
@@ -18,7 +16,7 @@ router.use(bodyParser.json());
 /*
     預計從前台接收的資料
 
-    ../class?type=課程類型&level=課程等級&sort=排序類型(類型,方法)&page=頁碼
+    GET /class?type=課程類型&level=課程等級&sort=排序類型(類型,方法)&page=頁碼
 
     type =    課程類型
     level =   課程等級
@@ -106,7 +104,7 @@ router.get('/class',(req,res)=>{
 //查詢單一筆詳細資料
 /*
     預計從前台接收的資料
-    ../class/課程編號
+    GET /class/課程編號
 
     classId = 課程編號
 
@@ -185,7 +183,7 @@ router.get('/class/:classId',(req,res)=>{
 /*
     預計從前台接收的資料
 
-    POST => /class
+    POST /class
     
     課程編號由後台產生後自動存入
     現在人數由後台預設為0
@@ -208,8 +206,15 @@ router.get('/class/:classId',(req,res)=>{
         {
             status =        狀態碼 201=新增成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
             msg =           說明訊息
+            location = /class/課程編號
         }
 */
+
+router.post('/try-session',(req,res)=>{
+    req.session.seller_id='S123456789'
+    req.session.memberId='M123456789'
+    res.json('session-OK')
+})
 
 router.post('/class',upload.single('classImg'),(req,res)=>{
     const data = {
@@ -217,58 +222,63 @@ router.post('/class',upload.single('classImg'),(req,res)=>{
         'msg' : '資料驗證失敗'
     }
     switch(true){
+        case !req.session.seller_id:
+            data.status='401'
+            data.msg='尚未登入'
+            res.json(data)
+            break
         case !req.body.className||!req.body.classTypeId||!req.body.classLevelId||!req.body.classLocation||!req.body.classFullLocation
         ||!req.body.classStartDate||!req.body.classPrice||!req.body.classIntroduction||!req.body.classDesc||!req.body.classMAXpeople :
             data.status='400'
-            data.msg='有資料缺失'
+            data.msg='資料缺失'
             res.json(data)
             break
-        case req.body.className === '' :
-            data.msg='課程名稱未輸入';
+        case (/(^\s*$)/g).test(req.body.className):
+            data.msg='課程名稱不可為空白';
             res.json(data);
             break;
         case req.body.className.length > 50 :
             data.msg='課程名稱過長';
             res.json(data);
             break;
-        case req.body.classLocation === '' :
-            data.msg='地點未輸入'
+        case (/(^\s*$)/g).test(req.body.classLocation) :
+            data.msg='地點不可為空白'
             res.json(data);
             break;
-        case req.body.classStartDate === '' :
-            data.msg='開課日期未輸入';
+        case (/(^\s*$)/g).test(req.body.classStartDate) :
+            data.msg='開課日期不可為空白';
             res.json(data);
             break;
         case moment(req.body.classStartDate).format('YYYY-MM-DD HH:mm') <= moment(new Date()).format('YYYY-MM-DD HH:mm'):
             data.msg='開課日期不可小於現在日期';
             res.json(data);
             break;
-        case req.body.classPrice === '':
-            data.msg='課程售價未輸入'
+        case (/(^\s*$)/g).test(req.body.classPrice):
+            data.msg='課程售價不可為空白'
             res.json(data);
             break;
         case !req.body.classPrice.match(/^\d{1,6}$/g) :
             data.msg='課程價格不可超過6位數'
             res.json(data);
             break;
-        case req.body.classIntroduction === '':
-            data.msg='課程簡介未輸入';
+        case (/(^\s*$)/g).test(req.body.classIntroduction):
+            data.msg='課程簡介不可為空白';
             res.json(data)
             break;
         case req.body.classIntroduction.length > 30:
             data.msg='課程簡介過長';
             res.json(data)
             break;
-        case req.body.classDesc === '':
-            data.msg='課程說明未輸入';
+        case (/(^\s*$)/g).test(req.body.classDesc):
+            data.msg='課程說明不可為空白';
             res.json(data);
             break;
         case req.body.classDesc.length > 3000:
             data.msg='課程說明過長';
             res.json(data);
             break;
-        case req.body.classMAXpeople === '':
-            data.msg='課程最大人數未輸入'
+        case (/(^\s*$)/g).test(req.body.classMAXpeople):
+            data.msg='課程最大人數不可為空白'
             res.json(data);
             break;
         case !req.body.classMAXpeople.match(/^\d{1,3}$/g):
@@ -298,24 +308,24 @@ router.post('/class',upload.single('classImg'),(req,res)=>{
                     FROM \`class_level\`
                     WHERE \`classLevelId\`='${req.body.classLevelId}'`
 
-    let Type = '';
-    let level = '';
-    let classId = '';
     let maxId = '';
+    let classType = '';
+    let classlevel = '';
+    let classId = '';
     let classImg = '';
 
     if ( data.status==='202' ) {
         db.query(sqlType,(error,result)=>{
             if( result[0] ){
-                Type = result[0].classTypeName
+                classType = result[0].classTypeName
             } else {
-                Type = '查無資料'
+                classType = '查無資料'
             }
             db.query(sqlLevel,(error,result)=>{
                 if( result[0] ){
-                    level = result[0].classLevel
+                    classlevel = result[0].classLevel
                 } else {
-                    level = '查無資料'
+                    classlevel = '查無資料'
                 }
                 db.query(sqlMAX,(error,result)=>{
                     if ( req.file && req.file.originalname ) {
@@ -337,8 +347,8 @@ router.post('/class',upload.single('classImg'),(req,res)=>{
                         maxId,
                         classId,
                         req.body.className,
-                        Type,
-                        level,
+                        classType,
+                        classlevel,
                         req.body.classLocation,
                         req.body.classFullLocation,
                         req.body.classStartDate,
@@ -346,14 +356,15 @@ router.post('/class',upload.single('classImg'),(req,res)=>{
                         req.body.classIntroduction,
                         req.body.classDesc,
                         req.body.classMAXpeople,
-                        10,
+                        0,
                         classImg,
-                        '這裡是賣家ID'
+                        req.session.seller_id
                     ]
                     db.query(sql,sqlStmt,(error,result)=>{
                         if ( result.affectedRows>0 ) {
                             data.status = 201;
                             data.msg = '新增成功'
+                            data.location = '/class/'+classId
                             res.json(data);
                         } else {
                             data.status = 500;
