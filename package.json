@@ -1,20 +1,26 @@
 {
   "name": "AQUA_nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "MFEE05 teamE project",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y920075/AQUA.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "homepage": "https://github.com/y920075/AQUA.git#readme",
   "dependencies": {
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "multer": "^1.4.2",
