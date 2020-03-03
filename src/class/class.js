@@ -582,8 +582,8 @@ router.get('/seller/class/:classId',(req,res)=>{
     
 */
 
-router.put('/testput',upload.none(),(req,res)=>{
-    console.log()
+router.post('/testput',upload.none(),(req,res)=>{
+    console.log(req.body)
     res.json(req.body)
 })
 
