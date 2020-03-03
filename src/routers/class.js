@@ -215,7 +215,7 @@ router.get('/class/:classId',(req,res)=>{
         }
 */
 
-router.post('/class',upload.single('classImg'),(req,res)=>{
+router.post('/seller/class',upload.single('classImg'),(req,res)=>{
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -493,6 +493,7 @@ router.get('/seller/class',(req,res)=>{
         msg =           說明訊息
         classCoachData : [
             {
+                id = 流水號
                 classCoachName = 教練名稱
                 classCoachLicense1 = 教練證照1
                 classCoachLicense2 = 教練證照2
@@ -530,7 +531,7 @@ router.get('/seller/class/:classId',(req,res)=>{
         data.msg = '尚未登入'
         res.json(data)
     } else {
-        const c_sql = `SELECT \`classCoachName\`,\`classCoachLicense1\`,\`classCoachLicense2\`,\`classCoachLicense3\`
+        const c_sql = `SELECT \`id\`,\`classCoachName\`,\`classCoachLicense1\`,\`classCoachLicense2\`,\`classCoachLicense3\`
                     FROM \`class_coach\`
                     WHERE \`classId\` = '${req.params.classId}'`
         const sql = `SELECT \`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classFullLocation\`,\`classStartDate\`,
@@ -557,6 +558,33 @@ router.get('/seller/class/:classId',(req,res)=>{
             }
         })
     }
+})
+
+//賣家編輯自己的課程資料
+/*
+    預計從前台接收的資料
+
+    PUT /seller/class/課程編號
+
+    req.body.className
+    req.body.classType
+    req.body.classLevel
+    req.body.classDate
+    req.body.classLocation
+    req.body.classFullLocation
+    req.body.classIntroduction
+    req.body.classDesc
+    req.body.classMAXpeople
+    req.body.classImg
+    req.body.classPrice
+
+    
+    
+*/
+
+router.put('/testput',upload.none(),(req,res)=>{
+    console.log()
+    res.json(req.body)
 })
 
 module.exports = router;
