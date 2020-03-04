@@ -131,7 +131,8 @@ router.get('/class',(req,res)=>{
                 className =             課程名稱
                 classType =             課程類型
                 classLevel =            課程等級
-                classDate =             開課日期
+                classStartDate =        開課日期
+                classEndDate =          結訓日期
                 classFullLocation =     開課地點(完整)
                 classDesc =             課程說明
                 classMAXpeople =        最大人數
@@ -156,7 +157,7 @@ router.get('/class/:classId',(req,res)=>{
                     FROM \`class_coach\`
                     WHERE \`classId\` = '${classId}'`
     const sql = `SELECT \`class_data\`.\`classId\`,\`class_data\`.\`className\`,\`class_data\`.\`classType\`,\`class_data\`.\`classLevel\`,\`class_data\`.\`classFullLocation\`,
-                        \`class_data\`.\`classStartDate\`,\`class_data\`.\`classPrice\`,\`class_data\`.\`classDesc\`,
+                        \`class_data\`.\`classStartDate\`,\`class_data\`.\`classEndDate\`,\`class_data\`.\`classPrice\`,\`class_data\`.\`classDesc\`,
                         \`class_data\`.\`classMAXpeople\`,\`class_data\`.\`classNOWpeople\`,\`class_data\`.\`classImg\`,
                         \`basic_information\`.\`seller_id\`,\`basic_information\`.\`seller_shop\`
                     FROM \`class_data\` 
@@ -199,6 +200,7 @@ router.get('/class/:classId',(req,res)=>{
     req.body.classLocation = 課程地點(縣市)
     req.body.classFullLocation = 課程地點(完整)
     req.body.classStartDate = 開課日期(input type="datetime-local")
+    req.body.classEndDate = 結訓日期(input type="datetime-local")
     req.body.classPrice = 課程售價(6位數)
     req.body.classIntroduction = 課程簡介(30字內)
     req.body.classDesc = 課程說明(3000字內)
@@ -227,7 +229,7 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
             res.json(data)
             break
         case !req.body.className||!req.body.classTypeId||!req.body.classLevelId||!req.body.classLocation||!req.body.classFullLocation
-        ||!req.body.classStartDate||!req.body.classPrice||!req.body.classIntroduction||!req.body.classDesc||!req.body.classMAXpeople :
+        ||!req.body.classStartDate||!req.body.classEndDate||!req.body.classPrice||!req.body.classIntroduction||!req.body.classDesc||!req.body.classMAXpeople :
             data.status='400'
             data.msg='資料缺失'
             res.json(data)
@@ -250,6 +252,18 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
             break;
         case moment(req.body.classStartDate).format('YYYY-MM-DD HH:mm') <= moment(new Date()).format('YYYY-MM-DD HH:mm'):
             data.msg='開課日期不可小於現在日期';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.classEndDate) :
+            data.msg='結訓日期不可為空白';
+            res.json(data);
+            break;
+        case moment(req.body.classEndDate).format('YYYY-MM-DD HH:mm') <= moment(new Date()).format('YYYY-MM-DD HH:mm'):
+            data.msg='結訓日期不可小於現在日期';
+            res.json(data);
+            break;
+        case moment(req.body.classEndDate).format('YYYY-MM-DD HH:mm') <= moment(req.body.classStartDate).format('YYYY-MM-DD HH:mm'):
+            data.msg='結訓日期不可小於開課日期';
             res.json(data);
             break;
         case (/(^\s*$)/g).test(req.body.classPrice):
@@ -291,9 +305,9 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
 
     const sql = `INSERT INTO \`class_data\`
             (\`maxId\`, \`classId\`, \`className\`, \`classType\`, \`classLevel\`, \`classLocation\`, \`classFullLocation\`,
-            \`classStartDate\`, \`classPrice\`,\`classIntroduction\`, \`classDesc\`, \`classMAXpeople\`, \`classNOWpeople\`, 
+            \`classStartDate\`,\`classEndDate\`, \`classPrice\`,\`classIntroduction\`, \`classDesc\`, \`classMAXpeople\`, \`classNOWpeople\`, 
             \`classImg\`, \`seller_id\`) 
-            VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`
+            VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?)`
 
     const sqlMAX = `SELECT MAX(\`maxId\`) AS \`maxId\`
                 FROM \`class_data\` 
@@ -351,6 +365,7 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
                         req.body.classLocation,
                         req.body.classFullLocation,
                         req.body.classStartDate,
+                        req.body.classEndDate,
                         req.body.classPrice,
                         req.body.classIntroduction,
                         req.body.classDesc,
