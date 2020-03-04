@@ -4,7 +4,7 @@ const router = express.Router();
 
 //查詢區鄉鎮資料
 /*
-    GET /dist?dist=城市名稱
+    GET /dist?city=城市名稱
 
     回傳的資料範例
     result = [
@@ -18,7 +18,7 @@ const router = express.Router();
 router.get('/dist',(req,res)=>{
     const sql = `SELECT \`id\`,\`cityName\`,\`distName\` 
                 FROM \`dist\` 
-                WHERE \`cityName\` = '${req.query.dist}'`
+                WHERE \`cityName\` = '${req.query.city}'`
     db.queryAsync(sql)
     .then(result=>{
         let arrDist = []
