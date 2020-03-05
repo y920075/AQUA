@@ -225,7 +225,6 @@ router.get('/class/:classId',(req,res)=>{
 */
 
 router.post('/seller/class',upload.single('classImg'),(req,res)=>{
-    req.session.seller_id = 'S20030002'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -586,28 +585,192 @@ router.get('/seller/class/:classId',(req,res)=>{
 //賣家編輯自己的課程資料
 /*
     預計從前台接收的資料
-
     PUT /seller/class/課程編號
 
-    req.body.className
-    req.body.classType
-    req.body.classLevel
-    req.body.classDate
-    req.body.classLocation
-    req.body.classFullLocation
-    req.body.classIntroduction
-    req.body.classDesc
-    req.body.classMAXpeople
-    req.body.classImg
-    req.body.classPrice
+    req.session.seller_id = 賣家編號(驗證用)
 
-    
-    
+    req.body.className = 課程名稱
+    req.body.classType = 課程類型
+    req.body.classLevel = 課程等級
+    req.body.classStartDate = 開課日期(input type="datetime-local")
+    req.body.classEndDate = 結訓日期(input type="datetime-local")
+    req.body.classLocation = 課程地點(縣市)
+    req.body.classFullLocation = 課程地點(完整)
+    req.body.classIntroduction = 課程簡介(30字內)
+    req.body.classDesc = 課程說明(3000字內)
+    req.body.classMAXpeople = 最大人數
+    req.body.classImg = 課程圖片
+    req.body.classPrice = 課程售價
+
+    預計傳送回去的資料
+    {
+        status =        狀態碼 201=修改成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+        msg =           說明訊息
+    }
+
 */
 
-router.post('/testput',upload.none(),(req,res)=>{
-    console.log(req.body)
-    res.json(req.body)
+router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
+    req.session.seller_id = 'S20010001'
+    const data = {
+        'status' : 412,
+        'msg' : '資料驗證失敗'
+    }
+    switch(true){
+        case !req.session.seller_id:
+            data.status='401'
+            data.msg='尚未登入'
+            res.json(data)
+            break
+        case !req.body.className||!req.body.classTypeId||!req.body.classLevelId||!req.body.classLocation||!req.body.classFullLocation
+        ||!req.body.classStartDate||!req.body.classEndDate||!req.body.classPrice||!req.body.classIntroduction||!req.body.classDesc||!req.body.classMAXpeople :
+            data.status='400'
+            data.msg='資料缺失'
+            res.json(data)
+            break
+        case (/(^\s*$)/g).test(req.body.className):
+            data.msg='課程名稱不可為空白';
+            res.json(data);
+            break;
+        case req.body.className.length > 50 :
+            data.msg='課程名稱過長';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.classLocation) :
+            data.msg='地點不可為空白'
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.classStartDate) :
+            data.msg='開課日期不可為空白';
+            res.json(data);
+            break;
+        case moment(req.body.classStartDate).format('YYYY-MM-DD HH:mm') <= moment(new Date()).format('YYYY-MM-DD HH:mm'):
+            data.msg='開課日期不可小於現在日期';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.classEndDate) :
+            data.msg='結訓日期不可為空白';
+            res.json(data);
+            break;
+        case moment(req.body.classEndDate).format('YYYY-MM-DD HH:mm') <= moment(new Date()).format('YYYY-MM-DD HH:mm'):
+            data.msg='結訓日期不可小於現在日期';
+            res.json(data);
+            break;
+        case moment(req.body.classEndDate).format('YYYY-MM-DD HH:mm') <= moment(req.body.classStartDate).format('YYYY-MM-DD HH:mm'):
+            data.msg='結訓日期不可小於開課日期';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.classPrice):
+            data.msg='課程售價不可為空白'
+            res.json(data);
+            break;
+        case !req.body.classPrice.match(/^\d{1,6}$/g) :
+            data.msg='課程價格不可超過6位數'
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.classIntroduction):
+            data.msg='課程簡介不可為空白';
+            res.json(data)
+            break;
+        case req.body.classIntroduction.length > 30:
+            data.msg='課程簡介過長';
+            res.json(data)
+            break;
+        case (/(^\s*$)/g).test(req.body.classDesc):
+            data.msg='課程說明不可為空白';
+            res.json(data);
+            break;
+        case req.body.classDesc.length > 3000:
+            data.msg='課程說明過長';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.classMAXpeople):
+            data.msg='課程最大人數不可為空白'
+            res.json(data);
+            break;
+        case !req.body.classMAXpeople.match(/^\d{1,3}$/g):
+            data.msg='最大人數不可超過3位數';
+            res.json(data);
+            break;
+        default:
+            data.status='202'
+    }
+
+    let classImg = !req.file && !req.originalname ? '' : ',\`classImg\` = ?'
+    const sql =  `UPDATE \`class_data\`
+                SET \`className\` = ?, \`classType\` = ?, \`classLevel\` = ?, \`classLocation\` = ?, 
+                    \`classFullLocation\` = ?,\`classStartDate\` = ?,\`classEndDate\` = ?, \`classPrice\` = ?,
+                    \`classIntroduction\` = ?, \`classDesc\` = ?, \`classMAXpeople\` = ?${classImg}
+                WHERE \`classId\` = '${req.params.classId}' AND \`seller_id\` = '${req.session.seller_id}'`
+    const sqlType = `SELECT \`classTypeName\`
+                    FROM \`class_type\`
+                    WHERE \`classTypeId\`='${req.body.classTypeId}'`
+
+    const sqlLevel = `SELECT \`classLevel\`
+                    FROM \`class_level\`
+                    WHERE \`classLevelId\`='${req.body.classLevelId}'`
+
+    if ( data.status==='202' ) {
+        let classType = '';
+        let classLevel = '';
+        let classImgName = 'noImg.jpg';
+        db.queryAsync(sqlType)
+        .then(result=>{
+            if( result[0] ){
+                classType = result[0].classTypeName
+            } else {
+                classType = '查無資料'
+            }
+            return db.queryAsync(sqlLevel)
+        })
+        .then(result=>{
+            if( result[0] ){
+                classLevel = result[0].classLevel
+            } else {
+                classLevel = '查無資料'
+            }
+
+            let sqlStmt = [
+                req.body.className,
+                classType,
+                classLevel,
+                req.body.classLocation,
+                req.body.classFullLocation,
+                req.body.classStartDate,
+                req.body.classEndDate,
+                req.body.classPrice,
+                req.body.classIntroduction,
+                req.body.classDesc,
+                req.body.classMAXpeople,
+            ]
+
+            if ( req.file && req.file.originalname ) {
+                classImgName = 'S' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
+                fs.rename(req.file.path, './public/images/classImg/'+classImgName,()=>{})
+                sqlStmt.push(classImgName)
+                db.query(`SELECT \`classImg\` FROM \`class_data\` WHERE \`classId\` = '${req.params.classId}'`,(error,result)=>{
+                    if ( result[0].classImg !== 'noImg.jpg' && result[0].classImg !== undefined ){
+                        fs.unlink(`./public/images/classImg/${result[0].classImg}`,(error)=>{
+                            if (error) throw error
+                            console.log('successfully deleted');
+                        })
+                    }
+                })
+            }
+            return db.queryAsync(sql,sqlStmt)
+        })
+        .then(result=>{
+            if ( result.affectedRows>0 ) {
+                data.status = 201;
+                data.msg = '修改成功'
+                res.json(data);
+            } else {
+                data.status = 500;
+                data.msg = '修改失敗'
+                res.json(data);
+            }
+        })
+    }
 })
 
 module.exports = router;
