@@ -120,6 +120,7 @@ router.get('/class',(req,res)=>{
         classCoachData : [
             {
                 classCoachName = 教練名稱
+                classCoachImg =  教練相片
                 classCoachLicense1 = 教練證照1
                 classCoachLicense2 = 教練證照2
                 classCoachLicense3 = 教練證照3
@@ -153,11 +154,17 @@ router.get('/class/:classId',(req,res)=>{
         'classCoachData' : '',
         'classData' : ''
     }
-    const c_sql = `SELECT \`classCoachName\`,\`classCoachLicense1\`,\`classCoachLicense2\`,\`classCoachLicense3\`
-                    FROM \`class_coach\`
-                    WHERE \`classId\` = '${classId}'`
-    const sql = `SELECT \`class_data\`.\`classId\`,\`class_data\`.\`className\`,\`class_data\`.\`classType\`,\`class_data\`.\`classLevel\`,\`class_data\`.\`classFullLocation\`,
-                        \`class_data\`.\`classStartDate\`,\`class_data\`.\`classEndDate\`,\`class_data\`.\`classPrice\`,\`class_data\`.\`classDesc\`,
+    const c_sql = `SELECT \`class_coach_status\`.\`classId\`,\`class_coach\`.\`classCoachName\`,
+                        \`class_coach\`.\`classCoachImg\`,\`class_coach\`.\`classCoachLicense1\` 
+                        ,\`class_coach\`.\`classCoachLicense2\`,\`class_coach\`.\`classCoachLicense3\`
+                    FROM \`class_coach_status\` 
+                    LEFT JOIN \`class_coach\`
+                    ON \`class_coach_status\`.\`coachId\` = \`class_coach\`.\`id\`
+                    WHERE \`class_coach_status\`.\`classId\` = '${classId}'`
+
+    const sql = `SELECT \`class_data\`.\`classId\`,\`class_data\`.\`className\`,\`class_data\`.\`classType\`,
+                        \`class_data\`.\`classLevel\`,\`class_data\`.\`classFullLocation\`,\`class_data\`.\`classStartDate\`,
+                        \`class_data\`.\`classEndDate\`,\`class_data\`.\`classPrice\`,\`class_data\`.\`classDesc\`,
                         \`class_data\`.\`classMAXpeople\`,\`class_data\`.\`classNOWpeople\`,\`class_data\`.\`classImg\`,
                         \`basic_information\`.\`seller_id\`,\`basic_information\`.\`seller_shop\`
                     FROM \`class_data\` 
@@ -218,6 +225,7 @@ router.get('/class/:classId',(req,res)=>{
 */
 
 router.post('/seller/class',upload.single('classImg'),(req,res)=>{
+    req.session.seller_id = 'S20030002'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
