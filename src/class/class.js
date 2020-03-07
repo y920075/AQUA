@@ -610,7 +610,6 @@ router.get('/seller/class/:classId',(req,res)=>{
 */
 
 router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
-    req.session.seller_id = 'S20010001'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -808,7 +807,7 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
         .then(result=>{
             if ( result.affectedRows>0 ) {
                 data.status = 201;
-                data.msg = '刪除成功'
+                data.msg = `編號${req.params.classId} 刪除成功`
                 res.json(data);
             } else {
                 data.status = 500;

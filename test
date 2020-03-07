@@ -1,0 +1,4 @@
+UPDATE \`class_coach\` 
+SET \`classCoachName\`= ? ,\`classCoachImg\`= ? ,\`classCoachLicense1\`= ? ,
+    \`classCoachLicense2\`= ? ,\`classCoachLicense3\`= ?  
+WHERE \`id\` = '${req.params.id}' AND \`seller_id\` = '${req.session.seller_id}'

@@ -15,6 +15,7 @@ app.use(session({
 
 app.use(require(__dirname+'/location'))
 app.use(require(__dirname+'/class/class'))
+app.use(require(__dirname+'/class/coach'))
 
 
 
