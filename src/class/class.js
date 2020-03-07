@@ -541,7 +541,6 @@ router.get('/seller/class',(req,res)=>{
 */
 
 router.get('/seller/class/:classId',(req,res)=>{
-    req.session.seller_id = '這裡是賣家ID'
     const data = {
         'status' : 404,
         'msg' :　'查無資料',
@@ -767,6 +766,53 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
             } else {
                 data.status = 500;
                 data.msg = '修改失敗'
+                res.json(data);
+            }
+        })
+    }
+})
+
+//賣家刪除自己的課程資料
+/*
+    預計從前台接收的資料
+    DELETE /seller/class/課程編號
+
+    req.session.seller_id = 賣家編號(驗證用)
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=刪除成功 401=尚未登入
+        msg = 說明訊息
+    }
+*/
+
+router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
+    const data = {
+        'status':401,
+        'msg':'尚未登入'
+    }
+    if ( !req.session.seller_id ) {
+        res.json(data)
+    } else {
+        const sql = `DELETE FROM\`class_data\` WHERE \`classId\` = '${req.params.classId}' AND \`seller_id\` = '${req.session.seller_id}'`
+        db.queryAsync(`SELECT \`classImg\` FROM \`class_data\` WHERE \`classId\` = '${req.params.classId}' AND \`seller_id\` = '${req.session.seller_id}'`)
+        .then(result=>{
+            if ( result[0].classImg !== 'noImg.jpg' && result[0].classImg !== undefined ){
+                fs.unlink(`./public/images/classImg/${result[0].classImg}`,(error)=>{
+                    if (error) throw error
+                    console.log('successfully deleted');
+                })
+            }
+            return db.queryAsync(sql)
+        })
+        .then(result=>{
+            if ( result.affectedRows>0 ) {
+                data.status = 201;
+                data.msg = '刪除成功'
+                res.json(data);
+            } else {
+                data.status = 500;
+                data.msg = '刪除失敗'
                 res.json(data);
             }
         })
