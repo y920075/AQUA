@@ -316,7 +316,6 @@ router.put('/seller/coach/:id',upload.single('classCoachImg'),(req,res)=>{
 */
 
 router.delete('/seller/coach/:id',upload.none(),(req,res)=>{
-    req.session.seller_id = 'S20010001'
     const data = {
         'status':401,
         'msg':'尚未登入'
@@ -344,6 +343,125 @@ router.delete('/seller/coach/:id',upload.none(),(req,res)=>{
                 data.status = 500;
                 data.msg = '刪除失敗'
                 res.json(data);
+            }
+        })
+    }
+})
+
+//賣家指派課程給教練
+/*
+    預計從前台接收的資料
+    PATCH /seller/coach/status/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classId = 要被指派的課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=指派成功 401=尚未登入 409=資料重複 404=查無課程資料
+        msg = 說明訊息
+    }
+*/
+
+router.patch('/seller/coach/status/:id',upload.none(),(req,res)=>{
+    const data = {
+        'status':404,
+        'msg':'查無課程資料'
+    }
+    if ( !req.session.seller_id ) {
+        data.status = 401
+        data.msg = '尚未登入'
+        res.json(data)
+    } else {
+        //檢查課程存不存在 如果搜尋無結果就是沒有資料
+        const checkClassDataSql = `SELECT \`classId\` FROM \`class_data\` WHERE \`classId\` = '${req.body.classId}'`
+        //檢查是否已重複指派 如果搜尋有結果就是重複指派
+        const checkCoachDataSql = `SELECT \`classId\` FROM \`class_coach_status\` WHERE \`classId\` = '${req.body.classId}' AND \`coachId\` = ${req.params.id}`
+        //新增指派狀態到資料表
+        const sql = `INSERT INTO \`class_coach_status\`(\`seller_id\`, \`classId\`, \`coachId\`) 
+                    VALUES (? , ? , ?)`
+        const sqlStmt = [
+            req.session.seller_id,
+            req.body.classId,
+            req.params.id
+        ]
+        db.queryAsync(checkCoachDataSql)
+        .then(result=>{
+            if ( !result.length>0 ) {
+                db.queryAsync(checkClassDataSql)
+                .then(result=>{
+                    if ( result.length>0 ) {
+                        db.queryAsync(sql,sqlStmt)
+                        .then(result=>{
+                            if ( result.affectedRows>0 ) {
+                                data.status = 201
+                                data.msg = '指派成功'
+                                res.json(data)
+                            } else {
+                                data.status = 500
+                                data.msg = '指派失敗'
+                                res.json(data)
+                            }
+                        })
+                    } else {
+                        data.status = 404
+                        data.msg = '查無課程資料'
+                        res.json(data)
+                    }
+                })
+            } else {
+                data.status = 409
+                data.msg = '重複指派'
+                res.json(data)
+            }
+        })
+    }
+})
+
+//賣家取消指派課程給教練
+/*
+    預計從前台接收的資料
+    PATCH /seller/coach/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classId = 要被取消的課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無指派資料
+        msg = 說明訊息
+    }
+*/
+
+router.delete('/seller/coach/status/:id',upload.none(),(req,res)=>{
+    const data = {
+        'status':404,
+        'msg':'查無指派資料'
+    }
+    if ( !req.session.seller_id ) {
+        data.status = 401
+        data.msg = '尚未登入'
+        res.json(data)
+    } else {
+        const sql = `DELETE FROM \`class_coach_status\` WHERE \`classId\` = '${req.body.classId}' AND \`coachId\` = '${req.params.id}' AND \`seller_id\` = '${req.session.seller_id}'`
+        const checkCoachDataSql = `SELECT \`classId\` FROM \`class_coach_status\` WHERE \`classId\` = '${req.body.classId}' AND \`coachId\` = '${req.params.id}'`
+        db.queryAsync(checkCoachDataSql)
+        .then(result=>{
+            if ( result.length>0 ) {
+                db.queryAsync(sql)
+                .then(result=>{
+                    if ( result.affectedRows>0 ) {
+                        data.status = 201
+                        data.msg = '取消成功'
+                        res.json(data)
+                    } else {
+                        data.status = 500
+                        data.msg = '取消失敗'
+                        res.json(data)
+                    }
+                })
+            } else {
+                res.json(data)
             }
         })
     }
