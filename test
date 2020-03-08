@@ -1,2 +1,5 @@
-INSERT INTO \`class_coach_status\`(\`seller_id\`, \`classId\`, \`coachId\`) 
-VALUES (? , ? , ?)
+SELECT \`class_data\`.\`classId\`,\`class_data\`.\`className\`,\`class_data\`.\`classType\`,\`class_data\`.\`classLevel\`,\`class_data\`.\`classLocation\`,\`class_data\`.\`classStartDate\`,\`class_data\`.\`classIntroduction\`,\`class_data\`.\`classImg\`
+FROM \`class_data\` 
+INNER JOIN \`class_member\`
+ON \`class_data\`.\`classId\` = \`class_member\`.\`classId\`
+WHERE \`class_member\`.\`memberId\` = 'M20010001'

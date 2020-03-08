@@ -818,4 +818,202 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
     }
 })
 
+//會員報名課程
+/*
+    預計從前台接收的資料
+
+    POST /member/class/:classId
+
+    req.session.memberId = 會員編號
+    req.params.classId = 課程編號
+    req.body.memberMemo = 會員備註
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=報名成功 401=尚未登入 409=重複報名 404=查無課程資料
+        msg = 說明訊息
+    }
+*/
+
+router.post('/member/class/:classId',upload.none(),(req,res)=>{
+    req.session.memberId = 'M20010011'
+    const data = {
+        'status':401,
+        'msg':'尚未登入'
+    }
+    if ( !req.session.memberId ) {
+        res.json(data)
+    } else {
+        const checkClassData = `SELECT \`classId\` FROM \`class_data\` WHERE \`classId\` = '${req.params.classId}'`
+        const checkMemberData = `SELECT \`classId\`, \`memberId\`FROM \`class_member\` WHERE \`memberId\` = '${req.session.memberId}' AND \`classId\` = '${req.params.classId}'`
+        const checkNowPeople = `SELECT \`classMAXpeople\`,\`classNOWpeople\` FROM \`class_data\` WHERE \`classId\` = '${req.params.classId}'`
+        const sql = `INSERT INTO \`class_member\`(\`classId\`, \`memberId\`, \`memberMemo\`) 
+                     VALUES (? , ? , ?)`
+        const sqlStmt = [
+            req.params.classId,
+            req.session.memberId,
+            req.body.memberMemo
+        ]
+        
+        db.queryAsync(checkClassData)
+        .then(result=>{
+            if ( result.length>0 ) {
+                db.queryAsync(checkNowPeople)
+                .then(result=>{
+                    if ( result[0].classNOWpeople<result[0].classMAXpeople ) {
+                        db.queryAsync(checkMemberData)
+                        .then(result=>{
+                            if ( !result.length>0 ){
+                                db.queryAsync(sql,sqlStmt)
+                                .then(result=>{
+                                    if ( result.affectedRows>0 ) {
+                                        data.status = 201
+                                        data.msg = '報名成功'
+                                        const countSql = `SELECT COUNT(0) as classCount FROM \`class_member\` WHERE \`classId\` = '${req.params.classId}'`
+                                        db.queryAsync(countSql)
+                                        .then(result=>{
+                                            const updateNowPeople = `UPDATE \`class_data\` SET\`classNOWpeople\` = '${result[0].classCount}' WHERE \`classId\` = '${req.params.classId}'`
+                                            return db.queryAsync(updateNowPeople)
+                                        })
+                                        .then(result=>{
+                                            res.json(data)
+                                        })
+                                    } else {
+                                        data.status = 500
+                                        data.msg = '報名失敗'
+                                        res.json(data)
+                                    }
+                                })
+                            } else {
+                                data.status = 409
+                                data.msg = '重複報名'
+                                res.json(data)
+                            }
+                        })
+                    } else {
+                        data.status = 400
+                        data.msg = '報名人數已滿'
+                        res.json(data)
+                    }
+                })
+            } else {
+                data.status = 404
+                data.msg = '查無課程資料'
+                res.json(data)
+            }
+        })
+    }
+})
+
+// 會員查詢自己的報名課程資料
+/*
+    預計從前台接收的資料
+    GET /member/class?type=課程類型&level=課程等級&sort=排序類型(類型,方法)&page=頁碼
+
+    type =    課程類型
+    level =   課程等級
+    sort =    排序類型  (類型,方法) 
+    page =    頁碼
+    req.session.member = 賣家ID
+
+    預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        searchType =    搜索的課程類型
+        searchLevel =   搜索的課程等級
+        sortType =      設定的排序類型 
+        page =          目前頁碼
+        totalRows =     總筆數
+        totalPages =    總頁數
+        memberId =      會員編號
+        result : [
+            {
+                classId =               課程編號
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classDate =             開課日期
+                classLocation =         開課地點(僅縣市)
+                classIntroduction =     課程簡介
+                classImg =              課程圖片連結
+                classPrice =            課程售價
+            }
+        ]
+    }
+*/
+
+router.get('/member/class',(req,res)=>{
+    req.session.memberId = 'M20010001'
+    const data = {
+        'status' : '401',
+        'msg' : '尚未登入'
+    }
+    if ( !req.session.memberId ) {
+        res.json(data)
+    } else {
+        const perPage = 6;
+        const searchType = req.query.type && !req.query.level ? ` AND \`class_data\`.\`classType\` = '${req.query.type}' ` : '';
+        const searchLevel = req.query.type && req.query.level ? ` AND  \`class_data\`.\`classType\` = '${req.query.type}' AND \`class_data\`.\`classLevel\` = '${req.query.level}' ` : '';
+        const sort = req.query.sort ? ` ORDER BY \`class_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`class_data\`.\`created_at\` DESC`
+        const total_sql = ` SELECT COUNT(1) as 'rows' 
+                            FROM \`class_data\`  
+                            INNER JOIN \`class_member\`
+                            ON \`class_data\`.\`classId\` = \`class_member\`.\`classId\`
+                            WHERE \`class_member\`.\`memberId\` = '${req.session.memberId}' ${searchType}${searchLevel}`
+        let page = req.query.page ? parseInt(req.query.page) : 1;
+        let totalRows;
+        let totalPages;
+
+        db.queryAsync(total_sql)
+        .then(result=>{
+            totalRows = result[0].rows;
+            if ( totalRows===0 ) {
+                return false
+            } else {
+                totalPages = Math.ceil(totalRows/perPage);
+                if (page<1) page=1;
+                if (page>totalPages) page=totalPages;
+
+                const sql = `   SELECT \`class_data\`.\`classId\`,\`class_data\`.\`className\`,\`class_data\`.\`classType\`,
+                                \`class_data\`.\`classLevel\`,\`class_data\`.\`classLocation\`,\`class_data\`.\`classStartDate\`,\`class_data\`.\`classIntroduction\`,
+                                \`class_data\`.\`classImg\`
+                                FROM \`class_data\` 
+                                INNER JOIN \`class_member\`
+                                ON \`class_data\`.\`classId\` = \`class_member\`.\`classId\`
+                                WHERE \`class_member\`.\`memberId\` = '${req.session.memberId}' ${searchType}${searchLevel}
+                                ${sort}
+                                LIMIT  ${(page-1)*perPage}, ${perPage}`
+                return db.queryAsync(sql);
+            }
+        })
+        .then(result=>{
+            if ( result.length>0 ) {
+                res.json({
+                    'status' :        200,
+                    'msg':            '請求成功',
+                    'searchType' :    req.query.type,
+                    'searchLevel' :   req.query.level,
+                    'sortType' :      req.query.sort,
+                    'memberId' :     req.session.memberId,
+                    page,
+                    totalRows,
+                    totalPages,
+                    result
+            })
+            } else {
+                res.json({
+                    'status' :        404,
+                    'msg':            '查無任何資料',
+                    'searchType' :    req.query.type,
+                    'searchLevel' :   req.query.level,
+                    'sortType' :      req.query.sort,
+                    'memberId' :     req.session.memberId,
+                })
+            }
+        })
+    }
+})
+
+
 module.exports = router;
