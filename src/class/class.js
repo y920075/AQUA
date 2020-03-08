@@ -501,7 +501,7 @@ router.get('/seller/class',(req,res)=>{
     }
 })
 
-// 賣家取得單一筆課程資料(編輯用)
+// 賣家取得單一筆課程資料
 /*
     預計從前台接收的資料
     GET /seller/class/課程編號
@@ -533,37 +533,59 @@ router.get('/seller/class',(req,res)=>{
                 classIntroduction =     課程簡介
                 classDesc =             課程說明
                 classMAXpeople =        最大人數
+                classNOWpeople =        目前人數
                 classImg =              課程圖片連結
                 classPrice =            課程售價
+            }
+        ]
+        classMemberData : [
+            {
+                memberId = 會員編號
+                memberMemo = 會員備註
+                fullName = 會員全名
+                gender = 會員性別
+                email = 會員電子郵件
+                mobileNumber = 會員手機號碼
             }
         ]
     }
 */
 
 router.get('/seller/class/:classId',(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status' : 404,
         'msg' :　'查無資料',
         'classCoachData' : '',
-        'classData' : ''
+        'classData' : '',
+        'classMemberData' : ''
     }
     if ( !req.session.seller_id ) {
         data.status = '401'
         data.msg = '尚未登入'
         res.json(data)
     } else {
-        const c_sql = `SELECT \`id\`,\`classCoachName\`,\`classCoachLicense1\`,\`classCoachLicense2\`,\`classCoachLicense3\`
-                    FROM \`class_coach\`
-                    WHERE \`classId\` = '${req.params.classId}'`
+        const findCoachDataSql = `SELECT \`class_coach\`.\`id\`,\`class_coach_status\`.\`classId\`,\`class_coach\`.\`classCoachName\`,\`class_coach\`.\`classCoachImg\`,
+                                    \`class_coach\`.\`classCoachLicense1\`,\`class_coach\`.\`classCoachLicense2\`,\`class_coach\`.\`classCoachLicense3\`
+                                FROM \`class_coach\` 
+                                INNER JOIN \`class_coach_status\`
+                                ON \`class_coach\`.\`id\` = \`class_coach_status\`.\`coachId\`
+                                WHERE \`class_coach_status\`.\`classId\` = '${req.params.classId}'`
         const sql = `SELECT \`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classFullLocation\`,\`classStartDate\`,
-                        \`classPrice\`,\`classIntroduction\`,\`classDesc\`,\`classMAXpeople\`,\`classImg\` 
+                        \`classPrice\`,\`classIntroduction\`,\`classDesc\`,\`classMAXpeople\`,\`classNOWpeople\`,\`classImg\` 
                         FROM \`class_data\` 
                         WHERE \`seller_id\` = '${req.session.seller_id}' AND \`classId\` = '${req.params.classId}'`
+        const findMemberDataSql = `SELECT \`class_member\`.\`memberId\`,\`class_member\`.\`memberMemo\`,\`my_member\`.\`fullName\`,
+                                \`my_member\`.\`gender\`,\`my_member\`.\`email\`,\`my_member\`.\`mobileNumber\`
+                                FROM \`class_member\` 
+                                INNER JOIN \`my_member\`
+                                ON \`class_member\`.\`memberId\` = \`my_member\`.\`memberId\`
+                                WHERE \`class_member\`.\`classId\` = '${req.params.classId}' `
         db.queryAsync(sql)
         .then(result=>{
             if ( result.length>0 ) {
                 data.classData = result;
-                return db.queryAsync(c_sql)
+                return db.queryAsync(findCoachDataSql)
             } else {
                 return false
             }
@@ -573,7 +595,11 @@ router.get('/seller/class/:classId',(req,res)=>{
                 data.status = 200
                 data.msg = '請求成功'
                 data.classCoachData = result;
-                res.json(data)
+                db.queryAsync(findMemberDataSql)
+                .then(result=>{
+                    data.classMemberData = result
+                    res.json(data)
+                })
             } else {
                 res.json(data)
             }
@@ -944,7 +970,6 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/class',(req,res)=>{
-    req.session.memberId = 'M20010001'
     const data = {
         'status' : '401',
         'msg' : '尚未登入'
@@ -1015,5 +1040,120 @@ router.get('/member/class',(req,res)=>{
     }
 })
 
+//會員取消自己報名的課程
+/*
+    預計從前台接收的資料
+    DELETE /member/class/:classId
+
+    req.session.memberId = 會員編號
+    req.params.id = 課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無報名資料
+        msg = 說明訊息
+    }
+*/
+
+router.delete('/member/class/:classId',(req,res)=>{
+    const data = {
+        'status':404,
+        'msg':'查無報名資料'
+    }
+    if ( !req.session.memberId ) {
+        data.status = 401
+        data.msg = '尚未登入'
+        res.json(data)
+    } else {
+        const sql = `DELETE FROM \`class_member\` WHERE \`classId\` = '${req.params.classId}' AND \`memberId\` = '${req.session.memberId}'`
+        const checkMemberDataSql = `SELECT \`classId\` FROM \`class_member\` WHERE \`classId\` = '${req.params.classId}' AND \`memberId\` = '${req.session.memberId}'`
+        db.queryAsync(checkMemberDataSql)
+        .then(result=>{
+            if ( result.length>0 ) {
+                db.queryAsync(sql)
+                .then(result=>{
+                    if ( result.affectedRows>0 ) {
+                        const countSql = `SELECT COUNT(0) as classCount FROM \`class_member\` WHERE \`classId\` = '${req.params.classId}'`
+                        db.queryAsync(countSql)
+                        .then(result=>{
+                            const updateNowPeople = `UPDATE \`class_data\` SET\`classNOWpeople\` = '${result[0].classCount}' WHERE \`classId\` = '${req.params.classId}'`
+                            return db.queryAsync(updateNowPeople)
+                        })
+                        .then(result=>{
+                            data.status = 201
+                            data.msg = '取消成功'
+                            res.json(data)
+                        })
+                    } else {
+                        data.status = 500
+                        data.msg = '取消失敗'
+                        res.json(data)
+                    }
+                })
+            } else {
+                res.json(data)
+            }
+        })
+    }
+})
+
+//賣家取消單一會員報名的課程
+/*
+    預計從前台接收的資料
+    
+    DELETE /seller/class/member/:classId
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.params.classId = 課程編號
+    req.body.memberId = 會員編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無報名資料
+        msg = 說明訊息
+    }
+*/
+
+router.delete('/seller/class/member/:classId',upload.none(),(req,res)=>{
+    const data = {
+        'status':404,
+        'msg':'查無報名資料'
+    }
+    if ( !req.session.seller_id ) {
+        data.status = 401
+        data.msg = '尚未登入'
+        res.json(data)
+    } else {
+        const sql = `DELETE FROM \`class_member\` WHERE \`classId\` = '${req.params.classId}' AND \`memberId\` = '${req.body.memberId}'`
+        const checkMemberDataSql = `SELECT \`classId\` FROM \`class_member\` WHERE \`classId\` = '${req.params.classId}' AND \`memberId\` = '${req.body.memberId}'`
+        db.queryAsync(checkMemberDataSql)
+        .then(result=>{
+            if ( result.length>0 ) {
+                db.queryAsync(sql)
+                .then(result=>{
+                    if ( result.affectedRows>0 ) {
+                        const countSql = `SELECT COUNT(0) as classCount FROM \`class_member\` WHERE \`classId\` = '${req.params.classId}'`
+                        db.queryAsync(countSql)
+                        .then(result=>{
+                            const updateNowPeople = `UPDATE \`class_data\` SET\`classNOWpeople\` = '${result[0].classCount}' WHERE \`classId\` = '${req.params.classId}'`
+                            return db.queryAsync(updateNowPeople)
+                        })
+                        .then(result=>{
+                            data.status = 201
+                            data.msg = '取消成功'
+                            res.json(data)
+                        })
+                    } else {
+                        data.status = 500
+                        data.msg = '取消失敗'
+                        res.json(data)
+                    }
+                })
+            } else {
+                res.json(data)
+            }
+        })
+    }
+})
 
 module.exports = router;

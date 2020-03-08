@@ -1,5 +1,5 @@
-SELECT \`class_data\`.\`classId\`,\`class_data\`.\`className\`,\`class_data\`.\`classType\`,\`class_data\`.\`classLevel\`,\`class_data\`.\`classLocation\`,\`class_data\`.\`classStartDate\`,\`class_data\`.\`classIntroduction\`,\`class_data\`.\`classImg\`
-FROM \`class_data\` 
-INNER JOIN \`class_member\`
-ON \`class_data\`.\`classId\` = \`class_member\`.\`classId\`
-WHERE \`class_member\`.\`memberId\` = 'M20010001'
+SELECT \`class_member\`.\`memberId\`,\`class_member\`.\`memberMemo\`,\`my_member\`.\`fullName\`,\`my_member\`.\`gender\`,\`my_member\`.\`email\`,\`my_member\`.\`mobileNumber\`
+FROM \`class_member\` 
+INNER JOIN \`my_member\`
+ON \`class_member\`.\`memberId\` = \`my_member\`.\`memberId\`
+WHERE \`class_member\`.\`classId\` = 'C20030001' 
