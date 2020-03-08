@@ -325,3 +325,114 @@
         msg = 說明訊息
     }
 */
+
+//賣家查詢自己的全部或單筆教練資訊
+/*
+    預計從前台接收的資料
+    如果存在id就給單筆資料
+    GET /seller/coach/:id?
+
+    req.session.seller_id = 賣家編號(驗證用)
+
+    預計傳送回去的資料
+    [
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        result:[
+            {
+                id = 教練編號
+                classId = 該教練目前已被指派給哪門課程
+                classCoachName = 教練姓名
+                classCoachImg = 教練相片
+                classCoachLicense1 = 教練證照1
+                classCoachLicense2 = 教練證照2
+                classCoachLicense3 = 教練證照3
+            }
+        ]
+    ]
+*/
+
+//賣家新增一筆教練資訊
+/*
+    預計從前台接收的資訊
+
+    POST /seller/coach
+    
+    req.session.seller_id = 賣家編號
+    req.body.classCoachName = 教練姓名
+    req.body.classCoachImg = 教練相片
+    req.body.classCoachLicense1 = 教練證照1
+    req.body.classCoachLicense2 = 教練證照2
+    req.body.classCoachLicense3 = 教練證照3
+
+    預計傳送回去的資料
+    [
+        status = 狀態碼 201=新增成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+        msg = 說明訊息
+        id = 新增的教練編號
+    ]
+*/
+
+//賣家編輯一筆教練資訊
+/*
+    預計從前台接收的資訊
+
+    PUT /seller/coach/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classCoachName = 教練姓名
+    req.body.classCoachImg = 教練相片
+    req.body.classCoachLicense1 = 教練證照1
+    req.body.classCoachLicense2 = 教練證照2
+    req.body.classCoachLicense3 = 教練證照3
+
+    預計傳送回去的資料
+    [
+        status = 狀態碼 201=新增成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+        msg = 說明訊息
+    ]
+*/
+
+//賣家刪除一筆教練資訊
+/*
+    預計從前台接收的資料
+    DELETE /seller/coach/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=刪除成功 401=尚未登入
+        msg = 說明訊息
+    }
+*/
+
+//賣家指派課程給教練
+/*
+    預計從前台接收的資料
+    PATCH /seller/coach/status/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classId = 要被指派的課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=指派成功 401=尚未登入 409=資料重複 404=查無課程資料
+        msg = 說明訊息
+    }
+*/
+
+//賣家取消指派課程給教練
+/*
+    預計從前台接收的資料
+    PATCH /seller/coach/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classId = 要被取消的課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無指派資料
+        msg = 說明訊息
+    }
+*/

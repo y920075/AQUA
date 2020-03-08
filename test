@@ -1,5 +1,3 @@
-SELECT \`class_member\`.\`memberId\`,\`class_member\`.\`memberMemo\`,\`my_member\`.\`fullName\`,\`my_member\`.\`gender\`,\`my_member\`.\`email\`,\`my_member\`.\`mobileNumber\`
-FROM \`class_member\` 
-INNER JOIN \`my_member\`
-ON \`class_member\`.\`memberId\` = \`my_member\`.\`memberId\`
-WHERE \`class_member\`.\`classId\` = 'C20030001' 
+const update = `UPDATE \`weather_data\`
+                SET \`1day\`= ?,\`2day\`= ?,\`3day\`= ?,\`4day\`= ?,\`5day\`= ?,\`6day\`= ?
+                WHERE \`eventId\` = '${result[i].eventId}'`

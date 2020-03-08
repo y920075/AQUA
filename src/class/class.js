@@ -10,13 +10,6 @@ const router = express.Router();
 //Top LeveL Middleware
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json()); 
-
-router.post('/try-session',(req,res)=>{
-    req.session.seller_id='S123456789'
-    req.session.memberId='M123456789'
-    res.json('session-OK')
-})
-
 //查詢列表資料
 /*
     預計從前台接收的資料
