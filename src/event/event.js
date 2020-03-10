@@ -641,6 +641,63 @@ router.put('/member/event/:eventId',upload.single('eventImg'),(req,res)=>{
     }
 })
 
+//會員刪除自己的課程資料
+/*
+    預計從前台接收的資料
+    DELETE /member/event/課程編號
+
+    req.session.memberId = 賣家編號(驗證用)
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=刪除成功 401=尚未登入
+        msg = 說明訊息
+    }
+*/
+
+router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
+    req.session.memberId = 'M20010002'
+    const data = {
+        'status':401,
+        'msg':'尚未登入'
+    }
+    if ( !req.session.memberId ) {
+        res.json(data)
+    } else {
+        const sql = `DELETE FROM\`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+        db.queryAsync(`SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`)
+        .then(result=>{
+            if ( result.length>0 ) {
+                if ( result[0].eventImg !== 'noImg.jpg' && result[0].eventImg !== undefined ){
+                    fs.unlink(`./public/images/eventImg/${result[0].eventImg}`,(error)=>{
+                        if (error) throw error
+                        console.log('successfully deleted');
+                    })
+                }
+                return db.queryAsync(sql)
+            } else {
+                res.json(data)
+            }
+        })
+        .then(result=>{
+            if ( result.affectedRows>0 ) {
+                const delWeatherData = `DELETE FROM \`weather_data\` WHERE \`eventId\` = '${req.params.eventId}'`
+                db.queryAsync(delWeatherData).then(result=>{
+                    if ( result.affectedRows>0 ) {
+                        data.status = 201;
+                        data.msg = `編號${req.params.eventId} 刪除成功`
+                        res.json(data);
+                    }
+                })
+            } else {
+                data.status = 500;
+                data.msg = '刪除失敗'
+                res.json(data);
+            }
+        })
+    }
+})
+
 // 會員查詢自己的所有活動資料
 /*
     預計從前台接收的資料
@@ -681,7 +738,6 @@ router.put('/member/event/:eventId',upload.single('eventImg'),(req,res)=>{
 */
 
 router.get('/member/event',(req,res)=>{
-    req.session.memberId = 'M20010002'
     const perPage = 8
     const searchKeyword = req.query.q ? ` AND \`eventName\` LIKE '%${req.query.q}%' ` : ''
     const searchType = req.query.type ? ` AND \`eventType\` = '${req.query.type}' ` : ''
@@ -735,5 +791,7 @@ router.get('/member/event',(req,res)=>{
         }
     })
 })
+
+
 
 module.exports = router
