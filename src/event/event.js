@@ -9,6 +9,13 @@ const upload =      multer({dest:'tmp_uploads/'})
 const getWeatherData = require(__dirname+ '/../weather')
 const router = express.Router();
 
+/*
+    2020-03-10 注意事項
+    取得經緯度的Google API key還沒輸入
+    要使用時 用API KEY 取代 'GOOGLE的APIKEY放這裡' 這段字
+*/
+
+
 //Top LeveL Middleware
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json()); 
@@ -397,7 +404,7 @@ router.post('/member/event',upload.single('eventImg'),(req,res)=>{
                     eventId = `E${moment(new Date()).format('YYMM')}${maxId.padStart(4,'0')}`;
                 }
 
-                const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的API KEY放這裡`
+                const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
                 )
                 axios.get(url)
                 .then(response=>{
@@ -447,6 +454,188 @@ router.post('/member/event',upload.single('eventImg'),(req,res)=>{
                             res.json(data);
                         }
                     })
+                })
+            })
+        })
+    }
+})
+
+//會員修改一筆活動資訊
+/*
+    預計從前台接收的資料
+    PUT /member/event/活動編號
+
+    活動編號由後台產生後自動存入
+    現在人數由後台預設為0
+    經緯度由eventFullLocation透過Google API取得後存入
+
+    req.body.eventName =            活動名稱
+    req.body.eventTypeId =          活動類別編號
+    req.body.eventLocation =        活動地點(縣市)
+    req.body.eventFullLocation =    活動地點(完整)
+    req.session.member =            活動發起人編號
+    req.body.eventStartDate =       活動日期
+    req.body.eventEndDate =         報名截止日期
+    req.body.eventDesc =            活動說明
+    req.body.eventNeedPeople =      徵求人數
+    req.body.eventImg =             活動圖片(png,jpg,gif)
+
+    預計傳送回去的資料
+    {
+        status =        狀態碼 201=修改成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+        msg =           說明訊息
+    }
+
+*/
+
+router.put('/member/event/:eventId',upload.single('eventImg'),(req,res)=>{
+    req.session.memberId = 'M20010002'
+    const data = {
+        'status' : 412,
+        'msg' : '資料驗證失敗'
+    }
+
+    switch(true){
+        case !req.session.memberId:
+            data.status='401'
+            data.msg='尚未登入'
+            res.json(data)
+            break
+        case !req.body.eventName||!req.body.eventTypeId||!req.body.eventLocation||!req.body.eventFullLocation
+            ||!req.body.eventStartDate||!req.body.eventEndDate||!req.body.eventDesc||!req.body.eventNeedPeople :
+            data.status='400'
+            data.msg='資料缺失'
+            res.json(data)
+            break
+        case (/(^\s*$)/g).test(req.body.eventName):
+            data.msg='活動名稱不可為空白';
+            res.json(data);
+            break;
+        case req.body.eventName.length > 50 :
+            data.msg='活動名稱過長';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.eventLocation) :
+            data.msg='地點不可為空白'
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.eventStartDate) :
+            data.msg='活動日期不可為空白';
+            res.json(data);
+            break;
+        case moment(req.body.eventStartDate).format('YYYY-MM-DD HH:mm') <= moment(new Date()).format('YYYY-MM-DD HH:mm'):
+            data.msg='活動日期不可小於現在日期';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.eventEndDate) :
+            data.msg='報名截止日期不可為空白';
+            res.json(data);
+            break;
+        case moment(req.body.eventEndDate).format('YYYY-MM-DD HH:mm') <= moment(new Date()).format('YYYY-MM-DD HH:mm'):
+            data.msg='報名截止日期不可小於現在日期';
+            res.json(data);
+            break;
+        case moment(req.body.eventEndDate).format('YYYY-MM-DD HH:mm') >= moment(req.body.eventStartDate).format('YYYY-MM-DD HH:mm'):
+            data.msg='報名截止日期不可大於活動日期';
+            res.json(data);
+            break;
+        case (/(^\s*$)/g).test(req.body.eventDesc):
+            data.msg='活動說明不可為空白';
+            res.json(data)
+            break;
+        case req.body.eventDesc.length > 3000:
+            data.msg='活動說明過長';
+            res.json(data)
+            break;
+        case (/(^\s*$)/g).test(req.body.eventNeedPeople):
+            data.msg='徵求人數不可為空白'
+            res.json(data);
+            break;
+        case !req.body.eventNeedPeople.match(/^\d{1,3}$/g):
+            data.msg='徵求人數不可超過3位數';
+            res.json(data);
+            break;
+        default:
+            data.status='202'
+    }
+
+    let eventImg = !req.file && !req.originalname ? '' : ',\`eventImg\` = ?'
+    const sql = `UPDATE \`event_data\`
+                SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
+                    \`eventLocation_lat\`=?,\`eventLocation_lng\`=?,\`eventStartDate\`=?,\`eventEndDate\`=?,
+                    \`eventDesc\`=?,\`eventNeedPeople\`=?${eventImg}
+                WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+
+    const sqlType = `SELECT \`eventTypeName\`
+                    FROM \`event_type\`
+                    WHERE \`eventTypeId\`='${req.body.eventTypeId}'`
+
+    if ( data.status==='202' ) {
+        let eventType = '';
+        let eventImgName = 'noImg.jpg';
+        db.query(sqlType,(error,result)=>{
+            if( result[0] ){
+                eventType = result[0].eventTypeName
+            } else {
+                eventType = '查無資料'
+            }
+
+            const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
+            )
+            axios.get(url)
+            .then(response=>{
+                const eventLocationLat = response.data.results[0].geometry.location.lat
+                const eventLocationLng = response.data.results[0].geometry.location.lng
+                const sqlStmt = [
+                    req.body.eventName,
+                    eventType,
+                    req.body.eventLocation,
+                    req.body.eventFullLocation,
+                    eventLocationLat,
+                    eventLocationLng,
+                    req.body.eventStartDate,
+                    req.body.eventEndDate,
+                    req.body.eventDesc,
+                    req.body.eventNeedPeople,
+                ]
+                if ( req.file && req.file.originalname ) {
+                    eventImgName = 'E' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
+                    fs.rename(req.file.path, './public/images/eventImg/'+eventImgName,()=>{})
+                    sqlStmt.push(eventImgName)
+                    db.query(`SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}'`,(error,result)=>{
+                        if ( result[0].eventImg !== 'noImg.jpg' && result[0].eventImg !== undefined ){
+                            fs.unlink(`./public/images/eventImg/${result[0].eventImg}`,(error)=>{
+                                if (error) throw error
+                                console.log('successfully deleted');
+                            })
+                        }
+                    })
+                }
+                db.query(sql,sqlStmt,(error,result)=>{
+                    if (error) throw error
+                    if ( result.affectedRows>0 ) {
+                        const weatherSql = `UPDATE \`weather_data\`
+                                            SET \`location_lng\`=?, \`location_lat\`=?,\`eventStartDate\`=?,\`weatherData_updated_at\`=?
+                                            WHERE \`eventId\` = '${req.params.eventId}'`
+                        const weatherSqlStmt  = [
+                            eventLocationLng,
+                            eventLocationLat,
+                            req.body.eventStartDate,
+                            '1970-01-01'
+                        ]
+                        db.query(weatherSql,weatherSqlStmt,(error)=>{
+                            if(error) throw error
+                            if ( result.affectedRows>0 ) {
+                                data.status = 201;
+                                data.msg = '修改成功'
+                                res.json(data)
+                            }
+                        })
+                    } else {
+                        data.status = 500;
+                        data.msg = '修改失敗'
+                        res.json(data);
+                    }
                 })
             })
         })
