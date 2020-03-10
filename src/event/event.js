@@ -397,7 +397,7 @@ router.post('/member/event',upload.single('eventImg'),(req,res)=>{
                     eventId = `E${moment(new Date()).format('YYMM')}${maxId.padStart(4,'0')}`;
                 }
 
-                const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=AIzaSyCKzc6x2rbFXwvA2gjuzRNsniXFlo0gAnw`
+                const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的API KEY放這裡`
                 )
                 axios.get(url)
                 .then(response=>{
