@@ -189,7 +189,7 @@ router.get('/class/:classId',(req,res)=>{
 /*
     預計從前台接收的資料
 
-    POST /class
+    POST /seller/class
     
     課程編號由後台產生後自動存入
     現在人數由後台預設為0

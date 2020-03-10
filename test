@@ -1,6 +1,16 @@
-SELECT \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,\`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
-		\`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,\`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,
-		\`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,\`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
-FROM \`event_data\` 
-LEFT JOIN \`my_member\`
-ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
+const sql = `INSERT INTO \`event_data\`
+                (\`maxId\`, \`eventId\`, \`eventName\`, \`eventType\`, \`eventLocation\`, \`eventFullLocation\`,
+                \`eventLocation_lat\`,\`eventLocation_lng\`, \`eventSponsor\`,\`eventStartDate\`, \`eventEndDate\`,
+                \`eventDesc\`, \`eventNeedPeople\`,\`eventNowPeople\`, \`eventImg\`)
+                VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`
+
+	req.body.eventName =            活動名稱
+    req.body.eventTypeId =          活動類別編號
+    req.body.eventLocation =        活動地點(縣市)
+    req.body.eventFullLocation =    活動地點(完整)
+    req.session.memberId =          活動發起人編號
+    req.body.eventStartDate =       活動日期
+    req.body.eventEndDate =         報名截止日期
+    req.body.eventDesc =            活動說明
+    req.body.eventNeedPeople =      徵求人數
+    req.body.eventImg =             活動圖片(png,jpg,gif)
