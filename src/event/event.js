@@ -5,6 +5,7 @@ const multer =      require('multer');
 const fs =          require('fs')
 const db =          require(__dirname + '/../db_connect')
 const axios =       require('axios')
+const eventSql =    require('./eventM')
 const upload =      multer({dest:'tmp_uploads/'})
 const getWeatherData = require(__dirname+ '/../weather')
 const router = express.Router();
@@ -106,21 +107,11 @@ const autoUpdateWeatherData = ()=>{
 
 router.get('/event',(req,res)=>{
     const perPage = 8
-    let searchKeyword = ''
-    if ( req.query.q && !req.query.type ) {
-        searchKeyword = ` WHERE \`event_data\`.\`eventName\` LIKE '%${req.query.q}%' `
-    } else if ( req.query.q && req.query.type ) {
-        searchKeyword = ` AND \`event_data\`.\`eventName\` LIKE '%${req.query.q}%' `
-    }
-
-    const searchType = req.query.type ? ` WHERE \`event_data\`.\`eventType\` = '${req.query.type}' ` : ''
-    const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
-    const total_sql = `SELECT COUNT(1) as 'rows' FROM \`event_data\` ${searchType}${searchKeyword}`
     let page = req.query.page ? parseInt(req.query.page) : 1
     let totalRows
     let totalPages
 
-    db.queryAsync(total_sql)
+    db.queryAsync(eventSql.getTotalData(req.query))
     .then(result=>{
         totalRows = result[0].rows;
         if ( totalRows===0 ) {
@@ -129,17 +120,7 @@ router.get('/event',(req,res)=>{
             totalPages = Math.ceil(totalRows/perPage);
             if (page<1) page=1;
             if (page>totalPages) page=totalPages;
-
-            const sql = `   SELECT \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,\`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
-                                    \`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,\`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,
-                                    \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,\`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
-                                    FROM \`event_data\` 
-                                    LEFT JOIN \`my_member\`
-                                    ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
-                            ${searchType}${searchKeyword}
-                            ${sort}
-                            LIMIT  ${(page-1)*perPage}, ${perPage}`
-            return db.queryAsync(sql);
+            return db.queryAsync(eventSql.getAllEventData(req.query,totalPages,perPage));
         }
     })
     .then(result=>{
@@ -220,25 +201,11 @@ router.get('/event/:eventId',(req,res)=>{
         'weather_data' : '',
         'eventData' : ''
     }
-    const weatherDataSql = `SELECT \`id\`, \`eventId\`, \`location_lng\`, \`location_lat\`, 
-                            \`1day\`, \`2day\`, \`3day\`, \`4day\`, \`5day\`, \`6day\`,\`weatherData_updated_at\` 
-                            FROM \`weather_data\` 
-                            WHERE \`eventId\` = '${eventId}'`
-
-    const sql = `SELECT \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
-                        \`event_data\`.\`eventFullLocation\`,\`event_data\`.\`eventSponsor\`,
-                        \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,\`event_data\`.\`eventDesc\`,
-                        \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
-                        \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
-                FROM \`event_data\` 
-                LEFT JOIN \`my_member\`
-                ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
-                WHERE \`eventId\` =  '${eventId}'`
-    db.queryAsync(sql)
+    db.queryAsync(eventSql.getSingleEventData(eventId))
     .then(result=>{
         if ( result.length>0 ) {
             data.eventData = result;
-            db.queryAsync(weatherDataSql)
+            db.queryAsync(eventSql.getWeatherData(eventId))
             .then(result=>{
                 if( result.length>0 ){
                     result[0]['1day'] = JSON.parse(result[0]['1day'])
@@ -292,7 +259,7 @@ router.get('/event/:eventId',(req,res)=>{
     }
 */
 
-router.post('/member/event',upload.single('eventImg'),(req,res)=>{
+router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
     req.session.memberId = 'M20010002'
     const data = {
         'status' : 412,
@@ -362,100 +329,58 @@ router.post('/member/event',upload.single('eventImg'),(req,res)=>{
             data.status='202'
     }
 
-    const sql = `INSERT INTO \`event_data\`
-                (\`maxId\`, \`eventId\`, \`eventName\`, \`eventType\`, \`eventLocation\`, \`eventFullLocation\`,
-                \`eventLocation_lat\`,\`eventLocation_lng\`, \`eventSponsor\`,\`eventStartDate\`, \`eventEndDate\`,
-                \`eventDesc\`, \`eventNeedPeople\`,\`eventNowPeople\`, \`eventImg\`)
-                VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`
-
-    const sqlMAX = `SELECT MAX(\`maxId\`) AS \`maxId\`
-                FROM \`event_data\` 
-                WHERE DATE_FORMAT(\`created_at\`,'%Y-%m') = '${moment(new Date()).format('YYYY-MM')}'`;
-
-    const sqlType = `SELECT \`eventTypeName\`
-                    FROM \`event_type\`
-                    WHERE \`eventTypeId\`='${req.body.eventTypeId}'`
-
     let maxId = '';
     let eventType = '';
     let eventId = '';
     let eventImg = '';
 
     if ( data.status==='202' ) {
-        db.query(sqlType,(error,result)=>{
-            if( result[0] ){
-                eventType = result[0].eventTypeName
-            } else {
-                eventType = '查無資料'
-            }
-            db.query(sqlMAX,(error,result)=>{
-                if ( req.file && req.file.originalname ) {
-                    eventImg = 'E' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
-                    fs.rename(req.file.path, './public/images/eventImg/'+ eventImg,()=>{}) 
-                } else {
-                    eventImg = 'noImg.jpg'
-                }
-        
-                if ( !result[0].maxId ) {
-                    maxId = '1';
-                    eventId = `E${moment(new Date()).format('YYMM')}${maxId.padStart(4,'0')}`;
-                } else {
-                    maxId = `${result[0].maxId+1}`;
-                    eventId = `E${moment(new Date()).format('YYMM')}${maxId.padStart(4,'0')}`;
-                }
+        eventType = await eventSql.getEventType(req.body.eventTypeId)
+        maxId = await eventSql.getMaxNumber()
+        eventId = `E${moment(new Date()).format('YYMM')}${maxId.padStart(4,'0')}`;
 
-                const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
-                )
-                axios.get(url)
-                .then(response=>{
-                    const eventLocationLat = response.data.results[0].geometry.location.lat
-                    const eventLocationLng = response.data.results[0].geometry.location.lng
-                    const sqlStmt = [
-                        maxId,
-                        eventId,
-                        req.body.eventName,
-                        eventType,
-                        req.body.eventLocation,
-                        req.body.eventFullLocation,
-                        eventLocationLat,
-                        eventLocationLng,
-                        req.session.memberId,
-                        req.body.eventStartDate,
-                        req.body.eventEndDate,
-                        req.body.eventDesc,
-                        req.body.eventNeedPeople,
-                        0,
-                        eventImg
-                    ]
-                    db.query(sql,sqlStmt,(error,result)=>{
-                        if (error) throw error
-                        if ( result.affectedRows>0 ) {
-                            const weatherSql = `INSERT INTO \`weather_data\`(\`eventId\`, \`location_lng\`, \`location_lat\`,\`eventStartDate\`,\`weatherData_updated_at\`) 
-                                                VALUES (?,?,?,?,?)`
-                            const weatherSqlStmt  = [
-                                eventId,
-                                eventLocationLng,
-                                eventLocationLat,
-                                req.body.eventStartDate,
-                                '1970-01-01'
-                            ]
-                            db.query(weatherSql,weatherSqlStmt,(error)=>{
-                                if(error) throw error
-                                if ( result.affectedRows>0 ) {
-                                    data.status = 201;
-                                    data.msg = '新增成功'
-                                    data.location = '/event/'+eventId
-                                    res.json(data)
-                                }
-                            })
-                        } else {
-                            data.status = 500;
-                            data.msg = '新增失敗'
-                            res.json(data);
-                        }
-                    })
-                })
-            })
+        if ( req.file && req.file.originalname ) {
+            eventImg = 'E' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
+            fs.rename(req.file.path, './public/images/eventImg/'+ eventImg,()=>{}) 
+        } else {
+            eventImg = 'noImg.jpg'
+        }
+        
+        const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
+        )
+        axios.get(url)
+        .then(async response=>{
+            const eventLocationLat = response.data.results[0].geometry.location.lat
+            const eventLocationLng = response.data.results[0].geometry.location.lng
+            const sqlStmt = [
+                maxId,
+                eventId,
+                req.body.eventName,
+                eventType,
+                req.body.eventLocation,
+                req.body.eventFullLocation,
+                eventLocationLat,
+                eventLocationLng,
+                req.session.memberId,
+                req.body.eventStartDate,
+                req.body.eventEndDate,
+                req.body.eventDesc,
+                req.body.eventNeedPeople,
+                0,
+                eventImg
+            ]
+
+            const result = await eventSql.memberAddEventData(sqlStmt,eventId,eventLocationLat,eventLocationLng,req.body.eventStartDate)
+            if(result.affectedRows>0){
+                data.status = 201;
+                data.msg = '新增成功'
+                data.location = '/event/'+eventId
+                res.json(data)
+            } else {
+                data.status = 500;
+                data.msg = '新增失敗'
+                res.json(data);
+            }
         })
     }
 })
