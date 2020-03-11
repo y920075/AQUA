@@ -32,7 +32,7 @@ const autoUpdateWeatherData = ()=>{
         console.log(`${nowDate} 刪除已過活動日期資料中...`)
         await db.queryAsync(del).then(result=>{
             if(result.affectedRows>0){
-                console.log(`${nowDate} 刪除完成`)
+                console.log(`${nowDate} 刪除完成，共刪除${result.affectedRows}筆資料`)
             } else {
                 console.log(`${nowDate} 沒有未過期資料`)
             }
@@ -260,7 +260,6 @@ router.get('/event/:eventId',(req,res)=>{
 */
 
 router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
-    req.session.memberId = 'M20010002'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -329,10 +328,10 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
             data.status='202'
     }
 
-    let maxId = '';
-    let eventType = '';
-    let eventId = '';
-    let eventImg = '';
+    let maxId = null;
+    let eventType = null;
+    let eventId = null;
+    let eventImg = null;
 
     if ( data.status==='202' ) {
         eventType = await eventSql.getEventType(req.body.eventTypeId)
@@ -345,7 +344,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
         } else {
             eventImg = 'noImg.jpg'
         }
-        
+
         const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
         )
         axios.get(url)
@@ -413,7 +412,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
 
 */
 
-router.put('/member/event/:eventId',upload.single('eventImg'),(req,res)=>{
+router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -483,85 +482,53 @@ router.put('/member/event/:eventId',upload.single('eventImg'),(req,res)=>{
             data.status='202'
     }
 
-    let eventImg = !req.file && !req.originalname ? '' : ',\`eventImg\` = ?'
-    const sql = `UPDATE \`event_data\`
-                SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
-                    \`eventLocation_lat\`=?,\`eventLocation_lng\`=?,\`eventStartDate\`=?,\`eventEndDate\`=?,
-                    \`eventDesc\`=?,\`eventNeedPeople\`=?${eventImg}
-                WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
-
-    const sqlType = `SELECT \`eventTypeName\`
-                    FROM \`event_type\`
-                    WHERE \`eventTypeId\`='${req.body.eventTypeId}'`
-
     if ( data.status==='202' ) {
-        let eventType = '';
+        let eventType = await eventSql.getEventType(req.body.eventTypeId)
         let eventImgName = 'noImg.jpg';
-        db.query(sqlType,(error,result)=>{
-            if( result[0] ){
-                eventType = result[0].eventTypeName
-            } else {
-                eventType = '查無資料'
-            }
-
-            const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
-            )
-            axios.get(url)
-            .then(response=>{
-                const eventLocationLat = response.data.results[0].geometry.location.lat
-                const eventLocationLng = response.data.results[0].geometry.location.lng
-                const sqlStmt = [
-                    req.body.eventName,
-                    eventType,
-                    req.body.eventLocation,
-                    req.body.eventFullLocation,
-                    eventLocationLat,
-                    eventLocationLng,
-                    req.body.eventStartDate,
-                    req.body.eventEndDate,
-                    req.body.eventDesc,
-                    req.body.eventNeedPeople,
-                ]
-                if ( req.file && req.file.originalname ) {
-                    eventImgName = 'E' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
-                    fs.rename(req.file.path, './public/images/eventImg/'+eventImgName,()=>{})
-                    sqlStmt.push(eventImgName)
-                    db.query(`SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}'`,(error,result)=>{
-                        if ( result[0].eventImg !== 'noImg.jpg' && result[0].eventImg !== undefined ){
-                            fs.unlink(`./public/images/eventImg/${result[0].eventImg}`,(error)=>{
-                                if (error) throw error
-                                console.log('successfully deleted');
-                            })
-                        }
-                    })
-                }
-                db.query(sql,sqlStmt,(error,result)=>{
-                    if (error) throw error
-                    if ( result.affectedRows>0 ) {
-                        const weatherSql = `UPDATE \`weather_data\`
-                                            SET \`location_lng\`=?, \`location_lat\`=?,\`eventStartDate\`=?,\`weatherData_updated_at\`=?
-                                            WHERE \`eventId\` = '${req.params.eventId}'`
-                        const weatherSqlStmt  = [
-                            eventLocationLng,
-                            eventLocationLat,
-                            req.body.eventStartDate,
-                            '1970-01-01'
-                        ]
-                        db.query(weatherSql,weatherSqlStmt,(error)=>{
-                            if(error) throw error
-                            if ( result.affectedRows>0 ) {
-                                data.status = 201;
-                                data.msg = '修改成功'
-                                res.json(data)
-                            }
+        
+        const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
+        )
+        axios.get(url)
+        .then(async response=>{
+            const eventLocationLat = response.data.results[0].geometry.location.lat
+            const eventLocationLng = response.data.results[0].geometry.location.lng
+            const sqlStmt = [
+                req.body.eventName,
+                eventType,
+                req.body.eventLocation,
+                req.body.eventFullLocation,
+                eventLocationLat,
+                eventLocationLng,
+                req.body.eventStartDate,
+                req.body.eventEndDate,
+                req.body.eventDesc,
+                req.body.eventNeedPeople,
+            ]
+            if ( req.file && req.file.originalname ) {
+                eventImgName = 'E' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
+                fs.rename(req.file.path, './public/images/eventImg/'+eventImgName,()=>{})
+                sqlStmt.push(eventImgName)
+                db.query(`SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}'`,(error,result)=>{
+                    if ( result[0].eventImg !== 'noImg.jpg' && result[0].eventImg !== undefined ){
+                        fs.unlink(`./public/images/eventImg/${result[0].eventImg}`,(error)=>{
+                            if (error) throw error
+                            console.log('successfully deleted');
                         })
-                    } else {
-                        data.status = 500;
-                        data.msg = '修改失敗'
-                        res.json(data);
                     }
                 })
-            })
+            }
+
+            result = await eventSql.memberEditEventData(sqlStmt,req,eventLocationLat,eventLocationLng)
+
+            if ( result.affectedRows>0 ) {
+                data.status = 201;
+                data.msg = '修改成功'
+                res.json(data)
+            } else {
+                data.status = 500;
+                data.msg = '修改失敗'
+                res.json(data);
+            }
         })
     }
 })

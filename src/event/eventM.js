@@ -21,33 +21,21 @@ class event {
         return sql
     }
     //取得活動類型
-    static async getEventType(eventTypeId){
-        let eventType
+    static async getEventType(typeId){
+        let eventType = null
         const sql = `SELECT \`eventTypeName\`
                         FROM \`event_type\`
-                        WHERE \`eventTypeId\`='${eventTypeId}'`
-        await db.queryAsync(sql).then(result=>{
-            if( result[0] ){
-                eventType = result[0].eventTypeName
-            } else {
-                eventType = '查無資料'
-            }
-        })
+                        WHERE \`eventTypeId\`='${typeId}'`
+        await db.queryAsync(sql).then(result=>{eventType = result[0] ? result[0].eventTypeName : '查無資料'})
         return eventType
     }
     //取得編號的目前最大值
     static async getMaxNumber(){
-        let maxId
+        let maxId = null
         const sql = `SELECT MAX(\`maxId\`) AS \`maxId\`
                         FROM \`event_data\` 
                         WHERE DATE_FORMAT(\`created_at\`,'%Y-%m') = '${moment(new Date()).format('YYYY-MM')}'`;
-        await db.queryAsync(sql).then(result=>{
-            if ( !result[0].maxId ) {
-                maxId = '1';
-            } else {
-                maxId = `${result[0].maxId+1}`;
-            }
-        })
+        await db.queryAsync(sql).then(result=>{maxId = !result[0].maxId ? '1' : `${result[0].maxId+1}`})
         return maxId
     }
     //取得所有活動資料
@@ -73,7 +61,7 @@ class event {
         return sql
     }
     //取得單一活動資料
-    static getSingleEventData(eventId){
+    static getSingleEventData(Id){
         const sql = `SELECT \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
                             \`event_data\`.\`eventFullLocation\`,\`event_data\`.\`eventSponsor\`,
                             \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,\`event_data\`.\`eventDesc\`,
@@ -82,12 +70,12 @@ class event {
                     FROM \`event_data\` 
                     LEFT JOIN \`my_member\`
                     ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
-                    WHERE \`eventId\` =  '${eventId}'`
+                    WHERE \`eventId\` =  '${Id}'`
         return sql
     }
     //會員新增一筆活動
-    static async memberAddEventData(sqlStmt,eventId,eventLocationLat,eventLocationLng,eventStartDate){
-        let data
+    static async memberAddEventData(sqlStmt,Id,lat,lng,startDate){
+        let data = null
         const sql = `INSERT INTO \`event_data\`
                     (\`maxId\`, \`eventId\`, \`eventName\`, \`eventType\`, \`eventLocation\`, \`eventFullLocation\`,
                     \`eventLocation_lat\`,\`eventLocation_lng\`, \`eventSponsor\`,\`eventStartDate\`, \`eventEndDate\`,
@@ -99,23 +87,41 @@ class event {
                 const weatherSql = `INSERT INTO \`weather_data\`(\`eventId\`, \`location_lng\`, \`location_lat\`,\`eventStartDate\`,\`weatherData_updated_at\`) 
                                     VALUES (?,?,?,?,?)`
                 const weatherSqlStmt  = [
-                    eventId,
-                    eventLocationLng,
-                    eventLocationLat,
-                    eventStartDate,
+                    Id,
+                    lng,
+                    lat,
+                    startDate,
                     '1970-01-01'
                 ]
                 return db.queryAsync(weatherSql,weatherSqlStmt)
             }
-        })
-        .then(result=>{
-            data = result
-        })
+        }).then( result => data = result)
         return data
     }
     //會員編輯一筆活動
-    static memberEditEventData(){
-
+    static async memberEditEventData(sqlStmt,req,lat,lng){
+        let data = null
+        let eventImg = !req.file && !req.file.originalname ? '' : ',\`eventImg\` = ?'
+        const sql = `UPDATE \`event_data\`
+                    SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
+                        \`eventLocation_lat\`=?,\`eventLocation_lng\`=?,\`eventStartDate\`=?,\`eventEndDate\`=?,
+                        \`eventDesc\`=?,\`eventNeedPeople\`=?${eventImg}
+                    WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+        await db.queryAsync(sql,sqlStmt).then(result=>{
+            if ( result.affectedRows>0 ) {
+                const weatherSql = `UPDATE \`weather_data\`
+                                    SET \`location_lng\`=?, \`location_lat\`=?,\`eventStartDate\`=?,\`weatherData_updated_at\`=?
+                                    WHERE \`eventId\` = '${req.params.eventId}'`
+                const weatherSqlStmt  = [
+                    lng,
+                    lat,
+                    req.body.eventStartDate,
+                    '1970-01-01'
+                ]
+                return db.queryAsync(weatherSql,weatherSqlStmt)
+            }
+        }).then( result => data = result)
+        return data
     }
     //會員刪除一筆活動
     static memberDelEventData(){
