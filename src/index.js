@@ -11,6 +11,7 @@ app.use(session({
         maxAge: 1200000, // session的存活時間 單位毫秒
     }
 }))
+app.use(cors())
 
 
 

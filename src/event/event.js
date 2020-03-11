@@ -111,7 +111,7 @@ router.get('/event',(req,res)=>{
     let totalRows
     let totalPages
 
-    db.queryAsync(eventSql.getTotalData(req.query))
+    db.queryAsync(eventSql.getTotalData(req))
     .then(result=>{
         totalRows = result[0].rows;
         if ( totalRows===0 ) {
@@ -135,7 +135,7 @@ router.get('/event',(req,res)=>{
                 totalRows,
                 totalPages,
                 result
-        })
+            })
         } else {
             res.json({
                 'status' :        404,
@@ -328,15 +328,15 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
             data.status='202'
     }
 
-    let maxId = null;
-    let eventType = null;
-    let eventId = null;
-    let eventImg = null;
+    let maxId = null
+    let eventType = null
+    let eventId = null
+    let eventImg = null
 
     if ( data.status==='202' ) {
         eventType = await eventSql.getEventType(req.body.eventTypeId)
         maxId = await eventSql.getMaxNumber()
-        eventId = `E${moment(new Date()).format('YYMM')}${maxId.padStart(4,'0')}`;
+        eventId = `E${moment(new Date()).format('YYMM')}${maxId.padStart(4,'0')}`
 
         if ( req.file && req.file.originalname ) {
             eventImg = 'E' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
@@ -378,7 +378,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
             } else {
                 data.status = 500;
                 data.msg = '新增失敗'
-                res.json(data);
+                res.json(data)
             }
         })
     }
@@ -508,7 +508,8 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
                 eventImgName = 'E' + moment(new Date()).format('YYYYMMDDHHmmss') + "." +req.file.originalname.split('.')[1]
                 fs.rename(req.file.path, './public/images/eventImg/'+eventImgName,()=>{})
                 sqlStmt.push(eventImgName)
-                db.query(`SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}'`,(error,result)=>{
+                db.queryAsync(eventSql.getImgName(req))
+                .then(result=>{
                     if ( result[0].eventImg !== 'noImg.jpg' && result[0].eventImg !== undefined ){
                         fs.unlink(`./public/images/eventImg/${result[0].eventImg}`,(error)=>{
                             if (error) throw error
@@ -548,7 +549,6 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
 */
 
 router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
-    req.session.memberId = 'M20010002'
     const data = {
         'status':401,
         'msg':'尚未登入'
@@ -556,8 +556,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
     if ( !req.session.memberId ) {
         res.json(data)
     } else {
-        const sql = `DELETE FROM\`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
-        db.queryAsync(`SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`)
+        db.queryAsync(eventSql.getImgName(req))
         .then(result=>{
             if ( result.length>0 ) {
                 if ( result[0].eventImg !== 'noImg.jpg' && result[0].eventImg !== undefined ){
@@ -566,21 +565,16 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
                         console.log('successfully deleted');
                     })
                 }
-                return db.queryAsync(sql)
+                return eventSql.memberDelEventData(req)
             } else {
                 res.json(data)
             }
         })
         .then(result=>{
             if ( result.affectedRows>0 ) {
-                const delWeatherData = `DELETE FROM \`weather_data\` WHERE \`eventId\` = '${req.params.eventId}'`
-                db.queryAsync(delWeatherData).then(result=>{
-                    if ( result.affectedRows>0 ) {
-                        data.status = 201;
-                        data.msg = `編號${req.params.eventId} 刪除成功`
-                        res.json(data);
-                    }
-                })
+                data.status = 201;
+                data.msg = `編號${req.params.eventId} 刪除成功`
+                res.json(data);
             } else {
                 data.status = 500;
                 data.msg = '刪除失敗'
@@ -630,16 +624,13 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event',(req,res)=>{
+    req.session.memberId = 'M20010002'
     const perPage = 8
-    const searchKeyword = req.query.q ? ` AND \`eventName\` LIKE '%${req.query.q}%' ` : ''
-    const searchType = req.query.type ? ` AND \`eventType\` = '${req.query.type}' ` : ''
-    const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC`
-    const total_sql = `SELECT COUNT(1) as 'rows' FROM \`event_data\` WHERE \`eventSponsor\` = '${req.session.memberId}'${searchType}${searchKeyword}`
     let page = req.query.page ? parseInt(req.query.page) : 1
     let totalRows
     let totalPages
 
-    db.queryAsync(total_sql)
+    db.queryAsync(eventSql.getTotalData(req))
     .then(result=>{
         totalRows = result[0].rows;
         if ( totalRows===0 ) {
@@ -648,15 +639,7 @@ router.get('/member/event',(req,res)=>{
             totalPages = Math.ceil(totalRows/perPage);
             if (page<1) page=1;
             if (page>totalPages) page=totalPages;
-
-            const sql = `   SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventLocation\`,\`eventLocation_lat\`,
-                                    \`eventLocation_lng\`,\`eventStartDate\`,\`eventEndDate\`,
-                                    \`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
-                            FROM \`event_data\`
-                            WHERE \`eventSponsor\` = '${req.session.memberId}'${searchType}${searchKeyword}
-                            ${sort}
-                            LIMIT  ${(page-1)*perPage}, ${perPage}`
-            return db.queryAsync(sql);
+            return db.queryAsync(eventSql.memberGetAllEventData(req,totalPages,perPage));
         }
     })
     .then(result=>{

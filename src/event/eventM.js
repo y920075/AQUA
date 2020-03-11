@@ -4,10 +4,11 @@ const moment =      require('moment-timezone');
 class event {
     constructor() {}
     //取得總筆數
-    static getTotalData(query){
+    static getTotalData(req){
         let where = []
-        if(query.type) where.push(`\`eventType\` = '${query.type}'`)
-        if(query.q) where.push(`\`eventName\` LIKE '%${query.q}%'`)
+        if(req.query.type) where.push(`\`eventType\` = '${req.query.type}'`)
+        if(req.query.q) where.push(`\`eventName\` LIKE '%${req.query.q}%'`)
+        if(req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sql = `SELECT COUNT(1) as 'rows' FROM \`event_data\` ${where}`
         return sql
@@ -38,6 +39,11 @@ class event {
         await db.queryAsync(sql).then(result=>{maxId = !result[0].maxId ? '1' : `${result[0].maxId+1}`})
         return maxId
     }
+    //取得圖片名稱
+    static getImgName(req){
+        const sql = `SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+        return sql
+    }
     //取得所有活動資料
     static getAllEventData(query,totalPages,perPage){
         let where = []
@@ -49,9 +55,12 @@ class event {
         let page = query.page ? parseInt(query.page) : 1
         if (page<1) page=1;
         if (page>totalPages) page=totalPages;
-        let sql = ` SELECT \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,\`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
-                            \`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,\`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,
-                            \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,\`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
+        let sql = ` SELECT  \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
+                            \`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
+                            \`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,
+                            \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,
+                            \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
+                            \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
                     FROM \`event_data\` 
                     LEFT JOIN \`my_member\`
                     ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
@@ -124,12 +133,39 @@ class event {
         return data
     }
     //會員刪除一筆活動
-    static memberDelEventData(){
-
+    static async memberDelEventData(req){
+        let data = null
+        const sql = `DELETE FROM\`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+        const delWeatherData = `DELETE FROM \`weather_data\` WHERE \`eventId\` = '${req.params.eventId}'`
+        await db.queryAsync(sql).then(result=>{
+            if(result.affectedRows>0){
+                return db.queryAsync(delWeatherData)
+            }
+        })
+        .then( result => data = result)
+        return data
     }
     //會員查詢自己的所有活動資料
-    static memberGetAllEventData(){
+    static memberGetAllEventData(req,totalPages,perPage){
+        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
+        let page = req.query.page ? parseInt(req.query.page) : 1
+        let where = []
+        if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
+        if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
+        if (req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
+        if (where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
+        if (page<1) page=1;
+        if (page>totalPages) page=totalPages;
 
+        const sql = `   SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventLocation\`,\`eventLocation_lat\`,
+                                \`eventLocation_lng\`,\`eventStartDate\`,\`eventEndDate\`,
+                                \`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
+                        FROM \`event_data\`
+                        ${where}
+                        ${sort}
+                        LIMIT  ${(page-1)*perPage}, ${perPage}`
+                        console.log(sql)
+        return sql
     }
 }
 
