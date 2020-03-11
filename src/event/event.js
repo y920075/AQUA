@@ -694,5 +694,41 @@ router.get('/member/event/:eventId', async (req,res)=>{
     }
 })
 
+//會員報名一筆活動
+/*
+    預計從前台接收的資料
+
+    POST /member/event/:eventId
+
+    req.session.memberId = 會員編號
+    req.params.eventId = 活動編號
+    req.body.memberMemo = 會員備註
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=報名成功 400=報名人數已滿 401=尚未登入 404=查無課程資料 409=重複報名
+        msg = 說明訊息
+    }
+*/
+
+router.post('/member/event/:eventId',upload.none(), async (req,res)=>{
+    let data = {
+        'status' : 401,
+        'msg' : '尚未登入'
+    }
+    if ( !req.session.memberId ) {
+        res.json(data)
+    } else {
+        data = {...data,... await eventSql.memberApplyEvent(req)}
+        if ( data.result && data.result.affectedRows>0 ) {
+            data.status = 201
+            data.msg = '報名成功'
+            res.json(data)
+        } else {
+            res.json(data)
+        }
+    }
+})
+
 
 module.exports = router

@@ -198,6 +198,52 @@ class event {
         }
         return data
     }
+    //會員報名一筆課程
+    static async memberApplyEvent(req){
+        let data = {}
+        const checkEventDataSql = `SELECT \`eventNeedPeople\`,\`eventNowPeople\`
+                                FROM \`event_data\` 
+                                WHERE \`eventId\` = '${req.params.eventId}'`
+        const checkMemberDataSql = `SELECT \`eventId\`,\`memberId\`
+                                 FROM \`event_memeber\`
+                                 WHERE \`eventId\` = '${req.params.eventId}' AND \`memberId\` = '${req.session.memberId}'`
+        const addDataSql = `INSERT INTO \`event_memeber\` 
+                            (\`eventId\`, \`memberId\`, \`memberMemo\`) 
+                            VALUES (? ,? ,?)`
+        const queryCountSql = `SELECT COUNT(0) as eventCount 
+                                FROM \`event_memeber\` 
+                                WHERE \`eventId\` = '${req.params.eventId}'`
+
+        const checkEventData = await db.queryAsync(checkEventDataSql)
+        if (checkEventData.length===0) {
+            data.status = 404
+            data.msg = '查無課程資料'
+            return data
+        } else if ( checkEventData[0].eventNeedPeople === checkEventData[0].eventNowPeople ) {
+            data.status = 400
+            data.msg = '報名人數已滿'
+            return data
+        }
+        const checkMemberData = await db.queryAsync(checkMemberDataSql)
+        if (checkMemberData.length>0) {
+            data.status = 409
+            data.msg = '重複報名'
+            return data
+        }
+        const sqlStmt = [
+            req.params.eventId,
+            req.session.memberId,
+            req.body.memberMemo
+        ]
+        await db.queryAsync(addDataSql,sqlStmt)
+        const queryCount = await db.queryAsync(queryCountSql)
+        const updateNowPeopleDataSql = `UPDATE \`event_data\` 
+                                        SET\`eventNowPeople\` = '${queryCount[0].eventCount}' 
+                                        WHERE \`eventId\` = '${req.params.eventId}'`
+        data.result = await db.queryAsync(updateNowPeopleDataSql)
+        return data
+
+    }
 }
 
 module.exports = event

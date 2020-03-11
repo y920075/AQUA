@@ -848,13 +848,12 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
 
     預計傳送回去的資料
     {
-        status = 狀態碼 201=報名成功 401=尚未登入 409=重複報名 404=查無課程資料
+        status = 狀態碼 201=報名成功  400=報名人數已滿 401=尚未登入 404=查無課程資料 409=重複報名 
         msg = 說明訊息
     }
 */
 
 router.post('/member/class/:classId',upload.none(),(req,res)=>{
-    req.session.memberId = 'M20010011'
     const data = {
         'status':401,
         'msg':'尚未登入'
