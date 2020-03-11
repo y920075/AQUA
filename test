@@ -1,5 +1,3 @@
-UPDATE \`event_data\` 
-SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
-    \`eventLocation_lat\`=?,\`eventLocation_lng\`=?,\`eventSponsor\`=?,\`eventStartDate\`=?,
-    \`eventEndDate\`=?,\`eventDesc\`=?,\`eventNeedPeople\`=?,\`eventNowPeople\`=?,\`eventImg\`=? 
-WHERE \`eventId\` = 
+SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventFullLocation\`,\`eventStartDate\`,\`eventEndDate\`,\`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
+FROM \`event_data\` 
+WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'

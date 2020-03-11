@@ -932,7 +932,7 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
     level =   課程等級
     sort =    排序類型  (類型,方法) 
     page =    頁碼
-    req.session.member = 賣家ID
+    req.session.memberId = 會員編號
 
     預計傳送回去的資料
     {

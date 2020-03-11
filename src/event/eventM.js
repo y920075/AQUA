@@ -146,10 +146,14 @@ class event {
         return data
     }
     //會員查詢自己的所有活動資料
-    static memberGetAllEventData(req,totalPages,perPage){
-        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
-        let page = req.query.page ? parseInt(req.query.page) : 1
+    static async memberGetAllEventData(req,perPage){
+        let data = {}
         let where = []
+        let totalPages = null
+        let page = req.query.page ? parseInt(req.query.page) : 1
+        const totalRows = await db.queryAsync(event.getTotalData(req))
+        if ( totalRows[0].rows===0 ){return data}else{totalPages = Math.ceil(totalRows[0].rows/perPage)}
+        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
         if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
         if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
         if (req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
@@ -164,7 +168,35 @@ class event {
                         ${where}
                         ${sort}
                         LIMIT  ${(page-1)*perPage}, ${perPage}`
-        return sql
+        
+        data.totalPages = totalPages
+        data.totalRows = totalRows[0].rows
+        data.page = page
+        data.eventData = await db.queryAsync(sql)
+        return data
+
+    }
+    //會員查詢自己的單一活動資料(含參加者資料)
+    static async memberGetSingleEnventData(req){
+        let data = {}
+        const findMemberData = `SELECT \`event_memeber\`.\`memberId\`,\`event_memeber\`.\`memberMemo\`,
+                                \`my_member\`.\`loginId\`,\`my_member\`.\`gender\`,\`my_member\`.\`email\`,
+                                \`my_member\`.\`mobileNumber\`
+                                FROM \`event_memeber\` 
+                                LEFT JOIN \`my_member\`
+                                ON \`event_memeber\`.\`memberId\` = \`my_member\`.\`memberId\`
+                                WHERE \`event_memeber\`.\`eventId\` = '${req.params.eventId}'`
+        const sql = `SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventFullLocation\`,\`eventStartDate\`,
+                    \`eventEndDate\`,\`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
+                    FROM \`event_data\` 
+                    WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+
+        const result = await db.queryAsync(sql)
+        if ( result.length>0 ) {
+            data.eventData = result
+            data.eventMemberData = await db.queryAsync(findMemberData)
+        }
+        return data
     }
 }
 
