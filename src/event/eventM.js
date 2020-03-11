@@ -164,7 +164,6 @@ class event {
                         ${where}
                         ${sort}
                         LIMIT  ${(page-1)*perPage}, ${perPage}`
-                        console.log(sql)
         return sql
     }
 }

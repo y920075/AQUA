@@ -624,7 +624,6 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event',(req,res)=>{
-    req.session.memberId = 'M20010002'
     const perPage = 8
     let page = req.query.page ? parseInt(req.query.page) : 1
     let totalRows
