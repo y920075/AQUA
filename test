@@ -1,3 +1,12 @@
-INSERT INTO \`event_memeber\`
-(\`eventId\`, \`memberId\`, \`memberMemo\`) 
-VALUES (? ,? ,?)
+SELECT  \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
+        \`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
+        \`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,
+        \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,
+        \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
+        \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
+FROM \`event_data\` 
+INNER JOIN \`event_memeber\`
+ON \`event_memeber\`.\`eventId\` = \`event_data\`.\`eventId\`
+LEFT JOIN \`my_member\`
+ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
+WHERE \`event_memeber\`.\`memberId\` = '${req.session.memberId}'

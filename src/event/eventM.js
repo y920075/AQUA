@@ -18,32 +18,35 @@ class event {
     //取得天氣資料
     static getWeatherData(eventId){
         const sql = `SELECT \`id\`, \`eventId\`, \`location_lng\`, \`location_lat\`, 
-        \`1day\`, \`2day\`, \`3day\`, \`4day\`, \`5day\`, \`6day\`,\`weatherData_updated_at\` 
-        FROM \`weather_data\` 
-        WHERE \`eventId\` = '${eventId}'`
+                     \`1day\`, \`2day\`, \`3day\`, \`4day\`, \`5day\`, \`6day\`,\`weatherData_updated_at\` 
+                     FROM \`weather_data\` 
+                     WHERE \`eventId\` = '${eventId}'`
         return sql
     }
     //取得活動類型
     static async getEventType(typeId){
         let eventType = null
-        const sql = `SELECT \`eventTypeName\`
+        const sql =    `SELECT \`eventTypeName\`
                         FROM \`event_type\`
                         WHERE \`eventTypeId\`='${typeId}'`
+
         await db.queryAsync(sql).then(result=>{eventType = result[0] ? result[0].eventTypeName : '查無資料'})
         return eventType
     }
     //取得編號的目前最大值
     static async getMaxNumber(){
         let maxId = null
-        const sql = `SELECT MAX(\`maxId\`) AS \`maxId\`
+        const sql =    `SELECT MAX(\`maxId\`) AS \`maxId\`
                         FROM \`event_data\` 
                         WHERE DATE_FORMAT(\`created_at\`,'%Y-%m') = '${moment(new Date()).format('YYYY-MM')}'`;
+
         await db.queryAsync(sql).then(result=>{maxId = !result[0].maxId ? '1' : `${result[0].maxId+1}`})
         return maxId
     }
     //取得圖片名稱
     static getImgName(req){
-        const sql = `SELECT \`eventImg\` FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+        const sql = `SELECT \`eventImg\` FROM \`event_data\` 
+                     WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
         return sql
     }
     //取得所有活動資料
@@ -78,10 +81,10 @@ class event {
                             \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,\`event_data\`.\`eventDesc\`,
                             \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
                             \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
-                    FROM \`event_data\` 
-                    LEFT JOIN \`my_member\`
-                    ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
-                    WHERE \`eventId\` =  '${Id}'`
+                     FROM \`event_data\` 
+                     LEFT JOIN \`my_member\`
+                     ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
+                     WHERE \`eventId\` =  '${Id}'`
         return sql
     }
     //會員新增一筆活動
@@ -113,11 +116,12 @@ class event {
     static async memberEditEventData(sqlStmt,req,lat,lng){
         let data = null
         let eventImg = !req.file && !req.file.originalname ? '' : ',\`eventImg\` = ?'
-        const sql = `UPDATE \`event_data\`
-                    SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
+        const sql =    `UPDATE \`event_data\`
+                        SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
                         \`eventLocation_lat\`=?,\`eventLocation_lng\`=?,\`eventStartDate\`=?,\`eventEndDate\`=?,
                         \`eventDesc\`=?,\`eventNeedPeople\`=?${eventImg}
-                    WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+                        WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+
         await db.queryAsync(sql,sqlStmt).then(result=>{
             if ( result.affectedRows>0 ) {
                 const weatherSql = `UPDATE \`weather_data\`
@@ -137,8 +141,12 @@ class event {
     //會員刪除一筆活動
     static async memberDelEventData(req){
         let data = null
-        const sql = `DELETE FROM\`event_data\` WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
-        const delWeatherData = `DELETE FROM \`weather_data\` WHERE \`eventId\` = '${req.params.eventId}'`
+        const sql =            `DELETE FROM\`event_data\` 
+                                WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+
+        const delWeatherData = `DELETE FROM \`weather_data\` 
+                                WHERE \`eventId\` = '${req.params.eventId}'`
+
         await db.queryAsync(sql).then(result=>{
             if(result.affectedRows>0){
                 return db.queryAsync(delWeatherData)
@@ -147,7 +155,7 @@ class event {
         .then( result => data = result)
         return data
     }
-    //會員查詢自己的所有活動資料
+    //會員查詢自己發起的所有活動資料
     static async memberGetAllEventData(req,perPage){
         let data = {}
         let where = []
@@ -176,7 +184,6 @@ class event {
         data.page = page
         data.eventData = await db.queryAsync(sql)
         return data
-
     }
     //會員查詢自己發起的單一活動資料(含參加者資料)
     static async memberGetSingleEnventData(req){
@@ -188,10 +195,11 @@ class event {
                                 LEFT JOIN \`my_member\`
                                 ON \`event_memeber\`.\`memberId\` = \`my_member\`.\`memberId\`
                                 WHERE \`event_memeber\`.\`eventId\` = '${req.params.eventId}'`
-        const sql = `SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventFullLocation\`,\`eventStartDate\`,
-                    \`eventEndDate\`,\`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
-                    FROM \`event_data\` 
-                    WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+
+        const sql =            `SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventFullLocation\`,\`eventStartDate\`,
+                                \`eventEndDate\`,\`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
+                                FROM \`event_data\` 
+                                WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
 
         const result = await db.queryAsync(sql)
         if ( result.length>0 ) {
@@ -203,18 +211,21 @@ class event {
     //會員報名一筆課程
     static async memberJoinEvent(req){
         let data = {}
-        const checkEventDataSql = `SELECT \`eventNeedPeople\`,\`eventNowPeople\`
-                                FROM \`event_data\` 
-                                WHERE \`eventId\` = '${req.params.eventId}'`
+        const checkEventDataSql =  `SELECT \`eventNeedPeople\`,\`eventNowPeople\`
+                                    FROM \`event_data\` 
+                                    WHERE \`eventId\` = '${req.params.eventId}'`
+
         const checkMemberDataSql = `SELECT \`eventId\`,\`memberId\`
-                                 FROM \`event_memeber\`
-                                 WHERE \`eventId\` = '${req.params.eventId}' AND \`memberId\` = '${req.session.memberId}'`
-        const addDataSql = `INSERT INTO \`event_memeber\` 
-                            (\`eventId\`, \`memberId\`, \`memberMemo\`) 
-                            VALUES (? ,? ,?)`
-        const queryCountSql = `SELECT COUNT(0) as eventCount 
-                                FROM \`event_memeber\` 
-                                WHERE \`eventId\` = '${req.params.eventId}'`
+                                    FROM \`event_memeber\`
+                                    WHERE \`eventId\` = '${req.params.eventId}' AND \`memberId\` = '${req.session.memberId}'`
+
+        const addDataSql =         `INSERT INTO \`event_memeber\` 
+                                    (\`eventId\`, \`memberId\`, \`memberMemo\`) 
+                                    VALUES (? ,? ,?)`
+
+        const queryCountSql =      `SELECT COUNT(0) as eventCount 
+                                    FROM \`event_memeber\` 
+                                    WHERE \`eventId\` = '${req.params.eventId}'`
 
         const checkEventData = await db.queryAsync(checkEventDataSql)
         if (checkEventData.length===0) {
@@ -312,6 +323,53 @@ class event {
         data.result = await db.queryAsync(updateNowPeopleDataSql)
         return data
     }
+    //會員查詢自己報名的所有活動資料
+    static async memberGetAllJoinEventData(req,perPage){
+        let data = {}
+        let where = []
+        let totalPages = null
+        let page = req.query.page ? parseInt(req.query.page) : 1
+
+        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
+
+        if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
+        if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
+        if (req.session.memberId) where.push(`\`event_memeber\`.\`memberId\` = '${req.session.memberId}'`)
+        if (where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
+
+        const totalRows = await db.queryAsync( `SELECT COUNT(1) as 'rows' 
+                                                FROM \`event_data\`  
+                                                INNER JOIN \`event_memeber\`
+                                                ON \`event_data\`.\`eventId\` = \`event_memeber\`.\`eventId\`
+                                                ${where}`)
+
+        if ( totalRows[0].rows===0 ){return data}else{totalPages = Math.ceil(totalRows[0].rows/perPage)}
+
+        if (page<1) page=1;
+        if (page>totalPages) page=totalPages;
+
+        const sql = `SELECT \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
+                            \`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
+                            \`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,
+                            \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,
+                            \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
+                            \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
+                     FROM \`event_data\` 
+                     INNER JOIN \`event_memeber\`
+                     ON \`event_memeber\`.\`eventId\` = \`event_data\`.\`eventId\`
+                     LEFT JOIN \`my_member\`
+                     ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
+                     ${where}
+                     ${sort}
+                     LIMIT  ${(page-1)*perPage}, ${perPage}`
+        
+        data.totalPages = totalPages
+        data.totalRows = totalRows[0].rows
+        data.page = page
+        data.eventData = await db.queryAsync(sql)
+        return data
+    }
+    
 }
 
 module.exports = event

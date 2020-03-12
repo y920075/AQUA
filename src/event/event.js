@@ -584,10 +584,10 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
     }
 })
 
-// 會員查詢自己的所有活動資料
+// 會員查詢自己發起的所有活動資料
 /*
     預計從前台接收的資料
-    GET /member/event?type=活動類型&sort=排序類型(類型,方法)&page=頁碼&q=關鍵字
+    GET /member/event/self?type=活動類型&sort=排序類型(類型,方法)&page=頁碼&q=關鍵字
 
     type =    活動類型
     q =       關鍵字搜索
@@ -623,7 +623,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
     }
 */
 
-router.get('/member/event', async (req,res)=>{
+router.get('/member/event/self', async (req,res)=>{
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -642,7 +642,7 @@ router.get('/member/event', async (req,res)=>{
 //會員查詢自己的單一活動資料(含參加者資料)
 /*
     預計從前台接收的資料
-    GET /member/event/活動編號
+    GET /member/event/self/活動編號
 
     req.session.memberId = 會員編號
     req.params.eventId = 活動編號
@@ -676,7 +676,7 @@ router.get('/member/event', async (req,res)=>{
     }
 */
 
-router.get('/member/event/:eventId', async (req,res)=>{
+router.get('/member/event/self/:eventId', async (req,res)=>{
     let data = {
         'status' : 404,
         'msg' :　'查無資料',
@@ -688,6 +688,66 @@ router.get('/member/event/:eventId', async (req,res)=>{
     } else {
         data = { ...data ,...await eventSql.memberGetSingleEnventData(req)}
         data.status = data.eventData ? 200 : 404
+        data.msg = data.eventData ? '請求成功' : '查無資料'
+        res.json(data)
+    }
+})
+
+//會員查詢自己報名的所有活動資料
+/*
+    預計從前台接收的資料
+    GET /member/event/join?type=活動類型&sort=排序類型(類型,方法)&page=頁碼&q=關鍵字
+
+    type =    活動類型
+    q =       關鍵字搜索
+    sort =    排序類型  (類型,方法) 
+    page =    頁碼
+    req.session.memberId = 會員編號
+
+        預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 404=查無資料
+        msg =           說明訊息
+        searchType =      搜索的活動類型
+        searchKeyword =   搜索的關鍵字
+        sortType =      設定的排序類型 
+        page =          目前頁碼
+        totalRows =     總筆數
+        totalPages =    總頁數
+        memeberId =     會員編號
+        result : [
+            {
+                eventId =               活動編號
+                eventName =             活動名稱
+                eventType =             活動類型
+                eventLocation =         活動地點(僅縣市)
+                eventLocation_lat =     活動地點(緯度)
+                eventLocation_lng =     活動地點(經度)
+                eventSponsor =          活動發起人編號
+                loginId =               活動發起人帳號
+                eventStartDate =        活動日期
+                eventEndDate =          報名截止日期
+                eventNeedPeople =       徵求人數
+                eventNowPeople =        現在人數
+                eventImg =              活動圖片
+            }
+        ]
+    }
+*/
+
+router.get('/member/event/join',async (req,res)=>{
+    req.session.memberId = 'M20010006'
+    let data = {
+        'status' : 401,
+        'msg' : '尚未登入'
+    }
+    if ( !req.session.memberId ) {
+        
+        res.json(data)
+    } else {
+        const perPage = 8
+        data = {...data, ...await eventSql.memberGetAllJoinEventData(req,perPage)}
+        data.status = data.eventData ? 201 : 404
         data.msg = data.eventData ? '請求成功' : '查無資料'
         res.json(data)
     }
@@ -789,7 +849,6 @@ router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010002'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
