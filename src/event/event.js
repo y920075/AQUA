@@ -389,8 +389,6 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
     預計從前台接收的資料
     PUT /member/event/活動編號
 
-    活動編號由後台產生後自動存入
-    現在人數由後台預設為0
     經緯度由eventFullLocation透過Google API取得後存入
 
     req.body.eventName =            活動名稱
@@ -409,7 +407,6 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
         status =        狀態碼 201=修改成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
         msg =           說明訊息
     }
-
 */
 
 router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
@@ -534,12 +531,12 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
     }
 })
 
-//會員刪除自己的課程資料
+//會員刪除自己發起的活動資料
 /*
     預計從前台接收的資料
     DELETE /member/event/活動編號
 
-    req.session.memberId = 賣家編號(驗證用)
+    req.session.memberId = 會員編號(驗證用)
 
     預計傳送回去的資料
     {
@@ -588,6 +585,8 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 /*
     預計從前台接收的資料
     GET /member/event/self?type=活動類型&sort=排序類型(類型,方法)&page=頁碼&q=關鍵字
+
+    req.session.memberId = 會員編號
 
     type =    活動類型
     q =       關鍵字搜索
@@ -698,11 +697,12 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
     預計從前台接收的資料
     GET /member/event/join?type=活動類型&sort=排序類型(類型,方法)&page=頁碼&q=關鍵字
 
+    req.session.memberId = 會員編號
+
     type =    活動類型
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
     page =    頁碼
-    req.session.memberId = 會員編號
 
         預計傳送回去的資料
     {
@@ -736,7 +736,6 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
-    req.session.memberId = 'M20010006'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -765,7 +764,7 @@ router.get('/member/event/join',async (req,res)=>{
 
     預計傳送回去的資料
     {
-        status = 狀態碼 201=報名成功 400=報名人數已滿 401=尚未登入 404=查無課程資料 409=重複報名
+        status = 狀態碼 201=報名成功 400=報名人數已滿 401=尚未登入 404=查無活動資料 409=重複報名
         msg = 說明訊息
         result:[
             ...,
@@ -803,7 +802,7 @@ router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 
     預計傳送回去的資料
     {
-        status = 狀態碼 201=取消成功  401=尚未登入 404=查無課程資料 
+        status = 狀態碼 201=取消成功  401=尚未登入 404=查無活動資料 
         msg = 說明訊息
         result:[
             ...,
@@ -837,7 +836,7 @@ router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
     
     DELETE /member/event/unjoin/:eventId
 
-    req.session.memberId = 賣家編號(驗證用)
+    req.session.memberId = 自己的會員編號(驗證用)
     req.params.eventId = 課程編號
     req.body.memberId = 會員編號
 
