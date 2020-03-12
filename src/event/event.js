@@ -697,7 +697,7 @@ router.get('/member/event/:eventId', async (req,res)=>{
 /*
     預計從前台接收的資料
 
-    POST /member/joinevent/:eventId
+    POST /member/event/join/:eventId
 
     req.session.memberId = 會員編號
     req.params.eventId = 活動編號
@@ -714,7 +714,7 @@ router.get('/member/event/:eventId', async (req,res)=>{
     }
 */
 
-router.post('/member/joinevent/:eventId',upload.none(), async (req,res)=>{
+router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -736,7 +736,7 @@ router.post('/member/joinevent/:eventId',upload.none(), async (req,res)=>{
 //會員取消報名活動(自己不是活動發起人)
 /*
     預計從前台接收的資料
-    DELETE /member/joinevent/:eventId
+    DELETE /member/event/join/:eventId
     
     req.session.memberId = 會員編號
     req.params.eventId = 活動編號
@@ -752,8 +752,7 @@ router.post('/member/joinevent/:eventId',upload.none(), async (req,res)=>{
     }
 */
 
-router.delete('/member/joinevent/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010005'
+router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -773,5 +772,40 @@ router.delete('/member/joinevent/:eventId',upload.none(), async (req,res)=>{
 })
 
 //會員取消其他人的報名(自己為活動發起人時)
+/*
+    預計從前台接收的資料
+    
+    DELETE /member/event/unjoin/:eventId
+
+    req.session.memberId = 賣家編號(驗證用)
+    req.params.eventId = 課程編號
+    req.body.memberId = 會員編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無報名資料
+        msg = 說明訊息
+    }
+*/
+
+router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
+    req.session.memberId = 'M20010002'
+    let data = {
+        'status' : 401,
+        'msg' : '尚未登入'
+    }
+    if ( !req.session.memberId ) {
+        res.json(data)
+    } else {
+        data = {...data,... await eventSql.memberUnjoinOtherPeopleEvent(req)}
+        if ( data.result && data.result.affectedRows>0 ) {
+            data.status = 201
+            data.msg = '取消成功'
+            res.json(data)
+        } else {
+            res.json(data)
+        }
+    }
+})
 
 module.exports = router

@@ -249,16 +249,20 @@ class event {
     //會員取消報名活動(自己不是活動發起人)
     static async memberUnjoinEvent(req){
         let data = {}
-        const checkEventDataSql = `SELECT \`eventNeedPeople\`,\`eventNowPeople\`
+        const checkEventDataSql =  `SELECT \`eventNeedPeople\`,\`eventNowPeople\`
                                     FROM \`event_data\` 
                                     WHERE \`eventId\` = '${req.params.eventId}'`
+
         const checkMemberDataSql = `SELECT \`eventId\`,\`memberId\`
                                     FROM \`event_memeber\`
+
                                     WHERE \`eventId\` = '${req.params.eventId}' AND \`memberId\` = '${req.session.memberId}'`
-        const delDataSql = `DELETE FROM \`event_memeber\` WHERE \`eventId\` = '${req.params.eventId}' AND \`memberId\` = '${req.session.memberId}'`
-        const queryCountSql = `SELECT COUNT(0) as eventCount 
-                                FROM \`event_memeber\` 
-                                WHERE \`eventId\` = '${req.params.eventId}'`
+        const delDataSql =         `DELETE FROM \`event_memeber\` 
+                                    WHERE \`eventId\` = '${req.params.eventId}' AND \`memberId\` = '${req.session.memberId}'`
+
+        const queryCountSql =      `SELECT COUNT(0) as eventCount 
+                                    FROM \`event_memeber\` 
+                                    WHERE \`eventId\` = '${req.params.eventId}'`
         
         const checkEventData = await db.queryAsync(checkEventDataSql)
         if (checkEventData.length===0) {
@@ -282,7 +286,31 @@ class event {
     }
     //會員取消其他人的報名(自己為活動發起人時)
     static async memberUnjoinOtherPeopleEvent(req){
-        
+        let data = {}
+        const checkEventDataSql =  `SELECT \`eventNeedPeople\`,\`eventNowPeople\`
+                                    FROM \`event_data\` 
+                                    WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
+    
+        const delDataSql =         `DELETE FROM \`event_memeber\` 
+                                    WHERE \`eventId\` = '${req.params.eventId}' AND \`memberId\` = '${req.body.memberId}'`
+
+        const queryCountSql =      `SELECT COUNT(0) as eventCount 
+                                    FROM \`event_memeber\` 
+                                    WHERE \`eventId\` = '${req.params.eventId}'`
+
+        const checkEventData = await db.queryAsync(checkEventDataSql)
+        if (checkEventData.length===0) {
+            data.status = 404
+            data.msg = '查無課程資料'
+            return data
+        }
+        await db.queryAsync(delDataSql)
+        const queryCount = await db.queryAsync(queryCountSql)
+        const updateNowPeopleDataSql = `UPDATE \`event_data\` 
+                                        SET\`eventNowPeople\` = '${queryCount[0].eventCount}' 
+                                        WHERE \`eventId\` = '${req.params.eventId}'`
+        data.result = await db.queryAsync(updateNowPeopleDataSql)
+        return data
     }
 }
 
