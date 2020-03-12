@@ -537,7 +537,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
 //會員刪除自己的課程資料
 /*
     預計從前台接收的資料
-    DELETE /member/event/課程編號
+    DELETE /member/event/活動編號
 
     req.session.memberId = 賣家編號(驗證用)
 
@@ -624,7 +624,6 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event', async (req,res)=>{
-    req.session.memberId = 'M20010002'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -698,7 +697,7 @@ router.get('/member/event/:eventId', async (req,res)=>{
 /*
     預計從前台接收的資料
 
-    POST /member/event/:eventId
+    POST /member/joinevent/:eventId
 
     req.session.memberId = 會員編號
     req.params.eventId = 活動編號
@@ -708,10 +707,14 @@ router.get('/member/event/:eventId', async (req,res)=>{
     {
         status = 狀態碼 201=報名成功 400=報名人數已滿 401=尚未登入 404=查無課程資料 409=重複報名
         msg = 說明訊息
+        result:[
+            ...,
+            affectedRows = 影響行數，判斷有沒有成功更新現在人數
+        ]
     }
 */
 
-router.post('/member/event/:eventId',upload.none(), async (req,res)=>{
+router.post('/member/joinevent/:eventId',upload.none(), async (req,res)=>{
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -719,7 +722,7 @@ router.post('/member/event/:eventId',upload.none(), async (req,res)=>{
     if ( !req.session.memberId ) {
         res.json(data)
     } else {
-        data = {...data,... await eventSql.memberApplyEvent(req)}
+        data = {...data,... await eventSql.memberJoinEvent(req)}
         if ( data.result && data.result.affectedRows>0 ) {
             data.status = 201
             data.msg = '報名成功'
@@ -730,5 +733,45 @@ router.post('/member/event/:eventId',upload.none(), async (req,res)=>{
     }
 })
 
+//會員取消報名活動(自己不是活動發起人)
+/*
+    預計從前台接收的資料
+    DELETE /member/joinevent/:eventId
+    
+    req.session.memberId = 會員編號
+    req.params.eventId = 活動編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功  401=尚未登入 404=查無課程資料 
+        msg = 說明訊息
+        result:[
+            ...,
+            affectedRows = 影響行數，判斷有沒有成功更新現在人數
+        ]
+    }
+*/
+
+router.delete('/member/joinevent/:eventId',upload.none(), async (req,res)=>{
+    req.session.memberId = 'M20010005'
+    let data = {
+        'status' : 401,
+        'msg' : '尚未登入'
+    }
+    if ( !req.session.memberId ) {
+        res.json(data)
+    } else {
+        data = {...data,... await eventSql.memberUnjoinEvent(req)}
+        if ( data.result && data.result.affectedRows>0 ) {
+            data.status = 201
+            data.msg = '取消成功'
+            res.json(data)
+        } else {
+            res.json(data)
+        }
+    }
+})
+
+//會員取消其他人的報名(自己為活動發起人時)
 
 module.exports = router
