@@ -5,14 +5,14 @@ import Class from './pages/class/class'
 function App() {
   return (
     <Router>
-    <>
+      <>
         <Switch>
           <Route path="/Class">
             <Class />
           </Route>
         </Switch>
-    </>
-  </Router>
+      </>
+    </Router>
   )
 }
 
