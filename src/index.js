@@ -107,6 +107,8 @@ app.use('/seller', require(__dirname+'/basic_information/basic_information') );
 
 //潛點
 app.use('/divelocation', require(__dirname+'/location/locationinfo') );
+//評論
+app.use('/comment', require(__dirname+'/comment/comment') );
 //讀取靜態檔案
 
 app.use(express.static(__dirname + '/../public'));
