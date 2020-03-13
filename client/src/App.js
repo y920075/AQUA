@@ -1,9 +1,18 @@
 import React from 'react'
-import Footer from './components/Footer'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import Class from './pages/class/class'
 
 function App() {
   return (
-      <Footer />
+    <Router>
+    <>
+        <Switch>
+          <Route path="/Class">
+            <Class />
+          </Route>
+        </Switch>
+    </>
+  </Router>
   )
 }
 
