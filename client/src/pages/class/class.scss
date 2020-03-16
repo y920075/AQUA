@@ -1,8 +1,17 @@
 .JYcontainer{
     color:white;
+    .sortSelect{
+        width: 8.75rem;
+        select{
+            color: rgba($color: #ffffff, $alpha: 0.6);
+            option{
+                background-color: #132948;
+            }
+        }
+    }
     .typeMenu,.subMenu{
         .active{
-            color: #F15A24;
+            color: rgba($color: #ffffff, $alpha: 1.0);
         }
         padding-left: 1.25rem;
         list-style: none;
@@ -10,17 +19,18 @@
     .levelTitle{
         font-size: 1.125rem;
         cursor: pointer;
-        color: white;
+        color: rgba($color: #ffffff, $alpha: 0.6);
         &:hover{
-            color: #F15A24;
+            color: rgba($color: #ffffff, $alpha: 1.0);
             text-decoration: none
         }
     }
     .subMenu{
+        color: rgba($color: #ffffff, $alpha: 0.6);
         li{
             &:hover{
                 cursor: pointer;
-                color: #F15A24;
+                color: rgba($color: #ffffff, $alpha: 1.0);
             }
         }
         margin-bottom: 0.625rem;

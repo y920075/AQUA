@@ -12,9 +12,9 @@ import Banner from '../../components/Banner'
 import Footer from '../../components/Footer'
 
 //AOS模組
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-AOS.init()
+// import AOS from 'aos'
+// import 'aos/dist/aos.css'
+// AOS.init()
 
 function Class(props) {
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
@@ -31,6 +31,20 @@ function Class(props) {
     setHasLoading(true)
     setTimeout(() => {
       setHasLoading(false)
+      let pageList = document.querySelectorAll('li.JY-classPage')
+      pageList.forEach(value => {
+        value.classList.remove('active')
+      })
+
+      if (
+        document.querySelector(
+          `li.JY-classPage[data-page="${props.classData.page}"]`
+        ) !== null
+      ) {
+        document
+          .querySelector(`li.JY-classPage[data-page="${props.classData.page}"]`)
+          .classList.add('active')
+      }
     }, 1000)
   }, [props.classData])
 
@@ -43,8 +57,7 @@ function Class(props) {
           <span
             className="page-link"
             onClick={event => {
-              pageActive(event)
-              getClassData()
+              getClassData(event)
             }}
           >
             {i}
@@ -73,17 +86,8 @@ function Class(props) {
     event.target.classList.add('active') //為被點擊的目標新增active
   }
 
-  //頁面按鈕的點擊active事件
-  function pageActive(event) {
-    let pageList = document.querySelectorAll('li.JY-classPage')
-    pageList.forEach(value => {
-      value.classList.remove('active')
-    })
-    event.target.parentElement.classList.add('active') //為被點擊的目標新增active
-  }
-
   //向伺服器取得資料
-  function getClassData() {
+  function getClassData(event) {
     const type = document.querySelector('.typeMenu .active')
       ? document.querySelector('.typeMenu .active').getAttribute('data-type')
       : ''
@@ -91,9 +95,7 @@ function Class(props) {
       ? document.querySelector('.typeMenu .active').getAttribute('data-level')
       : ''
     const sort = document.querySelector('select[name="sort"]').value
-    const page = document.querySelector('li.JY-classPage.active')
-      ? document.querySelector('li.JY-classPage.active').textContent
-      : '1'
+    const page = event ? event.target.textContent : '1'
     props.getClassDataAsync(type, level, sort, page)
   }
 
@@ -128,7 +130,7 @@ function Class(props) {
       <Banner BannerImgSrc="./images/ClassBanner.jpg" />
       <div className="container JYcontainer">
         <div className="row">
-          <div className="col-xl-3">
+          <div className="col-xl-3 col-sm-12">
             <h2>課程類型</h2>
             <ul className="typeMenu">
               <li>
@@ -266,20 +268,23 @@ function Class(props) {
                   ''
                 )}
 
-                <select
-                  name="sort"
-                  onChange={() => {
-                    getClassData()
-                  }}
-                >
-                  <option value="">排序方式</option>
-                  <option value="classPrice,desc">價格高至低</option>
-                  <option value="classPrice,asc">價格低至高</option>
-                  <option value="classNOWpeople,desc">名額多至少</option>
-                  <option value="classNOWpeople,asc">名額少至多</option>
-                  <option value="classStartDate,asc">開課日期近至遠</option>
-                  <option value="classStartDate,desc">開課日期遠至近</option>
-                </select>
+                <div className="sortSelect">
+                  <select
+                    name="sort"
+                    className="form-control"
+                    onChange={() => {
+                      getClassData()
+                    }}
+                  >
+                    <option value="">排序方式</option>
+                    <option value="classPrice,desc">價格高至低</option>
+                    <option value="classPrice,asc">價格低至高</option>
+                    <option value="classNOWpeople,desc">名額多至少</option>
+                    <option value="classNOWpeople,asc">名額少至多</option>
+                    <option value="classStartDate,asc">開課日期近至遠</option>
+                    <option value="classStartDate,desc">開課日期遠至近</option>
+                  </select>
+                </div>
               </div>
             </div>
             {hasloading

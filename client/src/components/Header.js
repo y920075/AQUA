@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav className="Header-Navbar navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
           {/* menu toggle */}
           <button

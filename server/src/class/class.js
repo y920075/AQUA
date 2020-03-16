@@ -63,7 +63,7 @@ router.get('/class',(req,res)=>{
     const perPage = 6;
     const searchType = req.query.type && !req.query.level ? ` WHERE \`classType\` = '${req.query.type}' ` : '';
     const searchLevel = req.query.type && req.query.level ? ` WHERE \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
-    const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC`
+    const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}  , \`classId\` DESC` : ` ORDER BY \`created_at\` DESC , \`classId\` DESC`
     const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\` ${searchType}${searchLevel}`
     let page = req.query.page ? parseInt(req.query.page) : 1;
     let totalRows;
@@ -85,6 +85,7 @@ router.get('/class',(req,res)=>{
                             ${searchType}${searchLevel}
                             ${sort}
                             LIMIT  ${(page-1)*perPage}, ${perPage}`
+                            
             return db.queryAsync(sql);
         }
     })

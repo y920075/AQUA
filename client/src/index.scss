@@ -18,6 +18,17 @@ code {
   img{
       width: 100%;
   }
+  @media screen and (max-width:540px){
+    height: 200px;
+    img{
+      object-fit: contain;
+    }
+  }
+}
+.Header-Navbar{
+  @media screen and(max-width:540px){
+    max-width: 375px;
+  }
 }
 div.collapse.navbar-collapse{
   @media screen and (max-width:540px){
