@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+//引入redux元件
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+//引入action
 import {
   getTypeLevelDataAsync,
   getClassDataAsync,
 } from '../../actions/class/class_Actions'
 
-//引入元件
+//引入自訂元件
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Footer from '../../components/Footer'
