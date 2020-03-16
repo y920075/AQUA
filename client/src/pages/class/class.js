@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -26,24 +28,34 @@ function Class(props) {
     props.getClassDataAsync()
   }, [])
 
-  //提示加載中
   useEffect(() => {
     setHasLoading(true)
-    setTimeout(() => {
-      setHasLoading(false)
-      let pageList = document.querySelectorAll('li.JY-classPage')
-      pageList.forEach(value => {
-        value.classList.remove('active')
-      })
 
-      if (
-        document.querySelector(
-          `li.JY-classPage[data-page="${props.classData.page}"]`
-        ) !== null
-      ) {
-        document
-          .querySelector(`li.JY-classPage[data-page="${props.classData.page}"]`)
-          .classList.add('active')
+    setTimeout(() => {
+      if (props.classData.status) {
+        setHasLoading(false)
+        let pageList = document.querySelectorAll('li.JY-classPage')
+        pageList.forEach(value => {
+          value.classList.remove('active')
+        })
+        if (
+          document.querySelector(
+            `li.JY-classPage[data-page="${props.classData.page}"]`
+          ) !== null
+        ) {
+          document
+            .querySelector(
+              `li.JY-classPage[data-page="${props.classData.page}"]`
+            )
+            .classList.add('active')
+        }
+
+        if (props.classData.totalPages === props.classData.page) {
+          document.querySelector('li.page-next').classList.add('disabled')
+        }
+        if (props.classData.page === 1) {
+          document.querySelector('li.page-prev').classList.add('disabled')
+        }
       }
     }, 1000)
   }, [props.classData])
@@ -109,7 +121,7 @@ function Class(props) {
   const page = (
     <nav aria-label="Page navigation example">
       <ul className="pagination justify-content-end">
-        <li className="page-item disabled">
+        <li className="page-item page-prev">
           <span className="page-link">Previous</span>
         </li>
         {hasloading
@@ -117,12 +129,68 @@ function Class(props) {
           : pageButton.map(value => {
               return value
             })}
-        <li className="page-item">
+        <li className="page-item page-next">
           <span className="page-link">Next</span>
         </li>
       </ul>
     </nav>
   )
+
+  const classData =
+    props.classData.status === 404 ? (
+      <h2>查無相關資料</h2>
+    ) : (
+      Object.keys(props.classData).map(key => {
+        if (key === 'result') {
+          const result = props.classData[key]
+          return result.map((value, index) => {
+            return (
+              <div className="row classBox" key={index} data-aos="fade-left">
+                <div className="col-xl-7 col-12 classImgBox">
+                  <img
+                    src={
+                      'http://127.0.0.1:5000/images/classImg/' + value.classImg
+                    }
+                    alt=""
+                  />
+                </div>
+                <div className="col-xl-5 col-12 classInfoContent">
+                  <h2>{value.className}</h2>
+                  <ul className="d-flex">
+                    <li>
+                      <img src="./images/classImg/icons/type.svg" alt="" />
+                      {value.classType}
+                    </li>
+                    <li>
+                      <img src="./images/classImg/icons/level.svg" alt="" />
+                      {value.classLevel}
+                    </li>
+                  </ul>
+                  <ul className="d-flex">
+                    <li>
+                      <img src="./images/classImg/icons/date.svg" alt="" />
+                      {value.classStartDate}
+                    </li>
+                    <li>
+                      <img src="./images/classImg/icons/local.svg" alt="" />
+                      {value.classLocation}
+                    </li>
+                  </ul>
+                  <p className="introduction">{value.classIntroduction}</p>
+                  <h2 className="price">{'$' + value.classPrice}</h2>
+                  <Link
+                    className="btn-more btn btn-raised btn-warning"
+                    to={`/Class/${value.classId}`}
+                  >
+                    了解詳情
+                  </Link>
+                </div>
+              </div>
+            )
+          })
+        }
+      })
+    )
 
   return (
     <>
@@ -287,77 +355,7 @@ function Class(props) {
                 </div>
               </div>
             </div>
-            {hasloading
-              ? loading
-              : Object.keys(props.classData).map(key => {
-                  if (key === 'result') {
-                    const result = props.classData[key]
-                    return result.map((value, index) => {
-                      return (
-                        <div
-                          className="row classBox"
-                          key={index}
-                          data-aos="fade-left"
-                        >
-                          <div className="col-xl-7 col-12 classImgBox">
-                            <img
-                              src={
-                                'http://127.0.0.1:5000/images/classImg/' +
-                                value.classImg
-                              }
-                              alt=""
-                            />
-                          </div>
-                          <div className="col-xl-5 col-12 classInfoContent">
-                            <h2>{value.className}</h2>
-                            <ul className="d-flex">
-                              <li>
-                                <img
-                                  src="./images/classImg/icons/type.svg"
-                                  alt=""
-                                />
-                                {value.classType}
-                              </li>
-                              <li>
-                                <img
-                                  src="./images/classImg/icons/level.svg"
-                                  alt=""
-                                />
-                                {value.classLevel}
-                              </li>
-                            </ul>
-                            <ul className="d-flex">
-                              <li>
-                                <img
-                                  src="./images/classImg/icons/date.svg"
-                                  alt=""
-                                />
-                                {value.classStartDate}
-                              </li>
-                              <li>
-                                <img
-                                  src="./images/classImg/icons/local.svg"
-                                  alt=""
-                                />
-                                {value.classLocation}
-                              </li>
-                            </ul>
-                            <p className="introduction">
-                              {value.classIntroduction}
-                            </p>
-                            <h2 className="price">{'$' + value.classPrice}</h2>
-                            <button
-                              type="button"
-                              className="btn-more btn btn-raised btn-warning"
-                            >
-                              了解詳情
-                            </button>
-                          </div>
-                        </div>
-                      )
-                    })
-                  }
-                })}
+            {hasloading ? loading : classData}
             {hasloading ? '' : page}
           </div>
         </div>
