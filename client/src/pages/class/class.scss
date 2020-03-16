@@ -1,11 +1,15 @@
 .JYcontainer{
     color:white;
     .typeMenu,.subMenu{
+        .active{
+            color: #F15A24;
+        }
         padding-left: 1.25rem;
         list-style: none;
     }
     .levelTitle{
         font-size: 1.125rem;
+        cursor: pointer;
         color: white;
         &:hover{
             color: #F15A24;
@@ -13,9 +17,6 @@
         }
     }
     .subMenu{
-        .active{
-            color: #F15A24;
-        }
         li{
             &:hover{
                 cursor: pointer;
@@ -30,7 +31,7 @@
         text-align: center;
     }
     .classBox{
-        margin: 15px 0px;
+        margin: 30px 0px;
         .classImgBox{
             padding: 0;
             img{

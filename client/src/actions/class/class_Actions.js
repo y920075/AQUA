@@ -25,20 +25,18 @@ export const getClassData = data => ({
   value: data,
 })
 
-export const getClassDataAsync = event => {
+export const getClassDataAsync = (type, level, sort, page) => {
   return async dispatch => {
     let query = []
-    if (event) {
-      if (event.target.getAttribute('data-type'))
-        query.push(`type=${event.target.getAttribute('data-type').trim()}`)
-      if (event.target.getAttribute('data-level'))
-        query.push(`level=${event.target.getAttribute('data-level').trim()}`)
-      if (event.target.value) query.push(`sort=${event.target.value}`)
-      if (query.length > 0) {
-        query = query.join('&')
-      } else {
-        query = ''
-      }
+
+    if (type) query.push(`type=${type.trim()}`)
+    if (level) query.push(`level=${level.trim()}`)
+    if (sort) query.push(`sort=${sort.trim()}`)
+    if (page) query.push(`page=${page.trim()}`)
+    if (query.length > 0) {
+      query = query.join('&')
+    } else {
+      query = ''
     }
 
     const request = new Request(`http://127.0.0.1:5000/class?${query}`, {

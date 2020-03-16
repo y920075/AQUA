@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -18,10 +17,10 @@ import 'aos/dist/aos.css'
 AOS.init()
 
 function Class(props) {
-  const [loading, setLoading] = useState(false)
-  const [pageButton, setPageButton] = useState([])
+  const [hasloading, setHasLoading] = useState(false) //是否正在載入中
+  const [pageButton, setPageButton] = useState([]) //存放page按鈕的陣列
 
-  //取得資料
+  //取得初始資料
   useEffect(() => {
     props.getTypeLevelDataAsync()
     props.getClassDataAsync()
@@ -29,57 +28,98 @@ function Class(props) {
 
   //提示加載中
   useEffect(() => {
-    setLoading(true)
+    setHasLoading(true)
     setTimeout(() => {
-      setLoading(false)
+      setHasLoading(false)
     }, 1000)
   }, [props.classData])
 
+  //依據totalPages製作頁數按鈕
   useEffect(() => {
     let nowPageButton = []
     for (let i = 1; i <= props.classData.totalPages; i++) {
       nowPageButton.push(
-        <li className="page-item">
-          <a className="page-link" href="#">
+        <li className="page-item JY-classPage" key={i} data-page={i}>
+          <span
+            className="page-link"
+            onClick={event => {
+              pageActive(event)
+              getClassData()
+            }}
+          >
             {i}
-          </a>
+          </span>
         </li>
       )
     }
     setPageButton(nowPageButton)
   }, [props.classData.totalPages])
 
-  function active(event) {
-    let abcd = document.querySelectorAll('ul[class="subMenu"] li')
-    abcd.forEach(value => {
+  //類別選單的點擊active事件
+  function typeMenuActive(event) {
+    //找到所有代表等級的li元素
+    let subMenuLiList = document.querySelectorAll('ul[class="subMenu"] li')
+    subMenuLiList.forEach(value => {
+      value.classList.remove('active') //移除active
+    })
+    //找到所有代表類型的a元素
+    let levelTitleList = document.querySelectorAll(
+      'ul[class="typeMenu"] li span'
+    )
+    levelTitleList.forEach(value => {
+      value.classList.remove('active') //移除active
+    })
+
+    event.target.classList.add('active') //為被點擊的目標新增active
+  }
+
+  //頁面按鈕的點擊active事件
+  function pageActive(event) {
+    let pageList = document.querySelectorAll('li.JY-classPage')
+    pageList.forEach(value => {
       value.classList.remove('active')
     })
-    event.target.classList.add('active')
+    event.target.parentElement.classList.add('active') //為被點擊的目標新增active
   }
 
-  let getSiblings = el => {
-    //取出父層第一個子元素
-    let sibling = el.parentNode.firstChild
-    //建立一個siblings空陣列
-    let siblings = []
-    //如果有sibling子元素執行迴圈
-    while (sibling) {
-      //節點類型為元素節點 且 sibling不等於自己 就push到siblings
-      if (sibling.nodeType === 1 && sibling != el) {
-        siblings.push(sibling)
-      }
-      //找siblings下一個同層元素
-      sibling = sibling.nextSibling
-    }
-    //執行至無同層元素回傳至陣列
-    return siblings
+  //向伺服器取得資料
+  function getClassData() {
+    const type = document.querySelector('.typeMenu .active')
+      ? document.querySelector('.typeMenu .active').getAttribute('data-type')
+      : ''
+    const level = document.querySelector('.typeMenu .active')
+      ? document.querySelector('.typeMenu .active').getAttribute('data-level')
+      : ''
+    const sort = document.querySelector('select[name="sort"]').value
+    const page = document.querySelector('li.JY-classPage.active')
+      ? document.querySelector('li.JY-classPage.active').textContent
+      : '1'
+    props.getClassDataAsync(type, level, sort, page)
   }
 
-  const load = (
+  const loading = (
     <div className="loading">
       <img src="../images/logo/Ripple-1s-200px.svg" alt="" />
       <h2>加載中...</h2>
     </div>
+  )
+
+  const page = (
+    <nav aria-label="Page navigation example">
+      <ul className="pagination justify-content-end">
+        <li className="page-item disabled">
+          <span className="page-link">Previous</span>
+        </li>
+        {hasloading
+          ? ''
+          : pageButton.map(value => {
+              return value
+            })}
+        <li className="page-item">
+          <span className="page-link">Next</span>
+        </li>
+      </ul>
+    </nav>
   )
 
   return (
@@ -92,15 +132,16 @@ function Class(props) {
             <h2>課程類型</h2>
             <ul className="typeMenu">
               <li>
-                <Link
+                <span
                   data-type="AIDA 國際自由潛水證照班"
                   className="levelTitle"
                   onClick={event => {
-                    props.getClassDataAsync(event)
+                    typeMenuActive(event)
+                    getClassData()
                   }}
                 >
                   AIDA 國際自由潛水證照班
-                </Link>
+                </span>
                 <ul className="subMenu">
                   {props.classTypeData.map((value, index) => {
                     if (value.classTypeId === 'classTypeAIDA') {
@@ -110,8 +151,8 @@ function Class(props) {
                           data-type={value.classTypeName}
                           data-level={value.classLevel}
                           onClick={event => {
-                            props.getClassDataAsync(event)
-                            active(event)
+                            typeMenuActive(event)
+                            getClassData()
                           }}
                         >
                           {value.classLevel}
@@ -122,15 +163,16 @@ function Class(props) {
                 </ul>
               </li>
               <li>
-                <Link
+                <span
                   data-type="SSI 國際潛水執照班"
                   className="levelTitle"
                   onClick={event => {
-                    props.getClassDataAsync(event)
+                    typeMenuActive(event)
+                    getClassData()
                   }}
                 >
                   SSI 國際潛水執照班
-                </Link>
+                </span>
                 <ul className="subMenu">
                   {props.classTypeData.map((value, index) => {
                     if (value.classTypeId === 'classTypeSSI') {
@@ -140,8 +182,8 @@ function Class(props) {
                           data-type={value.classTypeName}
                           data-level={value.classLevel}
                           onClick={event => {
-                            props.getClassDataAsync(event)
-                            active(event)
+                            typeMenuActive(event)
+                            getClassData()
                           }}
                         >
                           {value.classLevel}
@@ -152,15 +194,16 @@ function Class(props) {
                 </ul>
               </li>
               <li>
-                <Link
+                <span
                   data-type="PADI 潛水員證照班"
                   className="levelTitle"
                   onClick={event => {
-                    props.getClassDataAsync(event)
+                    typeMenuActive(event)
+                    getClassData()
                   }}
                 >
                   PADI 潛水員證照班
-                </Link>
+                </span>
                 <ul className="subMenu">
                   {props.classTypeData.map((value, index) => {
                     if (value.classTypeId === 'calssTypePADI') {
@@ -170,8 +213,8 @@ function Class(props) {
                           data-type={value.classTypeName}
                           data-level={value.classLevel}
                           onClick={event => {
-                            props.getClassDataAsync(event)
-                            active(event)
+                            typeMenuActive(event)
+                            getClassData()
                           }}
                         >
                           {value.classLevel}
@@ -182,15 +225,16 @@ function Class(props) {
                 </ul>
               </li>
               <li>
-                <Link
+                <span
                   data-type="普通班"
                   className="levelTitle"
                   onClick={event => {
-                    props.getClassDataAsync(event)
+                    typeMenuActive(event)
+                    getClassData()
                   }}
                 >
                   普通班
-                </Link>
+                </span>
                 <ul className="subMenu">
                   {props.classTypeData.map((value, index) => {
                     if (value.classTypeId === 'classType01') {
@@ -200,8 +244,8 @@ function Class(props) {
                           data-type={value.classTypeName}
                           data-level={value.classLevel}
                           onClick={event => {
-                            props.getClassDataAsync(event)
-                            active(event)
+                            typeMenuActive(event)
+                            getClassData()
                           }}
                         >
                           {value.classLevel}
@@ -216,24 +260,16 @@ function Class(props) {
           <div className="col-xl-9 col-sm-12">
             <div className="row">
               <div className="col-xl-12">
+                {props.classData.searchType ? (
+                  <p>目前檢視類型 {props.classData.searchType}</p>
+                ) : (
+                  ''
+                )}
+
                 <select
                   name="sort"
-                  onChange={async event => {
-                    event.target.setAttribute('data-type', '')
-                    event.target.setAttribute('data-level', '')
-                    if (props.classData.searchType) {
-                      event.target.setAttribute(
-                        'data-type',
-                        props.classData.searchType
-                      )
-                    }
-                    if (props.classData.searchLevel) {
-                      event.target.setAttribute(
-                        'data-level',
-                        props.classData.searchLevel
-                      )
-                    }
-                    props.getClassDataAsync(event)
+                  onChange={() => {
+                    getClassData()
                   }}
                 >
                   <option value="">排序方式</option>
@@ -246,8 +282,8 @@ function Class(props) {
                 </select>
               </div>
             </div>
-            {loading
-              ? load
+            {hasloading
+              ? loading
               : Object.keys(props.classData).map(key => {
                   if (key === 'result') {
                     const result = props.classData[key]
@@ -298,7 +334,7 @@ function Class(props) {
                                   src="./images/classImg/icons/local.svg"
                                   alt=""
                                 />
-                                台北市
+                                {value.classLocation}
                               </li>
                             </ul>
                             <p className="introduction">
@@ -317,25 +353,7 @@ function Class(props) {
                     })
                   }
                 })}
-            <nav aria-label="Page navigation example">
-              <ul className="pagination justify-content-end">
-                <li className="page-item disabled">
-                  <a className="page-link" href="#" tabindex="-1">
-                    Previous
-                  </a>
-                </li>
-                {loading
-                  ? ''
-                  : pageButton.map((value, index) => {
-                      return value
-                    })}
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            {hasloading ? '' : page}
           </div>
         </div>
       </div>
