@@ -31,16 +31,21 @@ function Class(props) {
     props.getClassDataAsync()
   }, [])
 
+  //判斷資料是否已載入進來
   useEffect(() => {
     setHasLoading(true)
 
     setTimeout(() => {
       if (props.classData.status) {
-        setHasLoading(false)
+        setHasLoading(false) //載入完成
+
+        //取得所有page按鈕並移除active
         let pageList = document.querySelectorAll('li.JY-classPage')
         pageList.forEach(value => {
           value.classList.remove('active')
         })
+
+        //如果page按鈕上的data-page值與後端回傳回來的現在頁數相等的話就加上active
         if (
           document.querySelector(
             `li.JY-classPage[data-page="${props.classData.page}"]`
@@ -53,14 +58,16 @@ function Class(props) {
             .classList.add('active')
         }
 
+        //如果總頁數等於現在頁數，則表示已到達最後一頁，鎖住next按鈕
         if (props.classData.totalPages === props.classData.page) {
           document.querySelector('li.page-next').classList.add('disabled')
         }
+        //如果現在頁數等於1，則表示目前是第一頁，鎖住prev按鈕
         if (props.classData.page === 1) {
           document.querySelector('li.page-prev').classList.add('disabled')
         }
       }
-    }, 1000)
+    }, 500)
   }, [props.classData])
 
   //依據totalPages製作頁數按鈕
@@ -103,13 +110,16 @@ function Class(props) {
 
   //向伺服器取得資料
   function getClassData(event) {
+    //收集擁有active的按鈕，如果存在就取得該按鈕的data-type以及level屬性值作為參數
     const type = document.querySelector('.typeMenu .active')
       ? document.querySelector('.typeMenu .active').getAttribute('data-type')
       : ''
     const level = document.querySelector('.typeMenu .active')
       ? document.querySelector('.typeMenu .active').getAttribute('data-level')
       : ''
+    //取得sort的select的值
     const sort = document.querySelector('select[name="sort"]').value
+    //page按鈕被點擊時會傳送event參數過來，用event.target判定使用者點下哪一頁
     const page = event ? event.target.textContent : '1'
     props.getClassDataAsync(type, level, sort, page)
   }

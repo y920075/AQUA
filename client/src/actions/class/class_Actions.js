@@ -19,7 +19,7 @@ export const getTypeLevelDataAsync = () => {
   }
 }
 
-//課程列表資料
+//取得課程列表資料
 export const getClassData = data => ({
   type: 'GET_CLASSDATA',
   value: data,

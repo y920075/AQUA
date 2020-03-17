@@ -42,5 +42,9 @@ div.collapse.navbar-collapse {
   display: flex !important;
   max-height: 500px !important;
 }
+.loading{
+  text-align: center;
+  color: white;
+}
 @import '../src/pages/class/class.scss';
 @import '../src/pages/class/classDetail.scss';

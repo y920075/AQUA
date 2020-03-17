@@ -9,7 +9,7 @@ const classTypeData = (state = [], action) => {
       return state
   }
 }
-
+//取得課程列表資料
 const classData = (state = {}, action) => {
   switch (action.type) {
     case 'GET_CLASSDATA':
@@ -18,7 +18,7 @@ const classData = (state = {}, action) => {
       return state
   }
 }
-
+//取得課程詳細資料
 const classDetailData = (state = {}, action) => {
   switch (action.type) {
     case 'GET_CLASSDETAIDATA':
