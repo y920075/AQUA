@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import { getItemDataAsync } from '../../actions/item/item_Actions'
+
 import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
 
@@ -12,6 +16,19 @@ import Aside from '../../components/item/Aside'
 import ItemCard from '../../components/item/ItemCard'
 
 function Items(props) {
+  useEffect(() => {
+    props.getItemDataAsync()
+  }, [])
+
+  useEffect(() => {
+    setHasLoading(true)
+
+    setTimeout(() => {
+      if (props.ItemData.status) {
+      }
+    }, 500)
+  }, [props.itemData])
+
   console.log(props)
   return (
     <>

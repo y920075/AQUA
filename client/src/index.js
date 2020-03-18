@@ -20,11 +20,11 @@ import thunk from 'redux-thunk'
 
 //合併reducers
 const rootReducer = combineReducers({
-  ...blogReducer,
-  ...classReducer,
-  ...eventReducer,
-  ...itemReducer,
-  ...memberReducer,
+  // ...blogReducer,
+  // ...classReducer,
+  // ...eventReducer,
+  itemReducer,
+  // ...memberReducer,
 })
 
 //使用中介軟體時，建立store的方法，需要額外建立一個composeEnhancers
