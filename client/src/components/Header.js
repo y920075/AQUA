@@ -51,7 +51,7 @@ function Header() {
           >
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/event">
+                <Link className="nav-link" to="/eventlist">
                   揪團潛水
                 </Link>
               </li>

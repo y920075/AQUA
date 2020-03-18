@@ -172,7 +172,7 @@ function ClassDetail(props) {
 
 // 取得Redux中store的值
 const mapStateToProps = store => {
-  return { classDetailData: store.classDetailData }
+  return { classDetailData: store.classReducer.classDetailData }
 }
 
 // 指示dispatch要綁定哪些action creators

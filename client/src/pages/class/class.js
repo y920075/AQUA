@@ -16,13 +16,8 @@ import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Footer from '../../components/Footer'
 
-//AOS模組
-// import AOS from 'aos'
-// import 'aos/dist/aos.css'
-// AOS.init()
 
 function Class(props) {
-  console.log(props)
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
   const [pageButton, setPageButton] = useState([]) //存放page按鈕的陣列
 

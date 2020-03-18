@@ -24,9 +24,9 @@
   }
   .eventInfoBox {
     margin: 0.938rem auto;
-    transition: .5s;
-    &:hover{
-        transform: translateY(-10px);
+    transition: 0.5s;
+    &:hover {
+      transform: translateY(-10px);
     }
     .eventContentBox {
       background-color: white;
@@ -56,7 +56,6 @@
           margin-bottom: 0;
           li {
             margin-right: 30px;
-            
           }
         }
         .status {
@@ -332,5 +331,8 @@
         background-position: 40px 0;
       }
     }
+  }
+  li.page-item {
+    cursor: pointer;
   }
 }
