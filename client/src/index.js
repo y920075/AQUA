@@ -11,7 +11,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 //導入reducers
 // import { blogReducer } from './reducers/blog/blog_Reducers'
 import { classReducer } from './reducers/class/class_Reducers'
-// import { eventReducer } from './reducers/event/event_Reducers'
+import { eventReducer } from './reducers/event/event_Reducers'
 // import { itemReducer } from './reducers/item/item_Reducers'
 // import { memberReducer } from './reducers/member/member_Reducers'
 
@@ -19,18 +19,18 @@ import { classReducer } from './reducers/class/class_Reducers'
 import thunk from 'redux-thunk'
 
 //合併reducers
-// const rootReducer = combineReducers({
-//   ...blogReducer,
-//   ...classReducer,
-//   ...eventReducer,
-//   ...itemReducer,
-//   ...memberReducer,
-// })
+const rootReducer = combineReducers({
+  // ...blogReducer,
+  classReducer,
+  eventReducer,
+  // ...itemReducer,
+  // ...memberReducer,
+})
 
 //使用中介軟體時，建立store的方法，需要額外建立一個composeEnhancers
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
-  classReducer,
+  rootReducer,
   /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))
 )
 

@@ -22,6 +22,7 @@ import Footer from '../../components/Footer'
 // AOS.init()
 
 function Class(props) {
+  console.log(props)
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
   const [pageButton, setPageButton] = useState([]) //存放page按鈕的陣列
 
@@ -380,7 +381,10 @@ function Class(props) {
 
 // 取得Redux中store的值
 const mapStateToProps = store => {
-  return { classTypeData: store.classTypeData, classData: store.classData }
+  return {
+    classTypeData: store.classReducer.classTypeData,
+    classData: store.classReducer.classData,
+  }
 }
 
 // 指示dispatch要綁定哪些action creators

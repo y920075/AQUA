@@ -64,6 +64,14 @@ const autoUpdateWeatherData = ()=>{
 }
 //autoUpdateWeatherData()
 
+//取得類型
+router.get('/event/type', async (req,res)=>{
+    const sql =    `SELECT \`eventTypeId\`,\`eventTypeName\`
+    FROM \`event_type\``
+    const data = await db.queryAsync(sql)
+    res.json(data)
+})
+
 //查詢所有活動列表
 /*
     預計從前台接收的資料
