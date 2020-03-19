@@ -54,7 +54,7 @@ function EventDetailDataContent(props) {
 
               <div
                 className="progress_container"
-                data-progress={progress + '%'}
+                data-progress={parseInt(progress) + '%'}
               >
                 <div className="progress progress-danger progress-striped active">
                   <div className="bar" style={{ width: progress + '%' }}></div>
