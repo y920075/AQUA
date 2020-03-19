@@ -26,7 +26,10 @@
     margin: 0.938rem auto;
     transition: 0.5s;
     &:hover {
-      transform: translateY(-10px);
+      .eventImgBox > img {
+        transform: scale(1.2);
+      }
+      transform: translateY(-5px);
     }
     .eventContentBox {
       background-color: white;
@@ -36,17 +39,49 @@
       .eventImgBox {
         width: 100%;
         height: 200px;
+        overflow: hidden;
         & > img {
+          transition: 0.5s;
           object-fit: cover;
           width: 100%;
           height: 100%;
         }
       }
+      $animate: all 0.2s ease-in-out;
       .eventDetailBox {
         color: #132948;
         padding: 10px;
+        &:hover{
+          h2{
+            &:before,
+            &:after {
+              opacity: 1;
+              width: 45%;
+            }
+          }
+        }
         h2 {
           text-align: center;
+          position: relative;
+          &:before,
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 0px;
+            height: 2px;
+            margin: 0px 0 0;
+            transition: $animate;
+            transition-duration: 0.75s;
+            opacity: 0;
+            background-color: #ff5722;
+          }
+          &:before {
+            left: 50%;
+          }
+          &:after {
+            right: 50%;
+          }
         }
         ul {
           padding: 0;
