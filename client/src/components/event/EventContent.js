@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function EventContent(props) {
   return (
@@ -28,7 +29,7 @@ function EventContent(props) {
                     />
                   </div>
                   <div className="eventDetailBox">
-                    <h2>{value.eventName}</h2>
+                    <h2 className="eventTitle">{value.eventName}</h2>
                     <ul className="d-flex">
                       <li>
                         <img src="/images/eventImg/icons/type.svg" alt="" />
@@ -63,7 +64,7 @@ function EventContent(props) {
                     </p>
                     <div
                       className="progress_container"
-                      data-progress={progress + '%'}
+                      data-progress={parseInt(progress) + '%'}
                     >
                       <div className="progress progress-danger progress-striped active">
                         <div
@@ -74,9 +75,12 @@ function EventContent(props) {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center">
-                    <button className="btn-more btn btn-raised btn-warning">
+                    <Link
+                      className="btn-more btn btn-raised btn-warning"
+                      to={'/event/' + value.eventId}
+                    >
                       了解詳情
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
