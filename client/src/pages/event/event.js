@@ -63,7 +63,7 @@ function EventList(props) {
             <EventContent eventData={eventData} />
             <EventPageButtons
               totalPages={props.eventData.totalPages}
-              getEventData={getEventData}
+              getDataFromServer={getEventData}
             />
           </>
         )}
