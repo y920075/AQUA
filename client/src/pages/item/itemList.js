@@ -32,12 +32,15 @@ function Items(props) {
 
     setTimeout(() => {
       if (props.itemData.status) {
-        setHasLoading(false)
         setItemData(props.itemData.result)
+        setHasLoading(false)
       }
     }, 500)
   }, [props.itemData])
 
+  function getItemData(page) {
+    props.getItemDataAsync(page)
+  }
   // const getItemData = page => {
   //   const category = document.querySelector('select[name="type"]').value
   //   const brand = document.querySelector('select[name="sort"]').value

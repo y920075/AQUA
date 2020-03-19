@@ -15,6 +15,7 @@ function Pages(props) {
           onClick={event => {
             const page = event.target.textContent
             props.getDataFromServer(page)
+            // console.log(page) 有拿到
           }}
         >
           <span className="page-link">{i}</span>
