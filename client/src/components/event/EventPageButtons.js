@@ -14,7 +14,7 @@ function EventPageButtons(props) {
           data-page={i}
           onClick={event => {
             const page = event.target.textContent
-            props.getEventData(page)
+            props.getDataFromServer(page)
           }}
         >
           <span className="page-link">{i}</span>
