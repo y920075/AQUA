@@ -55,3 +55,25 @@ export const getEventTypeDataAsync = () => {
     dispatch(getEventTypeData(data))
   }
 }
+
+//取得活動詳細資料
+export const getEventDetailData = data => ({
+  type: 'GET_EVENT_DETAIL_DATA',
+  value: data,
+})
+
+export const getEventDetailDataAsync = eventId => {
+  return async dispatch => {
+    const request = new Request(`http://127.0.0.1:5000/event/${eventId}`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(getEventDetailData(data))
+  }
+}

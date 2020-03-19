@@ -61,7 +61,10 @@ function EventContent(props) {
                       </span>{' '}
                       名額
                     </p>
-                    <div className="progress_container">
+                    <div
+                      className="progress_container"
+                      data-progress={progress + '%'}
+                    >
                       <div className="progress progress-danger progress-striped active">
                         <div
                           className="bar"

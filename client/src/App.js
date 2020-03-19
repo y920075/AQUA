@@ -1,10 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 //課程相關page
-import Class from './pages/class/class'
-import ClassDetail from './pages/class/classDetail'
+import ClassList from './pages/class/ClassList'
+import ClassDetail from './pages/class/ClassDetail'
 //活動相關page
-import EventList from './pages/event/event'
+import EventList from './pages/event/EventList'
+import EventDetail from './pages/event/EventDetail'
 
 function App() {
   return (
@@ -15,7 +16,10 @@ function App() {
             <ClassDetail />
           </Route>
           <Route path="/Class">
-            <Class />
+            <ClassList />
+          </Route>
+          <Route path="/event/:eventId">
+            <EventDetail />
           </Route>
           <Route path="/eventlist">
             <EventList />

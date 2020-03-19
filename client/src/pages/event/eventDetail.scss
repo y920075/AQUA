@@ -1,0 +1,59 @@
+.JY-event-container-detail {
+  .eventDataBox {
+    margin-bottom: 50px;
+    .eventImgBox {
+      height: 265px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .eventInfoBox {
+      color: white;
+      font-weight: 300;
+      h1 {
+        font-size: 1.875rem;
+        font-weight: 500;
+        text-align: center;
+      }
+      .quota {
+        text-align: center;
+        span {
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
+      @import './progress.scss';
+      .progress_container {
+        position: relative;
+        &::before {
+          content: attr(data-progress);
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 14px;
+        }
+        width: 100%;
+        margin: 0 auto;
+      }
+    }
+  }
+  .weatherBox {
+    background-color: white;
+    .WxImg {
+        margin: 0;
+      img {
+        width: 75px;
+        height: 75px;
+      }
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      li{
+          margin: 0 5px;
+      }
+    }
+  }
+}
