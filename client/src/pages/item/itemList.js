@@ -12,11 +12,18 @@ import '../../style/CW_items.scss'
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Aside from '../../components/item/Aside'
+import Pages from '../../components/item/Pages'
+// import Loading from '../../components'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 import ItemCard from '../../components/item/ItemCard'
 
 function Items(props) {
+  // console.log(props)
+  const [itemData, setItemData] = useState([])
+  const [hasloading, setHasLoading] = useState(false)
+
   useEffect(() => {
+    // console.log('22')
     props.getItemDataAsync()
   }, [])
 
@@ -24,10 +31,19 @@ function Items(props) {
     setHasLoading(true)
 
     setTimeout(() => {
-      if (props.ItemData.status) {
+      if (props.itemData.status) {
+        setHasLoading(false)
+        setItemData(props.itemData.result)
       }
     }, 500)
   }, [props.itemData])
+
+  // const getItemData = page => {
+  //   const category = document.querySelector('select[name="type"]').value
+  //   const brand = document.querySelector('select[name="sort"]').value
+  //   const price = document.querySelector('input.searchInput').value
+  //   props.getItemDataAsync(page)
+  // }
 
   console.log(props)
   return (
@@ -58,9 +74,17 @@ function Items(props) {
               </div>
             </div>
             <div className="row list-wrapper">
-              <ItemCard
-              // img={item.img} name={item.name} price={item.price}
-              />
+              {hasloading ? <h1>載入中</h1> : <ItemCard itemData={itemData} />}
+            </div>
+            <div className="row list-page">
+              {hasloading ? (
+                ''
+              ) : (
+                <Pages
+                  totalPages={props.itemData.totalPages}
+                  getDataFromServer={getItemData}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -69,4 +93,16 @@ function Items(props) {
   )
 }
 
-export default connect()(Items)
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    itemData: store.itemReducer.itemData,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getItemDataAsync }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Items)

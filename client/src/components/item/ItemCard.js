@@ -1,14 +1,34 @@
 import React from 'react'
+import { link } from 'react-router-dom'
 
-function ItemCard(params) {
+function ItemCard(props) {
+  console.log(props)
   return (
-    <div className="list-card col-md-3 col-6" onClick={() => {}}>
-      <img className="list-card-img-top" src="/20200117125234.jpg" alt="" />
-      <div className="list-card-body">
-        <h6 className="item-neme">C4 - DEEP SPEARO碳纖維長蛙鞋</h6>
-        <span className="item-price">NT$ 13800</span>
-      </div>
-    </div>
+    <>
+      {!props.itemData ? (
+        <h2>查無資料</h2>
+      ) : (
+        props.itemData.map((value, index) => {
+          return (
+            <div
+              className="list-card col-md-3 col-6"
+              key={index}
+              onClick={() => {}}
+            >
+              <img
+                className="list-card-img-top"
+                src={'http://127.0.0.1:5000/images/items/' + value.itemImg}
+                alt=""
+              />
+              <div className="list-card-body">
+                <h6 className="item-neme">{value.itemName}</h6>
+                <span className="item-price">NT$ {value.itemPrice}</span>
+              </div>
+            </div>
+          )
+        })
+      )}
+    </>
   )
 }
 

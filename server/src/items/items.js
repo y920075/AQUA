@@ -23,6 +23,7 @@ itemRouter.use(bodyParser.json())
 
 // 商品列表
 itemRouter.get('/items', (req, res)=>{
+    console.log('items進入')
     const perPage = 16
     let where = []
     if (req.query.category) where.push(`\`itemCategoryId\` ='${req.query.category}'`)
@@ -53,10 +54,12 @@ itemRouter.get('/items', (req, res)=>{
         .then(result=>{
            if (result.length>0) {
                 res.json({
+                    'status' : 200,
+                    'msg': '請求成功',
                     totalRows,
                     totalPages,
                     page,
-                    rows: result
+                    result
                 })
            } else{
                 res.json({
@@ -73,6 +76,7 @@ itemRouter.get('/items', (req, res)=>{
 
 // 商品詳細資料
 itemRouter.get('/items/:itemId', (req,res)=>{
+    console.log('22')
     const itemId = req.params.itemId
     const data = {
         'status' : 404,

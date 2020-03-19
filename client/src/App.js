@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import './style/base.scss'
 import Class from './pages/class/class'
 import Items from './pages/item/itemList'
+import ItemDetail from './pages/item/itemDetail'
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
           </Route>
           <Route path="/items">
             <Items />
+          </Route>
+          <Route path="/items/:itemId">
+            <ItemDetail />
           </Route>
         </Switch>
       </>

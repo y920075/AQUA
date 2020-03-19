@@ -1,15 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
+
+import { getItemDetailDataAsync } from '../../actions/item/item_Actions'
 
 //引入元件
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
-function itemDetail() {
+function ItemDetail(props) {
+  const [itemData, setItemData] = useState({})
+  const [hasloading, setHasLoading] = useState(false)
+
+  useEffect(() => {
+    const itemId = props.match.params.itemId
+    props.getItemDetailDataAsync(itemId)
+  }, [])
+
+  useEffect(() => {
+    setHasLoading(true)
+
+    setTimeout(() => {
+      if (props.itemDetailData.status) {
+        setHasLoading(false)
+        setItemData(props.itemData.result)
+      }
+    }, 500)
+  }, [props.itemData])
+
   return (
     <>
       <Header />
@@ -45,8 +67,8 @@ function itemDetail() {
 
             <div className="col-md-4 info d-flex flex-column justify-content-between">
               <div className="info-header">
-                <h4>C4 - DEEP SPEARO碳纖維長蛙鞋</h4>
-                <h4>NT$ 13800</h4>
+                <h4>{itemData.itemName}</h4>
+                <h4>NT$ {itemData.itemPrice}</h4>
               </div>
               <div className="info-size">
                 <h4>尺寸</h4>
@@ -59,15 +81,14 @@ function itemDetail() {
                 <div className="btn">c</div>
               </div>
               <div className="info-btn">
-                <a
+                <button
                   name=""
                   id=""
+                  onClick={() => {}}
                   className="btn btn-danger btn-lg w-100"
-                  href="#"
-                  role="button"
                 >
                   加入購物車
-                </a>
+                </button>
                 <a
                   name=""
                   id=""
@@ -99,4 +120,15 @@ function itemDetail() {
   )
 }
 
-export default connect()(itemDetail)
+const mapStateToProps = store => {
+  return { itemDetailData: store.itemReducer.itemDetailData }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getItemDetailDataAsync }, dispatch)
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ItemDetail)
+)
