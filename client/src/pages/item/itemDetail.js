@@ -13,8 +13,24 @@ import Banner from '../../components/Banner'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ItemDetail(props) {
+  const [mycart, setMycart] = useState([])
   const [itemData, setItemData] = useState({})
   const [hasloading, setHasLoading] = useState(false)
+
+  async function updateCartToLocalStorage(value) {
+    setHasLoading(true)
+
+    const currenyCart = JSON.parse(localStorage.getItem('cart')) || []
+
+    console.log('currentCart', currenyCart)
+    
+    const newCart = [...currenyCart, value]
+    localStorage.setItem('cart', JSON.stringify(newCart))
+
+    console.log('newCart', newCart)
+
+    
+  }
 
   useEffect(() => {
     const itemId = props.match.params.itemId
@@ -84,7 +100,18 @@ function ItemDetail(props) {
                 <button
                   name=""
                   id=""
-                  onClick={() => {}}
+                  onClick={() => {
+                    updateCartToLocalStorage({
+                      // id: {itemData.itemId},
+                      // name: {itemData.itemName},
+                      // amount: 1,
+                      // price: {itemData.itemPrice}
+                      id: 'I20010087',
+                      name: 'V.DIVE - 自由潛水塑膠長蛙鞋',
+                      amount: 1,
+                      price: '4380'
+                    })
+                  }}
                   className="btn btn-danger btn-lg w-100"
                 >
                   加入購物車
