@@ -42,7 +42,7 @@ div.collapse.navbar-collapse {
   display: flex !important;
   max-height: 500px !important;
 }
-.loading{
+.loading {
   text-align: center;
   color: white;
 }
@@ -50,3 +50,4 @@ div.collapse.navbar-collapse {
 @import '../src/pages/class/classDetail.scss';
 @import '../src/pages/event/event.scss';
 @import '../src/pages/event/eventDetail.scss';
+@import '../src/pages/event/eventMapList.scss';
