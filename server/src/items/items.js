@@ -53,8 +53,7 @@ itemRouter.get('/items', (req, res)=>{
         })
         .then(result=>{
            if (result.length>0) {
-                res.json({
-                    'status' : 200,
+                res.status(200).json({
                     'msg': '請求成功',
                     totalRows,
                     totalPages,
@@ -62,15 +61,14 @@ itemRouter.get('/items', (req, res)=>{
                     result
                 })
            } else{
-                res.json({
-                    'status' : 404,
+                res.status(404).json({
                     'msg': '查無符合條件'
                 })
            }
         })
         .catch(err=>{
             console.log(err)
-            return res.json(err)
+            return res.status(500).json(err)
         })
 })
 
@@ -303,11 +301,8 @@ itemRouter.get('/seller/orders', (req, res)=>{
 
 
 
-// 新增
-itemRouter.get('/insert', (req, res)=>{
-    // res.render('insert')
-})
-itemRouter.post('/insert', upload.none(), (req, res)=>{
+// 賣家新增商品
+itemRouter.post('/seller/iteminsert', upload.none(), (req, res)=>{
     // res.json(req.body)
     // 先檢查輸入
     
@@ -352,8 +347,10 @@ itemRouter.post('/insert', upload.none(), (req, res)=>{
 
 })
 
-// 修改
-itemRouter.get('/edit/:itemId', (req, res)=>{
+// 賣家修改商品
+itemRouter.get('/seller/itemedit/:itemId', (req, res)=>{
+    console.log('賣家修改')
+    const itemId = req.params.itemId
     const sql = `SELECT 
                 \`itemName\`, 
                 \`itemImg\`, 
@@ -366,16 +363,19 @@ itemRouter.get('/edit/:itemId', (req, res)=>{
                 \`itemStatus\`, 
                 \`itemSize\`, 
                 \`itemPrice\`, 
-                \`itemQty\`, 
-                FROM \`items\` WHERE \`itemId\`=?`
+                \`itemQty\`
+                FROM \`items\` WHERE \`itemId\`='${itemId}'`
 
-    db.queryAsync(sql, [req.params.itemId])
+    db.queryAsync(sql)
         .then(r=>{
-
+            return res.status(200).json(r)
             // res.render('edit', {row: r[0]})
         })
+        .catch(err=>{
+            return res.status(500).json(err)
+        })
 })
-itemRouter.post('/edit/:itemId', upload.none(), (req, res)=>{
+itemRouter.post('/seller/itemedit/:itemId', upload.none(), (req, res)=>{
     const sql = `UPDATE \`items\` SET 
                 \`itemName\`=?,
                 \`itemImg\`=?,
@@ -413,10 +413,10 @@ itemRouter.post('/edit/:itemId', upload.none(), (req, res)=>{
         return res.json(err)
     })
 })
-// 刪除
-itemRouter.post('/delete/:itemId', upload.none(), (req, res)=>{
+// 賣家刪除商品
+itemRouter.post('/seller/itemdelete/:itemId', upload.none(), (req, res)=>{
     const sql = `UPDATE \`items\` SET 
-    \`itemStatus\`=4 WHERE \`itemId\`=?`
+    \`itemStatus\`='deleted' WHERE \`itemId\`=?`
     
     db.queryAsync(sql, [req.params.itemId])
     .then(r=>{
@@ -429,15 +429,43 @@ itemRouter.post('/delete/:itemId', upload.none(), (req, res)=>{
         return res.json(err)
     })
 })
+// 賣家批次更改商品狀態
+itemRouter.post('/seller/itemupdate', upload.none(), (req, res)=>{
+    const sql = `UPDATE \`items\` SET 
+    \`itemStatus\`=? WHERE \`itemId\`=?`
+    
+    db.queryAsync(sql, [
+        req.body.itemStatus,
+        req.body.itemId[i]
+    ])
+    .then(r=>{
+        console.log('刪除狀態更新成功')
+        return res.json(r)
+        // res.redirect(req.baseUrl + '/list')
+    })
+    .catch(err=>{
+        console.log('刪除狀態更新失敗')
+        return res.json(err)
+    })
+})
 
-// 查詢
-itemRouter.get('/list/:page?', (req, res)=>{
+// 賣家查詢商品
+itemRouter.get('/seller/itemlist', (req, res)=>{
     console.log('進入列表')
+    const data = {
+        'msg' :　'查無資料',
+        'rows' :　0,
+        'itemData' : ''
+    }
     const perPage = 16
+    let where = []
+    if(req.query.status) where.push(`\`itemStatus\` ='${req.query.status}'`)
+    if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
+
     let totalRows, totalPages
     let page = req.params.page ? parseInt(req.params.page) : 1
 
-    const total = "SELECT COUNT(1) num FROM `items`"
+    const total = `SELECT COUNT(1) num FROM \`items\` ${where}`
     db.queryAsync(total)
         .then(result=>{
             totalRows = result[0].num
@@ -445,41 +473,26 @@ itemRouter.get('/list/:page?', (req, res)=>{
             // res.json(result)
             if (page<1) page= 1
             if (page>totalPages) page = totalRows
-                
-            const sql = `SELECT * FROM \`items\` ORDER BY \`updated_at\` DESC LIMIT  ${(page-1)*perPage}, ${perPage}`
-
+            const sql = `SELECT * FROM \`items\` ${where} ORDER BY \`updated_at\` DESC LIMIT  ${(page-1)*perPage}, ${perPage}`
+            
+            data.rows = totalRows
             return db.queryAsync(sql)
         })
         .then(result=>{
-            // res.render('list', {
-            //     totalRows,
-            //     totalPages,
-            //     page,
-            //     rows: result
-            // })
-            res.json({
-                totalRows,
-                totalPages,
-                page,
-                rows: result
-            })
+            if (result) {
+                data.msg = '請求成功'
+                data.itemData = result
+                res.status(200).json(data)
+            } else {
+                res.status(404).json(data)
+            }
         })
         .catch(err=>{
             console.log('刪除狀態更新失敗')
-            return res.json(err)
+            return res.status(500).json(err)
         })
     
 })
 
-
-
-
-
-// itemRouter.use(function (req, res) {
-//     res.type('text/html');
-//     res.status(404);
-//     res.send('<h1>404找不到頁面</h1>')
-// })
-// itemRouter.listen(3000, () => console.log(`Express server start, port:3000`))
 
 module.exports = itemRouter
