@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import '../../style/CW_items.scss'
@@ -10,9 +10,40 @@ import Banner from '../../components/Banner'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ShoppingCart(props) {
+  const [mycart , setMycart] =useState([])
+  const [hasLoading, setHasLoading] = useState(false)
+
+  async function getCartFromSession() {
+    setHasLoading(true)
+
+    let newCart = []
+    newCart = localStorage.getItem('cart')
+
+    console.log(JSON.parse(newCart))
+
+    setMycart(JSON.parse(newCart))
+  }
+
+  useEffect(()=>{
+    getCartFromSession()
+  }, [])
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      setHasLoading(false)
+    }, 500)
+
+    for (let i = 0; i < mycart.length; i++) {
+
+      
+    }
+  }, [mycart])
+
   console.log(props)
   return (
     <>
+      <Header />
+      <Banner BannerImgSrc="./images/ClassBanner.jpg" />
       <div class="container CW">
         <div class="row CW-shoppingCart">
           <div class="col-12 cart-header">{/* <Breadcrumb /> */}</div>

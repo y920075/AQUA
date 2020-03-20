@@ -4,6 +4,7 @@ import './style/base.scss'
 import Class from './pages/class/class'
 import Items from './pages/item/itemList'
 import ItemDetail from './pages/item/itemDetail'
+import ShoppingCart from './pages/order/shoppingCart'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route path="/items/:itemId">
             <ItemDetail />
+          </Route>
+          <Route path="/member/mycart">
+            <ShoppingCart />
           </Route>
         </Switch>
       </>
