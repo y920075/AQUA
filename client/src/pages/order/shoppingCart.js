@@ -11,9 +11,10 @@ import Banner from '../../components/Banner'
 
 function ShoppingCart(props) {
   const [mycart , setMycart] =useState([])
+  const [mycartDisplay , setMycartDisplay] =useState([])
   const [hasLoading, setHasLoading] = useState(false)
 
-  async function getCartFromSession() {
+  async function getCartFromLocalStorage() {
     setHasLoading(true)
 
     let newCart = []
@@ -25,7 +26,7 @@ function ShoppingCart(props) {
   }
 
   useEffect(()=>{
-    getCartFromSession()
+    getCartFromLocalStorage()
   }, [])
 
   useEffect(()=>{
@@ -33,10 +34,21 @@ function ShoppingCart(props) {
       setHasLoading(false)
     }, 500)
 
+    let newMycartDisplay = [...mycartDisplay]
     for (let i = 0; i < mycart.length; i++) {
-
-      
+      const index = newMycartDisplay.findIndex(
+        value => value.id === mycart[i].id
+      )
+      if (index !== -1){
+        console.log('findindex', index)
+        newMycartDisplay[index].amount++
+      } else {
+        const newItem = {amout: 1, ...mycart[i]}
+        newMycartDisplay = [...newMycartDisplay, newItem]
+      }
     }
+    console.log(newMycartDisplay)
+    setMycartDisplay(newMycartDisplay)
   }, [mycart])
 
   console.log(props)
