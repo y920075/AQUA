@@ -22,7 +22,7 @@ class map extends React.Component {
       // console.log(marksinfo)
       console.log(currentmark)
       const locatecurrentmark = marksinfo.filter(
-        marksinfo => marksinfo.LocationID == currentmark.LocationID
+        marksinfo => marksinfo.LocationID === currentmark.LocationID
       )
       // console.log(locatecurrentmark)
       let mymap

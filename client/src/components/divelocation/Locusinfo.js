@@ -6,28 +6,45 @@ import { bindActionCreators } from 'redux'
 import { fetchInfos } from '../../actions/location/Location_Action'
 
 export class Locusinfo extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentlocation: [],
+    }
+  }
   componentDidMount() {
     this.props.fetchInfos()
   }
   componentDidUpdate(prevProps) {
     if (this.props.LocusInfos !== prevProps.LocusInfos) {
-      const localinfo = this.props.LocusInfos
-      console.log(localinfo)
+      const localinfo = this.props.LocusInfos.DivelocationInfo
+      //   console.log(localinfo)
       const currentid = this.props.match.params
       //   console.log(currentid)
+      this.setState({
+        currentlocation: localinfo.filter(
+          localinfo => localinfo.LocationID == currentid.LocationID
+        ),
+      })
     }
   }
   render() {
     return (
       <div>
-        <h2></h2>
-        <hr />
-        <ul>
-          <li>潛點難度</li>
-          <li>交通資訊</li>
-          <li></li>
-          <li>備註：</li>
-        </ul>
+        {this.state.currentlocation.map((value, index) => {
+          return (
+            <div key={index}>
+              <h2>{value.LocationName}</h2>
+              <hr />
+              <ul>
+                <li>潛點難度：{value.Locationlevel}</li>
+                <li>交通資訊：{value.Transportation}</li>
+                <li>{value.Locationdescribe}</li>
+                <li>備註：{value.noted}</li>
+              </ul>
+            </div>
+          )
+        })}
       </div>
     )
   }
