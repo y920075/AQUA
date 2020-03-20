@@ -35,7 +35,7 @@ itemRouter.get('/items', (req, res)=>{
     let totalRows, totalPages
     let page = req.query.page ? parseInt(req.query.page) : 1
 
-    const total = `SELECT COUNT(1) num FROM \`items\` WHERE \`itemStatus\` = 'active' ${where}`
+    const total = `SELECT COUNT(DISTINCT \`itemName\`) num FROM \`items\` WHERE \`itemStatus\` = 'active' ${where}`
     db.queryAsync(total)
         .then(result=>{
             totalRows = result[0].num
@@ -46,7 +46,7 @@ itemRouter.get('/items', (req, res)=>{
                 if (page<1) page= 1
                 if (page>totalPages) page = totalRows
                     
-                const sql = `SELECT \`itemId\`, \`itemName\`, \`itemImg\`, \`itemCategoryId\`, \`itemTypeId\`, \`itemBrandId\`, \`itemPrice\`  FROM \`items\` WHERE \`itemStatus\` = 'active' ${where} ORDER BY \`updated_at\` DESC LIMIT  ${(page-1)*perPage}, ${perPage}`
+                const sql = `SELECT MIN(\`itemId\`), \`itemName\`, \`itemImg\`, \`itemCategoryId\`, \`itemTypeId\`, \`itemBrandId\`, \`itemPrice\`  FROM \`items\` WHERE \`itemStatus\` = 'active' ${where} GROUP BY \`itemName\` ORDER BY \`updated_at\` DESC LIMIT  ${(page-1)*perPage}, ${perPage}`
 
                 return db.queryAsync(sql)
             }
@@ -201,7 +201,75 @@ itemRouter.post('/checkout', upload.none(), (req, res)=>{
 
 
 
+// 訂單列表(賣家端)
+itemRouter.get('/seller/orders', (req, res)=>{
+    const data = {
+        'status' : '401',
+        'msg' : '尚未登入'
+    }
+    if ( !req.session.seller_id ) {
+        res.json(data)
+    } else {
+        const perPage = 10
+        let where = []
+        const memberSession = req.session.memberId
+        if (req.query.memberId) {
+            where.push(`\`orderMemberId\` = '${req.query.memberId}'`)
+        }
+        if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
+    
+        let totalRows, totalPages
+        let page = req.query.page ? parseInt(req.query.page) : 1
+    
+        const total = `SELECT COUNT(1) num FROM \`orders\` ${where}`
+        db.queryAsync(total)
+            .then(result=>{
+                totalRows = result[0].num
+                if ( totalRows===0 ) {
+                    return false
+                } else {
+                    totalPages = Math.ceil(totalRows/perPage)
+                    if (page<1) page= 1
+                    if (page>totalPages) page = totalRows
+                        
+                    const sql = `SELECT \`orders\`.\`orderItemId\`, \`orders\`.\`checkPrice\`, \`orders\`.\`checkQty\`, \`orders\`.\`checkSubtotal\`, \`orders\`.\`updated_at\`, \`items\`.\`itemSize\`, \`items\`.\`itemSellerId\`, \`basic_information\`.\`seller_name\`
+                    FROM \`orders\` 
+                    LEFT JOIN \`items\` 
+                    ON \`orders\`.\`orderItemId\` = \`items\`.\`itemId\` 
+                    LEFT JOIN \`basic_information\`
+                    ON \`items\`.\`itemSellerId\` = \`basic_information\`.\`seller_id\`
+                    ${where} 
+                    ORDER BY \`updated_at\` DESC 
+                    LIMIT  ${(page-1)*perPage}, ${perPage}`
+    
+                    return db.queryAsync(sql)
+                }
+            })
+            .then(result=>{
+                if (result.length>0) {
+                    res.json({
+                        totalRows,
+                        totalPages,
+                        page,
+                        rows: result
+                    })
+               } else{
+                    res.json({
+                        'status' : 404,
+                        'msg': '查無符合條件'
+                    })
+               }
+            })
+            .catch(err=>{
+                console.log(err)
+                return res.json(err)
+            })
 
+    }
+
+
+    
+})
 
 
 
