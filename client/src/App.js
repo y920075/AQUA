@@ -5,6 +5,7 @@ import ClassList from './pages/class/ClassList'
 import ClassDetail from './pages/class/ClassDetail'
 //活動相關page
 import EventList from './pages/event/EventList'
+import EventMapList from './pages/event/EventMapList'
 import EventDetail from './pages/event/EventDetail'
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/eventlist">
             <EventList />
+          </Route>
+          <Route path="/eventmaplist">
+            <EventMapList />
           </Route>
         </Switch>
       </>
