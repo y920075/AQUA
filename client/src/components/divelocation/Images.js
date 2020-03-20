@@ -13,8 +13,8 @@ export class Images extends Component {
     this.setState({
       localimages: [
         {
-          original: 'https://picsum.photos/id/1018/1000/600/',
-          thumbnail: 'https://picsum.photos/id/1018/250/150/',
+          original: '/images/divelocation/L0001-1.jpg',
+          thumbnail: '/images/divelocation/L0001-1.jpg',
         },
         {
           original: 'https://picsum.photos/id/1015/1000/600/',
