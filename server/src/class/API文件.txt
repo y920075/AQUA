@@ -1,0 +1,438 @@
+//查詢列表資料
+/*
+    預計從前台接收的資料
+
+    GET /class?type=課程類型&level=課程等級&sort=排序類型(類型,方法)&page=頁碼
+
+    type =    課程類型
+    level =   課程等級
+    sort =    排序類型  (類型,方法) 
+    page =    頁碼
+    
+    預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 404=查無資料
+        msg =           說明訊息
+        searchType =    搜索的課程類型
+        searchLevel =   搜索的課程等級
+        sortType =      設定的排序類型 
+        page =          目前頁碼
+        totalRows =     總筆數
+        totalPages =    總頁數
+        result : [
+            {
+                classId =               課程編號
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classDate =             開課日期
+                classLocation =         開課地點(僅縣市)
+                classIntroduction =     課程簡介
+                classImg =              課程圖片連結
+                classPrice =            課程售價
+            }
+        ]
+    }
+*/
+
+//查詢單一筆詳細資料
+/*
+    預計從前台接收的資料
+    GET /class/課程編號
+
+    classId = 課程編號
+
+    預計傳送回去的資料
+        {
+        status =        狀態碼 200=請求成功 404=查無資料
+        msg =           說明訊息
+        classCoachData : [
+            {
+                classCoachName = 教練名稱
+                classCoachImg =  教練相片
+                classCoachLicense1 = 教練證照1
+                classCoachLicense2 = 教練證照2
+                classCoachLicense3 = 教練證照3
+            }
+        ]
+        classData : [
+            {
+                classId =               課程編號
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classStartDate =        開課日期
+                classEndDate =          結訓日期
+                classFullLocation =     開課地點(完整)
+                classDesc =             課程說明
+                classMAXpeople =        最大人數
+                classNOWpeople =        現在人數
+                classImg =              課程圖片連結
+                seller_id =             工作室編號(null表示帳號已被刪除)
+                seller_shop =           工作室名稱(null表示帳號已被刪除)
+                classPrice =            課程售價
+            }
+        ]
+    }
+*/
+
+//新增一筆課程資料(賣家身分)
+/*
+    預計從前台接收的資料
+
+    POST /class
+    
+    課程編號由後台產生後自動存入
+    現在人數由後台預設為0
+
+    req.body.className = 課程名稱(50字內)
+    req.body.classTypeId = 課程類型
+    req.body.classLevelId = 課程等級
+    req.body.classLocation = 課程地點(縣市)
+    req.body.classFullLocation = 課程地點(完整)
+    req.body.classStartDate = 開課日期(input type="datetime-local")
+    req.body.classEndDate = 結訓日期(input type="datetime-local")
+    req.body.classPrice = 課程售價(6位數)
+    req.body.classIntroduction = 課程簡介(30字內)
+    req.body.classDesc = 課程說明(3000字內)
+    req.body.classMAXpeople = 最大人數(3位數)
+    req.body.classImg = 課程圖片 (png,jpg,gif)
+    req.session.seller_id = 賣家ID(30字內)
+
+
+    預計傳送回去的資料
+        {
+            status =        狀態碼 201=新增成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+            msg =           說明訊息
+            location = /class/課程編號
+        }
+*/
+
+// 賣家查詢自己的所有課程資料
+/*
+    預計從前台接收的資料
+    GET /seller/class?type=課程類型&level=課程等級&sort=排序類型(類型,方法)&page=頁碼
+
+    type =    課程類型
+    level =   課程等級
+    sort =    排序類型  (類型,方法) 
+    page =    頁碼
+    req.session.seller_id = 賣家ID
+
+    預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        searchType =    搜索的課程類型
+        searchLevel =   搜索的課程等級
+        sortType =      設定的排序類型 
+        page =          目前頁碼
+        totalRows =     總筆數
+        totalPages =    總頁數
+        seller_id =     賣家編號
+        result : [
+            {
+                classId =               課程編號
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classDate =             開課日期
+                classLocation =         開課地點(僅縣市)
+                classIntroduction =     課程簡介
+                classImg =              課程圖片連結
+                classPrice =            課程售價
+            }
+        ]
+    }
+*/
+
+// 賣家取得單一筆課程資料
+/*
+    預計從前台接收的資料
+    GET /seller/class/課程編號
+
+    req.session.seller_id = 賣家編號
+    req.params.classId = 要編輯的課程編號
+    
+    預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        classCoachData : [
+            {
+                id = 流水號
+                classCoachName = 教練名稱
+                classCoachLicense1 = 教練證照1
+                classCoachLicense2 = 教練證照2
+                classCoachLicense3 = 教練證照3
+            }
+        ]
+        classData : [
+            {
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classDate =             開課日期
+                classLocation =         開課地點(縣市)
+                classFullLocation =     開課地點(完整)
+                classIntroduction =     課程簡介
+                classDesc =             課程說明
+                classMAXpeople =        最大人數
+                classNOWpeople =        目前人數
+                classImg =              課程圖片連結
+                classPrice =            課程售價
+            }
+        ]
+        classMemberData : [
+            {
+                memberId = 會員編號
+                memberMemo = 會員備註
+                fullName = 會員全名
+                gender = 會員性別
+                email = 會員電子郵件
+                mobileNumber = 會員手機號碼
+            }
+        ]
+    }
+*/
+
+
+//賣家編輯自己的課程資料
+/*
+    預計從前台接收的資料
+    PUT /seller/class/課程編號
+
+    req.session.seller_id = 賣家編號(驗證用)
+
+    req.body.className = 課程名稱
+    req.body.classType = 課程類型
+    req.body.classLevel = 課程等級
+    req.body.classStartDate = 開課日期(input type="datetime-local")
+    req.body.classEndDate = 結訓日期(input type="datetime-local")
+    req.body.classLocation = 課程地點(縣市)
+    req.body.classFullLocation = 課程地點(完整)
+    req.body.classIntroduction = 課程簡介(30字內)
+    req.body.classDesc = 課程說明(3000字內)
+    req.body.classMAXpeople = 最大人數
+    req.body.classImg = 課程圖片
+    req.body.classPrice = 課程售價
+
+    預計傳送回去的資料
+    {
+        status =        狀態碼 201=修改成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+        msg =           說明訊息
+    }
+
+*/
+
+//賣家刪除自己的課程資料
+/*
+    預計從前台接收的資料
+    DELETE /seller/class/課程編號
+
+    req.session.seller_id = 賣家編號(驗證用)
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=刪除成功 401=尚未登入
+        msg = 說明訊息
+    }
+*/
+
+//會員報名課程
+/*
+    預計從前台接收的資料
+
+    POST /member/class/:classId
+
+    req.session.memberId = 會員編號
+    req.params.classId = 課程編號
+    req.body.memberMemo = 會員備註
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=報名成功 401=尚未登入 409=重複報名 404=查無課程資料
+        msg = 說明訊息
+    }
+*/
+
+// 會員查詢自己的報名課程資料
+/*
+    預計從前台接收的資料
+    GET /member/class?type=課程類型&level=課程等級&sort=排序類型(類型,方法)&page=頁碼
+
+    type =    課程類型
+    level =   課程等級
+    sort =    排序類型  (類型,方法) 
+    page =    頁碼
+    req.session.member = 賣家ID
+
+    預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        searchType =    搜索的課程類型
+        searchLevel =   搜索的課程等級
+        sortType =      設定的排序類型 
+        page =          目前頁碼
+        totalRows =     總筆數
+        totalPages =    總頁數
+        memberId =      會員編號
+        result : [
+            {
+                classId =               課程編號
+                className =             課程名稱
+                classType =             課程類型
+                classLevel =            課程等級
+                classDate =             開課日期
+                classLocation =         開課地點(僅縣市)
+                classIntroduction =     課程簡介
+                classImg =              課程圖片連結
+                classPrice =            課程售價
+            }
+        ]
+    }
+*/
+
+//會員取消自己報名的課程
+/*
+    預計從前台接收的資料
+    DELETE /member/class/:classId
+
+    req.session.memberId = 會員編號
+    req.params.id = 課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無報名資料
+        msg = 說明訊息
+    }
+*/
+
+//賣家取消單一會員報名的課程
+/*
+    預計從前台接收的資料
+    
+    DELETE /seller/class/member/:classId
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.params.classId = 課程編號
+    req.body.memberId = 會員編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無報名資料
+        msg = 說明訊息
+    }
+*/
+
+//賣家查詢自己的全部或單筆教練資訊
+/*
+    預計從前台接收的資料
+    如果存在id就給單筆資料
+    GET /seller/coach/:id?
+
+    req.session.seller_id = 賣家編號(驗證用)
+
+    預計傳送回去的資料
+    [
+        status =        狀態碼 200=請求成功 401=尚未登入 404=查無資料
+        msg =           說明訊息
+        result:[
+            {
+                id = 教練編號
+                classId = 該教練目前已被指派給哪門課程
+                classCoachName = 教練姓名
+                classCoachImg = 教練相片
+                classCoachLicense1 = 教練證照1
+                classCoachLicense2 = 教練證照2
+                classCoachLicense3 = 教練證照3
+            }
+        ]
+    ]
+*/
+
+//賣家新增一筆教練資訊
+/*
+    預計從前台接收的資訊
+
+    POST /seller/coach
+    
+    req.session.seller_id = 賣家編號
+    req.body.classCoachName = 教練姓名
+    req.body.classCoachImg = 教練相片
+    req.body.classCoachLicense1 = 教練證照1
+    req.body.classCoachLicense2 = 教練證照2
+    req.body.classCoachLicense3 = 教練證照3
+
+    預計傳送回去的資料
+    [
+        status = 狀態碼 201=新增成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+        msg = 說明訊息
+        id = 新增的教練編號
+    ]
+*/
+
+//賣家編輯一筆教練資訊
+/*
+    預計從前台接收的資訊
+
+    PUT /seller/coach/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classCoachName = 教練姓名
+    req.body.classCoachImg = 教練相片
+    req.body.classCoachLicense1 = 教練證照1
+    req.body.classCoachLicense2 = 教練證照2
+    req.body.classCoachLicense3 = 教練證照3
+
+    預計傳送回去的資料
+    [
+        status = 狀態碼 201=新增成功 400=資料缺失 401=尚未登入 409=資料重複 412=資料驗證失敗
+        msg = 說明訊息
+    ]
+*/
+
+//賣家刪除一筆教練資訊
+/*
+    預計從前台接收的資料
+    DELETE /seller/coach/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=刪除成功 401=尚未登入
+        msg = 說明訊息
+    }
+*/
+
+//賣家指派課程給教練
+/*
+    預計從前台接收的資料
+    PATCH /seller/coach/status/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classId = 要被指派的課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=指派成功 401=尚未登入 409=資料重複 404=查無課程資料
+        msg = 說明訊息
+    }
+*/
+
+//賣家取消指派課程給教練
+/*
+    預計從前台接收的資料
+    PATCH /seller/coach/:id
+
+    req.session.seller_id = 賣家編號(驗證用)
+    req.body.classId = 要被取消的課程編號
+
+    預計傳送回去的資料
+    {
+        status = 狀態碼 201=取消成功 401=尚未登入 404=查無指派資料
+        msg = 說明訊息
+    }
+*/
