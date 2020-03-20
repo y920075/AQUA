@@ -61,6 +61,14 @@ function ShoppingCart(props) {
     return total
   }
 
+  // handleDelete = product => {
+  //   const cart = this.props.data.cart
+  //   const index = cart.indexOf(product)
+  //   cart.splice(index, 1)
+  //   this.setState({ cart })
+  //   document.body.style.overflow = 'auto'
+  // }
+
   console.log(props)
   return (
     <>
@@ -69,7 +77,7 @@ function ShoppingCart(props) {
       <div className="container CW">
         <div className="row CW-shoppingCart">
           <div className="col-12 cart-header">{/* <Breadcrumb /> */}</div>
-          <div className="col-8 table-wrapper">
+          <div className="col-md-8 mb-3 table-wrapper">
             <div className="card">
               <div className="card-header d-flex ">
                 <div className="col-1">
@@ -86,12 +94,12 @@ function ShoppingCart(props) {
                   <h6>金額</h6>
                 </div>
               </div>
-              <div className="card-body cart-item">
+              <div className="card-body">
                 {<CartItem mycartDisplay={mycartDisplay} />}
               </div>
             </div>
           </div>
-          <div className="col-4 check-wrapper">
+          <div className="col-md-4 check-wrapper">
             <div className="card">
               <div className="card-header bg-light">
                 <h6>訂單摘要</h6>
