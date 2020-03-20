@@ -18,8 +18,6 @@ export const getEventDataAsync = (type, q, sort, page) => {
       query = ''
     }
 
-    console.log(query)
-
     const request = new Request(`http://127.0.0.1:5000/event?${query}`, {
       method: 'GET',
       headers: new Headers({
@@ -31,6 +29,39 @@ export const getEventDataAsync = (type, q, sort, page) => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(getEventData(data))
+  }
+}
+
+//取得活動列表資料(地圖用)
+export const getEventDataForMap = data => ({
+  type: 'GET_EVENTDATA_MAP',
+  value: data,
+})
+
+export const getEventDataForMapAsync = (type, q, sort) => {
+  return async dispatch => {
+    let query = []
+
+    if (type) query.push(`type=${type.trim()}`)
+    if (q) query.push(`q=${q.trim()}`)
+    if (sort) query.push(`sort=${sort.trim()}`)
+    if (query.length > 0) {
+      query = query.join('&')
+    } else {
+      query = ''
+    }
+
+    const request = new Request(`http://127.0.0.1:5000/event/map?${query}`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(getEventDataForMap(data))
   }
 }
 
