@@ -1,8 +1,8 @@
 .JY-event-container-detail {
   .eventDataBox {
-    margin-bottom: 50px;
+    margin-bottom: 3.125rem;
     .eventImgBox {
-      height: 265px;
+      height: 16.563rem;
       img {
         width: 100%;
         height: 100%;
@@ -20,7 +20,7 @@
       .quota {
         text-align: center;
         span {
-          font-size: 18px;
+          font-size: 1.125rem;
           font-weight: 500;
         }
       }
@@ -32,30 +32,68 @@
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          font-size: 14px;
+          font-size: 0.875rem;
         }
         width: 100%;
         margin: 0 auto;
       }
     }
   }
+  .weatherTitle {
+    color: white;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    border-bottom: 2px solid white;
+  }
   .weatherBox {
     background-color: white;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 0.625rem;
+    padding: 0.625rem;
+    margin-bottom: 30px;
+    .col-2 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .WxImg {
-        margin: 0;
+      margin: 0 0 0.625rem 0;
       img {
-        width: 75px;
-        height: 75px;
+        width: 4.688rem;
+        height: 4.688rem;
       }
     }
     ul {
       list-style: none;
       padding: 0;
-      li{
-          margin: 0 5px;
+      li {
+        margin: 0 0.313rem;
       }
+    }
+  }
+  .eventDesc {
+    width: 100%;
+    background-color: white;
+    padding: 0.938rem;
+    margin-bottom: 20px;
+    border-radius: 0.625rem;
+    pre {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+      font-size: 1rem;
+      color: #132948;
+      white-space: pre-wrap; /*css-3*/
+      white-space: -moz-pre-wrap; /*Mozilla,since1999*/
+      white-space: -pre-wrap; /*Opera4-6*/
+      white-space: -o-pre-wrap; /*Opera7*/
+      word-wrap: break-word; /*InternetExplorer5.5+*/
+    }
+  }
+  .btn-box {
+    margin-bottom: 50px;
+    .btn-join {
+      width: 280px;
+      margin: 0 auto;
     }
   }
 }

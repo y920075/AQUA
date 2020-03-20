@@ -18,7 +18,7 @@ function EventWeatherContent(props) {
 
   return (
     <>
-      <div className="row weatherBox">
+      <div className="d-flex weatherBox">
         {weatherData.map((value, index) => {
           return (
             <div className="col-2">
@@ -40,6 +40,13 @@ function EventWeatherContent(props) {
               <p>
                 <img src="/images/eventImg/icons/detail/waveH.svg" alt="" />
                 {value.waveH + '(m)'}
+              </p>
+              <p>
+                <i
+                  class="fas fa-angle-double-down"
+                  style={{ transform: 'rotate(' + value.waveDirNum + 'deg)' }}
+                ></i>
+                {'  ' + value.waveDir}
               </p>
             </div>
           )

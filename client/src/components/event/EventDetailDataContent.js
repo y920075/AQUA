@@ -62,7 +62,25 @@ function EventDetailDataContent(props) {
               </div>
             </div>
           </div>
+          <div className="row">
+            <div className="col-12 weatherTitle">
+              <h2>{props.eventData.eventFullLocation + ' 附近的天氣'}</h2>
+            </div>
+          </div>
           <EventWeatherContent weatherData={props.weatherData} />
+          <div className="row">
+            <div className="col-12 weatherTitle">
+              <h2>活動說明</h2>
+            </div>
+          </div>
+          <div className="eventDesc">
+            <pre>{props.eventData.eventDesc}</pre>
+          </div>
+          <div className="d-flex justify-content-center btn-box">
+            <button className="btn-join btn btn-raised btn-warning">
+              參加揪團
+            </button>
+          </div>
         </>
       ) : (
         ''

@@ -61,6 +61,7 @@ function EventDetail(props) {
             weatherData={weatherData}
           />
         )}
+        <Footer />
       </div>
     </>
   )
