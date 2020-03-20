@@ -17,7 +17,10 @@ function ItemCard(props) {
             >
               <img
                 className="list-card-img-top"
-                src={'http://127.0.0.1:5000/images/items/' + value.itemImg}
+                src={
+                  'http://127.0.0.1:5000/images/itemImg/test-item.jpg'
+                  // + value.itemImg
+                }
                 alt=""
               />
               <div className="list-card-body">

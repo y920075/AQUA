@@ -23,13 +23,11 @@ function ItemDetail(props) {
     const currenyCart = JSON.parse(localStorage.getItem('cart')) || []
 
     console.log('currentCart', currenyCart)
-    
+
     const newCart = [...currenyCart, value]
     localStorage.setItem('cart', JSON.stringify(newCart))
 
     console.log('newCart', newCart)
-
-    
   }
 
   useEffect(() => {
@@ -59,24 +57,24 @@ function ItemDetail(props) {
             <div className="col-md-2 lightbox-aside">
               <img
                 className="lightbox-aside-img"
-                src="/20200117125234.jpg"
+                src="http://127.0.0.1:5000/images/itemImg/test-item.jpg"
                 alt=""
               />
               <img
                 className="lightbox-aside-img"
-                src="/20200117125234.jpg"
+                src="http://127.0.0.1:5000/images/itemImg/test-item.jpg"
                 alt=""
               />
               <img
                 className="lightbox-aside-img"
-                src="/20200117125234.jpg"
+                src="http://127.0.0.1:5000/images/itemImg/test-item.jpg"
                 alt=""
               />
             </div>
             <div className="col-md-6 order-md-0 lightbox-main">
               <img
                 className="lightbox-main-img"
-                src="/20200117125234.jpg"
+                src="http://127.0.0.1:5000/images/itemImg/test-item.jpg"
                 alt=""
               />
             </div>
@@ -109,7 +107,7 @@ function ItemDetail(props) {
                       id: 'I20010087',
                       name: 'V.DIVE - 自由潛水塑膠長蛙鞋',
                       amount: 1,
-                      price: '4380'
+                      price: '4380',
                     })
                   }}
                   className="btn btn-danger btn-lg w-100"
@@ -131,7 +129,7 @@ function ItemDetail(props) {
           <div className="row mt-5 detail-desc">
             <div className="col-md-8">
               <h4>商品介紹</h4>
-              <hr style=" border-top:1px solid rgba(255, 255, 255, 1)" />
+              <hr />
               <p>
                 C4 - SCARPE蛙鞋套
                 來自義大利的複合材料製造商C4，創立於1986年，一開始研發的是自行車使用之碳纖維材料，隨後將這樣的材料技術延伸至自由潛水/水中漁獵的裝備；卓越的性能與粗獷的外型，受到許多專業玩家的喜愛。
