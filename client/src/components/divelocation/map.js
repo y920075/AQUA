@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 
 // 參考資料 : https://leafletjs.com/examples/quick-start/ & https://juejin.im/post/5cc192976fb9a032092e8e0a
-
+let mymap
 class map extends React.Component {
   componentDidMount() {
     this.props.fetchMapmarks()
@@ -25,7 +25,6 @@ class map extends React.Component {
         marksinfo => marksinfo.LocationID === currentmark.LocationID
       )
       // console.log(locatecurrentmark)
-      let mymap
       locatecurrentmark.forEach(function(locatecurrentmark) {
         mymap = L.map('mapid').setView(
           [locatecurrentmark.Latitude, locatecurrentmark.Longitude],
@@ -72,7 +71,9 @@ class map extends React.Component {
       //     }).addTo(mymap);
     }
   }
-
+  componentWillUnmount() {
+    mymap.remove()
+  }
   render() {
     return (
       <>

@@ -44,4 +44,14 @@ router.get('/region' , (req, res)=>{
     })
     
 })
+router.get('/images' , (req, res)=>{
+    const images = "SELECT * FROM divelocationimages";
+    db.queryAsync(images)
+    .then(result=>{
+        res.json({
+            Divelocationimages: result
+    })
+    })
+    
+})
 module.exports = router;

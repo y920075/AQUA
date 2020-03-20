@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import ImageGallery from 'react-image-gallery'
 import '../../style/divelocation/image-gallery.scss'
 
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { fetchImages } from '../../actions/location/Location_Action'
 export class Images extends Component {
   constructor(props) {
     super(props)
@@ -10,25 +14,19 @@ export class Images extends Component {
     }
   }
   componentDidMount() {
-    this.setState({
-      localimages: [
-        {
-          original: '/images/divelocation/L0001-1.jpg',
-          thumbnail: '/images/divelocation/L0001-1.jpg',
-        },
-        {
-          original: 'https://picsum.photos/id/1015/1000/600/',
-          thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-          original: 'https://picsum.photos/id/1019/1000/600/',
-          thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        },
-      ],
-    })
+    this.props.fetchImages()
   }
   componentDidUpdate(prevProps) {
-    if (this.props.Regions !== prevProps.Regions) {
+    if (this.props.LocusImages !== prevProps.LocusImages) {
+      const currentimageID = this.props.match.params
+      const locationimages = this.props.LocusImages.Divelocationimages
+      // console.log(locationimages)
+      this.setState({
+        localimages: locationimages.filter(
+          locationimages =>
+            locationimages.originalTitle === currentimageID.LocationID
+        ),
+      })
     }
   }
   render() {
@@ -39,4 +37,13 @@ export class Images extends Component {
     )
   }
 }
-export default Images
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return { LocusImages: store.LocusImages }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ fetchImages }, dispatch)
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Images))

@@ -62,3 +62,23 @@ export const fetchInfos = () => {
       })
   }
 }
+//取得圖片
+export const getImages = data => ({
+  type: 'GET_LOCUSIMAGES',
+  value: data,
+})
+export const fetchImages = () => {
+  return dispatch => {
+    axios
+      .get('http://localhost:5000/divelocation/images')
+      .then(function(response) {
+        // Success
+        const Images = response.data
+        dispatch(getImages(Images))
+      })
+      .catch(function(error) {
+        // Error
+        console.log(error)
+      })
+  }
+}

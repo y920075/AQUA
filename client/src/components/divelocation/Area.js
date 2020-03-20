@@ -6,10 +6,14 @@ import { Button } from 'react-bootstrap'
 //redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
-import { fetchRegions } from '../../actions/location/Location_Action'
+import {
+  fetchRegions,
+  fetchMapmarks,
+  fetchInfos,
+  fetchImages,
+} from '../../actions/location/Location_Action'
 import { Link } from 'react-router-dom'
-
+let mymap
 class Area extends React.Component {
   constructor(props) {
     super(props)
@@ -81,7 +85,15 @@ class Area extends React.Component {
                   {this.state.Northeastcapelist.map((value, index) => {
                     return (
                       <li key={index}>
-                        <Link role="button" to={value.LocationID}>
+                        <Link
+                          role="button"
+                          to={value.LocationID}
+                          onClick={() => {
+                            this.props.fetchInfos()
+                            // this.props.fetchMapmarks()
+                            this.props.fetchImages()
+                          }}
+                        >
                           {value.LocationName}
                         </Link>
                       </li>
@@ -183,7 +195,10 @@ const mapStateToProps = store => {
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchRegions }, dispatch)
+  return bindActionCreators(
+    { fetchRegions, fetchMapmarks, fetchInfos, fetchImages },
+    dispatch
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Area)
