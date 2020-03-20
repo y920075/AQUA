@@ -20,7 +20,7 @@ class map extends React.Component {
       const currentmark = this.props.match.params
       const marksinfo = this.props.mapmarksGCS.DivelocationInfo
       // console.log(marksinfo)
-      console.log(currentmark)
+      // console.log(currentmark)
       const locatecurrentmark = marksinfo.filter(
         marksinfo => marksinfo.LocationID === currentmark.LocationID
       )
