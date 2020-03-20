@@ -72,6 +72,66 @@ router.get('/event/type', async (req,res)=>{
     res.json(data)
 })
 
+//查詢所有活動列表(地圖用)
+/*
+    預計從前台接收的資料
+
+    GET /event?type=活動類型&sort=排序類型(類型,方法)&q=關鍵字
+
+    type =    活動類型
+    q =       關鍵字搜索
+    sort =    排序類型  (類型,方法) 
+
+        預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 404=查無資料
+        msg =           說明訊息
+        searchType =      搜索的活動類型
+        searchKeyword =   搜索的關鍵字
+        sortType =      設定的排序類型 
+        result : [
+            {
+                eventId =               活動編號
+                eventName =             活動名稱
+                eventType =             活動類型
+                eventLocation =         活動地點(僅縣市)
+                eventLocation_lat =     活動地點(緯度)
+                eventLocation_lng =     活動地點(經度)
+                eventSponsor =          活動發起人編號
+                loginId =               活動發起人帳號
+                eventStartDate =        活動日期
+                eventEndDate =          報名截止日期
+                eventNeedPeople =       徵求人數
+                eventNowPeople =        現在人數
+                eventImg =              活動圖片
+            }
+        ]
+    }
+*/
+router.get('/event/map',(req,res)=>{
+    db.queryAsync(eventSql.getAllEventDataForMap(req.query))
+    .then(result=>{
+        if ( result.length>0 ) {
+            res.json({
+                'status' :        200,
+                'msg':            '請求成功',
+                'searchType' :    req.query.type,
+                'searchKeyword' :   req.query.q,
+                'sortType' :      req.query.sort,
+                result
+            })
+        } else {
+            res.json({
+                'status' :        404,
+                'msg':            '查無任何資料',
+                'searchType' :    req.query.type,
+                'searchKeyword' :   req.query.q,
+                'sortType' :      req.query.sort,
+            })
+        }
+    })
+})
+
 //查詢所有活動列表
 /*
     預計從前台接收的資料
