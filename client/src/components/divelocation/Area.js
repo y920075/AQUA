@@ -29,24 +29,24 @@ class Area extends React.Component {
       const localRegions = this.props.Regions.Divelocationregion
       this.setState({
         Eastcoastlist: localRegions.filter(
-          area => area.LocationArea == '花東海岸'
+          area => area.LocationArea === '花東海岸'
         ),
       })
       this.setState({
         Northeastcapelist: localRegions.filter(
-          area => area.LocationArea == '東北角'
+          area => area.LocationArea === '東北角'
         ),
       })
       this.setState({
         Greenislandlist: localRegions.filter(
-          area => area.LocationArea == '綠島'
+          area => area.LocationArea === '綠島'
         ),
       })
       this.setState({
-        Iralalist: localRegions.filter(area => area.LocationArea == '蘭嶼'),
+        Iralalist: localRegions.filter(area => area.LocationArea === '蘭嶼'),
       })
       this.setState({
-        Kentinglist: localRegions.filter(area => area.LocationArea == '墾丁'),
+        Kentinglist: localRegions.filter(area => area.LocationArea === '墾丁'),
       })
 
       // console.log(onlyNortheastcape)

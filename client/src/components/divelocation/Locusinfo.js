@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux'
@@ -23,7 +23,7 @@ export class Locusinfo extends React.Component {
       //   console.log(currentid)
       this.setState({
         currentlocation: localinfo.filter(
-          localinfo => localinfo.LocationID == currentid.LocationID
+          localinfo => localinfo.LocationID === currentid.LocationID
         ),
       })
     }
