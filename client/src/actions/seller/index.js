@@ -354,9 +354,129 @@ export const getSellerClassDataAsunc = (sort, page) => {
 
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
 
     dispatch(getSellerClassData(data))
+  }
+}
+
+export const getCityData = data => ({
+  type: 'GET_CITY_DATA',
+  value: data,
+})
+
+export const getCityDataAsunc = () => {
+  return async dispatch => {
+    const request = new Request(`http://localhost:5000/city`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+
+    dispatch(getCityData(data))
+  }
+}
+
+export const getDistData = data => ({
+  type: 'GET_DIST_DATA',
+  value: data,
+})
+
+export const getDistDataAsunc = city => {
+  return async dispatch => {
+    const request = new Request(`http://localhost:5000/dist?city=${city}`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+
+    dispatch(getDistData(data))
+  }
+}
+
+export const getClassTypeDataForSeller = data => ({
+  type: 'GET_CLASSTYPEDATA_FORSELLER',
+  value: data,
+})
+
+export const getClassLevelDataForSeller = data => ({
+  type: 'GET_CLASSLEVELDATA_FORSELLER',
+  value: data,
+})
+
+export const getClassTypeLevelDataForSellerAsunc = (type, level) => {
+  return async dispatch => {
+    let query = ''
+    if (type) query = `onlyType=${type}`
+    if (level) query = `getLevel=${level}`
+
+    const request = new Request(
+      `http://localhost:5000/classtype/level?${query}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+
+    switch (true) {
+      case !type:
+        dispatch(getClassLevelDataForSeller(data))
+        break
+      case !level:
+        dispatch(getClassTypeDataForSeller(data))
+        break
+      default:
+        console.log('none')
+    }
+  }
+}
+
+export const addClassData = data => ({
+  type: 'ADD_CLASSDATA',
+  value: data,
+})
+
+export const addClassDataAsunc = formData => {
+  console.log(formData)
+  return async dispatch => {
+    const fd = new FormData()
+    fd.append('className', formData.className)
+    fd.append('classTypeId', formData.classTypeId)
+    fd.append('classLevelId', formData.classLevelId)
+    fd.append('classLocation', formData.classLocation)
+    fd.append('classFullLocation', formData.classFullLocation)
+    fd.append('classStartDate', formData.classStartDate)
+    fd.append('classEndDate', formData.classEndDate)
+    fd.append('classPrice', formData.classPrice)
+    fd.append('classIntroduction', formData.classIntroduction)
+    fd.append('classDesc', formData.classDesc)
+    fd.append('classMAXpeople', formData.classMAXpeople)
+    fd.append('classImg', formData.classImg)
+
+    const request = new Request(`http://127.0.0.1:5000/seller/class`, {
+      method: 'POST',
+      body: fd,
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(addClassData(data))
   }
 }
 
