@@ -71,6 +71,7 @@ class event {
                     ${sort}`
         return sql
     }
+
     //取得所有活動資料
     static getAllEventData(query,totalPages,perPage){
         let where = []
@@ -82,7 +83,6 @@ class event {
         let page = query.page ? parseInt(query.page) : 1
         if (page<1) page=1;
         if (page>totalPages) page=totalPages;
-
 
         let sql = ` SELECT  \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
                             \`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,

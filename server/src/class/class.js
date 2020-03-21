@@ -81,11 +81,12 @@ router.get('/class',(req,res)=>{
 
             const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,
             \`classLocation\`,DATE_FORMAT(\`classStartDate\`,'%Y-%m-%d') as classStartDate,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+
                             FROM \`class_data\`
                             ${searchType}${searchLevel}
                             ${sort}
                             LIMIT  ${(page-1)*perPage}, ${perPage}`
-                            
+
             return db.queryAsync(sql);
         }
     })

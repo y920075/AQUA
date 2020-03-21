@@ -48,3 +48,4 @@ const eventReducer = combineReducers({
   eventDetailData,
 })
 export { eventReducer }
+
