@@ -52,7 +52,7 @@ function Coupon(props) {
          //找到所有代表等級的li元素
     let coupMenuLiList = document.querySelectorAll('ul.couponMenu li')
     coupMenuLiList.forEach(value => {
-      value.classList.remove('active') //移除active
+      value.classList.remove('active-chin') //移除active
     })
 
       //找到所有代表類型的span元素
@@ -61,9 +61,9 @@ function Coupon(props) {
       )
 
       coupMenuLiListspan.forEach(value => {
-        value.classList.remove('active') //移除active
+        value.classList.remove('active-chin') //移除active
       })
-      event.target.classList.add('active') //為被點擊的目標新增active
+      event.target.classList.add('active-chin') //為被點擊的目標新增active
       // console.log(coupMenuLiList)
       // console.log(coupMenuLiListspan)
 
@@ -72,8 +72,8 @@ function Coupon(props) {
 
     //向伺服器取得優惠券資料
     function getCouponData(event) {
-      const coup_cate_id = $('.couponMenu').find('li.nav-item span.nav-link.active')
-        ? $('.couponMenu').find('li.nav-item span.nav-link.active').attr('data-type')
+      const coup_cate_id = $('.couponMenu').find('li.nav-item span.nav-link.active-chin')
+        ? $('.couponMenu').find('li.nav-item span.nav-link.active-chin').attr('data-type')
         : ''
         console.log(coup_cate_id)
   
