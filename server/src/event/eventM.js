@@ -49,21 +49,46 @@ class event {
                      WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
         return sql
     }
+    //取得所有活動資料(地圖用)
+    static getAllEventDataForMap(query){
+        let where = []
+        if(query.type) where.push(`\`event_data\`.\`eventType\` = '${query.type}'`)
+        if(query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${query.q}%'`)
+        if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
+        const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC, \`event_data\`.\`eventId\` DESC`
+
+        let sql = ` SELECT  \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
+                            \`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
+                            \`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,
+                            DATE_FORMAT(\`event_data\`.\`eventStartDate\`,'%Y-%m-%d') as eventStartDate,
+                            DATE_FORMAT(\`event_data\`.\`eventEndDate\`,'%Y-%m-%d') as eventEndDate,
+                            \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
+                            \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
+                    FROM \`event_data\` 
+                    LEFT JOIN \`my_member\`
+                    ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`
+                    ${where}
+                    ${sort}`
+        return sql
+    }
+
     //取得所有活動資料
     static getAllEventData(query,totalPages,perPage){
         let where = []
         if(query.type) where.push(`\`event_data\`.\`eventType\` = '${query.type}'`)
         if(query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${query.q}%'`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
-        const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
+        const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC, \`event_data\`.\`eventId\` DESC`
 
         let page = query.page ? parseInt(query.page) : 1
         if (page<1) page=1;
         if (page>totalPages) page=totalPages;
+
         let sql = ` SELECT  \`event_data\`.\`eventId\`,\`event_data\`.\`eventName\`,\`event_data\`.\`eventType\`,
                             \`event_data\`.\`eventLocation\`,\`event_data\`.\`eventLocation_lat\`,
                             \`event_data\`.\`eventLocation_lng\`,\`event_data\`.\`eventSponsor\`,
-                            \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,
+                            DATE_FORMAT(\`event_data\`.\`eventStartDate\`,'%Y-%m-%d') as eventStartDate,
+                            DATE_FORMAT(\`event_data\`.\`eventEndDate\`,'%Y-%m-%d') as eventEndDate,
                             \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
                             \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
                     FROM \`event_data\` 

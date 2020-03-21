@@ -1,0 +1,139 @@
+.JY-event-container-maplist {
+  .searchBox {
+    // background-color: white;
+    padding: 0.938rem;
+    border-radius: 0.625rem;
+    select {
+      color: rgba($color: #ffffff, $alpha: 0.5);
+      border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.5);
+      option {
+        background-color: #132948;
+      }
+    }
+    .searchInput {
+      color: rgba($color: #ffffff, $alpha: 0.5);
+      border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.5);
+      &:focus {
+        border-bottom: 0px solid transparent;
+      }
+    }
+    .btn-search {
+      color: white;
+      border: 1px solid white;
+    }
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .eventListBox {
+    max-height: 800px;
+    overflow: auto;
+    padding: 0;
+    .eventInfoBox {
+      width: 255px;
+      margin: 30px auto;
+      transition: 0.5s;
+      &:hover {
+        .eventImgBox > img {
+          transform: scale(1.2);
+        }
+        transform: translateY(-5px);
+      }
+      .eventContentBox {
+        background-color: white;
+        height: 32.5rem;
+        border-radius: 0.625rem;
+        overflow: hidden;
+        .eventImgBox {
+          width: 100%;
+          height: 200px;
+          overflow: hidden;
+          & > img {
+            transition: 0.5s;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        $animate: all 0.2s ease-in-out;
+        .eventDetailBox {
+          color: #132948;
+          padding: 10px;
+          &:hover {
+            h2 {
+              &:before,
+              &:after {
+                opacity: 1;
+                width: 45%;
+              }
+            }
+          }
+          h2 {
+            text-align: center;
+            position: relative;
+            &:before,
+            &:after {
+              content: '';
+              position: absolute;
+              bottom: -10px;
+              width: 0px;
+              height: 2px;
+              margin: 0px 0 0;
+              transition: $animate;
+              transition-duration: 0.75s;
+              opacity: 0;
+              background-color: #ff5722;
+            }
+            &:before {
+              left: 50%;
+            }
+            &:after {
+              right: 50%;
+            }
+          }
+          ul {
+            padding: 0;
+            list-style: none;
+          }
+          & > ul {
+            margin-bottom: 0;
+            li {
+              margin-right: 30px;
+            }
+          }
+          .status {
+            margin-top: 15px;
+            font-size: 18px;
+            text-align: center;
+          }
+          .quota {
+            text-align: center;
+            font-size: 14px;
+            span {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+
+      @media screen and(max-width:540px) {
+        // padding:0 8px;
+      }
+      @import './progress.scss';
+      .progress_container {
+        position: relative;
+        &::before {
+          content: attr(data-progress);
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .eventMapListNoDataTtile {
+    text-align: center;
+    color: white;
+  }
+}

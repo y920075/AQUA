@@ -1,11 +1,13 @@
-import React,{useState} from 'react'
+import React from 'react'
 
-function Banner(props){
-    return (<>
-        <div class="banner">
-            <img src={props.BannerImgSrc} alt=""/>
-        </div>
-    </>)
+function Banner(props) {
+  return (
+    <>
+      <div className="banner">
+        <img src={props.BannerImgSrc} alt="" />
+      </div>
+    </>
+  )
 }
 
 export default Banner

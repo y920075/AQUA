@@ -1,0 +1,1 @@
+SELECT \`classTypeId\`,\`classTypeName\` FROM \`class_type\`

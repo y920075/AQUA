@@ -10,6 +10,19 @@ const router = express.Router();
 //Top LeveL Middleware
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json()); 
+
+//取得所有類型與等級資料
+router.get('/classtype/level',async (req,res)=>{
+    const sql = `SELECT \`class_type\`.\`classTypeId\`,\`class_type\`.\`classTypeName\`,\`class_level\`.\`classLevelId\`,\`class_level\`.\`classLevel\`
+    FROM \`class_type\`
+    INNER JOIN \`class_level\`
+    USING(\`classTypeId\`)`
+
+    const sql2 = `SELECT \`classTypeId\`,\`classTypeName\` FROM \`class_type\``
+
+    res.json(await db.queryAsync(sql))
+
+})
 //查詢列表資料
 /*
     預計從前台接收的資料
@@ -50,7 +63,7 @@ router.get('/class',(req,res)=>{
     const perPage = 6;
     const searchType = req.query.type && !req.query.level ? ` WHERE \`classType\` = '${req.query.type}' ` : '';
     const searchLevel = req.query.type && req.query.level ? ` WHERE \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
-    const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC`
+    const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}  , \`classId\` DESC` : ` ORDER BY \`created_at\` DESC , \`classId\` DESC`
     const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\` ${searchType}${searchLevel}`
     let page = req.query.page ? parseInt(req.query.page) : 1;
     let totalRows;
@@ -66,11 +79,14 @@ router.get('/class',(req,res)=>{
             if (page<1) page=1;
             if (page>totalPages) page=totalPages;
 
-            const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classStartDate\`,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+            const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,
+            \`classLocation\`,DATE_FORMAT(\`classStartDate\`,'%Y-%m-%d') as classStartDate,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+
                             FROM \`class_data\`
                             ${searchType}${searchLevel}
                             ${sort}
                             LIMIT  ${(page-1)*perPage}, ${perPage}`
+
             return db.queryAsync(sql);
         }
     })
@@ -202,7 +218,7 @@ router.get('/class/:classId',(req,res)=>{
     req.body.classStartDate = 開課日期(input type="datetime-local")
     req.body.classEndDate = 結訓日期(input type="datetime-local")
     req.body.classPrice = 課程售價(6位數)
-    req.body.classIntroduction = 課程簡介(30字內)
+    req.body.classIntroduction = 課程簡介(70字內)
     req.body.classDesc = 課程說明(3000字內)
     req.body.classMAXpeople = 最大人數(3位數)
     req.body.classImg = 課程圖片 (png,jpg,gif)
@@ -218,6 +234,7 @@ router.get('/class/:classId',(req,res)=>{
 */
 
 router.post('/seller/class',upload.single('classImg'),(req,res)=>{
+    req.session.seller_id = 'S20010003'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -278,7 +295,7 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
             data.msg='課程簡介不可為空白';
             res.json(data)
             break;
-        case req.body.classIntroduction.length > 30:
+        case req.body.classIntroduction.length > 70:
             data.msg='課程簡介過長';
             res.json(data)
             break;
