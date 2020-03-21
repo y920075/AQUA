@@ -442,12 +442,14 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
                 classIntroduction =     課程簡介
                 classImg =              課程圖片連結
                 classPrice =            課程售價
+                classNowPeople =        現在人數
             }
         ]
     }
 */
 
 router.get('/seller/class',(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status' : '401',
         'msg' : '尚未登入'
@@ -474,7 +476,7 @@ router.get('/seller/class',(req,res)=>{
                 if (page<1) page=1;
                 if (page>totalPages) page=totalPages;
 
-                const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classStartDate\`,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+                const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,DATE_FORMAT(\`classStartDate\`,'%Y-%m-%d') as classStartDate,\`classIntroduction\`,\`classImg\`,\`classPrice\`,\`classNowPeople\`
                                 FROM \`class_data\`
                                 WHERE \`seller_id\` = '${req.session.seller_id}'
                                 ${searchType}${searchLevel}
