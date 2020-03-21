@@ -13,14 +13,24 @@ router.use(bodyParser.json());
 
 //取得所有類型與等級資料
 router.get('/classtype/level',async (req,res)=>{
-    const sql = `SELECT \`class_type\`.\`classTypeId\`,\`class_type\`.\`classTypeName\`,\`class_level\`.\`classLevelId\`,\`class_level\`.\`classLevel\`
-    FROM \`class_type\`
-    INNER JOIN \`class_level\`
-    USING(\`classTypeId\`)`
 
-    const sql2 = `SELECT \`classTypeId\`,\`classTypeName\` FROM \`class_type\``
+    if ( req.query.onlyType ) {
+        const sql = `SELECT \`classTypeId\`,\`classTypeName\` FROM \`class_type\``
+        res.json(await db.queryAsync(sql))
 
-    res.json(await db.queryAsync(sql))
+    } else if (req.query.getLevel){
+        const sql = `SELECT \`classLevelId\`,\`classLevel\` FROM \`class_level\` WHERE \`classTypeId\` = '${req.query.getLevel}'`
+        res.json(await db.queryAsync(sql))
+
+    } else {
+        const sql = `SELECT \`class_type\`.\`classTypeId\`,\`class_type\`.\`classTypeName\`,\`class_level\`.\`classLevelId\`,\`class_level\`.\`classLevel\`
+        FROM \`class_type\`
+        INNER JOIN \`class_level\`
+        USING(\`classTypeId\`)`
+        res.json(await db.queryAsync(sql))
+
+    }
+
 
 })
 //查詢列表資料
@@ -234,7 +244,7 @@ router.get('/class/:classId',(req,res)=>{
 */
 
 router.post('/seller/class',upload.single('classImg'),(req,res)=>{
-    req.session.seller_id = 'S20010003'
+    req.session.seller_id = 'S20010001'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
