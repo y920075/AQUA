@@ -10,7 +10,7 @@ import CouponDetail from './CouponDetail'
 
 //redux相關
 
-import {getSellerCouponAsync} from '../../../actions/index'
+import {getSellerCouponAsync} from '../../../../actions/seller/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 

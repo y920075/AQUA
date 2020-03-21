@@ -1,6 +1,6 @@
 import React from 'react'
-import Avajpg from '../../image/20180615_201523.jpg'
-import Logo from '../../image/AQUA.svg'
+import Avajpg from '../../../image/20180615_201523.jpg'
+import Logo from '../../../image/AQUA.svg'
 // import Menu from './SidebarBox/Menu'
 
 import { Route, Switch } from 'react-router-dom'

@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "acorn": "^7.1.1",
     "aos": "^3.0.0-beta.6",
-    "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
     "minimist": "^1.2.5",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
@@ -22,7 +22,8 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

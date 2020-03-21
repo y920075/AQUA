@@ -1,7 +1,7 @@
 import React from 'react'
 import Navgation from './components/Navgation'
 import { BrowserRouter as Router,Route,Switch } from 'react-router-dom'
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { Home } from '../AQUA_ChinDai/Home';
 // import { Logout } from '../AQUA_ChinDai/Logout';
 // import { NoMatch } from '../AQUA_ChinDai/NoMatch';
