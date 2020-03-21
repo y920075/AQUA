@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
 //引入自訂元件
-import EventWeatherContent from './EventWeatherContent'
+import EventWeatherContent from './EventWeatherContent' //天氣資料的框框
 
+//傳入參數 props.eventData = 活動詳細資料
+//傳入參數 props.weatherData = 當地天氣資料
+//2020-03-21
 function EventDetailDataContent(props) {
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState(0) //計算進度條用的state
 
   useEffect(() => {
     const progressNum =

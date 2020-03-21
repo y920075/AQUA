@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
+//傳入參數 props.weatherData = 當地天氣資料
+//2020-03-21
 function EventWeatherContent(props) {
-  const [weatherData, setWeatherData] = useState([])
+  const [weatherData, setWeatherData] = useState([]) //存放天氣資料的陣列
 
+  //取出天氣資料存放到本地state
   useEffect(() => {
     const nowWeatherDataArr = []
+    //如果天氣資料存在
     if (props.weatherData[0]) {
+      //push到新陣列
       nowWeatherDataArr.push(props.weatherData[0]['1day'])
       nowWeatherDataArr.push(props.weatherData[0]['2day'])
       nowWeatherDataArr.push(props.weatherData[0]['3day'])

@@ -10,12 +10,17 @@ import { bindActionCreators } from 'redux'
 import { getclassDetailDataAsync } from '../../actions/class/class_Actions'
 
 //引入自訂元件
-import Header from '../../components/Header'
-import Banner from '../../components/Banner'
-import Footer from '../../components/Footer'
-import Loading from '../../components/class/Loading'
-import ClassDetailDataContent from '../../components/class/ClassDetailDataContent'
+import Header from '../../components/Header' //導航列
+import Banner from '../../components/Banner' //橫幅廣告
+import Footer from '../../components/Footer' //頁腳
+import Loading from '../../components/class/Loading' //載入中圖示
+import ClassDetailDataContent from '../../components/class/ClassDetailDataContent' //課程詳細資料框
 
+/*
+  store參數 props.classDetailData = 課程詳細資料
+  store方法 props.getclassDetailDataAsync() = 向伺服器取得課程詳細資料
+  2020-03-21
+*/
 function ClassDetail(props) {
   const [classData, setClassData] = useState({}) //存放課程資料的物件
   const [classCoachData, setClassCoachData] = useState([]) //存放教練資料的陣列

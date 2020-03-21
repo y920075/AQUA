@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+/*
+  傳入參數 props.classData = 課程資料列表
+  2020-03-21
+*/
 function ClassDataList(props) {
   return (
     <>

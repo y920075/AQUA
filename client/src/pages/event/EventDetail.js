@@ -10,12 +10,14 @@ import { bindActionCreators } from 'redux'
 import { getEventDetailDataAsync } from '../../actions/event/event_Actions'
 
 //引入自訂元件
-import Header from '../../components/Header'
-import Banner from '../../components/Banner'
-import Footer from '../../components/Footer'
-import Loading from '../../components/class/Loading'
-import EventDetailDataContent from '../../components/event/EventDetailDataContent'
+import Header from '../../components/Header' //導航列
+import Banner from '../../components/Banner' //橫幅廣告
+import Footer from '../../components/Footer' //頁腳
+import Loading from '../../components/class/Loading' //載入中圖示
+import EventDetailDataContent from '../../components/event/EventDetailDataContent' //活動詳細資料框
 
+//store參數 props.eventDetailData = 活動詳細資料
+//2020-03-21
 function EventDetail(props) {
   const [eventData, setEventData] = useState([]) //存放活動詳細資料的state
   const [weatherData, setWeatherData] = useState([]) //存放天氣資料的state

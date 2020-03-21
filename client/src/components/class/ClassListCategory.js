@@ -1,5 +1,10 @@
 import React from 'react'
 
+/*
+  傳入參數 props.classTypeData = 課程類型列表
+  傳入方法 props.getClassData() = 向伺服器取得新資料
+  2020-03-21
+*/
 function ClassListCategory(props) {
   //類別選單的點擊active事件
   function typeMenuActive(event) {

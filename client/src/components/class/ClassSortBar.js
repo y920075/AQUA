@@ -1,5 +1,9 @@
 import React from 'react'
 
+/*
+  傳入方法 props.getClassData() = 向伺服器取得新資料
+  2020-03-21
+*/
 function ClassSortBar(props) {
   return (
     <>

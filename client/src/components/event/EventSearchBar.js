@@ -1,5 +1,7 @@
 import React from 'react'
 
+//傳入方法 props.getEventData() = 向伺服器請求新的資料
+//2020-03-21
 function EventSearchBar(props) {
   return (
     <>

@@ -12,15 +12,22 @@ import {
 } from '../../actions/class/class_Actions'
 
 //引入自訂元件
-import Header from '../../components/Header'
-import Banner from '../../components/Banner'
-import Footer from '../../components/Footer'
-import Loading from '../../components/class/Loading'
-import ClassDataList from '../../components/class/ClassDataList'
-import ClassSortBar from '../../components/class/ClassSortBar'
-import ClassListCategory from '../../components/class/ClassListCategory'
-import EventPageButtons from '../../components/event/EventPageButtons'
+import Header from '../../components/Header' //導航列
+import Banner from '../../components/Banner' //橫幅廣告
+import Footer from '../../components/Footer' //頁腳
+import Loading from '../../components/class/Loading' //載入中圖示
+import ClassDataList from '../../components/class/ClassDataList' //課程資料列表
+import ClassSortBar from '../../components/class/ClassSortBar' //課程排序框
+import ClassListCategory from '../../components/class/ClassListCategory' //課程類別選單
+import EventPageButtons from '../../components/event/EventPageButtons' //課程頁數按鈕
 
+/*
+  store參數 props.classTypeData = 課程類別資料
+  store參數 props.classData = 課程列表資料
+  store方法 props.getClassDataAsync() = 取得課程資料
+  store方法 props.getTypeLevelDataAsync() = 取得課程類型資料
+  2020-03-21
+*/
 function Class(props) {
   const [classData, setClassData] = useState([]) //存放課程列表的陣列
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中

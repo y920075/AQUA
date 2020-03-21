@@ -1,5 +1,10 @@
 import React from 'react'
 
+/*
+  傳入參數 props.classData = 課程資料列表
+  傳入參數 props.classCoachData = 教練資料列表
+  2020-03-21
+*/
 function ClassDetailDataContent(props) {
   return (
     <>

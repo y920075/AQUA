@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function EventContent(props) {
+//傳入參數 props.eventData = 存放活動資料的陣列
+//2020-03-21
+function EventDataList(props) {
   return (
     <>
       <div className="row">
         {props.eventData && props.eventData.length > 0 ? (
           props.eventData.map((value, index) => {
+            // 變數 status = 判斷目前人數或時間決定顯示什麼
             let status = '火熱揪團中'
             let progress = (value.eventNowPeople / value.eventNeedPeople) * 100
 
@@ -94,4 +97,4 @@ function EventContent(props) {
   )
 }
 
-export default EventContent
+export default EventDataList
