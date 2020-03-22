@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-//引入 sweetalert2 套件
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-const MySwal = withReactContent(Swal)
+import SweetAlert from './Sweetalert2'
 
 /*
     傳入參數
@@ -46,19 +43,13 @@ function AddClassContent(props) {
   useEffect(() => {
     if (response) {
       if (props.addClassDataResponse.status === 201) {
-        MySwal.fire({
-          icon: 'success',
-          title: '已成功新增一筆資料!',
-          showConfirmButton: false,
-          timer: 1500,
-        })
+        SweetAlert.success('已成功新增一筆資料!')
         setResponse(false)
       } else {
-        MySwal.fire({
-          icon: 'error',
-          title: `錯誤代碼：${props.addClassDataResponse.status}`,
-          text: `錯誤訊息：${props.addClassDataResponse.msg}`,
-        })
+        SweetAlert.errorAlert(
+          props.addClassDataResponse.status,
+          props.addClassDataResponse.msg
+        )
         setResponse(false)
       }
     }
@@ -89,19 +80,12 @@ function AddClassContent(props) {
     }
 
     //跳出確認視窗
-    MySwal.fire({
-      title: '確定要送出嗎?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '送出',
-    }).then(async result => {
-      if (result.value) {
-        await props.addClassData(ClassFormData)
-        setResponse(true) //設定response資料為true
-      }
-    })
+    SweetAlert.sendConfirm(
+      '確定要送出嗎?',
+      props.addClassData(ClassFormData),
+      setResponse,
+      true
+    )
   }
 
   return (
