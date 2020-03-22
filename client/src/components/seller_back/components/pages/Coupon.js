@@ -6,7 +6,7 @@ import { Link, withRouter } from 'react-router-dom'
 import $ from "jquery";
 import Loading from '../components/Loading'
 import CouponDetail from './CouponDetail'
-
+import './Style/AllSeller.scss'
 
 //redux相關
 
@@ -81,11 +81,11 @@ function Coupon(props) {
     }
 
   return (  
-    <div className="container">    
+    <div className="container main-style-chin">    
           <div className="row mt-5 ml-5">
             <div className="col-sm-12 bgSet text-white rounded">
             <div>
-            <div className="d-flex justify-content-between">
+            <div className="d-flex bgSet justify-content-between ">
             <h2>ToolBox</h2>
             <button  onClick={() => togglePanel(!showPanel)}>
             <i className="fas fa-sort-down"></i>           
@@ -94,43 +94,30 @@ function Coupon(props) {
           
             { showPanel ?  
             
-            (<div className="row">
-            <div className="col-sm-5 ml-5 text-center">
-            {/* <Form className="form-center">
-            
-            
-              <div className="d-flex">
-              <FormControl name="searchStart" type="text" placeholder="Search" className="" />
-              <button className="bgSet"> <i className="fas fa-search text-white"></i></button>
-              </div>
+            (
            
-             
-              </Form> */}
-
-            </div>
-            <div className="col-sm-5 text-center ml-5">
-            {/* <div className="d-flex">
-              
-              <FormControl name="searchEnd" type="text" placeholder="Search" className="" />
-              <button className="bgSet">  <i className="fas fa-search text-white"></i></button>
-              </div>
-            */}
-      
-            </div>
             <div className="row text-center">
-            <div className="col-sm-12 input-style-chin">
+            <div className="col-sm-6 input-style-chin">
             <Link
-                  className="text-white" to="/coupon/coupon_add">
+                  className="text-white" to="coupon/coupon_add">
                       <span className="btn bg-btn-chin text-white">
                       新增優惠
 
                       </span>
             </Link>
             </div>
-           
+            <div className="col-sm-6 input-style-chin">
+            <Link
+                  className="text-white" to="coupon/coupon_add_givi">
+                      <span className="btn bg-btn-chin text-white">
+                      贈品設定
+
+                      </span>
+            </Link>
+            </div>
             </div>
             
-            </div>
+           
             
             )
               : (<h2 hidden>non show</h2>) }
@@ -142,9 +129,9 @@ function Coupon(props) {
       <div className="row mt-3 ml-5">
       <div className="col-sm-12 col-lg-12">
       
-      <ul className="nav nav-tabs justify-content-around bgSet  couponMenu">
+      <ul className="nav nav-tabs justify-content-around bgSet couponMenu">
         <li
-        className="nav-item "
+        className="nav-item tabBar-chin"
         onClick={event => {
                     typeMenuActive(event)
                     getCouponData()
@@ -157,7 +144,7 @@ function Coupon(props) {
         </span>
         </li>
         <li 
-        className="nav-item"
+        className="nav-item tabBar-chin"
         onClick={event => {
                     typeMenuActive(event)
                     getCouponData()
@@ -168,7 +155,7 @@ function Coupon(props) {
         >商品優惠</span>
         </li>
         <li 
-        className="nav-item"
+        className="nav-item tabBar-chin"
         onClick={event => {
                     typeMenuActive(event)
                     getCouponData()
@@ -213,7 +200,7 @@ function Coupon(props) {
   }
 
   const mapStateToProps = store => {
-    return { coupon: store.coupon }
+    return { coupon: store.sellerReducer.coupon }
   }
   
   // 指示dispatch要綁定哪些action creators

@@ -9,7 +9,8 @@ import './components/Navbar.scss'
 import '../../style/variable.scss'
 import Container from './components/Container'
 
-function SellerBack() {
+function SellerBack(props) {
+  console.log(props)
   return (
     <React.Fragment>
     <Router>

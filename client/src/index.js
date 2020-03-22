@@ -12,10 +12,9 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 // import { blogReducer } from './reducers/blog/blog_Reducers'
 import { classReducer } from './reducers/class/class_Reducers'
 import { eventReducer } from './reducers/event/event_Reducers'
-import { sellerReducer } from './reducers/seller/index'
 // import { itemReducer } from './reducers/item/item_Reducers'
 // import { memberReducer } from './reducers/member/member_Reducers'
-
+import { sellerReducer } from './reducers/seller/sellerReducer'
 //引入中介軟體
 import thunk from 'redux-thunk'
 

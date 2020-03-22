@@ -263,18 +263,16 @@ export const insertSellerNewInsertCoupon = coupInsertData => ({
   type: 'COUPON_INSERT',
   value: coupInsertData,
 })
-export const insertSellerNewInsertCouponAsync = (coupData, callback) => {
-  console.log(coupData)
+export const insertSellerNewInsertCouponAsync = (coupFormData, callback) => {
+  console.log(coupFormData)
   return async dispatch => {
+  
     const request = new Request(
       'http://localhost:5000/seller/coupon/insert_coup_data',
       {
         method: 'POST',
-        body: JSON.stringify(coupData),
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
+        body:coupFormData,
+      
       }
     )
 
@@ -287,6 +285,40 @@ export const insertSellerNewInsertCouponAsync = (coupData, callback) => {
     callback()
   }
 }
+
+
+//贈品新增動作函數
+
+export const addGiviData = data => ({
+    type: 'ADD_GIVIDATA',
+    value: data,
+  })
+  
+  export const addGiviDataAsync = GiviFormData => {
+    console.log(GiviFormData)
+    return async dispatch => {
+      const givi_fd = new FormData()
+      givi_fd.append('givi_cate_id', GiviFormData.givi_cate_id)
+      givi_fd.append('givi_name', GiviFormData.givi_name)
+      givi_fd.append('givi_img', GiviFormData.givi_img_upload)
+      givi_fd.append('givi_num', GiviFormData.givi_num)
+      
+  
+      const request = new Request(`http://localhost:5000/seller/coupon/coupon_givi`, {
+        method: 'POST',
+        body: givi_fd,
+      })
+  
+      const response = await fetch(request)
+      const data = await response.json()
+      console.log(data)
+      dispatch(addGiviData(data))
+    }
+  }
+
+
+
+
 // //優惠券更新動作函數
 
 // export const sellerCouponUpdate = couponData => ({

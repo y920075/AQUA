@@ -284,7 +284,7 @@ function SellerEdit(props) {
 }
 // 取得Redux中isAuth的值
 const mapStateToProps = store => {
-    return { sellerEdit: store.sellerEdit,sellerUpdate: store.sellerUpdate }
+    return { sellerEdit: store.sellerReducer.sellerEdit,sellerUpdate: store.sellerReducer.sellerUpdate }
   }
   
   // 指示dispatch要綁定哪些action creators

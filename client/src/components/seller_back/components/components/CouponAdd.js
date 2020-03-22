@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { FormControl,Form } from 'react-bootstrap'
 
+
+import './Styles/CouponAdd.scss'
 import Loading from './Loading'
 
 import $ from "jquery";
@@ -64,9 +66,9 @@ function CouponAdd(props) {
         <div className="container">    
         <div className="my-5"></div>
             <div className="row mt-3 ml-5">
-              <div className="col-sm-10">
+              <div className="col-sm-12">
               
-              <ul className="nav nav-tabs justify-content-around bgSet couponMenu">
+              <ul className="nav nav-tabs justify-content-around tab-main-add-chin border-main-chin couponMenu">
                 <li
                 className="nav-item "
                 onClick={event => {
@@ -109,7 +111,7 @@ function CouponAdd(props) {
                 </ul>
                 </div>
                 </div>
-            <div className="row mt-3 ml-5">
+            <div className="row mt-3 ml-5 tab-main-add-content-chin input-style-chin text-center">
            
 
 
@@ -132,7 +134,7 @@ function CouponAdd(props) {
     )
 }
 const mapStateToProps = store => {
-    return { coupon: store.coupon }
+    return { coupon: store.sellerReducer.coupon }
   }
   
   // 指示dispatch要綁定哪些action creators

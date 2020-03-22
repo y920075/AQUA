@@ -57,6 +57,15 @@ const sellerInfo = (state = {}, action) => {
   }
 }
 
+const giviAdd =  (state = {},action) => {
+    switch (action.type) {
+        case 'ADD_GIVIDATA':
+            return action.value
+        default:
+            return state
+    }
+}
+
 //----------------------賣家中心課程相關reducer----------------
 
 const sellerClassData = (state = {}, action) => {
@@ -149,6 +158,7 @@ const sellerReducer = combineReducers({
   sellerInfo,
   coupon,
   couponInsert,
+  giviAdd,
   sellerClassData,
   cityData,
   distData,

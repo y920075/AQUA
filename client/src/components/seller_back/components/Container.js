@@ -6,6 +6,8 @@ import Logo from '../../../image/AQUA.svg'
 import { Route, Switch } from 'react-router-dom'
 import MenuUI from './SidebarBox/MenuUI'
 
+
+import './pages/Style/AllSeller.scss'
 //引入個別內容頁的component
 import MainPage from './pages/MainPage'
 import Info from './pages/Info'
@@ -16,11 +18,13 @@ import SellerClass from '../../../pages/class/SellerClass'
 import SellerEditClass from '../../../pages/class/SellerEditClass'
 import SellerEdit from './components/SellerEdit'
 import CouponEdit from './components/CouponEdit'
+import CouponAddGivi from './components/CouponAddGivi'
 
 import CouponAdd from './components/CouponAdd'
-function Container() {
-  return (
-    <>
+function Container(props) {
+  console.log(props)
+    return (
+     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-xl-2 col-lg-3 col-md-4 sidebar">
@@ -39,49 +43,55 @@ function Container() {
               </div>
               <span className="text-white mr-2 mt-3">Chin Dai</span>
             </div>
-            {/* <Menu/>    */}
-            <MenuUI />
-          </div>
-          <div className="col-xl-10 col-lg-9 col-md-8">
-            <Switch>
-              <Route path="/coupon/couponedit">
-                <CouponEdit />
-              </Route>
-              <Route path="/info/selleredit">
-                <SellerEdit />
-              </Route>
-              <Route path="/coupon/coupon_add">
-                <CouponAdd />
-              </Route>
-              <Route path="/info">
-                {/* <Info   loginStatus={login}
+        {/* <Menu/>    */}
+        <MenuUI/>
+      </div>
+      <div className="col-xl-10 col-lg-9 col-md-8 main-style-chin">
+
+      <Switch>
+      <Route path="/seller/coupon/couponedit">
+        <CouponEdit/>
+      </Route>
+      <Route path="/seller/info/selleredit">
+        <SellerEdit/>
+      </Route>
+      <Route path="/seller/coupon/coupon_add_givi">
+        <CouponAddGivi/>
+      </Route>
+      <Route path="/seller/coupon/coupon_add">
+        <CouponAdd/>
+        </Route>
+      <Route path="/seller/info">
+          {/* <Info   loginStatus={login}
                 trigger={() => {
                   setLogin(!login)
                 }}/> */}
-                <Info />
-              </Route>
-              <Route path="/coupon">
-                <Coupon />
-              </Route>
-
-              <Route path="/message">
-                <Message />
-              </Route>
-              <Route path="/order">
-                <Order />
-              </Route>
-              <Route path="/seller/class/:classId">
+                <Info/>
+      </Route>
+      <Route path="/seller/coupon">
+          <Coupon />
+        </Route>
+     
+      <Route path="/seller/message">
+          <Message />
+        </Route>
+        <Route path="/seller/order">
+          <Order />
+        </Route>
+        <Route path="/seller/class/:classId">
                 <SellerEditClass />
               </Route>
-              <Route path="/seller/class">
-                <SellerClass />
-              </Route>
-              <Route path="/">
-                <MainPage />
-              </Route>
-            </Switch>
-          </div>
-        </div>
+        <Route path="/seller/class">
+          <SellerClass />
+        </Route>
+        <Route path="/seller"> 
+        
+        <MainPage/>
+        </Route>
+     
+      </Switch>
+      </div>
+      </div>
       </div>
     </>
   )
