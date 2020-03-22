@@ -43,23 +43,26 @@ function ManageClassContent(props) {
         <Loading />
       ) : (
         <>
-          <div class="row">
+          <div className="row">
             {!props.sellerClassData.status ? (
               <h2>查無相關資料</h2>
             ) : (
               props.sellerClassData.result.map((value, index) => {
                 return (
                   <>
-                    <div class="col-sm-4">
-                      <div class="card">
+                    <div className="col-sm-4">
+                      <div className="card" key={index}>
                         <div className="classSellerImgBox card-img-top">
                           <img
-                            src="http://127.0.0.1:5000/images/classImg/noImg.jpg"
+                            src={
+                              'http://127.0.0.1:5000/images/classImg/' +
+                              value.classImg
+                            }
                             alt=""
                           />
                         </div>
-                        <div class="card-body">
-                          <h2 class="card-title">{value.className}</h2>
+                        <div className="card-body">
+                          <h2 className="card-title">{value.className}</h2>
                           <ul className="">
                             <li>
                               <img
@@ -99,12 +102,12 @@ function ManageClassContent(props) {
                             </li>
                           </ul>
                           <div className="buttons d-flex">
-                            <Link class="btn btn-outline-primary">
-                              <i class="fas fa-edit"></i>
+                            <Link className="btn btn-outline-primary">
+                              <i className="fas fa-edit"></i>
                             </Link>
-                            <Link class="btn btn-outline-primary">
-                              <i class="far fa-trash-alt"></i>
-                            </Link>
+                            <button className="btn btn-outline-primary">
+                              <i className="far fa-trash-alt"></i>
+                            </button>
                           </div>
                         </div>
                       </div>
