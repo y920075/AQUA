@@ -15,7 +15,6 @@ class SweetAlert {
       cancelButtonColor: '#d33',
       confirmButtonText: '送出',
     }).then(async result => {
-      console.log(result)
       if (result.value) {
         if (callback) await callback(callBackData)
         if (setStateFunc && stateData) setStateFunc(stateData)

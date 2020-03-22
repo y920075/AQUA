@@ -574,6 +574,8 @@ router.get('/seller/class',(req,res)=>{
 */
 
 router.get('/seller/class/:classId',(req,res)=>{
+    req.session.seller_id = 'S20010001'
+
     const data = {
         'status' : 404,
         'msg' :　'查無資料',

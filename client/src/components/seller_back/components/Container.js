@@ -12,7 +12,8 @@ import Info from './pages/Info'
 import Coupon from './pages/Coupon'
 import Message from './pages/Message'
 import Order from './pages/Order'
-import SellerClass from './pages/SellerClass'
+import SellerClass from '../../../pages/class/SellerClass'
+import SellerEditClass from '../../../pages/class/SellerEditClass'
 import SellerEdit from './components/SellerEdit'
 import CouponEdit from './components/CouponEdit'
 
@@ -68,6 +69,9 @@ function Container() {
               </Route>
               <Route path="/order">
                 <Order />
+              </Route>
+              <Route path="/seller/class/:classId">
+                <SellerEditClass />
               </Route>
               <Route path="/seller/class">
                 <SellerClass />

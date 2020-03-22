@@ -505,8 +505,29 @@ export const delClassDataAsunc = classId => {
 
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(delClassData(data))
+  }
+}
+
+//取得單一筆詳細資料
+export const getSellerClassDetailData = data => ({
+  type: 'GET_CLASSDETAILDATA_FORSELLER',
+  value: data,
+})
+
+export const getSellerClassDetailDataAsync = classId => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/seller/class/${classId}`,
+      {
+        method: 'GET',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(getSellerClassDetailData(data))
   }
 }
 

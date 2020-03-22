@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import SweetAlert from './Sweetalert2'
 
-import Loading from '../../../../class/Loading' //載入中圖示
-import EventPageButtons from '../../../../event/EventPageButtons'
+import Loading from '../Loading' //載入中圖示
+import EventPageButtons from '../../event/EventPageButtons'
 
 /*
   傳入參數
@@ -145,6 +145,7 @@ function ManageClassContent(props) {
                             <Link
                               className="btn btn-outline-primary"
                               data-id={value.classId}
+                              to={'/seller/class/' + value.classId}
                             >
                               <i
                                 className="fas fa-edit"
