@@ -452,7 +452,6 @@ export const addClassData = data => ({
 })
 
 export const addClassDataAsunc = formData => {
-  console.log(formData)
   return async dispatch => {
     const fd = new FormData()
     fd.append('className', formData.className)
@@ -475,7 +474,6 @@ export const addClassDataAsunc = formData => {
 
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(addClassData(data))
   }
 }
