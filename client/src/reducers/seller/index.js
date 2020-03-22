@@ -122,6 +122,15 @@ const delClassDataResponse = (state = {}, action) => {
   }
 }
 
+const editClassDataResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'EDIT_CLASSDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
 const SellerClassDetailData = (state = {}, action) => {
   switch (action.type) {
     case 'GET_CLASSDETAILDATA_FORSELLER':
@@ -148,6 +157,7 @@ const sellerReducer = combineReducers({
   addClassDataResponse,
   delClassDataResponse,
   SellerClassDetailData,
+  editClassDataResponse,
 })
 
 export { sellerReducer }
