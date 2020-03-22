@@ -6,6 +6,8 @@ import Logo from '../../../image/AQUA.svg'
 import { Route, Switch } from 'react-router-dom'
 import MenuUI from './SidebarBox/MenuUI'
 
+
+import './pages/Style/AllSeller.scss'
 //引入個別內容頁的component
 import MainPage from './pages/MainPage'
 import Info from './pages/Info'
@@ -15,9 +17,11 @@ import Order from './pages/Order'
 import Class from './pages/Class'
 import SellerEdit from './components/SellerEdit'
 import CouponEdit from './components/CouponEdit'
+import CouponAddGivi from './components/CouponAddGivi'
 
 import CouponAdd from './components/CouponAdd'
-function Container() {
+function Container(props) {
+  console.log(props)
     return (
      <>
       <div className="container-fluid">
@@ -36,39 +40,42 @@ function Container() {
         {/* <Menu/>    */}
         <MenuUI/>
       </div>
-      <div className="col-xl-10 col-lg-9 col-md-8">
+      <div className="col-xl-10 col-lg-9 col-md-8 main-style-chin">
 
       <Switch>
-      <Route path="/coupon/couponedit">
+      <Route path="/seller/coupon/couponedit">
         <CouponEdit/>
       </Route>
-      <Route path="/info/selleredit">
+      <Route path="/seller/info/selleredit">
         <SellerEdit/>
       </Route>
-      <Route path="/coupon/coupon_add">
+      <Route path="/seller/coupon/coupon_add_givi">
+        <CouponAddGivi/>
+      </Route>
+      <Route path="/seller/coupon/coupon_add">
         <CouponAdd/>
         </Route>
-      <Route path="/info">
+      <Route path="/seller/info">
           {/* <Info   loginStatus={login}
                 trigger={() => {
                   setLogin(!login)
                 }}/> */}
                 <Info/>
       </Route>
-      <Route path="/coupon">
+      <Route path="/seller/coupon">
           <Coupon />
         </Route>
      
-      <Route path="/message">
+      <Route path="/seller/message">
           <Message />
         </Route>
-        <Route path="/order">
+        <Route path="/seller/order">
           <Order />
         </Route>
-        <Route path="/class">
+        <Route path="/seller/class">
           <Class />
         </Route>
-        <Route path="/"> 
+        <Route path="/seller"> 
         
         <MainPage/>
         </Route>

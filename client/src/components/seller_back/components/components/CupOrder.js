@@ -151,9 +151,9 @@ function CupOrder(props) {
    
     return (
       
-    <form name="form1">
-            <div className="container-fluid border-dark">
-            <div className="row text-center">
+    <form name="form1 input-style-chin">
+            <div className="container">
+            <div className="row">
                 <div className="col-lg-6 input-style-chin">
                 <div className="form-group my-3 input-text-middle-chin">
                 
@@ -368,14 +368,14 @@ function CupOrder(props) {
                 {/* </Link> */}
                 </div>
                 </div>
-                </div> 
+                </div>
                         
     </form>
         
     )
 }
 const mapStateToProps = store => {
-    return { couponInsert : store.couponInsert  }
+    return { couponInsert : store.sellerReducer.couponInsert  }
   }
   
   // 指示dispatch要綁定哪些action creators

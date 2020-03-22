@@ -1,0 +1,26 @@
+@import '../../../../../style/variable.scss';
+.border-main-chin {
+  border: 4px solid $aquacolorfour;
+}
+.tab-main-add-chin {
+  background: $aquabackground;
+  border-radius: 2rem 2rem 0 0;
+  cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    color: $aquacolortwo;
+  }
+}
+.tab-main-add-content-chin {
+  border: 4px solid $aquacolortwo;
+  border-radius: 2rem 2rem 0 0;
+  &:hover {
+    color: $aquacolortwo;
+  }
+}
+.input-style-chin {
+  text-align: center;
+  vertical-align: middle;
+  padding-left: 4rem;
+}

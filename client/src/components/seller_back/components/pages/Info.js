@@ -31,56 +31,54 @@ function Info(props) {
   //使用Object.key進行拆解
 
   const sellerInfoData_left = 
-    props.sellerInfo.status === 404 ? (
-      <h2>沒有相關資料</h2>
+    props.sellerInfo ? ( Object.keys(props.sellerInfo).map(key => {
+      if(key === 'basic_info') {
+        const basic_info = props.sellerInfo[key]
+        return basic_info.map((value,index)=>{
+          console.log(JSON.parse(value.shop_img))
+          return(
+        <div className="col-lg-6" key={index} >
+          <div className="pb-3 flex-column text-center">
+                <div className="mb-3">
+                <div>
+                <figure>
+                <img alt="" src={ "http://localhost:5000/" + value.seller_img} height="150" width="150" className="rounded-circle mr-3"/> 
+                </figure>
+                </div>
+                <div>
+                <i className="fas fa-user-circle mt-3 font-middle-chin"></i>
+                </div>
+                </div>
+                  <span className="text-dark mr-2 mt-3 font-middle-chin">{value.seller_name}</span>
+                </div>
+                <hr />
+    
+                <div className="d-flex mx-3 my-4 font-middle-chin text-center">
+                <p className="mx-4 mt-3"><i className="fas fa-user-alt mx-3"></i>賣家帳號:</p>
+                <p className="card-text mt-3 mx-3">	
+                  {value.seller_account}</p>
+                </div>
+                <div className="d-flex mx-3 my-4 font-middle-chin">
+                <p className="mx-4"><i className="fas fa-unlock-alt mx-3"></i>賣家密碼:</p>
+                <p className="card-text mx-3">{value.seller_password}</p>
+                </div>
+                <div className="d-flex mb-3 mx-3 my-4 font-middle-chin">
+                <p className="mx-4"><i className="fas fa-toggle-on mx-3"></i>帳號狀態:</p>
+                <p className="card-text mx-3">{value.seller_status}</p>
+                </div>
+               
+          </div>
+          )
+          
+        })
+      }
+    })
     ) : (
-      Object.keys(props.sellerInfo).map(key => {
-        if(key === 'basic_info') {
-          const basic_info = props.sellerInfo[key]
-          return basic_info.map((value,index)=>{
-            console.log(JSON.parse(value.shop_img))
-            return(
-          <div className="col-lg-6" key={index} >
-            <div className="pb-3 flex-column text-center">
-                  <div className="mb-3">
-                  <div>
-                  <figure>
-                  <img alt="" src={ "http://localhost:5000/" + value.seller_img} height="150" width="150" className="rounded-circle mr-3"/> 
-                  </figure>
-                  </div>
-                  <div>
-                  <i className="fas fa-user-circle mt-3 font-middle-chin"></i>
-                  </div>
-                  </div>
-                    <span className="text-dark mr-2 mt-3 font-middle-chin">{value.seller_name}</span>
-                  </div>
-                  <hr />
-      
-                  <div className="d-flex mx-3 my-4 font-middle-chin text-center">
-                  <p className="mx-4 mt-3"><i className="fas fa-user-alt mx-3"></i>賣家帳號:</p>
-                  <p className="card-text mt-3 mx-3">	
-                    {value.seller_account}</p>
-                  </div>
-                  <div className="d-flex mx-3 my-4 font-middle-chin">
-                  <p className="mx-4"><i className="fas fa-unlock-alt mx-3"></i>賣家密碼:</p>
-                  <p className="card-text mx-3">{value.seller_password}</p>
-                  </div>
-                  <div className="d-flex mb-3 mx-3 my-4 font-middle-chin">
-                  <p className="mx-4"><i className="fas fa-toggle-on mx-3"></i>帳號狀態:</p>
-                  <p className="card-text mx-3">{value.seller_status}</p>
-                  </div>
-                 
-            </div>
-            )
-            
-          })
-        }
-      })
+      <h2>沒有相關資料</h2>
+
     )
 const sellerInfoData_right = 
-props.sellerInfo.status === 404 ? (
-  <h2>沒有相關資料</h2>
-) : (
+props.sellerInfo ? (
   Object.keys(props.sellerInfo).map(key=>{
     if(key === 'basic_info') {
       const basic_info = props.sellerInfo[key]
@@ -108,6 +106,8 @@ props.sellerInfo.status === 404 ? (
       })
     }
   })
+) : ( <h2>沒有相關資料</h2>
+  
 )
 
   return (
@@ -138,7 +138,7 @@ props.sellerInfo.status === 404 ? (
   )}
 // 取得Redux歸納函式中的值
 const mapStateToProps = store => {
-    return { sellerInfo: store.sellerInfo }
+    return { sellerInfo: store.sellerReducer.sellerInfo }
   }
   
   // 指示dispatch要綁定哪些action creators

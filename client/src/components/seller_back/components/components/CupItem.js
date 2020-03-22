@@ -191,16 +191,7 @@ function CupItem(props) {
                 
                  
                     </select>
-                <input
-                    readOnly 
-                    type="text"
-                    name="coup_cate_id"
-                    className="form-control my-3"
-                    id="nameInput"
-                    aria-describedby="nameHelp"
-                    defaultValue= {coup_cate_id}
-                    onChange={event =>setCoup_cate_id(event.target.value)}                  
-                />
+              
                 </div>
                 </div>
                 </div>
@@ -411,7 +402,7 @@ function CupItem(props) {
 
 
 const mapStateToProps = store => {
-    return { couponInsert : store.couponInsert  }
+    return { couponInsert : store.sellerReducer.couponInsert  }
   }
   
   // 指示dispatch要綁定哪些action creators

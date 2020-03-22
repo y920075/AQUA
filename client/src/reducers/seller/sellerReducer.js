@@ -56,13 +56,23 @@ const sellerInfo = (state = {},action) => {
             return state
     }
 }
+
+const giviAdd =  (state = {},action) => {
+    switch (action.type) {
+        case 'ADD_GIVIDATA':
+            return action.value
+        default:
+            return state
+    }
+}
 // 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
-const rootReducer = combineReducers({
+const sellerReducer = combineReducers({
     // user,
     sellerEdit,
     sellerInfo,
     coupon,
-    couponInsert 
+    couponInsert,
+    giviAdd
 })
 
-export { rootReducer }
+export { sellerReducer }
