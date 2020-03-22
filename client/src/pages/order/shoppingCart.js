@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { link, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import '../../style/CW_items.scss'
@@ -69,7 +69,7 @@ function ShoppingCart(props) {
   //   document.body.style.overflow = 'auto'
   // }
 
-  console.log(props)
+  // console.log(props)
   return (
     <>
       <Header />
@@ -125,7 +125,10 @@ function ShoppingCart(props) {
                   <h5>NT$ {sum(mycartDisplay)}</h5>
                 </div>
                 <br />
-                <Link className="check-btn btn btn-lg w-100" to="/checkout">
+                <Link
+                  className="check-btn btn btn-lg w-100"
+                  to="/member/checkout"
+                >
                   前往結帳
                 </Link>
               </div>
