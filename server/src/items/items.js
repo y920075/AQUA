@@ -23,7 +23,7 @@ itemRouter.use(bodyParser.json())
 
 // 商品列表
 itemRouter.get('/items', (req, res)=>{
-    console.log('items進入')
+    console.log('商品列表請求')
     const perPage = 16
     let where = []
     if (req.query.category) where.push(`\`itemCategoryId\` ='${req.query.category}'`)
@@ -46,22 +46,24 @@ itemRouter.get('/items', (req, res)=>{
                 if (page<1) page= 1
                 if (page>totalPages) page = totalRows
                     
-                const sql = `SELECT MIN(\`itemId\`), \`itemName\`, \`itemImg\`, \`itemCategoryId\`, \`itemTypeId\`, \`itemBrandId\`, \`itemPrice\`  FROM \`items\` WHERE \`itemStatus\` = 'active' ${where} GROUP BY \`itemName\` ORDER BY \`updated_at\` DESC LIMIT  ${(page-1)*perPage}, ${perPage}`
+                const sql = `SELECT MIN(\`itemId\`) AS itemId, \`itemName\`, \`itemImg\`, \`itemCategoryId\`, \`itemTypeId\`, \`itemBrandId\`, \`itemPrice\`  FROM \`items\` WHERE \`itemStatus\` = 'active' ${where} GROUP BY \`itemName\` ORDER BY \`updated_at\` DESC LIMIT  ${(page-1)*perPage}, ${perPage}`
 
                 return db.queryAsync(sql)
             }
         })
         .then(result=>{
            if (result.length>0) {
-                res.status(200).json({
+                res.json({
+                    'status': 200,
                     'msg': '請求成功',
                     totalRows,
                     totalPages,
                     page,
                     result
                 })
-           } else{
+            } else{
                 res.status(404).json({
+                    'status': 404,
                     'msg': '查無符合條件'
                 })
            }
@@ -71,11 +73,33 @@ itemRouter.get('/items', (req, res)=>{
             return res.status(500).json(err)
         })
 })
+// 商品列側欄資料
+itemRouter.get('/itemaside', (req, res)=>{
+    console.log('商品列側欄請求')
+
+    const data = {
+        'status': 404,
+        'msg' :　'查無資料',
+        'asideData' : '',
+    }
+    const brandSQL = `SELECT DISTINCT \`itemBrandId\` FROM \`items\` ORDER BY \`itemBrandId\` ASC` 
+    db.queryAsync(brandSQL)
+        .then(result=>{
+            if (result) {
+                data.status = 200
+                data.msg = '請求成功'
+                data.asideData = result
+                res.json(data)
+            } else {
+                res.json(data)
+            }
+        })
+})
 
 // 商品詳細資料
 itemRouter.get('/items/:itemId', (req,res)=>{
-    console.log('22')
     const itemId = req.params.itemId
+    console.log('商品詳細請求', itemId)
     const data = {
         'status' : 404,
         'msg': '查無商品',
@@ -106,7 +130,8 @@ itemRouter.get('/items/:itemId', (req,res)=>{
 })
 
 // 訂單列表
-itemRouter.get('/orders', (req, res)=>{
+itemRouter.get('/member/orders', (req, res)=>{
+    console.log('賣家訂單列表請求')
     const perPage = 10
     let where = []
     const memberSession = req.session.memberId
@@ -165,8 +190,40 @@ itemRouter.get('/orders', (req, res)=>{
 })
 
 // 訂單新增
-itemRouter.post('/checkout', upload.none(), (req, res)=>{
-    
+itemRouter.post('/member/mycart', upload.none(), (req, res)=>{
+    console.log('賣家訂單新增')
+    const sql = `INSERT INTO \`orders\`(
+                \`orderId\`, 
+                \`orderMemberId\`, 
+                \`orderItemId\`, 
+                \`checkPrice\`, 
+                \`checkQty\`, 
+                \`checkSubtotal\`) 
+                VALUES (?,?,?,?,?,?)`
+
+    db.queryAsync(sql, [
+        req.body.itemName,
+        req.session.memberId, // mamber session
+        req.body.orderItemId,
+        req.body.checkPrice,
+        req.body.checkQty,
+        req.body.checkSubtotal
+    ])
+    .then(r=>{
+        console.log('新增訂單成功')
+        return res.json(req.body)
+        // res.redirect(req.baseUrl + '/list')
+    })
+    .catch(err=>{
+        console.log('新增資料寫入失敗')
+        return res.json(err)
+    })
+
+})
+
+//訂單明細新增
+itemRouter.post('/member/checkout', upload.none(), (req, res)=>{
+    console.log('賣家訂單明細新增')
     const sql = `INSERT INTO \`orders\`(
                 \`orderId\`, 
                 \`orderMemberId\`, 
@@ -198,11 +255,11 @@ itemRouter.post('/checkout', upload.none(), (req, res)=>{
 
 
 
-
 // 訂單列表(賣家端)
 itemRouter.get('/seller/orders', (req, res)=>{
+    console.log('賣家訂單列表請求')
     const data = {
-        'status' : '401',
+        'status' : '404',
         'msg' : '尚未登入'
     }
     if ( !req.session.seller_id ) {

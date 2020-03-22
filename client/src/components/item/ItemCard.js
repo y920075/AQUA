@@ -1,5 +1,5 @@
 import React from 'react'
-import { link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function ItemCard(props) {
   console.log(props)
@@ -9,11 +9,12 @@ function ItemCard(props) {
         <h2>查無資料</h2>
       ) : (
         props.itemData.map((value, index) => {
+          // console.log(value)
           return (
-            <div
+            <Link
               className="list-card col-md-3 col-6"
               key={index}
-              onClick={() => {}}
+              to={`/items/${value.itemId}`}
             >
               <img
                 className="list-card-img-top"
@@ -27,7 +28,7 @@ function ItemCard(props) {
                 <h6 className="item-neme">{value.itemName}</h6>
                 <span className="item-price">NT$ {value.itemPrice}</span>
               </div>
-            </div>
+            </Link>
           )
         })
       )}

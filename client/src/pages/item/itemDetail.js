@@ -41,11 +41,12 @@ function ItemDetail(props) {
     setTimeout(() => {
       if (props.itemDetailData.status) {
         setHasLoading(false)
-        setItemData(props.itemData.result)
+        setItemData(props.itemDetailData.itemData)
       }
     }, 500)
-  }, [props.itemData])
-
+  }, [props.itemDetailData])
+  const itemDetailData = props.itemDetailData.itemData
+  console.log(itemDetailData, itemData.itemName)
   return (
     <>
       <Header />
@@ -110,7 +111,7 @@ function ItemDetail(props) {
                       price: '4380',
                     })
                   }}
-                  className="btn btn-danger btn-lg w-100"
+                  className="addcart-btn btn btn-lg w-100"
                 >
                   加入購物車
                 </button>

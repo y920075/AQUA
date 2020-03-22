@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { getItemDataAsync } from '../../actions/item/item_Actions'
+import {
+  getItemDataAsync,
+  getAsideDataAsync,
+} from '../../actions/item/item_Actions'
 
+import { cateData } from './itemType'
 import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
 
@@ -20,11 +24,13 @@ import ItemCard from '../../components/item/ItemCard'
 function Items(props) {
   // console.log(props)
   const [itemData, setItemData] = useState([])
+  const [asideData, setAsideData] = useState([])
   const [hasloading, setHasLoading] = useState(false)
+  console.log('cateData', cateData)
 
   useEffect(() => {
-    // console.log('22')
     props.getItemDataAsync()
+    props.getAsideDataAsync()
   }, [])
 
   useEffect(() => {
@@ -38,9 +44,35 @@ function Items(props) {
     }, 500)
   }, [props.itemData])
 
+  useEffect(() => {
+    setHasLoading(true)
+
+    setTimeout(() => {
+      if (props.asideData.status) {
+        setAsideData(props.asideData.asideData)
+        setHasLoading(false)
+      }
+    }, 500)
+  }, [props.asideData])
+
   function getItemData(page) {
-    props.getItemDataAsync(page)
+    const type = document.querySelector('.typeMenu .active')
+      ? document.querySelector('.typeMenu .active').getAttribute('data-type')
+      : ''
+    const brand = document.querySelector('.typeMenu .active')
+      ? document.querySelector('.typeMenu .active').getAttribute('data-level')
+      : ''
+    //取得sort的select的值
+    const price = document.querySelector('select[name="sort"]').value
+    props.getClassDataAsync(type, brand, price, page)
+
+    // props.getItemDataAsync(page)
   }
+
+  // function getAsideData(page) {
+  //   props.getAsideDataAsync(page)
+  // }
+
   // const getItemData = page => {
   //   const category = document.querySelector('select[name="type"]').value
   //   const brand = document.querySelector('select[name="sort"]').value
@@ -48,15 +80,20 @@ function Items(props) {
   //   props.getItemDataAsync(page)
   // }
 
-  console.log(props)
+  console.log(props.asideData)
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="./images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
       <div className="container CW">
         <div className="row CW-itemList">
           <div className="col-3 aside d-none d-md-block">
-            <Aside />
+            <Aside
+              cateData={cateData}
+              asideData={asideData}
+              getDataFromServer={getItemData}
+              // asideList={props.asideData}
+            />
           </div>
           <div className="col-md-9 list">
             <div className="row justify-content-between list-header">
@@ -100,12 +137,13 @@ function Items(props) {
 const mapStateToProps = store => {
   return {
     itemData: store.itemReducer.itemData,
+    asideData: store.itemReducer.asideData,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getItemDataAsync }, dispatch)
+  return bindActionCreators({ getItemDataAsync, getAsideDataAsync }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Items)

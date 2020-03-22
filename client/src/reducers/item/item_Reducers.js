@@ -10,6 +10,16 @@ const itemData = (state = {}, action) => {
   }
 }
 
+//取得商品列側欄資料
+const asideData = (state = {}, action) => {
+  switch (action.type) {
+    case 'GET_ASIDEDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //取得商品詳細資料
 const itemDetailData = (state = {}, action) => {
   switch (action.type) {
@@ -24,5 +34,6 @@ const itemDetailData = (state = {}, action) => {
 const itemReducer = combineReducers({
   itemData,
   itemDetailData,
+  asideData,
 })
 export { itemReducer }
