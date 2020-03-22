@@ -6,7 +6,7 @@ class SweetAlert {
   constructor() {}
 
   //送出前確認
-  static sendConfirm(title, callback, setStateFunc, stateData) {
+  static sendConfirm(title, callback, callBackData, setStateFunc, stateData) {
     MySwal.fire({
       title: title,
       icon: 'question',
@@ -15,13 +15,14 @@ class SweetAlert {
       cancelButtonColor: '#d33',
       confirmButtonText: '送出',
     }).then(async result => {
+      console.log(result)
       if (result.value) {
-        if (callback) await callback
+        if (callback) await callback(callBackData)
         if (setStateFunc && stateData) setStateFunc(stateData)
       }
     })
   }
-  //成功新增資料
+  //成功執行
   static success(title) {
     MySwal.fire({
       icon: 'success',

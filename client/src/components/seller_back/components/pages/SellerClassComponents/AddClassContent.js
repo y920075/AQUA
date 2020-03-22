@@ -82,7 +82,8 @@ function AddClassContent(props) {
     //跳出確認視窗
     SweetAlert.sendConfirm(
       '確定要送出嗎?',
-      props.addClassData(ClassFormData),
+      props.addClassData,
+      ClassFormData,
       setResponse,
       true
     )

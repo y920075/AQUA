@@ -52,7 +52,8 @@ function ManageClassContent(props) {
   const delClassData = classId => {
     SweetAlert.sendConfirm(
       '確定要刪除嗎?',
-      props.delClassDataAsunc(classId),
+      props.delClassDataAsunc,
+      classId,
       setResponse,
       true
     )
@@ -84,9 +85,8 @@ function ManageClassContent(props) {
       ) : (
         <>
           <div className="row">
-            {!props.sellerClassData.status ? (
-              <h2>查無相關資料</h2>
-            ) : (
+            {props.sellerClassData.status &&
+            props.sellerClassData.status !== 404 ? (
               props.sellerClassData.result.map((value, index) => {
                 return (
                   <>
@@ -173,6 +173,8 @@ function ManageClassContent(props) {
                   </>
                 )
               })
+            ) : (
+              <h2>查無相關資料</h2>
             )}
           </div>
           <EventPageButtons
