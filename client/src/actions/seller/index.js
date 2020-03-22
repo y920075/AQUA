@@ -327,6 +327,7 @@ export const insertSellerNewInsertCouponAsync = (coupData, callback) => {
 
 //----------------------賣家中心課程相關action----------------
 
+//取得賣家自己的課程資料
 export const getSellerClassData = data => ({
   type: 'GET_SELLER_CLASSDATA',
   value: data,
@@ -359,6 +360,7 @@ export const getSellerClassDataAsunc = (sort, page) => {
   }
 }
 
+//取得全台縣市資料
 export const getCityData = data => ({
   type: 'GET_CITY_DATA',
   value: data,
@@ -381,6 +383,7 @@ export const getCityDataAsunc = () => {
   }
 }
 
+//取得全台地區資料
 export const getDistData = data => ({
   type: 'GET_DIST_DATA',
   value: data,
@@ -403,16 +406,20 @@ export const getDistDataAsunc = city => {
   }
 }
 
+//取得類別資料
 export const getClassTypeDataForSeller = data => ({
   type: 'GET_CLASSTYPEDATA_FORSELLER',
   value: data,
 })
-
+//取得等級資料
 export const getClassLevelDataForSeller = data => ({
   type: 'GET_CLASSLEVELDATA_FORSELLER',
   value: data,
 })
 
+//取得類別或等級資料資料
+//type = true or false
+//level = classTypeId
 export const getClassTypeLevelDataForSellerAsunc = (type, level) => {
   return async dispatch => {
     let query = ''
@@ -446,11 +453,14 @@ export const getClassTypeLevelDataForSellerAsunc = (type, level) => {
   }
 }
 
+//新增課程資料
 export const addClassData = data => ({
   type: 'ADD_CLASSDATA',
   value: data,
 })
 
+//新增課程資料
+//formData = 傳送過來的表單值
 export const addClassDataAsunc = formData => {
   return async dispatch => {
     const fd = new FormData()
@@ -475,6 +485,28 @@ export const addClassDataAsunc = formData => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(addClassData(data))
+  }
+}
+
+//刪除課程資料
+export const delClassData = data => ({
+  type: 'DEL_CLASSDATA',
+  value: data,
+})
+
+export const delClassDataAsunc = classId => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/seller/class/${classId}`,
+      {
+        method: 'DELETE',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(delClassData(data))
   }
 }
 
