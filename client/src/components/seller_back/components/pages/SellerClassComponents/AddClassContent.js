@@ -1,14 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+//引入 sweetalert2 套件
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
+
+/*
+    傳入參數
+    cityData = 全台城市資料
+    distData= 依據選擇的城市得到相對應地區資料
+    typeData= 全部課程類型資料
+    levelData= 依據選擇的類型得到相對應等級資料
+    addClassDataResponse= 新增資料後，後端回傳的資訊
+
+    傳入方法
+    addClassData= 新增資料用的action
+    handleGetDistData= 取得地區資料的action
+    handleGetLevelData= 取得等級資料的action
+
+    2020-03-22
+
+*/
 
 function AddClassContent(props) {
-  const [addressCity, setAddressCity] = useState('')
-  const [addressDist, setAddressDist] = useState('')
+  const [addressCity, setAddressCity] = useState('') //儲存使用者選擇的縣市
+  const [addressDist, setAddressDist] = useState('') //儲存使用者選擇的地區
+  const [response, setResponse] = useState(false) //確認是否有收到response資料
 
-  //---接收表單上的值
+  //儲存表單值的本地state
   const [className, setClassName] = useState(null)
   const [classTypeId, setClassTypeId] = useState(null)
   const [classLevelId, setClassLevelId] = useState(null)
-  const [classLocation, setClassLocation] = useState('台北市')
+  const [classLocation, setClassLocation] = useState(null)
   const [classFullLocation, setClassFullLocation] = useState(null)
   const [classStartDate, setClassStartDate] = useState(null)
   const [classEndDate, setClassEndDate] = useState(null)
@@ -17,9 +40,38 @@ function AddClassContent(props) {
   const [classDesc, setClassDesc] = useState(null)
   const [classMAXpeople, setClassMAXpeople] = useState(null)
   const [classImg, setClassImg] = useState(null)
+  //儲存表單值的本地state
 
-  const form = React.createRef()
+  //每當response改變時就秀出提示視窗
+  useEffect(() => {
+    if (response) {
+      if (props.addClassDataResponse.status === 201) {
+        MySwal.fire({
+          icon: 'success',
+          title: '已成功新增一筆資料!',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        setResponse(false)
+      } else {
+        MySwal.fire({
+          icon: 'error',
+          title: `錯誤代碼：${props.addClassDataResponse.status}`,
+          text: `錯誤訊息：${props.addClassDataResponse.msg}`,
+        })
+        setResponse(false)
+      }
+    }
+  }, [response])
 
+  //每當本地state[addressDist]改變時就setClassLocation
+  useEffect(() => {
+    setClassLocation(
+      document.querySelector('input[name="classLocation"]').value
+    )
+  }, [addressDist])
+
+  //新增一筆課程資料用的函式
   const addClassData = async () => {
     const ClassFormData = {
       className,
@@ -35,14 +87,28 @@ function AddClassContent(props) {
       classMAXpeople,
       classImg,
     }
-    props.addClassData(ClassFormData)
+
+    //跳出確認視窗
+    MySwal.fire({
+      title: '確定要送出嗎?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '送出',
+    }).then(async result => {
+      if (result.value) {
+        await props.addClassData(ClassFormData)
+        setResponse(true) //設定response資料為true
+      }
+    })
   }
 
   return (
     <>
-      <div className="row">
-        <div className="col-6">
-          <form name="addClassForm" ref={form}>
+      <div className="row addClassForm">
+        <div className="col-xl-6">
+          <form name="addClassForm">
             <div className="form-group">
               <label htmlFor="">課程名稱</label>
               <input
@@ -51,7 +117,7 @@ function AddClassContent(props) {
                 className="form-control"
                 placeholder="15字以內"
                 onChange={event => {
-                  setClassName(event.target.value)
+                  setClassName(event.target.value) //設定課程名稱到本地state
                 }}
               />
             </div>
@@ -65,7 +131,7 @@ function AddClassContent(props) {
                   onChange={event => {
                     const type = event.target.value
                     props.handleGetLevelData(false, type)
-                    setClassTypeId(event.target.value)
+                    setClassTypeId(event.target.value) //設定課程類型到本地state
                   }}
                 >
                   <option value="">請選擇類型</option>
@@ -87,7 +153,7 @@ function AddClassContent(props) {
                   id=""
                   className="form-control"
                   onChange={event => {
-                    setClassLevelId(event.target.value)
+                    setClassLevelId(event.target.value) //設定課程等級到本地state
                   }}
                 >
                   <option value="">請選擇等級</option>
@@ -109,8 +175,8 @@ function AddClassContent(props) {
                   className="form-control"
                   onChange={event => {
                     const city = event.target.value
-                    props.handleGetDistData(city)
-                    setAddressCity(city)
+                    props.handleGetDistData(city) //取得相對應的地區資料
+                    setAddressCity(city) //設定課程地點(縣市)到本地state
                     setAddressDist('')
                   }}
                 >
@@ -134,7 +200,7 @@ function AddClassContent(props) {
                   className="form-control"
                   onChange={event => {
                     const dist = event.target.value
-                    setAddressDist(dist)
+                    setAddressDist(dist) //設定課程地區到本地state
                   }}
                 >
                   <option value="">請選擇地區</option>
@@ -159,9 +225,6 @@ function AddClassContent(props) {
                   placeholder=""
                   value={addressCity + addressDist}
                   readOnly
-                  onChange={event => {
-                    setClassLocation(event.target.value)
-                  }}
                 />
               </div>
               <div className="form-group col-md-6">
@@ -171,7 +234,7 @@ function AddClassContent(props) {
                   className="form-control"
                   placeholder=""
                   onChange={event => {
-                    setClassFullLocation(event.target.value)
+                    setClassFullLocation(event.target.value) //設定課程地點(完整)到本地state
                   }}
                 />
               </div>
@@ -184,7 +247,7 @@ function AddClassContent(props) {
                   name="classStartDate"
                   className="form-control"
                   onChange={event => {
-                    setClassStartDate(event.target.value)
+                    setClassStartDate(event.target.value) //設定開課日期到本地state
                   }}
                 />
               </div>
@@ -195,7 +258,7 @@ function AddClassContent(props) {
                   name="classEndDate"
                   className="form-control"
                   onChange={event => {
-                    setClassEndDate(event.target.value)
+                    setClassEndDate(event.target.value) //設定結訓日期到本地state
                   }}
                 />
               </div>
@@ -208,7 +271,7 @@ function AddClassContent(props) {
                   name="classPrice"
                   className="form-control"
                   onChange={event => {
-                    setClassPrice(event.target.value)
+                    setClassPrice(event.target.value) //設定課程售價到本地state
                   }}
                 />
               </div>
@@ -219,7 +282,7 @@ function AddClassContent(props) {
                   name="classMAXpeople"
                   className="form-control"
                   onChange={event => {
-                    setClassMAXpeople(event.target.value)
+                    setClassMAXpeople(event.target.value) //設定最大人數到本地state
                   }}
                 />
               </div>
@@ -231,7 +294,7 @@ function AddClassContent(props) {
                 name="classImg"
                 className="form-control-file"
                 onChange={event => {
-                  setClassImg(event.target.files[0])
+                  setClassImg(event.target.files[0]) //設定課程圖片到本地state
                 }}
               />
             </div>
@@ -242,32 +305,36 @@ function AddClassContent(props) {
                 name="classIntroduction"
                 rows="3"
                 onChange={event => {
-                  setClassIntroduction(event.target.value)
+                  setClassIntroduction(event.target.value) //設定課程簡介到本地state
                 }}
               ></textarea>
             </div>
-            <div className="form-group">
-              <label htmlFor="">課程說明(3000字內)</label>
-              <textarea
-                className="form-control"
-                name="classDesc"
-                rows="5"
-                onChange={event => {
-                  setClassDesc(event.target.value)
-                }}
-              ></textarea>
-            </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {
-                addClassData()
-              }}
-            >
-              送出
-            </button>
           </form>
         </div>
+        <div className="col-xl-6">
+          <div className="form-group classDescBox">
+            <label htmlFor="">課程說明(3000字內)</label>
+            <textarea
+              className="form-control"
+              name="classDesc"
+              rows="5"
+              onChange={event => {
+                setClassDesc(event.target.value) //設定課程說明到本地state
+              }}
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div className="col-12 btn-box d-flex">
+        <button
+          type="button"
+          className="btn btn-outline-warning"
+          onClick={() => {
+            addClassData() //觸發新增課程資料的事件
+          }}
+        >
+          送出
+        </button>
       </div>
     </>
   )
