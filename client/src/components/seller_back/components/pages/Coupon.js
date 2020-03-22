@@ -110,7 +110,7 @@ function Coupon(props) {
             <Link
                   className="text-white" to="coupon/coupon_add_givi">
                       <span className="btn bg-btn-chin text-white">
-                      新增贈品
+                      贈品設定
 
                       </span>
             </Link>

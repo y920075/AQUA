@@ -20,16 +20,10 @@ import CouponEdit from './components/CouponEdit'
 import CouponAddGivi from './components/CouponAddGivi'
 
 import CouponAdd from './components/CouponAdd'
-<<<<<<< HEAD
 function Container(props) {
   console.log(props)
     return (
      <>
-=======
-function Container() {
-  return (
-    <>
->>>>>>> 1d8ad12f3b613e94c51664b6f0abee3ebd93af0c
       <div className="container-fluid">
         <div className="row">
           <div className="col-xl-2 col-lg-3 col-md-4 sidebar">
@@ -48,7 +42,6 @@ function Container() {
               </div>
               <span className="text-white mr-2 mt-3">Chin Dai</span>
             </div>
-<<<<<<< HEAD
         {/* <Menu/>    */}
         <MenuUI/>
       </div>
@@ -85,7 +78,7 @@ function Container() {
           <Order />
         </Route>
         <Route path="/seller/class">
-          <Class />
+          <SellerClass />
         </Route>
         <Route path="/seller"> 
         
@@ -95,48 +88,6 @@ function Container() {
       </Switch>
       </div>
       </div>
-=======
-            {/* <Menu/>    */}
-            <MenuUI />
-          </div>
-          <div className="col-xl-10 col-lg-9 col-md-8">
-            <Switch>
-              <Route path="/coupon/couponedit">
-                <CouponEdit />
-              </Route>
-              <Route path="/info/selleredit">
-                <SellerEdit />
-              </Route>
-              <Route path="/coupon/coupon_add">
-                <CouponAdd />
-              </Route>
-              <Route path="/info">
-                {/* <Info   loginStatus={login}
-                trigger={() => {
-                  setLogin(!login)
-                }}/> */}
-                <Info />
-              </Route>
-              <Route path="/coupon">
-                <Coupon />
-              </Route>
-
-              <Route path="/message">
-                <Message />
-              </Route>
-              <Route path="/order">
-                <Order />
-              </Route>
-              <Route path="/seller/class">
-                <SellerClass />
-              </Route>
-              <Route path="/">
-                <MainPage />
-              </Route>
-            </Switch>
-          </div>
-        </div>
->>>>>>> 1d8ad12f3b613e94c51664b6f0abee3ebd93af0c
       </div>
     </>
   )

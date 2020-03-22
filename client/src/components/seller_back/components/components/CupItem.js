@@ -21,28 +21,28 @@ function CupItem(props) {
     console.log(props.item.coupon['table7'])
     const [coup_cate_id,setCoup_cate_id] = useState("coup002")
 
-    const [item,setItem] = useState("")
+    const [item,setItem] = useState(null)
 
-    const [coup_name,setCoupName] = useState("")
+    const [coup_name,setCoupName] = useState(null)
 
     //圖片的state鉤子
     const [coupfile, setCoupFile] = useState(null)
   
     //放進資料庫的圖片檔名
 
-    const [coupDataFiles, setCoupDataFiles] = useState("")
+    const [coupDataFiles, setCoupDataFiles] = useState(null)
     //優惠券超過模式
-    const [coupOver,setCoupOverMode] = useState("")
+    const [coupOver,setCoupOverMode] = useState(null)
     //折扣模式
-    const [coupPercent,setCoupPercentMode] = useState("")
+    const [coupPercent,setCoupPercentMode] = useState(null)
 
     //優惠起始時間
 
-    const [coupStart,setCoupStart] = useState("")
+    const [coupStart,setCoupStart] = useState(null)
 
     //優惠結束時間
 
-    const [coupEnd,setCoupEnd] = useState("")
+    const [coupEnd,setCoupEnd] = useState(null)
 
     //優惠使用次數
     const [coupTimes, setCoupTimes] = useState(0)
@@ -73,7 +73,7 @@ function CupItem(props) {
         console.log(event.target.files)
         setCoupFile(URL.createObjectURL(event.target.files[0]))
         console.log(event.target.files[0])
-        setCoupDataFiles(event.target.files[0].name)
+        setCoupDataFiles(event.target.files[0])
  
       }
       const toggleSwitchButton = () => {
@@ -142,17 +142,36 @@ function CupItem(props) {
         
 
 
-        // if (error) {
-        //   setError(error)
-        //   setErrorMessages(errorMessages)
-        //   return
-        // }
+        const coupData = { 
+          coup_cate_id, 
+          item,
+          coupId, 
+          coup_name,
+          coupDataFiles,
+          coupCode,
+          coupOver,
+          coupPercent,
+          coupStart,
+          coupEnd,
+          coupTimes 
+        }
+
+        const coupon_fd = new FormData()
+        coupon_fd.append('coup_cate_id', coupData.coup_cate_id)
+        coupon_fd.append('coup_id', coupData.coupId)
+        coupon_fd.append('coup_code', coupData.coupCode)
+        coupon_fd.append('itemType', coupData.item)
+        coupon_fd.append('coup_name', coupData.coup_name)
+        coupon_fd.append('img', coupData.coupDataFiles)
+        coupon_fd.append('coup_over', coupData.coupOver)
+        coupon_fd.append('coup_percent', coupData.coupPercent)
+        coupon_fd.append('coup_start', coupData.coupStart)
+        coupon_fd.append('coup_end', coupData.coupEnd)
+        coupon_fd.append('coup_times', coupData.coupTimes)
         
-        console.log(coup_cate_id, item, coupId, coup_name,coupDataFiles,coupCode,coupOver,coupPercent,coupStart, coupEnd, coupTimes)
-        const coupData = { coup_cate_id, coupId, coup_name ,coupDataFiles,coupCode,coupOver,coupPercent,coupStart, coupEnd, coupTimes }
-        console.log(coupData)
        
-        props.insertSellerNewInsertCouponAsync(coupData, () => alert('成功新增'))
+       
+        props.insertSellerNewInsertCouponAsync(coupon_fd, () => alert('成功新增'))
         // console.log(props.insertSellerNewInsertCouponAsync());
       }
    
@@ -179,15 +198,14 @@ function CupItem(props) {
                 </div>
                 <div className="col-lg-6 input-style-chin">
                 <div className="form-group my-3 input-text-middle-chin">
-                <select className="custom-select" onChange={event =>setItem(event.target.value)}>
+                <select name="itemType" className="custom-select" onChange={event =>setItem(event.target.value)}>
                 <option defaultValue="套用商品種類">套用商品種類</option>
-                 {props.item.coupon['table7'].map((item,index) => {
+                 { props.item.coupon['table7']?( props.item.coupon['table7'].map((item,index) => {
                       return <option key={index} value={item.itemTypeId}>{item.itemTypeId}</option>
 
-               
-                })
+                })):<h2>沒有從上層傳過來的資料</h2>
                     }
-                    
+                   
                 
                  
                     </select>
@@ -233,7 +251,7 @@ function CupItem(props) {
                         id="nameInput"
                         aria-describedby="nameHelp"
                         // value={props.data.value}
-                        onChange={(event) =>  handleCoupChange(event)}
+                        onChange={(event) => handleCoupChange(event)}
                     />        
                     <img width="200" height="100" src={coupfile}/>
 

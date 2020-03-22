@@ -263,18 +263,16 @@ export const insertSellerNewInsertCoupon = coupInsertData => ({
   type: 'COUPON_INSERT',
   value: coupInsertData,
 })
-export const insertSellerNewInsertCouponAsync = (coupData, callback) => {
-  console.log(coupData)
+export const insertSellerNewInsertCouponAsync = (coupFormData, callback) => {
+  console.log(coupFormData)
   return async dispatch => {
+  
     const request = new Request(
       'http://localhost:5000/seller/coupon/insert_coup_data',
       {
         method: 'POST',
-        body: JSON.stringify(coupData),
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
+        body:coupFormData,
+      
       }
     )
 
@@ -302,8 +300,8 @@ export const addGiviData = data => ({
       const givi_fd = new FormData()
       givi_fd.append('givi_cate_id', GiviFormData.givi_cate_id)
       givi_fd.append('givi_name', GiviFormData.givi_name)
+      givi_fd.append('givi_img', GiviFormData.givi_img_upload)
       givi_fd.append('givi_num', GiviFormData.givi_num)
-      givi_fd.append('givi_img', GiviFormData.givi_img)
       
   
       const request = new Request(`http://localhost:5000/seller/coupon/coupon_givi`, {

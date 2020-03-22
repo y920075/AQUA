@@ -1,0 +1,19 @@
+@import '../../../../../style/variable.scss';
+
+.bg-image-chin {
+  background-image: url(../../../../../image/givinBackground.jpg);
+  background-size: cover;
+}
+.inpput-givi-chin {
+  input[type='text'] {
+    color: $aquabackground;
+    background-color: wheat;
+  }
+  input[type='number'] {
+    color: $aquabackground;
+    background-color: wheat;
+  }
+  button {
+    background-color: $aquabackground !important;
+  }
+}

@@ -57,7 +57,6 @@ const sellerInfo = (state = {}, action) => {
   }
 }
 
-<<<<<<< HEAD:client/src/reducers/seller/sellerReducer.js
 const giviAdd =  (state = {},action) => {
     switch (action.type) {
         case 'ADD_GIVIDATA':
@@ -66,18 +65,7 @@ const giviAdd =  (state = {},action) => {
             return state
     }
 }
-// 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
-const sellerReducer = combineReducers({
-    // user,
-    sellerEdit,
-    sellerInfo,
-    coupon,
-    couponInsert,
-    giviAdd
-})
 
-export { sellerReducer }
-=======
 //----------------------賣家中心課程相關reducer----------------
 
 const sellerClassData = (state = {}, action) => {
@@ -143,6 +131,7 @@ const sellerReducer = combineReducers({
   sellerInfo,
   coupon,
   couponInsert,
+  giviAdd,
   sellerClassData,
   cityData,
   distData,
@@ -152,4 +141,3 @@ const sellerReducer = combineReducers({
 })
 
 export { sellerReducer }
->>>>>>> 1d8ad12f3b613e94c51664b6f0abee3ebd93af0c:client/src/reducers/seller/index.js

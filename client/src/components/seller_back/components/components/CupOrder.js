@@ -16,26 +16,26 @@ function CupOrder(props) {
     console.log(props)
     const [coup_cate_id,setCoup_cate_id] = useState("coup001")
 
-    const [coup_name,setCoupName] = useState("")
+    const [coup_name,setCoupName] = useState(null)
 
     //圖片的state鉤子
     const [coupfile, setCoupFile] = useState(null)
   
     //放進資料庫的圖片檔名
 
-    const [coupDataFiles, setCoupDataFiles] = useState("")
+    const [coupDataFiles, setCoupDataFiles] = useState(null)
     //優惠券超過模式
-    const [coupOver,setCoupOverMode] = useState("")
+    const [coupOver,setCoupOverMode] = useState(null)
     //折扣模式
-    const [coupPercent,setCoupPercentMode] = useState("")
+    const [coupPercent,setCoupPercentMode] = useState(null)
 
     //優惠起始時間
 
-    const [coupStart,setCoupStart] = useState("")
+    const [coupStart,setCoupStart] = useState(null)
 
     //優惠結束時間
 
-    const [coupEnd,setCoupEnd] = useState("")
+    const [coupEnd,setCoupEnd] = useState(null)
 
     //優惠使用次數
     const [coupTimes, setCoupTimes] = useState(0)
@@ -52,8 +52,8 @@ function CupOrder(props) {
       const [minusorpercent, setMinusorpercent ] = useState({
         isEnable: false
       });
-      const [error, setError] = useState(false)
-      const [errorMessages, setErrorMessages] = useState([])
+      // const [error, setError] = useState(false)
+      // const [errorMessages, setErrorMessages] = useState([])
       const inputstyle = {
             textAlign:'right'
       };
@@ -66,7 +66,7 @@ function CupOrder(props) {
         console.log(event.target.files)
         setCoupFile(URL.createObjectURL(event.target.files[0]))
         console.log(event.target.files[0])
-        setCoupDataFiles(event.target.files[0].name)
+        setCoupDataFiles(event.target.files[0])
  
       }
       const toggleSwitchButton = () => {
@@ -135,17 +135,35 @@ function CupOrder(props) {
         
 
 
-        // if (error) {
-        //   setError(error)
-        //   setErrorMessages(errorMessages)
-        //   return
-        // }
+       
         
         console.log(coup_cate_id, coupId, coup_name,coupDataFiles,coupCode,coupOver,coupPercent,coupStart, coupEnd, coupTimes)
-        const coupData = { coup_cate_id, coupId, coup_name ,coupDataFiles,coupCode,coupOver,coupPercent,coupStart, coupEnd, coupTimes }
-        console.log(coupData)
-       
-        props.insertSellerNewInsertCouponAsync(coupData, () => alert('成功新增'))
+        const coupData = { 
+          coup_cate_id, 
+          coupId, 
+          coup_name,
+          coupDataFiles,
+          coupCode,
+          coupOver,
+          coupPercent,
+          coupStart,
+          coupEnd,
+          coupTimes 
+        }
+
+        const coupon_fd = new FormData()
+        coupon_fd.append('coup_cate_id', coupData.coup_cate_id)
+        coupon_fd.append('coup_id', coupData.coupId)
+        coupon_fd.append('coup_code', coupData.coupCode)
+        coupon_fd.append('coup_name', coupData.coup_name)
+        coupon_fd.append('img', coupData.coupDataFiles)
+        coupon_fd.append('coup_over', coupData.coupOver)
+        coupon_fd.append('coup_percent', coupData.coupPercent)
+        coupon_fd.append('coup_start', coupData.coupStart)
+        coupon_fd.append('coup_end', coupData.coupEnd)
+        coupon_fd.append('coup_times', coupData.coupTimes)
+
+        props.insertSellerNewInsertCouponAsync(coupon_fd, () => alert('成功新增'))
         // console.log(props.insertSellerNewInsertCouponAsync());
       }
    
@@ -287,7 +305,7 @@ function CupOrder(props) {
                                 <span className="input-group-text">減</span>
                             </div>
                             <input 
-                            name="coup_over" 
+                            name="coup_percent" 
                             style={inputstyle}
                             type="text"
                             className="form-control"
@@ -305,7 +323,7 @@ function CupOrder(props) {
                                 <span className="input-group-text">打</span>
                             </div>
                             <input 
-                            name="coup_over" 
+                            name="coup_percent" 
                             style={inputstyle} 
                             type="text" 
                             className="form-control"
