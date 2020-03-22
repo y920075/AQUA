@@ -11,6 +11,7 @@ import {
   getDistDataAsunc,
   getClassTypeLevelDataForSellerAsunc,
   addClassDataAsunc,
+  delClassDataAsunc,
 } from '../../../../actions/seller/index'
 
 import ManageClassContent from './SellerClassComponents/ManageClassContent'
@@ -98,6 +99,8 @@ function SellerClass(props) {
                   <ManageClassContent
                     sellerClassData={props.sellerClassData}
                     getSellerClassData={getSellerClassData}
+                    delClassDataAsunc={props.delClassDataAsunc}
+                    delClassDataResponse={props.delClassDataResponse}
                   />
                 )
             }
@@ -117,6 +120,7 @@ const mapStateToProps = store => {
     typeDataForSeller: store.sellerReducer.typeDataForSeller,
     levelDataForSeller: store.sellerReducer.levelDataForSeller,
     addClassDataResponse: store.sellerReducer.addClassDataResponse,
+    delClassDataResponse: store.sellerReducer.delClassDataResponse,
   }
 }
 
@@ -129,6 +133,7 @@ const mapDispatchToProps = dispatch => {
       getDistDataAsunc,
       getClassTypeLevelDataForSellerAsunc,
       addClassDataAsunc,
+      delClassDataAsunc,
     },
     dispatch
   )
