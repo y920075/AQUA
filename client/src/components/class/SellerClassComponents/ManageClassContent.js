@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import SweetAlert from './Sweetalert2'
 
-import Loading from '../../../../class/Loading' //載入中圖示
-import EventPageButtons from '../../../../event/EventPageButtons'
+import Loading from '../Loading' //載入中圖示
+import EventPageButtons from '../../event/EventPageButtons'
+
+/*
+  傳入參數
+  sellerClassData = 此賣家自己擁有的全部課程資料
+  delClassDataResponse = 刪除課程資料後，後端回傳的訊息
+
+  傳入方法
+  getSellerClassData = 取得賣家的全部課程資料
+  delClassDataAsunc = 刪除一筆課程資料
+
+  2020-03-22
+*/
 
 function ManageClassContent(props) {
   const [hasLoading, setHasLoading] = useState(false)
+  const [response, setResponse] = useState(false) //確認是否有收到刪除動作的response資料
 
   //每次資料有變動就將新資料存進本地state
   useEffect(() => {
@@ -17,6 +31,33 @@ function ManageClassContent(props) {
       }
     }, 500)
   }, [props.sellerClassData])
+
+  //每當response改變時就秀出提示視窗
+  useEffect(() => {
+    if (response) {
+      if (props.delClassDataResponse.status === 201) {
+        SweetAlert.success('已成功刪除一筆資料!')
+        setResponse(false)
+        props.getSellerClassData()
+      } else {
+        SweetAlert.errorAlert(
+          props.delClassDataResponse.status,
+          props.delClassDataResponse.msg
+        )
+        setResponse(false)
+      }
+    }
+  }, [response])
+
+  const delClassData = classId => {
+    SweetAlert.sendConfirm(
+      '確定要刪除嗎?',
+      props.delClassDataAsunc,
+      classId,
+      setResponse,
+      true
+    )
+  }
 
   return (
     <>
@@ -43,23 +84,25 @@ function ManageClassContent(props) {
         <Loading />
       ) : (
         <>
-          <div class="row">
-            {!props.sellerClassData.status ? (
-              <h2>查無相關資料</h2>
-            ) : (
+          <div className="row">
+            {props.sellerClassData.status &&
+            props.sellerClassData.status !== 404 ? (
               props.sellerClassData.result.map((value, index) => {
                 return (
                   <>
-                    <div class="col-sm-4">
-                      <div class="card">
+                    <div className="col-sm-4">
+                      <div className="card" key={index}>
                         <div className="classSellerImgBox card-img-top">
                           <img
-                            src="http://127.0.0.1:5000/images/classImg/noImg.jpg"
+                            src={
+                              'http://127.0.0.1:5000/images/classImg/' +
+                              value.classImg
+                            }
                             alt=""
                           />
                         </div>
-                        <div class="card-body">
-                          <h2 class="card-title">{value.className}</h2>
+                        <div className="card-body">
+                          <h2 className="card-title">{value.className}</h2>
                           <ul className="">
                             <li>
                               <img
@@ -99,12 +142,31 @@ function ManageClassContent(props) {
                             </li>
                           </ul>
                           <div className="buttons d-flex">
-                            <Link class="btn btn-outline-primary">
-                              <i class="fas fa-edit"></i>
+                            <Link
+                              className="btn btn-outline-primary"
+                              data-id={value.classId}
+                              to={'/seller/class/' + value.classId}
+                            >
+                              <i
+                                className="fas fa-edit"
+                                data-id={value.classId}
+                              ></i>
                             </Link>
-                            <Link class="btn btn-outline-primary">
-                              <i class="far fa-trash-alt"></i>
-                            </Link>
+                            <button
+                              className="btn btn-outline-primary"
+                              data-id={value.classId}
+                              onClick={event => {
+                                const classId = event.target.getAttribute(
+                                  'data-id'
+                                )
+                                delClassData(classId)
+                              }}
+                            >
+                              <i
+                                className="far fa-trash-alt"
+                                data-id={value.classId}
+                              ></i>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -112,6 +174,8 @@ function ManageClassContent(props) {
                   </>
                 )
               })
+            ) : (
+              <h2>查無相關資料</h2>
             )}
           </div>
           <EventPageButtons

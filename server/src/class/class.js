@@ -574,6 +574,8 @@ router.get('/seller/class',(req,res)=>{
 */
 
 router.get('/seller/class/:classId',(req,res)=>{
+    req.session.seller_id = 'S20010001'
+
     const data = {
         'status' : 404,
         'msg' :　'查無資料',
@@ -818,7 +820,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
     }
 })
 
-//賣家刪除自己的課程資料
+//賣家刪除自己的課程資料(連帶刪除所有報名資料)
 /*
     預計從前台接收的資料
     DELETE /seller/class/課程編號
@@ -833,6 +835,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
 */
 
 router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status':401,
         'msg':'尚未登入'
@@ -851,8 +854,10 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
             }
             return db.queryAsync(sql)
         })
-        .then(result=>{
+        .then(async result=>{
             if ( result.affectedRows>0 ) {
+                const sql = `DELETE FROM\`class_member\` WHERE \`classId\` = '${req.params.classId}'`
+                await db.queryAsync(sql)
                 data.status = 201;
                 data.msg = `編號${req.params.classId} 刪除成功`
                 res.json(data);

@@ -12,11 +12,11 @@ import {
   getClassTypeLevelDataForSellerAsunc,
   addClassDataAsunc,
   delClassDataAsunc,
-} from '../../../../actions/seller/index'
+} from '../../actions/seller/index'
 
-import ManageClassContent from './SellerClassComponents/ManageClassContent'
-import ManageCoachContent from './SellerClassComponents/ManageCoachContent'
-import AddClassContent from './SellerClassComponents/AddClassContent'
+import ManageClassContent from '../../components/class/SellerClassComponents/ManageClassContent'
+import ManageCoachContent from '../../components/class/SellerClassComponents/ManageCoachContent'
+import AddClassContent from '../../components/class/SellerClassComponents/AddClassContent'
 
 function SellerClass(props) {
   const [nowClickTag, setNowClickTag] = useState(1)
