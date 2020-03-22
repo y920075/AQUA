@@ -25,18 +25,18 @@ function AddClassContent(props) {
   const [response, setResponse] = useState(false) //確認是否有收到response資料
 
   //儲存表單值的本地state
-  const [className, setClassName] = useState(null)
-  const [classTypeId, setClassTypeId] = useState(null)
-  const [classLevelId, setClassLevelId] = useState(null)
-  const [classLocation, setClassLocation] = useState(null)
-  const [classFullLocation, setClassFullLocation] = useState(null)
-  const [classStartDate, setClassStartDate] = useState(null)
-  const [classEndDate, setClassEndDate] = useState(null)
-  const [classPrice, setClassPrice] = useState(null)
-  const [classIntroduction, setClassIntroduction] = useState(null)
-  const [classDesc, setClassDesc] = useState(null)
-  const [classMAXpeople, setClassMAXpeople] = useState(null)
-  const [classImg, setClassImg] = useState(null)
+  const [className, setClassName] = useState('')
+  const [classTypeId, setClassTypeId] = useState('')
+  const [classLevelId, setClassLevelId] = useState('')
+  const [classLocation, setClassLocation] = useState('')
+  const [classFullLocation, setClassFullLocation] = useState('')
+  const [classStartDate, setClassStartDate] = useState('')
+  const [classEndDate, setClassEndDate] = useState('')
+  const [classPrice, setClassPrice] = useState('')
+  const [classIntroduction, setClassIntroduction] = useState('')
+  const [classDesc, setClassDesc] = useState('')
+  const [classMAXpeople, setClassMAXpeople] = useState('')
+  const [classImg, setClassImg] = useState('')
   //儲存表單值的本地state
 
   //每當response改變時就秀出提示視窗
@@ -45,6 +45,7 @@ function AddClassContent(props) {
       if (props.addClassDataResponse.status === 201) {
         SweetAlert.success('已成功新增一筆資料!')
         setResponse(false)
+        props.setNowClickTag(2)
       } else {
         SweetAlert.errorAlert(
           props.addClassDataResponse.status,
@@ -82,10 +83,10 @@ function AddClassContent(props) {
     //跳出確認視窗
     SweetAlert.sendConfirm(
       '確定要送出嗎?',
-      props.addClassData,
-      ClassFormData,
       setResponse,
-      true
+      true,
+      props.addClassData,
+      ClassFormData
     )
   }
 
@@ -163,6 +164,11 @@ function AddClassContent(props) {
                     props.handleGetDistData(city) //取得相對應的地區資料
                     setAddressCity(city) //設定課程地點(縣市)到本地state
                     setAddressDist('')
+                    setClassFullLocation('')
+                    setClassLocation('')
+                    document.querySelector(
+                      'input[name="classFullLocation"]'
+                    ).value = ''
                   }}
                 >
                   <option value="">請選擇縣市</option>
@@ -186,6 +192,11 @@ function AddClassContent(props) {
                   onChange={event => {
                     const dist = event.target.value
                     setAddressDist(dist) //設定課程地區到本地state
+                    setClassFullLocation('')
+                    setClassLocation('')
+                    document.querySelector(
+                      'input[name="classFullLocation"]'
+                    ).value = ''
                   }}
                 >
                   <option value="">請選擇地區</option>
@@ -219,7 +230,9 @@ function AddClassContent(props) {
                   className="form-control"
                   placeholder=""
                   onChange={event => {
-                    setClassFullLocation(event.target.value) //設定課程地點(完整)到本地state
+                    setClassFullLocation(
+                      addressCity + addressDist + event.target.value
+                    ) //設定課程地點(完整)到本地state
                   }}
                 />
               </div>
