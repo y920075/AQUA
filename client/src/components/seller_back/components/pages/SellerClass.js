@@ -18,7 +18,7 @@ import ManageCoachContent from './SellerClassComponents/ManageCoachContent'
 import AddClassContent from './SellerClassComponents/AddClassContent'
 
 function SellerClass(props) {
-  const [nowClickTag, setNowClickTag] = useState(2)
+  const [nowClickTag, setNowClickTag] = useState(1)
 
   useEffect(() => {
     props.getSellerClassDataAsunc()
@@ -88,6 +88,7 @@ function SellerClass(props) {
                     typeData={props.typeDataForSeller}
                     levelData={props.levelDataForSeller}
                     addClassData={props.addClassDataAsunc}
+                    addClassDataResponse={props.addClassDataResponse}
                   />
                 )
               case 3:
