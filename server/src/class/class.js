@@ -228,7 +228,7 @@ router.get('/class/:classId',(req,res)=>{
     req.body.classStartDate = 開課日期(input type="datetime-local")
     req.body.classEndDate = 結訓日期(input type="datetime-local")
     req.body.classPrice = 課程售價(6位數)
-    req.body.classIntroduction = 課程簡介(70字內)
+    req.body.classIntroduction = 課程簡介(100字內)
     req.body.classDesc = 課程說明(3000字內)
     req.body.classMAXpeople = 最大人數(3位數)
     req.body.classImg = 課程圖片 (png,jpg,gif)
@@ -305,7 +305,7 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
             data.msg='課程簡介不可為空白';
             res.json(data)
             break;
-        case req.body.classIntroduction.length > 70:
+        case req.body.classIntroduction.length > 100:
             data.msg='課程簡介過長';
             res.json(data)
             break;
@@ -333,8 +333,8 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
     const sql = `INSERT INTO \`class_data\`
             (\`maxId\`, \`classId\`, \`className\`, \`classType\`, \`classLevel\`, \`classLocation\`, \`classFullLocation\`,
             \`classStartDate\`,\`classEndDate\`, \`classPrice\`,\`classIntroduction\`, \`classDesc\`, \`classMAXpeople\`, \`classNOWpeople\`, 
-            \`classImg\`, \`seller_id\`) 
-            VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?)`
+            \`classImg\`, \`seller_id\`, \`classTypeId\`, \`classLevelId\`) 
+            VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?, ?, ?)`
 
     const sqlMAX = `SELECT MAX(\`maxId\`) AS \`maxId\`
                 FROM \`class_data\` 
@@ -399,9 +399,12 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
                         req.body.classMAXpeople,
                         0,
                         classImg,
-                        req.session.seller_id
+                        req.session.seller_id,
+                        req.body.classTypeId,
+                        req.body.classLevelId,
                     ]
                     db.query(sql,sqlStmt,(error,result)=>{
+                        if (error) throw error
                         if ( result.affectedRows>0 ) {
                             data.status = 201;
                             data.msg = '新增成功'
@@ -594,8 +597,8 @@ router.get('/seller/class/:classId',(req,res)=>{
                                 INNER JOIN \`class_coach_status\`
                                 ON \`class_coach\`.\`id\` = \`class_coach_status\`.\`coachId\`
                                 WHERE \`class_coach_status\`.\`classId\` = '${req.params.classId}'`
-        const sql = `SELECT \`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classFullLocation\`,\`classStartDate\`,
-                        \`classPrice\`,\`classIntroduction\`,\`classDesc\`,\`classMAXpeople\`,\`classNOWpeople\`,\`classImg\` 
+        const sql = `SELECT \`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classFullLocation\`,DATE_FORMAT(\`classStartDate\`, '%Y-%m-%dT%H:%i') as classStartDate,
+                        \`classPrice\`,\`classIntroduction\`,\`classDesc\`,\`classMAXpeople\`,\`classNOWpeople\`,\`classImg\`,\`classTypeId\`,\`classLevelId\`,DATE_FORMAT(\`classEndDate\`, '%Y-%m-%dT%H:%i') as classEndDate
                         FROM \`class_data\` 
                         WHERE \`seller_id\` = '${req.session.seller_id}' AND \`classId\` = '${req.params.classId}'`
         const findMemberDataSql = `SELECT \`class_member\`.\`memberId\`,\`class_member\`.\`memberMemo\`,\`my_member\`.\`fullName\`,
@@ -640,11 +643,13 @@ router.get('/seller/class/:classId',(req,res)=>{
     req.body.className = 課程名稱
     req.body.classType = 課程類型
     req.body.classLevel = 課程等級
+    req.body.classTypeId = 課程類型編號
+    req.body.classLevelId = 課程等級編號
     req.body.classStartDate = 開課日期(input type="datetime-local")
     req.body.classEndDate = 結訓日期(input type="datetime-local")
     req.body.classLocation = 課程地點(縣市)
     req.body.classFullLocation = 課程地點(完整)
-    req.body.classIntroduction = 課程簡介(30字內)
+    req.body.classIntroduction = 課程簡介(100字內)
     req.body.classDesc = 課程說明(3000字內)
     req.body.classMAXpeople = 最大人數
     req.body.classImg = 課程圖片
@@ -659,6 +664,7 @@ router.get('/seller/class/:classId',(req,res)=>{
 */
 
 router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -719,7 +725,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
             data.msg='課程簡介不可為空白';
             res.json(data)
             break;
-        case req.body.classIntroduction.length > 30:
+        case req.body.classIntroduction.length > 100:
             data.msg='課程簡介過長';
             res.json(data)
             break;
@@ -747,7 +753,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
     const sql =  `UPDATE \`class_data\`
                 SET \`className\` = ?, \`classType\` = ?, \`classLevel\` = ?, \`classLocation\` = ?, 
                     \`classFullLocation\` = ?,\`classStartDate\` = ?,\`classEndDate\` = ?, \`classPrice\` = ?,
-                    \`classIntroduction\` = ?, \`classDesc\` = ?, \`classMAXpeople\` = ?${classImg}
+                    \`classIntroduction\` = ?, \`classDesc\` = ?, \`classMAXpeople\` = ?, \`classTypeId\` = ?, \`classLevelId\` = ?${classImg}
                 WHERE \`classId\` = '${req.params.classId}' AND \`seller_id\` = '${req.session.seller_id}'`
     const sqlType = `SELECT \`classTypeName\`
                     FROM \`class_type\`
@@ -789,6 +795,8 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
                 req.body.classIntroduction,
                 req.body.classDesc,
                 req.body.classMAXpeople,
+                req.body.classTypeId,
+                req.body.classLevelId
             ]
 
             if ( req.file && req.file.originalname ) {
