@@ -17,9 +17,9 @@ function App(props) {
     <Router>
       <>
         <Switch>
-        <Route path="/seller">
-          <SellerBack/>
-        </Route>
+          <Route path="/seller">
+            <SellerBack />
+          </Route>
           <Route path="/Class/:classId">
             <ClassDetail />
           </Route>

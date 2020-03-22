@@ -1,0 +1,33 @@
+.JY-Seller-Class{
+    background-color: white;
+    .card{
+        font-size: 16px;
+        margin-top: 30px;
+        .card-title{
+            font-size: 22px;
+        }
+        .card-body{
+            padding: 10px;
+        }
+        .classSellerImgBox{
+            height: 260px;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        ul{
+            list-style: none;
+            padding-left: 0;
+            li{
+                margin-right: 20px;;
+            }
+        }
+        .buttons{
+            justify-content: center;
+            .btn{
+                margin: 0 15px;
+            }
+        }
+    }
+}

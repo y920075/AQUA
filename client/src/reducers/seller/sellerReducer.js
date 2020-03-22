@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 
 //action = {type, value}
 
@@ -17,46 +17,47 @@ import {combineReducers} from 'redux'
 //             return state
 //     }
 // }
-const sellerEdit = (state = {},action) => {
-    switch (action.type) {
-        case 'SELLER_EDIT':
-            return {...action.data}
-        case 'SELLER_UPDATE':
-            return {...action.data}
-        default:
-            return state
-    }
+const sellerEdit = (state = {}, action) => {
+  switch (action.type) {
+    case 'SELLER_EDIT':
+      return { ...action.data }
+    case 'SELLER_UPDATE':
+      return { ...action.data }
+    default:
+      return state
+  }
 }
-const coupon = (state = {},action) => {
-    switch (action.type) {
-        case 'COUPON_ALL_GET':
-            return action.value
-        case 'COUPON_GET_INSERT':
-            return action.value
-        case 'COUPON_INSERT':
-            return action.value
-        default:
-            return state
-    }
+const coupon = (state = {}, action) => {
+  switch (action.type) {
+    case 'COUPON_ALL_GET':
+      return action.value
+    case 'COUPON_GET_INSERT':
+      return action.value
+    case 'COUPON_INSERT':
+      return action.value
+    default:
+      return state
+  }
 }
-const couponInsert = (state = {},action) => {
-    switch (action.type) {
-        case 'COUPON_INSERT':
-            return action.value
-        default:
-            return state
-    }
-}
-
-const sellerInfo = (state = {},action) => {
-    switch (action.type) {
-        case 'SELLER_INFO':
-            return action.value
-        default:
-            return state
-    }
+const couponInsert = (state = {}, action) => {
+  switch (action.type) {
+    case 'COUPON_INSERT':
+      return action.value
+    default:
+      return state
+  }
 }
 
+const sellerInfo = (state = {}, action) => {
+  switch (action.type) {
+    case 'SELLER_INFO':
+      return action.value
+    default:
+      return state
+  }
+}
+
+<<<<<<< HEAD:client/src/reducers/seller/sellerReducer.js
 const giviAdd =  (state = {},action) => {
     switch (action.type) {
         case 'ADD_GIVIDATA':
@@ -76,3 +77,79 @@ const sellerReducer = combineReducers({
 })
 
 export { sellerReducer }
+=======
+//----------------------賣家中心課程相關reducer----------------
+
+const sellerClassData = (state = {}, action) => {
+  switch (action.type) {
+    case 'GET_SELLER_CLASSDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
+const cityData = (state = {}, action) => {
+  switch (action.type) {
+    case 'GET_CITY_DATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
+const distData = (state = [], action) => {
+  switch (action.type) {
+    case 'GET_DIST_DATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
+const typeDataForSeller = (state = [], action) => {
+  switch (action.type) {
+    case 'GET_CLASSTYPEDATA_FORSELLER':
+      return action.value
+    default:
+      return state
+  }
+}
+
+const levelDataForSeller = (state = [], action) => {
+  switch (action.type) {
+    case 'GET_CLASSLEVELDATA_FORSELLER':
+      return action.value
+    default:
+      return state
+  }
+}
+
+const addClassDataResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_CLASSDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
+//----------------------賣家中心課程相關reducer----------------
+
+// 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
+const sellerReducer = combineReducers({
+  // user,
+  sellerEdit,
+  sellerInfo,
+  coupon,
+  couponInsert,
+  sellerClassData,
+  cityData,
+  distData,
+  typeDataForSeller,
+  levelDataForSeller,
+  addClassDataResponse,
+})
+
+export { sellerReducer }
+>>>>>>> 1d8ad12f3b613e94c51664b6f0abee3ebd93af0c:client/src/reducers/seller/index.js
