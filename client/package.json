@@ -12,7 +12,6 @@
     "bootstrap": "^4.4.1",
     "leaflet": "^1.6.0",
     "aos": "^3.0.0-beta.6",
-    "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
     "minimist": "^1.2.5",
     "node-sass": "^4.13.1",
