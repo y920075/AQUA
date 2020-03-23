@@ -70,15 +70,6 @@ class map extends React.Component {
           .bindPopup(marksinfo.LocationName)
           .openPopup()
       })
-      //marksinfo.LocationID
-      // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-
-      //     L.circle([25.03418, 121.564517], {
-      //       color: "red",
-      //       fillColor: "#f03",
-      //       fillOpacity: 0.5,
-      //       radius: 10
-      //     }).addTo(mymap);
     }
   }
   render() {
