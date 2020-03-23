@@ -5,6 +5,8 @@ $fontcolor: #FFFF;
 
 
 // main
+.locationcontent{
+    color:#FFFF;
 
 .locationh1{
     color: $fontcolor;
@@ -128,4 +130,5 @@ $fontcolor: #FFFF;
 }
 ::placeholder{
     color: #ffffffa9;
+}
 }
