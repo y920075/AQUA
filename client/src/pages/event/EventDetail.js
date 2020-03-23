@@ -7,7 +7,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 //引入action
-import { getEventDetailDataAsync } from '../../actions/event/event_Actions'
+import {
+  getEventDetailDataAsync,
+  memberJoinEventAsync,
+} from '../../actions/event/event_Actions'
 
 //引入自訂元件
 import Header from '../../components/Header' //導航列
@@ -61,6 +64,8 @@ function EventDetail(props) {
           <EventDetailDataContent
             eventData={eventData}
             weatherData={weatherData}
+            memberJoinEventAsync={props.memberJoinEventAsync}
+            memberJoinEventResponse={props.memberJoinEventResponse}
           />
         )}
         <Footer />
@@ -73,12 +78,16 @@ function EventDetail(props) {
 const mapStateToProps = store => {
   return {
     eventDetailData: store.eventReducer.eventDetailData,
+    memberJoinEventResponse: store.eventReducer.memberJoinEventResponse,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getEventDetailDataAsync }, dispatch)
+  return bindActionCreators(
+    { getEventDetailDataAsync, memberJoinEventAsync },
+    dispatch
+  )
 }
 
 export default withRouter(

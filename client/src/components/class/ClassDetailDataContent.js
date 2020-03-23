@@ -1,11 +1,34 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
+import SweetAlert from './SellerClassComponents/Sweetalert2'
 /*
-  傳入參數 props.classData = 課程資料列表
-  傳入參數 props.classCoachData = 教練資料列表
-  2020-03-21
+  傳入參數
+  props.classData = 課程資料列表
+  props.classCoachData = 教練資料列表
+  memberJoinClassResponse = 會員報名完成之後，後端回傳的資料
+
+  傳入方法
+  memberJoinClassAsync = 會員報名用的action
+  2020-03-23
 */
 function ClassDetailDataContent(props) {
+  const [response, setResponse] = useState(false) //確認是否有收到response資料
+
+  //每當response改變時就秀出提示視窗
+  useEffect(() => {
+    if (response) {
+      if (props.memberJoinClassResponse.status === 201) {
+        SweetAlert.success('報名成功!')
+        setResponse(false)
+      } else {
+        SweetAlert.errorAlert(
+          props.memberJoinClassResponse.status,
+          props.memberJoinClassResponse.msg
+        )
+        setResponse(false)
+      }
+    }
+  }, [response])
+
   return (
     <>
       {props.classData.length <= 0 ? (
@@ -50,8 +73,45 @@ function ClassDetailDataContent(props) {
                 <li>{'目前人數：' + props.classData.classNOWpeople}</li>
               </ul>
               <h1 className="classPrice">{'$' + props.classData.classPrice}</h1>
-              <button className="btn-join btn btn-raised btn-warning">
-                馬上報名
+              <button
+                className="btn-join btn btn-raised btn-warning"
+                disabled={
+                  props.classData.classNOWpeople >=
+                  props.classData.classMAXpeople
+                    ? true
+                    : false
+                }
+                onClick={() => {
+                  let msgArr = [
+                    {
+                      title: '輸入備註訊息',
+                      text: '輸入你想給賣家的備註 ex: 只吃素食等',
+                      input: 'text',
+                    },
+                    {
+                      title: '確認課程資訊',
+                      html: `<h2>主題：${props.classData.className}</h2>
+                            <p>類型：${props.classData.classType}</p>
+                            <p>等級：${props.classData.classLevel}</p>
+                            <p>開訓日期：${props.classData.classStartDate}</p>
+                            <p>結訓日期：${props.classData.classEndDate}</p>
+                            `,
+                    },
+                  ]
+                  SweetAlert.questionAlert(
+                    ['1', '2'],
+                    msgArr,
+                    setResponse,
+                    true,
+                    props.memberJoinClassAsync,
+                    props.classData.classId
+                  )
+                }}
+              >
+                {props.classData.classNOWpeople >=
+                props.classData.classMAXpeople
+                  ? '已額滿'
+                  : '馬上報名'}
               </button>
             </div>
           </div>
