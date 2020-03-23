@@ -76,7 +76,7 @@ class Area extends React.Component {
         <Accordion>
           <Card className="locationcard">
             <Accordion.Toggle as={Button} eventKey="0">
-              <h2>東北角</h2>
+              <h2 className="locationh2">東北角</h2>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
@@ -104,7 +104,7 @@ class Area extends React.Component {
           </Card>
           <Card className="locationcard">
             <Accordion.Toggle as={Button} eventKey="1">
-              <h2>花東海岸</h2>
+              <h2 className="locationh2">花東海岸</h2>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
@@ -132,7 +132,7 @@ class Area extends React.Component {
           </Card>
           <Card className="locationcard">
             <Accordion.Toggle as={Button} eventKey="2">
-              <h2>綠島</h2>
+              <h2 className="locationh2">綠島</h2>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="2">
               <Card.Body>
@@ -160,7 +160,7 @@ class Area extends React.Component {
           </Card>
           <Card className="locationcard">
             <Accordion.Toggle as={Button} eventKey="3">
-              <h2>蘭嶼</h2>
+              <h2 className="locationh2">蘭嶼</h2>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="3">
               <Card.Body>
@@ -188,7 +188,7 @@ class Area extends React.Component {
           </Card>
           <Card className="locationcard">
             <Accordion.Toggle as={Button} eventKey="4">
-              <h2>墾丁</h2>
+              <h2 className="locationh2">墾丁</h2>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="4">
               <Card.Body>

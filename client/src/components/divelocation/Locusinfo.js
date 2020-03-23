@@ -34,7 +34,7 @@ export class Locusinfo extends React.Component {
         {this.state.currentlocation.map((value, index) => {
           return (
             <div key={index}>
-              <h2>{value.LocationName}</h2>
+              <h2 className="locationh2">{value.LocationName}</h2>
               <hr />
               <ul>
                 <li>潛點難度：{value.Locationlevel}</li>
