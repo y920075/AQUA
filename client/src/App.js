@@ -5,7 +5,7 @@ import Divelocation from './pages/divelocation/Divelocation'
 import SellerBack from '../src/components/seller_back/SellerBack'
 //課程相關page
 import ClassList from './pages/class/ClassList'
-import ClassDetail from './pages/class/ClassDetail'
+import ClassDetailPage from './pages/class/classDetailPage'
 import MemberClass from './pages/class/MemberClass'
 //活動相關page
 import EventList from './pages/event/EventList'
@@ -28,7 +28,7 @@ function App(props) {
             <SellerBack />
           </Route>
           <Route path="/Class/:classId">
-            <ClassDetail />
+            <ClassDetailPage />
           </Route>
           <Route path="/Class">
             <ClassList />
