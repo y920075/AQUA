@@ -20,6 +20,7 @@ import Loading from '../../components/class/Loading' //載入中圖示
 import ClassDetailDataContent from '../../components/class/ClassDetailDataContent' //課程詳細資料框
 
 /*
+
   store參數 props.classDetailData = 課程詳細資料
   store方法 props.getclassDetailDataAsync() = 向伺服器取得課程詳細資料
   2020-03-21
