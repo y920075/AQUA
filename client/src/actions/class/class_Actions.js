@@ -98,3 +98,56 @@ export const memberJoinClassAsync = (classId, memberMemo) => {
     dispatch(memberJoinClass(data))
   }
 }
+
+//會員取得自己報名的課程資料
+export const memberGetClassData = data => ({
+  type: 'MEMBER_GETCLASSDATA',
+  value: data,
+})
+
+export const memberGetClassDataAsync = (sort, page) => {
+  return async dispatch => {
+    let query = []
+
+    if (sort) query.push(`sort=${sort.trim()}`)
+    if (page) query.push(`page=${page.trim()}`)
+    if (query.length > 0) {
+      query = query.join('&')
+    } else {
+      query = ''
+    }
+
+    const request = new Request(`http://127.0.0.1:5000/member/class?${query}`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(memberGetClassData(data))
+  }
+}
+
+//會員"取消"報名一筆課程
+export const memberUnJoinClass = data => ({
+  type: 'UNJOIN_CLASS',
+  value: data,
+})
+
+export const memberUnJoinClassAsync = classId => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/member/class/${classId}`,
+      {
+        method: 'DELETE',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(memberUnJoinClass(data))
+  }
+}
