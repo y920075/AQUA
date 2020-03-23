@@ -20,6 +20,8 @@ app.use(require(__dirname+'/class/class'))
 app.use(require(__dirname+'/class/coach'))
 app.use(require(__dirname+'/event/event'))
 
+app.use(require(__dirname+'/items/items'))
+
 
 
 

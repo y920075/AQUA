@@ -11,6 +11,11 @@ import EventList from './pages/event/EventList'
 import EventMapList from './pages/event/EventMapList'
 import EventDetail from './pages/event/EventDetail'
 
+import Items from './pages/item/itemList'
+import ItemDetail from './pages/item/itemDetail'
+import ShoppingCart from './pages/order/shoppingCart'
+import CheckOut from './pages/order/checkOut'
+
 function App(props) {
   console.log(props)
   return (
@@ -34,6 +39,18 @@ function App(props) {
           </Route>
           <Route path="/eventmaplist">
             <EventMapList />
+          </Route>
+          <Route path="/items/:itemId">
+            <ItemDetail />
+          </Route>
+          <Route path="/items">
+            <Items />
+          </Route>
+          <Route path="/member/mycart">
+            <ShoppingCart />
+          </Route>
+          <Route path="/member/checkout">
+            <CheckOut />
           </Route>
         </Switch>
       </>

@@ -96,7 +96,6 @@ router.get('/class',(req,res)=>{
                             ${searchType}${searchLevel}
                             ${sort}
                             LIMIT  ${(page-1)*perPage}, ${perPage}`
-
             return db.queryAsync(sql);
         }
     })
