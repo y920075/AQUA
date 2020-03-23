@@ -5,6 +5,7 @@ import {customerUseAsync} from '../../../../actions/seller/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+
 import './Style/CustomerMan.scss'
 
 function CouponTableList(props) {
@@ -109,7 +110,6 @@ function CouponTableList(props) {
         </thead>
         <tbody>
         {tableData3}
-
         </tbody>
       </table>
         </div>
