@@ -71,7 +71,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/store">
+                <Link className="nav-link" to="/items">
                   線上商店
                 </Link>
               </li>
