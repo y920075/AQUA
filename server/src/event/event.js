@@ -842,6 +842,7 @@ router.get('/member/event/join',async (req,res)=>{
 */
 
 router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
+    req.session.memberId = 'M20010002'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'

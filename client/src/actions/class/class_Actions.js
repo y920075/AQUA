@@ -74,3 +74,27 @@ export const getclassDetailDataAsync = classId => {
     dispatch(getclassDetailData(data))
   }
 }
+
+//會員報名一筆課程
+export const memberJoinClass = data => ({
+  type: 'APPLY_CLASS',
+  value: data,
+})
+
+export const memberJoinClassAsync = (classId, memberMemo) => {
+  return async dispatch => {
+    const fd = new FormData()
+    fd.append('memberMemo', memberMemo)
+    const request = new Request(
+      `http://127.0.0.1:5000/member/class/${classId}`,
+      {
+        method: 'POST',
+        body: fd,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(memberJoinClass(data))
+  }
+}

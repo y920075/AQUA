@@ -7,7 +7,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 //引入action
-import { getclassDetailDataAsync } from '../../actions/class/class_Actions'
+import {
+  getclassDetailDataAsync,
+  memberJoinClassAsync,
+} from '../../actions/class/class_Actions'
 
 //引入自訂元件
 import Header from '../../components/Header' //導航列
@@ -64,6 +67,8 @@ function ClassDetail(props) {
           <ClassDetailDataContent
             classData={classData}
             classCoachData={classCoachData}
+            memberJoinClassAsync={props.memberJoinClassAsync}
+            memberJoinClassResponse={props.memberJoinClassResponse}
           />
         )}
       </div>
@@ -74,12 +79,18 @@ function ClassDetail(props) {
 
 // 取得Redux中store的值
 const mapStateToProps = store => {
-  return { classDetailData: store.classReducer.classDetailData }
+  return {
+    classDetailData: store.classReducer.classDetailData,
+    memberJoinClassResponse: store.classReducer.memberJoinClassResponse,
+  }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getclassDetailDataAsync }, dispatch)
+  return bindActionCreators(
+    { getclassDetailDataAsync, memberJoinClassAsync },
+    dispatch
+  )
 }
 
 export default withRouter(
