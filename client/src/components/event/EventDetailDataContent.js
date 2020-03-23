@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import SweetAlert from '../class/SellerClassComponents/Sweetalert2'
 
 //引入自訂元件
 import EventWeatherContent from './EventWeatherContent' //天氣資料的框框
@@ -8,6 +9,24 @@ import EventWeatherContent from './EventWeatherContent' //天氣資料的框框
 //2020-03-21
 function EventDetailDataContent(props) {
   const [progress, setProgress] = useState(0) //計算進度條用的state
+
+  const [response, setResponse] = useState(false) //確認是否有收到response資料
+
+  //每當response改變時就秀出提示視窗
+  useEffect(() => {
+    if (response) {
+      if (props.memberJoinEventResponse.status === 201) {
+        SweetAlert.success('報名成功!')
+        setResponse(false)
+      } else {
+        SweetAlert.errorAlert(
+          props.memberJoinEventResponse.status,
+          props.memberJoinEventResponse.msg
+        )
+        setResponse(false)
+      }
+    }
+  }, [response])
 
   useEffect(() => {
     const progressNum =
@@ -80,8 +99,43 @@ function EventDetailDataContent(props) {
             <pre>{props.eventData.eventDesc}</pre>
           </div>
           <div className="d-flex justify-content-center btn-box">
-            <button className="btn-join btn btn-raised btn-warning">
-              參加揪團
+            <button
+              className="btn-join btn btn-raised btn-warning"
+              disabled={
+                props.eventData.eventNowPeople >=
+                props.eventData.eventNeedPeople
+                  ? true
+                  : false
+              }
+              onClick={() => {
+                let msgArr = [
+                  {
+                    title: '輸入備註訊息',
+                    text: '輸入你想給主辦者的備註 ex: 只吃素食等',
+                    input: 'text',
+                  },
+                  {
+                    title: '確認報名資訊',
+                    html: `<h2>主題：${props.eventData.eventName}</h2>
+                            <p>類型：${props.eventData.eventType}</p>
+                            <p>活動地點：${props.eventData.eventFullLocation}</p>
+                            <p>開始日期：${props.eventData.eventStartDate}</p>
+                            `,
+                  },
+                ]
+                SweetAlert.questionAlert(
+                  ['1', '2'],
+                  msgArr,
+                  setResponse,
+                  true,
+                  props.memberJoinEventAsync,
+                  props.eventData.eventId
+                )
+              }}
+            >
+              {props.eventData.eventNowPeople >= props.eventData.eventNeedPeople
+                ? '已額滿'
+                : '參加揪團'}
             </button>
           </div>
         </>

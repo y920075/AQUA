@@ -9,7 +9,7 @@ export const getItemDataAsync = (type, brand, price, page) => {
   return async dispatch => {
     let query = []
 
-    if (type) query.push(`category=${type.trim()}`)
+    if (type) query.push(`type=${type.trim()}`)
     if (brand) query.push(`brand=${brand.trim()}`)
     if (price) query.push(`price=${price.trim()}`)
     if (page) query.push(`page=${page.trim()}`)
@@ -18,7 +18,7 @@ export const getItemDataAsync = (type, brand, price, page) => {
     } else {
       query = ''
     }
-    // console.log('query', query)
+    console.log('query', query)
 
     const request = new Request(`http://127.0.0.1:5000/items?${query}`, {
       method: 'GET',

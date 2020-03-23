@@ -4,10 +4,11 @@ const bluebird = require('bluebird');
 
 
 const db = mysql.createConnection({
-    host: config.mysql.host,
+  host: config.mysql.host,
   user: config.mysql.user,
   password: config.mysql.password,
   database: config.mysql.database,
+  multipleStatements: true,
   dateStrings:true
 });
 

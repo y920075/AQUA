@@ -108,3 +108,28 @@ export const getEventDetailDataAsync = eventId => {
     dispatch(getEventDetailData(data))
   }
 }
+
+//會員報名一筆活動
+export const memberJoinEvent = data => ({
+  type: 'APPLY_EVENT',
+  value: data,
+})
+
+export const memberJoinEventAsync = (eventId, memberMemo) => {
+  return async dispatch => {
+    const fd = new FormData()
+    fd.append('memberMemo', memberMemo)
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/join/${eventId}`,
+      {
+        method: 'POST',
+        body: fd,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(memberJoinEvent(data))
+  }
+}

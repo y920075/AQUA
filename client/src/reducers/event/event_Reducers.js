@@ -40,11 +40,22 @@ const eventDetailData = (state = {}, action) => {
   }
 }
 
+//取得報名之後後端回傳的資料
+const memberJoinEventResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'APPLY_EVENT':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
 const eventReducer = combineReducers({
   eventData,
   eventDataForMap,
   eventTypeData,
   eventDetailData,
+  memberJoinEventResponse,
 })
 export { eventReducer }
