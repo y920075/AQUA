@@ -618,8 +618,47 @@ export const getSellerClassDetailDataAsync = classId => {
 
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(getSellerClassDetailData(data))
+  }
+}
+
+//編輯課程資料
+export const editClassData = data => ({
+  type: 'EDIT_CLASSDATA',
+  value: data,
+})
+
+//新增課程資料
+//formData = 傳送過來的表單值
+export const editClassDataAsunc = (formData, classId) => {
+  return async dispatch => {
+    const fd = new FormData()
+    fd.append('className', formData.className)
+    fd.append('classType', formData.classType)
+    fd.append('classLevel', formData.classLevel)
+    fd.append('classTypeId', formData.classTypeId)
+    fd.append('classLevelId', formData.classLevelId)
+    fd.append('classLocation', formData.classLocation)
+    fd.append('classFullLocation', formData.classFullLocation)
+    fd.append('classStartDate', formData.classStartDate)
+    fd.append('classEndDate', formData.classEndDate)
+    fd.append('classPrice', formData.classPrice)
+    fd.append('classIntroduction', formData.classIntroduction)
+    fd.append('classDesc', formData.classDesc)
+    fd.append('classMAXpeople', formData.classMAXpeople)
+    fd.append('classImg', formData.classImg)
+
+    const request = new Request(
+      `http://127.0.0.1:5000/seller/class/${classId}`,
+      {
+        method: 'PUT',
+        body: fd,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(editClassData(data))
   }
 }
 

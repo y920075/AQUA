@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import SellerBack from '../src/components/seller_back/SellerBack'
 //課程相關page
 import ClassList from './pages/class/ClassList'
-import ClassDetail from './pages/class/classDetail'
+import ClassDetail from './pages/class/ClassDetail'
 //活動相關page
 import EventList from './pages/event/EventList'
 import EventMapList from './pages/event/EventMapList'

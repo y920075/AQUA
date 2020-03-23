@@ -6,7 +6,14 @@ class SweetAlert {
   constructor() {}
 
   //送出前確認
-  static sendConfirm(title, callback, callBackData, setStateFunc, stateData) {
+  static sendConfirm(
+    title,
+    setStateFunc,
+    stateData,
+    callback,
+    callBackData = '',
+    callBackData2 = ''
+  ) {
     MySwal.fire({
       title: title,
       icon: 'question',
@@ -16,7 +23,7 @@ class SweetAlert {
       confirmButtonText: '送出',
     }).then(async result => {
       if (result.value) {
-        if (callback) await callback(callBackData)
+        if (callback) await callback(callBackData, callBackData2)
         if (setStateFunc && stateData) setStateFunc(stateData)
       }
     })

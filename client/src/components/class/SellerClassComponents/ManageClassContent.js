@@ -52,10 +52,10 @@ function ManageClassContent(props) {
   const delClassData = classId => {
     SweetAlert.sendConfirm(
       '確定要刪除嗎?',
-      props.delClassDataAsunc,
-      classId,
       setResponse,
-      true
+      true,
+      props.delClassDataAsunc,
+      classId
     )
   }
 
@@ -106,14 +106,14 @@ function ManageClassContent(props) {
                           <ul className="">
                             <li>
                               <img
-                                src="../images/classImg/icons/type.svg"
+                                src="../../images/classImg/icons/type.svg"
                                 alt=""
                               />
                               {value.classType}
                             </li>
                             <li>
                               <img
-                                src="../images/classImg/icons/level.svg"
+                                src="../../images/classImg/icons/level.svg"
                                 alt=""
                               />
                               {value.classLevel}
@@ -122,14 +122,14 @@ function ManageClassContent(props) {
                           <ul className="d-flex">
                             <li>
                               <img
-                                src="../images/classImg/icons/date.svg"
+                                src="../../images/classImg/icons/date.svg"
                                 alt=""
                               />
                               {value.classStartDate}
                             </li>
                             <li>
                               <img
-                                src="../images/classImg/icons/local.svg"
+                                src="../../images/classImg/icons/local.svg"
                                 alt=""
                               />
                               {value.classLocation}
