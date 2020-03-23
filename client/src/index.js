@@ -9,31 +9,31 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 
 //導入reducers
-// import { blogReducer } from './reducers/blog/blog_Reducers'
-// import { classReducer } from './reducers/class/class_Reducers'
-// import { eventReducer } from './reducers/event/event_Reducers'
-// import { itemReducer } from './reducers/item/item_Reducers'
-// import { memberReducer } from './reducers/member/member_Reducers'
+
 import { locationReducer } from './reducers/location/location_Reducers'
-
-
+import { classReducer } from './reducers/class/class_Reducers'
+import { eventReducer } from './reducers/event/event_Reducers'
+import { itemReducer } from './reducers/item/item_Reducers'
+// import { memberReducer } from './reducers/member/member_Reducers'
+import { sellerReducer } from './reducers/seller/sellerReducer'
 //引入中介軟體
 import thunk from 'redux-thunk'
 
 //合併reducers
-// const rootReducer = combineReducers({
-//   ...blogReducer,
-//   ...classReducer,
-//   ...eventReducer,
-//   ...itemReducer,
-//   ...memberReducer,
-//   ...locationReducer,
-// })
+const rootReducer = combineReducers({
+  // ...blogReducer,
+  classReducer,
+  eventReducer,
+  sellerReducer,
+  itemReducer,
+  locationReducer,
+  // ...memberReducer,
+})
 
 //使用中介軟體時，建立store的方法，需要額外建立一個composeEnhancers
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
-  locationReducer,
+  rootReducer,
   /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))
 )
 

@@ -1,0 +1,112 @@
+.JY-container-detail {
+  color: white;
+  h1 {
+    font-size: 1.875rem;
+    text-align: center;
+    margin-bottom: 1.875rem;
+  }
+  .classDataBox {
+    justify-content: center;
+  }
+  .classImgBox {
+    height: 19.063rem;
+    & > img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .classInfoBox {
+    .icons {
+      vertical-align: middle;
+    }
+    ul {
+      li {
+        margin-right: 2.5rem;
+      }
+      padding-left: 0;
+      justify-content: space-between;
+      list-style: none;
+    }
+    .classPrice {
+      margin: 1.875rem auto;
+      color: #d2b319;
+    }
+    .btn-join {
+      width: 15rem;
+      height: 2.563rem;
+      margin: 0 15%;
+    }
+  }
+  .shopName {
+    margin: 0.625rem 0px;
+    text-align: center;
+  }
+  .shopNameBox {
+    border-bottom: 2px solid white;
+    justify-content: center;
+  }
+  .coachTitle {
+    margin: 1.875rem 0;
+    text-align: center;
+  }
+  .coachList {
+    justify-content: center;
+    // flex-wrap: nowrap;
+    overflow: hidden;
+    padding: 0px 0px 1.875rem 0px;
+    border-bottom: 2px solid white;
+    .coachInfo {
+      min-width: 11.875rem;
+      min-height: 15rem;
+      min-height: 14.938rem;
+      background-color: white;
+      border-radius: 0.625rem;
+      color: #132948;
+      padding: 0 0.625rem;
+      margin: 0.875rem;
+      .avatarBox {
+        overflow: hidden;
+        width: 4.688rem;
+        height: 4.688rem;
+        border-radius: 50%;
+        margin: 0.938rem auto;
+        & > img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .coachName {
+        p {
+          text-align: center;
+          margin: 0 auto;
+        }
+      }
+      .coachEducation {
+        p {
+          font-size: 0.875rem;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .classDesc {
+    width: 100%;
+    background-color: white;
+    padding: 0.938rem;
+    margin-bottom: 6.25rem;
+    border-radius: 0.625rem;
+    pre {
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+      font-size: 1rem;
+      color: #132948;
+      white-space: pre-wrap; /*css-3*/
+      white-space: -moz-pre-wrap; /*Mozilla,since1999*/
+      white-space: -pre-wrap; /*Opera4-6*/
+      white-space: -o-pre-wrap; /*Opera7*/
+      word-wrap: break-word; /*InternetExplorer5.5+*/
+    }
+  }
+}

@@ -1,8 +1,8 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -15,19 +15,41 @@ code {
   height: 370px;
   overflow: hidden;
   margin-bottom: 3.125rem;
-  img{
-      width: 100%;
+  img {
+    width: 100%;
+  }
+  @media screen and (max-width: 540px) {
+    height: 200px;
+    img {
+      object-fit: contain;
+    }
   }
 }
-div.collapse.navbar-collapse{
-  @media screen and (max-width:540px){
-      display: flex !important;
-      max-height: 0;
-      overflow: hidden;
-      transition: 1s;
+.Header-Navbar {
+  @media screen and(max-width:540px) {
+    max-width: 375px;
   }
 }
-.JY_navMenuShow{
+div.collapse.navbar-collapse {
+  @media screen and (max-width: 540px) {
+    display: flex !important;
+    max-height: 0;
+    overflow: hidden;
+    transition: 1s;
+  }
+}
+.JY_navMenuShow {
   display: flex !important;
   max-height: 500px !important;
 }
+.loading {
+  text-align: center;
+  color: white;
+}
+@import '../src/pages/class/class.scss';
+@import '../src/pages/class/classDetail.scss';
+@import '../src/pages/event/event.scss';
+@import '../src/pages/event/eventDetail.scss';
+@import '../src/pages/event/eventMapList.scss';
+@import '../src/pages/class/SellerClass.scss';
+@import '../src/pages/class/SellerEditClass.scss';

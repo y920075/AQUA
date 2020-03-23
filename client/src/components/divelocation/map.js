@@ -91,7 +91,7 @@ class map extends React.Component {
 }
 // 取得Redux中store的值
 const mapStateToProps = store => {
-  return { mapmarksGCS: store.mapmarksGCS }
+  return { mapmarksGCS: store.locationReducer.mapmarksGCS }
 }
 
 // 指示dispatch要綁定哪些action creators

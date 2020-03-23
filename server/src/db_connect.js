@@ -8,8 +8,8 @@ const db = mysql.createConnection({
   user: config.mysql.user,
   password: config.mysql.password,
   database: config.mysql.database,
-  multipleStatements: true
-
+  multipleStatements: true,
+  dateStrings:true
 });
 
 // db.on('error',(event)=>{
@@ -17,9 +17,6 @@ const db = mysql.createConnection({
 //     //假設db連線crush掉,讓其他的部分也能運作
 //     console.log(event);
 // });
-
-
-
 
 db.connect(err=>{
     if(err) {

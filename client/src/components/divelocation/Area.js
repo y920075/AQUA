@@ -221,7 +221,7 @@ class Area extends React.Component {
 }
 // 取得Redux中store的值
 const mapStateToProps = store => {
-  return { Regions: store.Regions }
+  return { Regions: store.locationReducer.Regions }
 }
 
 // 指示dispatch要綁定哪些action creators

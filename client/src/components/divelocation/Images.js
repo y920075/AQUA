@@ -39,7 +39,7 @@ export class Images extends Component {
 }
 // 取得Redux中store的值
 const mapStateToProps = store => {
-  return { LocusImages: store.LocusImages }
+  return { LocusImages: store.locationReducer.LocusImages }
 }
 
 // 指示dispatch要綁定哪些action creators

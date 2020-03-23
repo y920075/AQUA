@@ -51,7 +51,7 @@ export class Locusinfo extends React.Component {
 }
 // 取得Redux中store的值
 const mapStateToProps = store => {
-  return { LocusInfos: store.LocusInfos }
+  return { LocusInfos: store.locationReducer.LocusInfos }
 }
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
