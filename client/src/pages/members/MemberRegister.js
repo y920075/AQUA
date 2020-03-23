@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import Header from '../../components/Header'
 import '../../style/HS.scss'
 
 
 
-function MemberRegister() {
+function MemberRegister(props) {
     //set background img
     useEffect(() => {
         require('../../style/bg.css')
@@ -25,7 +26,12 @@ function MemberRegister() {
         let error = false
         if (password1 !== password2) {
             error = true
-            alert('兩次密碼寫的不同')
+            // alert('兩次密碼寫的不同')
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '兩次密碼不同!'
+            })
         }
 
         setError(error)
@@ -33,18 +39,34 @@ function MemberRegister() {
 
         const password = password1
         const userData = { name, email, username, password }
-        sendRegisterDataToServer(userData, () => alert('成功註冊'))
+        sendRegisterDataToServer(userData, () => {
+            Swal.fire(
+                '註冊成功!',
+                'Redirect in 5 seconds...!',
+                'success'
+            )
+            setTimeout(function () {
+                window.location.href = './memberlogin'
+            }, 5000);
+        });
     }
 
     async function sendRegisterDataToServer(userData, callback) {
-        // 注意資料格式要設定，伺服器才知道是json格式
-        const request = new Request('http://localhost:5000/', {
+        const fd = new FormData()
+        fd.append('fullName', userData.name)
+        fd.append('email', userData.email)
+        fd.append('loginId', userData.username)
+        fd.append('loginPwd', userData.password)
+
+
+
+        const request = new Request('http://localhost:5000/members/register', {
             method: 'POST',
-            body: JSON.stringify(userData),
-            headers: new Headers({
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }),
+            body: fd,
+            // headers: new Headers({
+            //     Accept: 'application/json',
+            //     'Content-Type': 'application/json',
+            // }),
         })
 
         console.log(JSON.stringify(userData))
@@ -53,6 +75,7 @@ function MemberRegister() {
         const data = await response.json()
         console.log(data)
         callback()
+
     }
 
     return <>
@@ -62,7 +85,7 @@ function MemberRegister() {
             <div className="registercard-hs row d-flex align-items-center">
                 <div className="card col-md-6 mx-auto">
                     {/* <!-- Default form register --> */}
-                    <form className="text-center p-4" action="/memberhomepage">
+                    <form className="text-center p-4" action="">
 
                         <p className="h4 mb-4">註冊</p>
 
@@ -94,7 +117,7 @@ function MemberRegister() {
                             aria-describedby="defaultRegisterFormPhoneHelpBlock" onChange={e => setMobile(e.target.value)} /> */}
 
                         {/* <!-- Sign up button --> */}
-                        <button className="btn btn-info my-4 btn-block" type="submit" onClick={() => handleSubmit()}>立即註冊!</button>
+                        <button className="btn btn-info my-4 btn-block" type="button" onClick={() => handleSubmit()}>立即註冊!</button>
 
                         {/* <!-- Social register --> */}
                         <p>其他登入方式:</p>

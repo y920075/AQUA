@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Sidebar from '../../components/member/Sidebar'
@@ -7,6 +7,17 @@ import '../../style/HS.scss'
 
 
 function MemberUser() {
+    // const [] = useState('')
+
+    const [avatarFile, setAvatarFile] = useState('');
+    const [avatarDataFiles, setAvatarDataFiles] = useState('');
+    const handleChange = (event) => {
+        console.log(event.target.files)
+        setAvatarFile(URL.createObjectURL(event.target.files[0]))
+        console.log(event.target.files[0])
+        setAvatarDataFiles(event.target.files[0])
+    }
+
     return <>
         <Header />
         <Banner BannerImgSrc="./images/member/coralreef.jpg" />
@@ -25,14 +36,15 @@ function MemberUser() {
                             <h3 className="pagetitle-hs">個人資料</h3>
                         </div>
                         <hr className="hrline-hs" />
+
                         {/* <!-- Avatar Image --> */}
                         <div className=" avatar-hs d-flex justify-content-center mt-5">
-                            <img className="rounded-circle avatar mb-5" src="./images/member/nemo.jpg" alt="" />
+                            <input type="file" onChange={(event) => handleChange(event)} />
+                            <img className="blah" src={avatarFile} width="100" height="100" />
+                            {/* <img className="rounded-circle avatar mb-5" src="./images/member/nemo.jpg" alt="" /> */}
                         </div>
-                        {/* <!-- Edit Image --> */}
-                        <div className="d-flex justify-content-center">
-                            <a type="button"><i className="far fa-edit"></i></a>
-                        </div>
+
+                        {/* start of member form */}
                         <form>
                             {/* <!-- Material input --> */}
                             <div className="input-hs md-form form-group mt-5 col-lg-12">

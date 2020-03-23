@@ -1,13 +1,50 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { userLoginAsync } from '../../actions/member/memberActions'
+import { withRouter, Link } from 'react-router-dom'
 import Header from '../../components/Header'
 import '../../style/HS.scss'
 
-function MemberLogin() {
+
+
+function MemberLogin(props) {
     //set background img
     useEffect(() => {
         require('../../style/bg.css')
     }, []);
+
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const [error, setError] = useState(false)
+    const [errorMessages, setErrorMessages] = useState([])
+
+    const handleSubmit = () => {
+        let error = false
+        let errorMessages = []
+
+        if (!username) {
+            error = true
+            errorMessages.push('帳號沒填')
+        }
+
+        if (!password) {
+            error = true
+            errorMessages.push('密碼沒填')
+        }
+
+        if (error) {
+            setError(error)
+            setErrorMessages(errorMessages)
+            return
+        }
+
+        const userData = { username, password }
+        props.userLoginAsync(userData, () => alert('成功登入'))
+    }
+
+
     return <>
         <Header />
 
@@ -21,14 +58,15 @@ function MemberLogin() {
                     {/* <!-- Default form login --> */}
                     <form className="text-center p-4" action="#!">
                         <p className="h4 mb-4">會員登入</p>
-                        {/* <!-- Email --> */}
-                        <input type="email" id="defaultLoginFormEmail" className="form-control mb-4" placeholder="E-mail" />
+                        {/* <!-- Username --> */}
+                        <input onChange={e => setUsername(e.target.value)} type="text" id="" className="form-control mb-4" placeholder="Username" />
 
                         {/* <!-- Password --> */}
-                        <input type="password" id="defaultLoginFormPassword" className="form-control mb-4" placeholder="Password" />
+                        <input onChange={e => setPassword(e.target.value)} type="password" id="" className="form-control mb-4" placeholder="Password" />
+
+                        {/* <!-- Remember me --> */}
                         <div className="d-flex justify-content-around">
                             <div>
-                                {/* <!-- Remember me --> */}
                                 <div className="custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" id="defaultLoginFormRemember" />
                                     <label className="custom-control-label" for="defaultLoginFormRemember">記住我</label>
@@ -43,7 +81,7 @@ function MemberLogin() {
 
                         {/* <!-- Sign in button --> */}
                         {/* <Link to="memberhomepage"> */}
-                            <button className="loginbutton btn btn-info btn-block my-4" type="submit">登入</button>
+                        <button onClick={() => handleSubmit()} className="loginbutton btn btn-info btn-block my-4" type="button">登入</button>
                         {/* </Link> */}
 
 
@@ -71,9 +109,19 @@ function MemberLogin() {
                 </div>
             </div>
         </div>
-
-
     </>
 }
 
-export default MemberLogin
+// 取得Redux中isAuth的值
+const mapStateToProps = store => {
+    return { isAuth: store.user.isAuth }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ userLoginAsync }, dispatch)
+}
+
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(MemberLogin)
+)

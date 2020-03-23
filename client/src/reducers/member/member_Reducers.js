@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-
+//註冊
 // 第一步：建立reducer
 // action = {type, value}
 // type: ADD_VALUE, MINUS_VALUE
@@ -18,12 +18,29 @@ const counter = (state = 0, action) => {
     }
 }
 
+//登入
+// action = {type, value}
+// type: ADD_VALUE, MINUS_VALUE
+// ex. action = {type: 'ADD_VALUE', value: 10}
+const user = (state = { isAuth: false }, action) => {
+    switch (action.type) {
+        case 'USER_REGISTER':
+            return { ...action.data, isAuth: true }
+        case 'USER_LOGIN':
+            return { ...action.data, isAuth: true }
+        case 'USER_LOGOUT':
+            return { isAuth: false }
+        default:
+            return state
+    }
+}
 
 
 
-
-//合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
+// 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
 const memberReducer = combineReducers({
-
+    counter,
+    user,
 })
+
 export { memberReducer }
