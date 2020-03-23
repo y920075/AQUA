@@ -8,6 +8,7 @@ function Aside(props) {
     let type_li = document.querySelectorAll('li.type-li')
     let brand_li = document.querySelectorAll('li.brand-li')
 
+    console.log('觸發act')
     switch (event.target.classList.value) {
       case 'type-li':
         type_li.forEach(value => {
@@ -27,15 +28,20 @@ function Aside(props) {
     }
 
     event.target.classList.add('active') //為被點擊的目標新增active
+    event.stopPropagation()
   }
   function toggleClick(event) {
     // console.log(event.target.childNodes[1].classList.value == 'type-ul')
+    console.log('觸發tog')
     const type_ul = event.target.childNodes[1]
-    if (type_ul.classList.value == 'type-ul') {
+  
+       if (type_ul.classList.value == 'type-ul') {
       type_ul.classList.add('h-100')
     } else {
       type_ul.classList.remove('h-100')
     }
+    
+   
     // let type_ul = document.querySelectorAll('ul.type-ul')
     // type_ul.forEach(value => {
     //   value.classList.add('h-100')
@@ -65,7 +71,7 @@ function Aside(props) {
               key={index}
               data-cate={value.itemCategoryId}
               onClick={event => {
-                // toggleClick(event)
+                toggleClick(event)
                 // asideClick(event)
                 // const brand = event.target.dataset.brand
                 // props.getDataFromServer(brand)
