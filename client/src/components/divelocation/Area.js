@@ -12,7 +12,6 @@ import {
   fetchImages,
 } from '../../actions/location/Location_Action'
 import { Link } from 'react-router-dom'
-let mymap
 class Area extends React.Component {
   constructor(props) {
     super(props)
