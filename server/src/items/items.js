@@ -26,16 +26,18 @@ itemRouter.get('/items', (req, res)=>{
     console.log('商品列表請求')
     const perPage = 16
     let where = []
-    if (req.query.category) where.push(`\`itemCategoryId\` ='${req.query.category}'`)
-    if (req.query.brand) where.push(`\`itemBrandId\` ='${req.query.brand}'`)
-    if (req.query.price) where.push(`\`itemPrice\` > '${req.query.price.split(",")[0]}' AND \`itemPrice\` < '${req.query.price.split(",")[1]}'`)
+    if (req.query.type && req.query.type !='t000') where.push(`\`itemTypeId\` ='${req.query.type}'`)
+    if (req.query.brand && req.query.brand != 'all') where.push(`\`itemBrandId\` ='${req.query.brand}'`)
+    if (req.query.price) where.push(`\`itemPrice\` > ${req.query.price.split(",")[0]} AND \`itemPrice\` < ${req.query.price.split(",")[1]}`)
     if(where.length>0){where = 'AND '+where.join(' AND ')}else{where=''}
     
+    console.log(where)
     
     let totalRows, totalPages
     let page = req.query.page ? parseInt(req.query.page) : 1
 
     const total = `SELECT COUNT(DISTINCT \`itemName\`) num FROM \`items\` WHERE \`itemStatus\` = 'active' ${where}`
+    console.log('total',total)
     db.queryAsync(total)
         .then(result=>{
             totalRows = result[0].num
@@ -53,6 +55,7 @@ itemRouter.get('/items', (req, res)=>{
         })
         .then(result=>{
            if (result.length>0) {
+               console.log(totalRows)
                 res.json({
                     'status': 200,
                     'msg': '請求成功',

@@ -61,7 +61,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/location">
+                <Link className="nav-link" to="/location/L0002">自由潛點
                   自由潛點
                 </Link>
               </li>

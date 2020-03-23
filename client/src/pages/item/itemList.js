@@ -26,7 +26,7 @@ function Items(props) {
   const [itemData, setItemData] = useState([])
   const [asideData, setAsideData] = useState([])
   const [hasloading, setHasLoading] = useState(false)
-  console.log('cateData', cateData)
+  // console.log('cateData', cateData)
 
   useEffect(() => {
     props.getItemDataAsync()
@@ -56,15 +56,18 @@ function Items(props) {
   }, [props.asideData])
 
   function getItemData(page) {
-    const type = document.querySelector('.typeMenu .active')
-      ? document.querySelector('.typeMenu .active').getAttribute('data-type')
+    const type = document.querySelector('.type-li.active')
+      ? document.querySelector('.type-li.active').getAttribute('data-type')
       : ''
-    const brand = document.querySelector('.typeMenu .active')
-      ? document.querySelector('.typeMenu .active').getAttribute('data-level')
+    const brand = document.querySelector('.brand-li.active')
+      ? document.querySelector('.brand-li.active').getAttribute('data-brand')
       : ''
     //取得sort的select的值
-    const price = document.querySelector('select[name="sort"]').value
-    props.getClassDataAsync(type, brand, price, page)
+    console.log(type, brand)
+    const price = document.querySelector('.price-li.active')
+      ? document.querySelector('.price-li.active').getAttribute('data-price')
+      : ''
+    props.getItemDataAsync(type, brand, price, page)
 
     // props.getItemDataAsync(page)
   }
@@ -80,7 +83,7 @@ function Items(props) {
   //   props.getItemDataAsync(page)
   // }
 
-  console.log(props.asideData)
+  // console.log(props.asideData)
   return (
     <>
       <Header />

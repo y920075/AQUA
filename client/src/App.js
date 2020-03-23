@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
-
+import Divelocation from './pages/divelocation/Divelocation'
 //賣家後台page
 import SellerBack from '../src/components/seller_back/SellerBack'
 //課程相關page
@@ -59,6 +59,9 @@ function App(props) {
           </Route>
           <Route path="/memberevent">
             <MemberEvent />
+          </Route>
+          <Route path="/location/:LocationID">
+            <Divelocation />
           </Route>
         </Switch>
       </>
