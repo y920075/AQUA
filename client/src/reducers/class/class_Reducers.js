@@ -28,10 +28,30 @@ const classDetailData = (state = {}, action) => {
   }
 }
 
-//取得報名之後後端回傳的資料
+//取得會員報名之後後端回傳的資料
 const memberJoinClassResponse = (state = {}, action) => {
   switch (action.type) {
     case 'APPLY_CLASS':
+      return action.value
+    default:
+      return state
+  }
+}
+
+//會員取得自己報名的課程資料
+const memberClassData = (state = {}, action) => {
+  switch (action.type) {
+    case 'MEMBER_GETCLASSDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
+//取得會員"取消"報名之後，後端回傳的資料
+const memberUnJoinClassResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'UNJOIN_CLASS':
       return action.value
     default:
       return state
@@ -44,5 +64,7 @@ const classReducer = combineReducers({
   classData,
   classDetailData,
   memberJoinClassResponse,
+  memberClassData,
+  memberUnJoinClassResponse,
 })
 export { classReducer }

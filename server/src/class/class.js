@@ -1003,6 +1003,7 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/class',(req,res)=>{
+    req.session.memberId = 'M20010002'
     const data = {
         'status' : '401',
         'msg' : '尚未登入'
@@ -1089,6 +1090,7 @@ router.get('/member/class',(req,res)=>{
 */
 
 router.delete('/member/class/:classId',(req,res)=>{
+    req.session.memberId = 'M20010002'
     const data = {
         'status':404,
         'msg':'查無報名資料'

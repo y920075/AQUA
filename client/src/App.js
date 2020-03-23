@@ -6,10 +6,12 @@ import SellerBack from '../src/components/seller_back/SellerBack'
 //課程相關page
 import ClassList from './pages/class/ClassList'
 import ClassDetail from './pages/class/ClassDetail'
+import MemberClass from './pages/class/MemberClass'
 //活動相關page
 import EventList from './pages/event/EventList'
 import EventMapList from './pages/event/EventMapList'
 import EventDetail from './pages/event/EventDetail'
+import MemberEvent from './pages/event/MemberEvent'
 
 import Items from './pages/item/itemList'
 import ItemDetail from './pages/item/itemDetail'
@@ -51,6 +53,12 @@ function App(props) {
           </Route>
           <Route path="/member/checkout">
             <CheckOut />
+          </Route>
+          <Route path="/memberclass">
+            <MemberClass />
+          </Route>
+          <Route path="/memberevent">
+            <MemberEvent />
           </Route>
         </Switch>
       </>
