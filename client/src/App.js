@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
-
+import Divelocation from './pages/divelocation/Divelocation'
 //賣家後台page
 import SellerBack from '../src/components/seller_back/SellerBack'
 //課程相關page
 import ClassList from './pages/class/ClassList'
-import ClassDetail from './pages/class/ClassDetail'
+import ClassDetail from './pages/class/classDetail'
 //活動相關page
 import EventList from './pages/event/EventList'
 import EventMapList from './pages/event/EventMapList'
@@ -52,6 +52,9 @@ function App(props) {
           <Route path="/member/checkout">
             <CheckOut />
           </Route>
+          <Route path="/location/:LocationID">
+            <Divelocation />
+          </Route> 
         </Switch>
       </>
     </Router>
