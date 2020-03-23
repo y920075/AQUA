@@ -69,9 +69,21 @@ const customer =  (state = {},action) => {
     switch (action.type) {
         case 'CUSTOMER_GET':
             return action.value
+        case 'CUSTOMER_USE':
+          return action.value
         default:
             return state
     }
+}
+
+
+const cutomeruse =(state = {},action) => {
+  switch (action.type) {
+      case 'CUSTOMER_USE':
+        return action.value
+      default:
+          return state
+  }
 }
 //----------------------賣家中心課程相關reducer----------------
 
@@ -167,6 +179,7 @@ const sellerReducer = combineReducers({
   couponInsert,
   giviAdd,
   customer,
+  cutomeruse,
   sellerClassData,
   cityData,
   distData,

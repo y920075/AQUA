@@ -330,8 +330,14 @@ export const customerGet = data => ({
   
   export const customerGetAsync = (customerData, callback) => {
     return async dispatch => {
+
+      let query = []
+      if (customerData) query.push(`searchType=${customerData.trim()}`)
+      console.log(query[0])
+
+
       const request = new Request(
-        'http://localhost:5000/seller/customermanager/customer-info',
+        `http://localhost:5000/seller/customermanager/customer-search?${query[0]}`,
   
         {
           method: 'GET',
@@ -351,7 +357,35 @@ export const customerGet = data => ({
     }
   }
 
+  export const customerUse = data => ({
+    type: 'CUSTOMER_USE',
+    value: data,
+  })
+  export const customerUseAsync = (customerData, callback) => {
+    return async dispatch => {
 
+  
+
+      const request = new Request(
+        `http://localhost:5000/seller/customermanager/customer-coupon-use`,
+  
+        {
+          method: 'GET',
+          headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }),
+        }
+      )
+  
+  
+      const response = await fetch(request)
+      const data = await response.json()
+      console.log('res data', data)
+  
+      dispatch(customerUse(data))
+    }
+  }
   // export const customerGetSort = data => ({
   //   type: 'CUSTOMER_GET_SORT',
   //   value: data,
