@@ -17,6 +17,9 @@ class map extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.mapmarksGCS !== prevProps.mapmarksGCS) {
+      if (mymap !== undefined) {
+        mymap.remove()
+      }
       const currentmark = this.props.match.params
       const marksinfo = this.props.mapmarksGCS.DivelocationInfo
       // console.log(marksinfo)
@@ -60,6 +63,13 @@ class map extends React.Component {
           .addTo(mymap)
           .bindPopup(marksinfo.LocationName)
       })
+      // 打開現在地點
+      locatecurrentmark.forEach(function(marksinfo) {
+        L.marker([marksinfo.Latitude, marksinfo.Longitude], { icon: blueIcon })
+          .addTo(mymap)
+          .bindPopup(marksinfo.LocationName)
+          .openPopup()
+      })
       //marksinfo.LocationID
       // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 
@@ -70,9 +80,6 @@ class map extends React.Component {
       //       radius: 10
       //     }).addTo(mymap);
     }
-  }
-  componentWillUnmount() {
-    mymap.remove()
   }
   render() {
     return (

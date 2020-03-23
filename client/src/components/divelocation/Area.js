@@ -2,7 +2,6 @@ import React from 'react'
 import { Accordion } from 'react-bootstrap'
 import { Card } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
-
 //redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -71,6 +70,7 @@ class Area extends React.Component {
   // if(localRegions) {
   //     //切割
   // }
+
   render() {
     return (
       <div>
@@ -90,7 +90,7 @@ class Area extends React.Component {
                           to={value.LocationID}
                           onClick={() => {
                             this.props.fetchInfos()
-                            // this.props.fetchMapmarks()
+                            this.props.fetchMapmarks()
                             this.props.fetchImages()
                           }}
                         >
@@ -113,7 +113,15 @@ class Area extends React.Component {
                   {this.state.Eastcoastlist.map((value, index) => {
                     return (
                       <li key={index}>
-                        <Link role="button" to={value.LocationID}>
+                        <Link
+                          role="button"
+                          to={value.LocationID}
+                          onClick={() => {
+                            this.props.fetchInfos()
+                            this.props.fetchMapmarks()
+                            this.props.fetchImages()
+                          }}
+                        >
                           {value.LocationName}
                         </Link>
                       </li>
@@ -133,7 +141,15 @@ class Area extends React.Component {
                   {this.state.Greenislandlist.map((value, index) => {
                     return (
                       <li key={index}>
-                        <Link role="button" to={value.LocationID}>
+                        <Link
+                          role="button"
+                          to={value.LocationID}
+                          onClick={() => {
+                            this.props.fetchInfos()
+                            this.props.fetchMapmarks()
+                            this.props.fetchImages()
+                          }}
+                        >
                           {value.LocationName}
                         </Link>
                       </li>
@@ -153,7 +169,15 @@ class Area extends React.Component {
                   {this.state.Iralalist.map((value, index) => {
                     return (
                       <li key={index}>
-                        <Link role="button" to={value.LocationID}>
+                        <Link
+                          role="button"
+                          to={value.LocationID}
+                          onClick={() => {
+                            this.props.fetchInfos()
+                            this.props.fetchMapmarks()
+                            this.props.fetchImages()
+                          }}
+                        >
                           {value.LocationName}
                         </Link>
                       </li>
@@ -173,7 +197,15 @@ class Area extends React.Component {
                   {this.state.Kentinglist.map((value, index) => {
                     return (
                       <li key={index}>
-                        <Link role="button" to={value.LocationID}>
+                        <Link
+                          role="button"
+                          to={value.LocationID}
+                          onClick={() => {
+                            this.props.fetchInfos()
+                            this.props.fetchMapmarks()
+                            this.props.fetchImages()
+                          }}
+                        >
                           {value.LocationName}
                         </Link>
                       </li>
