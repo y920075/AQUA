@@ -12,7 +12,7 @@ import './pages/Style/AllSeller.scss'
 import MainPage from './pages/MainPage'
 import Info from './pages/Info'
 import Coupon from './pages/Coupon'
-import Message from './pages/Message'
+import CustomerManager from './pages/CustomerManager'
 import Order from './pages/Order'
 import SellerClass from '../../../pages/class/SellerClass'
 import SellerEditClass from '../../../pages/class/SellerEditClass'
@@ -72,8 +72,8 @@ function Container(props) {
           <Coupon />
         </Route>
      
-      <Route path="/seller/message">
-          <Message />
+      <Route path="/seller/managecustomer">
+          <CustomerManager />
         </Route>
         <Route path="/seller/order">
           <Order />

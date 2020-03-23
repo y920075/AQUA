@@ -5,7 +5,7 @@ import './Style/CouponDetail.scss'
 
 
 function CouponDetail(props) {
-    console.log(props['status'].coupon['status'])
+    console.log(props['status'].coupon)
     return (
 
         <>
@@ -35,7 +35,8 @@ function CouponDetail(props) {
                                     exact 
                                     activeClassName="active" 
                                     className="nav-link" to="/info/selleredit">
-                                        <button className="btn bg-aqua-chin text-white">編輯</button>
+                                        <button 
+                                        className="btn bg-aqua-chin text-white">編輯</button>
                                         </NavLink>
                                         <NavLink
                                     exact 
