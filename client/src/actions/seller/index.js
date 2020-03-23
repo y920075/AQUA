@@ -109,6 +109,12 @@ export const sellerInfoAsync = (sellerInfoData, callback) => {
   }
 }
 
+
+
+
+
+
+
 //從後端用get方法擷取seller的資料前端進行編輯
 
 export const sellerEdit = data => ({
@@ -315,10 +321,64 @@ export const addGiviData = data => ({
       dispatch(addGiviData(data))
     }
   }
+//常客管理動作函數
+//get
+export const customerGet = data => ({
+    type: 'CUSTOMER_GET',
+    value: data,
+  })
+  
+  export const customerGetAsync = (customerData, callback) => {
+    return async dispatch => {
+      const request = new Request(
+        'http://localhost:5000/seller/customermanager/customer-info',
+  
+        {
+          method: 'GET',
+          headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          }),
+        }
+      )
+  
+  
+      const response = await fetch(request)
+      const data = await response.json()
+      console.log('res data', data)
+  
+      dispatch(customerGet(data))
+    }
+  }
 
 
-
-
+  // export const customerGetSort = data => ({
+  //   type: 'CUSTOMER_GET_SORT',
+  //   value: data,
+  // })
+  
+  // export const customerGetAsync = (customerData, callback) => {
+  //   return async dispatch => {
+  //     const request = new Request(
+  //       'http://localhost:5000/seller/customermanager/customer-search',
+  
+  //       {
+  //         method: 'GET',
+  //         headers: new Headers({
+  //           Accept: 'application/json',
+  //           'Content-Type': 'application/json',
+  //         }),
+  //       }
+  //     )
+  
+  
+  //     const response = await fetch(request)
+  //     const data = await response.json()
+  //     console.log('res data', data)
+  
+  //     dispatch(customerGet(data))
+  //   }
+  // }
 // //優惠券更新動作函數
 
 // export const sellerCouponUpdate = couponData => ({
