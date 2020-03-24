@@ -161,10 +161,22 @@ $white: #ffffff;
   width: 90px;
 }
 .eventimg-hs {
-  width: 150px;
-  height: 150px;
-  margin-top: 30px;
+  width: 100%;
+  height: 100%;
+  // margin-top: 30px;
+  padding: 15px;
   border-radius: 5px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.itemId-JY {
+  margin: 0;
+}
+
+.card-header-jy {
+  min-height: 50px;
 }
 
 .addClassForm {
@@ -185,4 +197,16 @@ $white: #ffffff;
   .btn {
     width: 300px;
   }
+}
+.select-jy {
+  color: rgba($color: #fff, $alpha: 0.6);
+  border-bottom: 1px solid rgba($color: #fff, $alpha: 0.6);
+}
+.switchbutton-jy {
+  min-height: 40px;
+  margin-right: 15px;
+  p{
+    margin: 0 5px 0 0 ;
+  }
+  color: rgba($color: #fff, $alpha: 0.6);
 }
