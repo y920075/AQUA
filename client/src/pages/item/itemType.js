@@ -15,6 +15,7 @@ const cateData = [
     typeData: [
       { itemTypeId: 't021', itemType: '玻璃面鏡' },
       { itemTypeId: 't022', itemType: '塑膠面鏡' },
+      { itemTypeId: 't023', itemType: '液態面鏡' },
     ],
   },
   {
