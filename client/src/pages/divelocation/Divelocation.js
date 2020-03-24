@@ -25,7 +25,7 @@ function Divelocation() {
     <div>
       <Header />
       <Banner BannerImgSrc="/images/locationbanner.png" />
-      <div className="container">
+      <div className="container locationcontent">
         <section className="divelocussection">
           <h1 className="locationh1">AQUA 精選潛點地圖</h1>
           <div className="row">
@@ -37,7 +37,7 @@ function Divelocation() {
             </div>
           </div>
         </section>
-        <section className="divelocussection">
+        <section className="divelocussection divelocusinfos">
           <h1>潛點資訊</h1>
           <div className="row">
             <div className="col-sm-6">
