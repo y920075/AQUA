@@ -19,13 +19,12 @@ function EventWeatherContent(props) {
       nowWeatherDataArr.push(props.weatherData[0]['6day'])
       setWeatherData(nowWeatherDataArr)
     }
-    console.log(weatherData.length > 0)
   }, [props.weatherData])
 
   return (
     <>
       <div className="d-flex weatherBox">
-        {weatherData.length > 0 && weatherData[0].date
+        {weatherData.length > 0 && weatherData[0]
           ? weatherData.map((value, index) => {
               return (
                 <>
