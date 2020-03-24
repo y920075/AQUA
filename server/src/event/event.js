@@ -328,6 +328,7 @@ router.get('/event/:eventId',(req,res)=>{
 */
 
 router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
+    req.session.memberId = "M20010002"
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
