@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import SwitchButton from '../../components/event/MemberEventComponents/SwitchButton'
 
 //引入redux元件
 import { connect } from 'react-redux'
@@ -22,6 +23,11 @@ import '../../style/HS.scss'
 
 function MemberClass(props) {
   const [hasLoading, setHasLoading] = useState(false)
+  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
+
+  useEffect(() => {
+    props.memberGetClassDataAsync()
+  }, [])
 
   //每次資料有變動就將新資料存進本地state
   useEffect(() => {
@@ -34,17 +40,21 @@ function MemberClass(props) {
     }, 500)
   }, [props.memberClassData])
 
+  //每次按鈕被點擊時，就取得新資料
   useEffect(() => {
-    props.memberGetClassDataAsync()
-  }, [])
+    getMemberClassData()
+  }, [isEnable])
+
+  //每次點擊SwitchButton就改變state
+  const toggleSwitchButton = () => {
+    setIsEnable(!isEnable)
+  }
 
   //向伺服器取得新資料
   const getMemberClassData = page => {
     //取得select的值，作為類型、等級的篩選參數
     const sort = document.querySelector('select[name="sort"]').value
-    console.log(sort)
-    console.log(page)
-    props.memberGetClassDataAsync(sort, page)
+    props.memberGetClassDataAsync(sort, page, isEnable)
   }
 
   return (
@@ -58,10 +68,18 @@ function MemberClass(props) {
             <Sidebar />
           </div>
           <div className="col-lg-9">
-            <div className="order-select">
+            <div className="order-select d-flex justify-content-end">
+              <div className="d-flex switchbutton-jy align-items-center">
+                <p>包含已過期資料</p>
+                <SwitchButton
+                  type="button"
+                  active={isEnable}
+                  clicked={toggleSwitchButton}
+                />
+              </div>
               <select
                 name="sort"
-                className="form-control"
+                className="form-control col-sm-2 select-jy"
                 onChange={() => {
                   getMemberClassData()
                 }}
@@ -73,7 +91,6 @@ function MemberClass(props) {
                 <option value="classStartDate,desc">開課日期遠至近</option>
               </select>
             </div>
-            <br />
             <div className="order-history">
               {hasLoading ? (
                 <Loading />

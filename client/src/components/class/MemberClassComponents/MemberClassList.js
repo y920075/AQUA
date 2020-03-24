@@ -29,13 +29,19 @@ function MemberClassList(props) {
           return (
             <div className="card mt-3" key={index}>
               <div
-                className="card-header d-flex justify-content-between"
+                className="card-header py-1 d-flex justify-content-between card-header-jy align-items-center"
                 style={{ background: '#c4cad1' }}
               >
-                <p>{'課程編號：' + value.classId}</p>
+                <p className="itemId-JY">{'課程編號：' + value.classId}</p>
                 <button
                   type="button"
                   className="btn btn-info"
+                  disabled={
+                    new Date(value.classStartDate).getTime() <
+                    new Date().getTime()
+                      ? true
+                      : false
+                  }
                   onClick={() => {
                     const classId = value.classId
                     SweetAlert.sendConfirm(
@@ -51,7 +57,7 @@ function MemberClassList(props) {
                 </button>
               </div>
               <div className="row">
-                <div className="col-sm-8">
+                <div className="col-sm-6">
                   <div className="card-body">
                     <h5 className="card-title">{value.className}</h5>
                     <p className="card-text">
@@ -74,9 +80,9 @@ function MemberClassList(props) {
                     </Link>
                   </div>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-sm-6">
                   <img
-                    className="classimg-hs"
+                    className="eventimg-hs"
                     src={
                       'http://127.0.0.1:5000/images/classImg/' + value.classImg
                     }

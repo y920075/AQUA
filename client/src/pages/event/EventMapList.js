@@ -29,6 +29,7 @@ import EventSearchBar from '../../components/event/EventSearchBar'
 function EventMapList(props) {
   const [eventDataForMap, setEventDataForMap] = useState([])
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
+  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
     props.getEventDataForMapAsync()
@@ -45,11 +46,16 @@ function EventMapList(props) {
     }, 500)
   }, [props.eventDataForMap])
 
+  //每次按鈕被點擊時，就取得新資料
+  useEffect(() => {
+    getEventData()
+  }, [isEnable])
+
   const getEventData = () => {
     const type = document.querySelector('select[name="type"]').value
     const sort = document.querySelector('select[name="sort"]').value
     const q = document.querySelector('input.searchInput').value
-    props.getEventDataForMapAsync(type, q, sort)
+    props.getEventDataForMapAsync(type, q, sort, isEnable)
   }
 
   const MyMapComponent = withScriptjs(
@@ -81,6 +87,8 @@ function EventMapList(props) {
         <EventSearchBar
           getEventData={getEventData}
           eventTypeData={props.eventTypeData}
+          setIsEnable={setIsEnable}
+          isEnable={isEnable}
         />
         {hasloading ? (
           <Loading />

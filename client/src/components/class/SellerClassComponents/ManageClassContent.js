@@ -4,6 +4,7 @@ import SweetAlert from './Sweetalert2'
 
 import Loading from '../Loading' //載入中圖示
 import EventPageButtons from '../../event/EventPageButtons'
+import SwitchButton from '../../event/MemberEventComponents/SwitchButton'
 
 /*
   傳入參數
@@ -49,6 +50,12 @@ function ManageClassContent(props) {
     }
   }, [response])
 
+  //每次點擊SwitchButton就改變state
+  const toggleSwitchButton = () => {
+    props.setIsEnable(!props.isEnable)
+  }
+
+  //刪除資料的事件
   const delClassData = classId => {
     SweetAlert.sendConfirm(
       '確定要刪除嗎?',
@@ -64,6 +71,14 @@ function ManageClassContent(props) {
       <div className="row">
         <div className="col-xl-3">
           <div className="sortSelect">
+            <div className="d-flex switchbutton-jy align-items-center">
+              <p>包含已過期資料</p>
+              <SwitchButton
+                type="button"
+                active={props.isEnable}
+                clicked={toggleSwitchButton}
+              />
+            </div>
             <select
               name="sort"
               className="form-control"
@@ -155,6 +170,12 @@ function ManageClassContent(props) {
                             <button
                               className="btn btn-outline-primary"
                               data-id={value.classId}
+                              disabled={
+                                new Date(value.classStartDate).getTime() <
+                                new Date().getTime()
+                                  ? true
+                                  : false
+                              }
                               onClick={event => {
                                 const classId = event.target.getAttribute(
                                   'data-id'

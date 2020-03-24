@@ -103,7 +103,9 @@ function EventDetailDataContent(props) {
               className="btn-join btn btn-raised btn-warning"
               disabled={
                 props.eventData.eventNowPeople >=
-                props.eventData.eventNeedPeople
+                  props.eventData.eventNeedPeople ||
+                new Date(props.eventData.eventStartDate).getTime() <
+                  new Date().getTime()
                   ? true
                   : false
               }
