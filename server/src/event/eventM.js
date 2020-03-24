@@ -10,6 +10,7 @@ class event {
         let where = []
         if(req.query.type) where.push(`\`eventType\` = '${req.query.type}'`)
         if(req.query.q) where.push(`\`eventName\` LIKE '%${req.query.q}%'`)
+        if (!req.query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if(req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sql = `SELECT COUNT(1) as 'rows' FROM \`event_data\` ${where}`
@@ -54,6 +55,7 @@ class event {
         let where = []
         if(query.type) where.push(`\`event_data\`.\`eventType\` = '${query.type}'`)
         if(query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${query.q}%'`)
+        if (!query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC, \`event_data\`.\`eventId\` DESC`
 
@@ -77,6 +79,7 @@ class event {
         let where = []
         if(query.type) where.push(`\`event_data\`.\`eventType\` = '${query.type}'`)
         if(query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${query.q}%'`)
+        if (!query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC, \`event_data\`.\`eventId\` DESC`
 
@@ -213,6 +216,7 @@ class event {
         if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
         if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
         if (req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
+        if (!req.query.expired) where.push(`\`eventStartDate\` >= NOW()`)
         if (where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         if (page<1) page=1;
         if (page>totalPages) page=totalPages;
@@ -224,6 +228,8 @@ class event {
                         ${where}
                         ${sort}
                         LIMIT  ${(page-1)*perPage}, ${perPage}`
+                        console.log(req.query)
+                        console.log(sql)
         data.totalPages = totalPages
         data.totalRows = totalRows[0].rows
         data.page = page
@@ -384,6 +390,7 @@ class event {
         if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
         if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
         if (req.session.memberId) where.push(`\`event_memeber\`.\`memberId\` = '${req.session.memberId}'`)
+        if (!req.query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if (where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
 
         const totalRows = await db.queryAsync( `SELECT COUNT(1) as 'rows' 
