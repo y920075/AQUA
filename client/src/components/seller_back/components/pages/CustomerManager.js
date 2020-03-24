@@ -5,7 +5,7 @@ import {customerGetAsync,customerUseAsync} from '../../../../actions/seller/inde
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import $ from "jquery";
-
+import ProgressToMailBar from './ProgressToMailBar'
 
 import CouponTableList from './CouponTableList'
 import './Style/CustomerMan.scss'
@@ -14,10 +14,10 @@ import './Style/CustomerMan.scss'
 function CustomerManager(props) {
 
 
-  const custommerArray = []
 
   const [customermail,setCustomerMail] = useState([])
   console.log(customermail)
+
   useEffect(() => {
     props.customerGetAsync()
     props.customerUseAsync()
@@ -117,8 +117,21 @@ return customer_get
                 </tbody>
               </table>
                     </div>
-                  
-                    <h2>{customermail}</h2>
+                    <div className="d-flex my-4">   
+                    <div class="jumbotron jumbotron-fluid mx-5">
+                    <div class="container">
+                      <h1 class="display-4 mb-2">寄送名單</h1>
+                      <div className="d-flex flex-column">
+                      {customermail.map((element,index)=>{
+                       return  <span key={index} className="active-chin-td my-2 rounded">{element += ", "}</span>
+                      })}
+                      </div>
+                    </div>
+                  </div>
+                    <ProgressToMailBar people={props}/>
+                    </div>
+                 
+
                   </div>
                 <h3 className="text-center my-5">優惠總表</h3>
                 <CouponTableList/>
