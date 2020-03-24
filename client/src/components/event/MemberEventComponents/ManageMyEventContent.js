@@ -7,16 +7,21 @@ import EventPageButtons from '../EventPageButtons'
 
 /*
   傳入參數
+    nowClickTag = 現在點擊的頁籤
+    memberEventDataSelf = 會員自己發起的所有活動資料/會員報名的所有活動資料 依據tag而有不同
+    delEventDataResponse = 會員刪除活動之後，後端回傳的資料
+    memberUnJoinEventResponse = 會員取消報名資後，後端回傳的資料
+    
+    傳入方法
+    delEventDataAsync = 刪除活動的action
+    memberGetEventDataAsync = 取得資料的action
+    memberUnJoinEventAsync = 取消報名的action
   
-
-  傳入方法
-  
-
-  
+    2020-03-24
 */
 
 function ManageMyEventContent(props) {
-  const [hasLoading, setHasLoading] = useState(true)
+  const [hasLoading, setHasLoading] = useState(true) //是否載入中
   const [response, setResponse] = useState(false) //確認是否有收到刪除動作的response資料
   const [unJoinResponse, setUnJoinResponse] = useState(false) //確認是否有收到取消報名動作的response資料
 
