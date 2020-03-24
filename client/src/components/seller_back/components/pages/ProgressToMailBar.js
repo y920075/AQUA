@@ -1,10 +1,19 @@
 import React from 'react'
 import './Style/CustomerMan.scss'
 
+
+// function ProgressBarToMailBar(props){
+//         console.log(props.people)
+//        return(
+//          <>
+//          hellow
+//          </>
+//        )
+// }
+
 class ProgressBarToMailBar extends React.Component {
     constructor(props) {
       super(props)
-      console.log(props)
       this.state = {
         percentage: 0
       }
