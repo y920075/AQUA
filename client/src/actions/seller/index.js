@@ -665,7 +665,6 @@ export const editClassData = data => ({
   value: data,
 })
 
-//新增課程資料
 //formData = 傳送過來的表單值
 export const editClassDataAsunc = (formData, classId) => {
   return async dispatch => {
