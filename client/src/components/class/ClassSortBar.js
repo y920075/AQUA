@@ -8,10 +8,8 @@ function ClassSortBar(props) {
   return (
     <>
       <div className="row">
-        <div className="col-xl-12">
-          {props.searchType ? <p>目前檢視類型 {props.searchType}</p> : ''}
-
-          <div className="sortSelect">
+        <div className="col-xl-12 d-flex justify-content-end">
+          <div className="sortSelect ">
             <select
               name="sort"
               className="form-control"
