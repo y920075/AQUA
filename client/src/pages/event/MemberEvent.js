@@ -10,7 +10,11 @@ import {
   memberGetEventDataAsync,
   delEventDataAsync,
   memberUnJoinEventAsync,
+  getEventTypeDataAsync,
+  addEventDataAsunc,
 } from '../../actions/event/event_Actions'
+
+import { getCityDataAsunc, getDistDataAsunc } from '../../actions/seller/index'
 
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
@@ -25,6 +29,8 @@ function MemberEvent(props) {
 
   useEffect(() => {
     props.memberGetEventDataAsync('', '', nowClickTag)
+    props.getEventTypeDataAsync()
+    props.getCityDataAsunc()
   }, [])
 
   const handleNavActive = event => {
@@ -93,7 +99,17 @@ function MemberEvent(props) {
                     />
                   )
                 case 3:
-                  return <AddEventContent />
+                  return (
+                    <AddEventContent
+                      typeData={props.eventTypeData}
+                      cityData={props.cityData}
+                      distData={props.distData}
+                      handleGetDistData={props.getDistDataAsunc}
+                      addEventDataAsunc={props.addEventDataAsunc}
+                      addEventDataResponse={props.addEventDataResponse}
+                      setNowClickTag={setNowClickTag}
+                    />
+                  )
                 default:
               }
             })()}
@@ -111,6 +127,10 @@ const mapStateToProps = store => {
     memberEventDataSelf: store.eventReducer.memberEventDataSelf,
     delEventDataResponse: store.eventReducer.delEventDataResponse,
     memberUnJoinEventResponse: store.eventReducer.memberUnJoinEventResponse,
+    eventTypeData: store.eventReducer.eventTypeData,
+    cityData: store.sellerReducer.cityData,
+    distData: store.sellerReducer.distData,
+    addEventDataResponse: store.eventReducer.addEventDataResponse,
   }
 }
 
@@ -121,6 +141,10 @@ const mapDispatchToProps = dispatch => {
       memberGetEventDataAsync,
       delEventDataAsync,
       memberUnJoinEventAsync,
+      getEventTypeDataAsync,
+      getCityDataAsunc,
+      getDistDataAsunc,
+      addEventDataAsunc,
     },
     dispatch
   )
