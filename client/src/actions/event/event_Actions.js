@@ -4,7 +4,7 @@ export const getEventData = data => ({
   value: data,
 })
 
-export const getEventDataAsync = (type, q, sort, page) => {
+export const getEventDataAsync = (type, q, sort, page, isEnable) => {
   return async dispatch => {
     let query = []
 
@@ -12,6 +12,7 @@ export const getEventDataAsync = (type, q, sort, page) => {
     if (q) query.push(`q=${q.trim()}`)
     if (sort) query.push(`sort=${sort.trim()}`)
     if (page) query.push(`page=${page.trim()}`)
+    if (isEnable) query.push(`expired=1`)
     if (query.length > 0) {
       query = query.join('&')
     } else {
@@ -38,13 +39,14 @@ export const getEventDataForMap = data => ({
   value: data,
 })
 
-export const getEventDataForMapAsync = (type, q, sort) => {
+export const getEventDataForMapAsync = (type, q, sort, isEnable) => {
   return async dispatch => {
     let query = []
 
     if (type) query.push(`type=${type.trim()}`)
     if (q) query.push(`q=${q.trim()}`)
     if (sort) query.push(`sort=${sort.trim()}`)
+    if (isEnable) query.push(`expired=1`)
     if (query.length > 0) {
       query = query.join('&')
     } else {
@@ -139,7 +141,8 @@ export const memberGetEventDataSelf = data => ({
   value: data,
 })
 
-export const memberGetEventDataAsync = (sort, page, nowClickTag) => {
+export const memberGetEventDataAsync = (sort, page, nowClickTag, isEnable) => {
+  console.log(isEnable)
   return async dispatch => {
     let url = null
 
@@ -147,6 +150,7 @@ export const memberGetEventDataAsync = (sort, page, nowClickTag) => {
 
     if (sort) query.push(`sort=${sort.trim()}`)
     if (page) query.push(`page=${page.trim()}`)
+    if (isEnable) query.push(`expired=1`)
     if (query.length > 0) {
       query = query.join('&')
     } else {
