@@ -64,3 +64,26 @@ div.collapse.navbar-collapse {
 @import '../src/pages/event/memberEvent.scss';
 @import '../src/pages/class/SellerClass.scss';
 @import '../src/pages/class/SellerEditClass.scss';
+
+.CW.index {
+  .container {
+    height: 100vh;
+    color: #ffffff;
+  }
+
+  .index {
+    &-video {
+      height: 100vh;
+
+    }
+
+    &-location {}
+
+    &-event {}
+
+    &-class {}
+
+    &-footer {}
+  }
+
+}

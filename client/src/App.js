@@ -18,6 +18,8 @@ import ItemDetail from './pages/item/itemDetail'
 import ShoppingCart from './pages/order/shoppingCart'
 import CheckOut from './pages/order/checkOut'
 
+import Home from './pages/Home'
+
 function App(props) {
   console.log(props)
   return (
@@ -62,6 +64,9 @@ function App(props) {
           </Route>
           <Route path="/location/:LocationID">
             <Divelocation />
+          </Route>
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </>

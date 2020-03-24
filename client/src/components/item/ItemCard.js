@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function ItemCard(props) {
-  console.log('itemcard', props)
+  // console.log('itemcard', props)
   return (
     <>
       {!props.itemData ? (
