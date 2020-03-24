@@ -18,14 +18,15 @@ function CustomerManager(props) {
 
 
   const [customermail,setCustomerMail] = useState([])
-  console.log(customermail)
 
+  const [childcoupon, setChildCoupon] = useState({})
+
+  console.log(childcoupon)
   useEffect(() => {
     props.customerGetAsync()
     props.customerUseAsync()
 
   }, [])
-  console.log(props)
 
    //類別選單的點擊active事件
  const handleChange = (event) =>{
@@ -77,6 +78,7 @@ customerMenuList.forEach(value => {
             data-type={comcus_gmail}
             onClick={ event =>{
               typeInputActive(event) 
+              // storeEmail(comcus_gmail)
               setCustomerMail([...customermail, comcus_gmail])
               // getCustomerData(event)
             clickCustomer(event)}}><input type="checkbox" 
@@ -125,9 +127,9 @@ customerMenuList.forEach(value => {
               </table>
                     </div>
                     <div className="d-flex my-4">   
-                    <div class="jumbotron jumbotron-fluid mx-5">
-                    <div class="container">
-                      <h1 class="display-4 mb-2">寄送名單</h1>
+                    <div className="jumbotron jumbotron-fluid mx-5">
+                    <div className="container">
+                      <h1 className="display-4 mb-2">寄送名單:</h1>
                       <div className="d-flex flex-column">
                       {customermail.map((element,index)=>{
                        return  <span key={index} className="active-chin-td my-2 rounded">
@@ -143,23 +145,47 @@ customerMenuList.forEach(value => {
                       })}
                       </div>
                     </div>
+              
                   </div>
+                  
                     <ProgressToMailBar people={customermail}/>
                     </div>
-                 
+                    <div className="jumbotron jumbotron-fluid mx-5">
+                        <div className="container">
+                        <h1 className="display-4 mb-2">優惠券選擇名單:</h1>
+                        <div className="d-flex flex-column">
+                     <span className="active-chin-td my-2 rounded">
+                     {childcoupon.coup_name}
+                     
+                     </span>
+                      
+                        </div>
+                        </div>
+                    </div>
 
                   </div>
-                <h3 className="text-center my-5">優惠總表</h3>
-                <CouponTableList/>
+                <CouponTableList setChildCoupon={setChildCoupon}/>
+                {/* <button onClick={
+                  // () => {
+                  //   postToBack(props.memberEmail, props.cuponId)
+                  // }
+                }>送</button> */}
                   </div>
                   </div>  
 }
 const mapStateToProps = store => {
-  return { customer: store.sellerReducer.customer }
+  // const memberEmail = store.sellerReducer.memberEmail
+  // const cuponId = store.sellerReducer.cuponId
+  return { 
+    customer: store.sellerReducer.customer,
+    // memberEmail,
+    }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
+  // postToBack
+  // storeEmail(email)
   return bindActionCreators({ customerGetAsync,customerUseAsync }, dispatch)
 }
 
