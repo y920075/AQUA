@@ -472,7 +472,7 @@ router.get('/seller/class',(req,res)=>{
         const perPage = 6;
         const searchType = req.query.type && !req.query.level ? `AND \`classType\` = '${req.query.type}' ` : '';
         const searchLevel = req.query.type && req.query.level ? `AND  \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
-        const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC`
+        const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC , \`classId\` DESC`
         const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\`  WHERE \`seller_id\` = '${req.session.seller_id}' ${searchType}${searchLevel}`
         let page = req.query.page ? parseInt(req.query.page) : 1;
         let totalRows;
@@ -1014,7 +1014,7 @@ router.get('/member/class',(req,res)=>{
         const perPage = 6;
         const searchType = req.query.type && !req.query.level ? ` AND \`class_data\`.\`classType\` = '${req.query.type}' ` : '';
         const searchLevel = req.query.type && req.query.level ? ` AND  \`class_data\`.\`classType\` = '${req.query.type}' AND \`class_data\`.\`classLevel\` = '${req.query.level}' ` : '';
-        const sort = req.query.sort ? ` ORDER BY \`class_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`class_data\`.\`created_at\` DESC`
+        const sort = req.query.sort ? ` ORDER BY \`class_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`class_data\`.\`created_at\` DESC , \`classId\` DESC`
         const total_sql = ` SELECT COUNT(1) as 'rows' 
                             FROM \`class_data\`  
                             INNER JOIN \`class_member\`

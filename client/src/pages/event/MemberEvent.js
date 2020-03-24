@@ -1,135 +1,129 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+//引入redux元件
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+//引入action
+import {
+  memberGetEventDataAsync,
+  delEventDataAsync,
+  memberUnJoinEventAsync,
+} from '../../actions/event/event_Actions'
+
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
+import ManageMyEventContent from '../../components/event/MemberEventComponents/ManageMyEventContent'
+import AddEventContent from '../../components/event/MemberEventComponents/AddEventContent'
 import Sidebar from '../../components/member/Sidebar'
 import Footer from '../../components/Footer'
 import '../../style/HS.scss'
 
+function MemberEvent(props) {
+  const [nowClickTag, setNowClickTag] = useState(1)
 
-function MemberEvent() {
-    return <>
-        <Header />
-        <Banner BannerImgSrc="./images/member/coralreef.jpg" />
+  useEffect(() => {
+    props.memberGetEventDataAsync('', '', nowClickTag)
+  }, [])
 
-        <div className="container hsevent">
-            <div className="row">
-                <div className="col-lg-3">
-                    <Sidebar />
-                </div>
-                <div className="col-lg-9">
-                    <div className="event-select">
-                        <select className="eventselection-hs" id="">
-                            <option selected>選擇排序...</option>
-                            <option value="1">我的揪團</option>
-                            <option value="2">參加的揪團</option>
-                        </select>
-                        <div className="eventhistory">
-                            <div className="card mt-3">
-                                <div className="card-header" style={{ background: "#c4cad1" }}>
-                                    活動編號：E000111
-                            </div>
-                                <div className="row">
-                                    <div className="col-sm-8">
-                                        <div className="card-body">
-                                            <h5 className="card-title">XXX 揪團</h5>
-                                            <p className="card-text">揪團人數：4 </p>
-                                            <p className="card-text">揪團日期: 2020/04/01 </p>
-                                            <p className="card-text">揪團地址：台北市106大安區和平東路二段106號11樓 (科技大樓)</p>
-                                            <a href="#" className="btn btn-primary">詳細</a>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <img className="eventimg-hs" src="./images/member/dive.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card mt-3">
-                                <div className="card-header" style={{ background: "#c4cad1" }}>
-                                    活動編號：E000111
-                            </div>
-                                <div className="row">
-                                    <div className="col-sm-8">
-                                        <div className="card-body">
-                                            <h5 className="card-title">XXX 揪團</h5>
-                                            <p className="card-text">揪團人數：4 </p>
-                                            <p className="card-text">揪團日期: 2020/04/01 </p>
-                                            <p className="card-text">揪團地址：台北市106大安區和平東路二段106號11樓 (科技大樓)</p>
-                                            <a href="#" className="btn btn-primary">詳細</a>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <img className="eventimg-hs" src="./images/member/dive.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card mt-3">
-                                <div className="card-header" style={{ background: "#c4cad1" }}>
-                                    活動編號：E000111
-                            </div>
-                                <div className="row">
-                                    <div className="col-sm-8">
-                                        <div className="card-body">
-                                            <h5 className="card-title">XXX 揪團</h5>
-                                            <p className="card-text">揪團人數：4 </p>
-                                            <p className="card-text">揪團日期: 2020/04/01 </p>
-                                            <p className="card-text">揪團地址：台北市106大安區和平東路二段106號11樓 (科技大樓)</p>
-                                            <a href="#" className="btn btn-primary">詳細</a>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <img className="eventimg-hs" src="./images/member/dive.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card mt-3">
-                                <div className="card-header" style={{ background: "#c4cad1" }}>
-                                    活動編號：E000111
-                            </div>
-                                <div className="row">
-                                    <div className="col-sm-8">
-                                        <div className="card-body">
-                                            <h5 className="card-title">XXX 揪團</h5>
-                                            <p className="card-text">揪團人數：4 </p>
-                                            <p className="card-text">揪團日期: 2020/04/01 </p>
-                                            <p className="card-text">揪團地址：台北市106大安區和平東路二段106號11樓 (科技大樓)</p>
-                                            <a href="#" className="btn btn-primary">詳細</a>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <img className="eventimg-hs" src="./images/member/dive.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
+  const handleNavActive = event => {
+    const navButtons = document.querySelectorAll('button.nav-item.nav-link')
+    navButtons.forEach((value, index) => {
+      value.classList.remove('active')
+    })
+    event.target.classList.add('active')
+  }
 
+  return (
+    <>
+      <Header />
+      <Banner BannerImgSrc="./images/member/coralreef.jpg" />
 
-                            {/* <!-- pagination --> */}
-                            <div className="pagination mt-5 mb-5 d-flex justify-content-center">
-                                <nav aria-label="Page navigation example">
-                                    <ul className="pagination">
-                                        <li className="page-item">
-                                            <a className="page-link" href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                        <li className="page-item">
-                                            <a className="page-link" href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            {/* <!-- end of pagination  --> */}
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div className="container hsevent jy-member-event">
+        <div className="row">
+          <div className="col-lg-3">
+            <Sidebar />
+          </div>
+          <div className="col-lg-9">
+            <nav className="nav nav-pills nav-justified nav-pills-memberEvent">
+              <button
+                className="nav-item nav-link active"
+                onClick={event => {
+                  handleNavActive(event)
+                  setNowClickTag(1)
+                }}
+              >
+                我發起的揪團
+              </button>
+              <button
+                className="nav-item nav-link "
+                onClick={event => {
+                  handleNavActive(event)
+                  setNowClickTag(2)
+                }}
+              >
+                我參加的揪團
+              </button>
+              <button
+                className="nav-item nav-link "
+                onClick={event => {
+                  handleNavActive(event)
+                  setNowClickTag(3)
+                }}
+              >
+                新增揪團
+              </button>
+            </nav>
+            {(() => {
+              switch (nowClickTag) {
+                case 1:
+                case 2:
+                  return (
+                    <ManageMyEventContent
+                      memberEventDataSelf={props.memberEventDataSelf}
+                      memberGetEventDataAsync={props.memberGetEventDataAsync}
+                      delEventDataAsync={props.delEventDataAsync}
+                      delEventDataResponse={props.delEventDataResponse}
+                      nowClickTag={nowClickTag}
+                      memberUnJoinEventAsync={props.memberUnJoinEventAsync}
+                      memberUnJoinEventResponse={
+                        props.memberUnJoinEventResponse
+                      }
+                    />
+                  )
+                case 3:
+                  return <AddEventContent />
+                default:
+              }
+            })()}
+          </div>
         </div>
-        <Footer/>
+      </div>
+      <Footer />
     </>
+  )
 }
 
-export default MemberEvent 
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    memberEventDataSelf: store.eventReducer.memberEventDataSelf,
+    delEventDataResponse: store.eventReducer.delEventDataResponse,
+    memberUnJoinEventResponse: store.eventReducer.memberUnJoinEventResponse,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      memberGetEventDataAsync,
+      delEventDataAsync,
+      memberUnJoinEventAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MemberEvent)

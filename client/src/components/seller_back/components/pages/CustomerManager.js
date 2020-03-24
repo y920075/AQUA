@@ -5,7 +5,9 @@ import {customerGetAsync,customerUseAsync} from '../../../../actions/seller/inde
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import $ from "jquery";
+import ProgressToMailBar from './ProgressToMailBar'
 
+import CrossSvg from '../../../../image/customer/cancel.svg'
 
 import CouponTableList from './CouponTableList'
 import './Style/CustomerMan.scss'
@@ -14,16 +16,17 @@ import './Style/CustomerMan.scss'
 function CustomerManager(props) {
 
 
-  const custommerArray = []
 
   const [customermail,setCustomerMail] = useState([])
-  console.log(customermail)
+
+  const [childcoupon, setChildCoupon] = useState({})
+
+  console.log(childcoupon)
   useEffect(() => {
     props.customerGetAsync()
     props.customerUseAsync()
 
   }, [])
-  console.log(props)
 
    //類別選單的點擊active事件
  const handleChange = (event) =>{
@@ -47,15 +50,20 @@ customerMenuList.forEach(value => {
 }
 
 
-function getCustomerData(event) {
-  const customer_get = $('tr.tr-chin').find('td.active-chin-td')
-    ? $('tr.tr-chin').find('td.active-chin-td').attr('data-type')
-    : ''
-    console.log(customer_get)
-return customer_get
-  // props.getSellerCouponAsync(coup_cate_id)
-}
-
+// function getCustomerData(event) {
+//   const customer_get = $('tr.tr-chin').find('td.active-chin-td')
+//     ? $('tr.tr-chin').find('td.active-chin-td').attr('data-type')
+//     : ''
+//     console.log(customer_get)
+// return customer_get
+//   // props.getSellerCouponAsync(coup_cate_id)
+// }
+    function triggerDelete(index){
+      if(window.confirm("你確定要刪除這個顧客嗎?")){
+        customermail.splice(index, 1);
+        setCustomerMail([...customermail])
+     }
+      }
 
 
  const clickCustomer = (event) =>{
@@ -70,6 +78,7 @@ return customer_get
             data-type={comcus_gmail}
             onClick={ event =>{
               typeInputActive(event) 
+              // storeEmail(comcus_gmail)
               setCustomerMail([...customermail, comcus_gmail])
               // getCustomerData(event)
             clickCustomer(event)}}><input type="checkbox" 
@@ -117,20 +126,66 @@ return customer_get
                 </tbody>
               </table>
                     </div>
-                  
-                    <h2>{customermail}</h2>
+                    <div className="d-flex my-4">   
+                    <div className="jumbotron jumbotron-fluid mx-5">
+                    <div className="container">
+                      <h1 className="display-4 mb-2">寄送名單:</h1>
+                      <div className="d-flex flex-column">
+                      {customermail.map((element,index)=>{
+                       return  <span key={index} className="active-chin-td my-2 rounded">
+                       <div onClick={
+                         event =>{
+                         event.stopPropagation()
+                         event.preventDefault()
+                         triggerDelete(index)}}>
+                       <img width="30" height="30" src={CrossSvg}/>
+                       </div>
+                       {element += ", "}
+                       </span>
+                      })}
+                      </div>
+                    </div>
+              
                   </div>
-                <h3 className="text-center my-5">優惠總表</h3>
-                <CouponTableList/>
+                  
+                    <ProgressToMailBar people={customermail}/>
+                    </div>
+                    <div className="jumbotron jumbotron-fluid mx-5">
+                        <div className="container">
+                        <h1 className="display-4 mb-2">優惠券選擇名單:</h1>
+                        <div className="d-flex flex-column">
+                     <span className="active-chin-td my-2 rounded">
+                     {childcoupon.coup_name}
+                     
+                     </span>
+                      
+                        </div>
+                        </div>
+                    </div>
+
+                  </div>
+                <CouponTableList setChildCoupon={setChildCoupon}/>
+                {/* <button onClick={
+                  // () => {
+                  //   postToBack(props.memberEmail, props.cuponId)
+                  // }
+                }>送</button> */}
                   </div>
                   </div>  
 }
 const mapStateToProps = store => {
-  return { customer: store.sellerReducer.customer }
+  // const memberEmail = store.sellerReducer.memberEmail
+  // const cuponId = store.sellerReducer.cuponId
+  return { 
+    customer: store.sellerReducer.customer,
+    // memberEmail,
+    }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
+  // postToBack
+  // storeEmail(email)
   return bindActionCreators({ customerGetAsync,customerUseAsync }, dispatch)
 }
 

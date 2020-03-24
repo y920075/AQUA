@@ -85,6 +85,24 @@ const cutomeruse =(state = {},action) => {
           return state
   }
 }
+
+// const memberEmail = (state = {}, action) => {
+//   switch (action.type) {
+//     case 'STORE_EMAIL':
+//       return [...state, action.data]
+//     default:
+//       return state
+//   }
+// }
+// const couponIdEmail = (state = {}, action) => {
+//   switch (action.type) {
+//     case 'STORE_EMAIL':
+//       return [...state, action.data]
+//     default:
+//       return state
+//   }
+// }
+
 //----------------------賣家中心課程相關reducer----------------
 
 const sellerClassData = (state = {}, action) => {

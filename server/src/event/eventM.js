@@ -165,20 +165,41 @@ class event {
     }
     //會員刪除一筆活動
     static async memberDelEventData(req){
-        let data = null
+        let data = {}
+
+        const findEventDataSql = `SELECT * FROM \`event_data\` WHERE \`eventId\` = '${req.params.eventId}'`
+
         const sql =            `DELETE FROM\`event_data\` 
                                 WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
 
-        const delWeatherData = `DELETE FROM \`weather_data\` 
+        const delWeatherDataSql = `DELETE FROM \`weather_data\` 
                                 WHERE \`eventId\` = '${req.params.eventId}'`
 
-        await db.queryAsync(sql).then(result=>{
-            if(result.affectedRows>0){
-                return db.queryAsync(delWeatherData)
-            }
-        })
-        .then( result => data = result)
-        return data
+
+        const findEventData = await db.queryAsync(findEventDataSql)
+        if ( findEventData.length<=0 ) {
+            data.status = 404
+            data.msg = '找不到活動資料'
+            return data
+        } else if ( findEventData[0].eventSponsor !== req.session.memberId ){
+            data.status = 403
+            data.msg = '不可以刪除不是自己的活動!'
+            return data
+        }
+
+        await db.queryAsync(delWeatherDataSql)
+        const delEventData = await db.queryAsync(sql)
+        if (delEventData.affectedRows>0){
+            const delEventMemberSql = `DELETE FROM\`event_memeber\` WHERE \`eventId\` = '${req.params.eventId}'`
+            await db.queryAsync(delEventMemberSql)
+            data.status = 201;
+            data.msg = `編號${req.params.eventId} 刪除成功`
+            return data
+        } else {
+            data.status = 500;
+            data.msg = '刪除失敗'
+            return data
+        }
     }
     //會員查詢自己發起的所有活動資料
     static async memberGetAllEventData(req,perPage){
@@ -188,7 +209,7 @@ class event {
         let page = req.query.page ? parseInt(req.query.page) : 1
         const totalRows = await db.queryAsync(event.getTotalData(req))
         if ( totalRows[0].rows===0 ){return data}else{totalPages = Math.ceil(totalRows[0].rows/perPage)}
-        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
+        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC , \`eventId\` DESC`
         if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
         if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
         if (req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
@@ -203,7 +224,6 @@ class event {
                         ${where}
                         ${sort}
                         LIMIT  ${(page-1)*perPage}, ${perPage}`
-        
         data.totalPages = totalPages
         data.totalRows = totalRows[0].rows
         data.page = page
@@ -236,7 +256,7 @@ class event {
     //會員報名一筆課程
     static async memberJoinEvent(req){
         let data = {}
-        const checkEventDataSql =  `SELECT \`eventNeedPeople\`,\`eventNowPeople\`
+        const checkEventDataSql =  `SELECT \`eventNeedPeople\`,\`eventNowPeople\`,\`eventSponsor\`
                                     FROM \`event_data\` 
                                     WHERE \`eventId\` = '${req.params.eventId}'`
 
@@ -260,6 +280,10 @@ class event {
         } else if ( checkEventData[0].eventNeedPeople === checkEventData[0].eventNowPeople ) {
             data.status = 400
             data.msg = '報名人數已滿'
+            return data
+        } else if ( checkEventData[0].eventSponsor === req.session.memberId ) {
+            data.status = 409
+            data.msg = '主辦者不可以報名自己的活動!'
             return data
         }
         const checkMemberData = await db.queryAsync(checkMemberDataSql)
@@ -355,7 +379,7 @@ class event {
         let totalPages = null
         let page = req.query.page ? parseInt(req.query.page) : 1
 
-        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC`
+        const sort = req.query.sort ? ` ORDER BY \`event_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC , \`eventId\` DESC`
 
         if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
         if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)

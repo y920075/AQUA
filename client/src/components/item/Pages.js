@@ -29,13 +29,13 @@ function Pages(props) {
     <>
       <ul className="pagination ">
         <li className="page-item page-prev">
-          <span className="page-link">Previous</span>
+          <span className="page-link">&laquo;</span>
         </li>
         {pageButtons.map(value => {
           return value
         })}
         <li className="page-item page-next">
-          <span className="page-link">Next</span>
+          <span className="page-link">&raquo;</span>
         </li>
       </ul>
     </>

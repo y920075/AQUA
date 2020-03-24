@@ -299,7 +299,6 @@ export const addGiviData = data => ({
     type: 'ADD_GIVIDATA',
     value: data,
   })
-  
   export const addGiviDataAsync = GiviFormData => {
     console.log(GiviFormData)
     return async dispatch => {
@@ -450,6 +449,10 @@ export const customerGet = data => ({
 //             }
 //         }
 // }
+
+//儲存賣家選擇的狀態state
+
+
 
 //----------------------賣家中心課程相關action----------------
 
