@@ -129,7 +129,58 @@ export const memberJoinEventAsync = (eventId, memberMemo) => {
 
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(memberJoinEvent(data))
+  }
+}
+
+//會員取得自己發起的活動資料
+export const memberGetEventDataSelf = data => ({
+  type: 'GET_MEMBER_EVENT_SELF',
+  value: data,
+})
+
+export const memberGetEventDataAsync = (sort, page) => {
+  return async dispatch => {
+    let query = []
+
+    if (sort) query.push(`sort=${sort.trim()}`)
+    if (page) query.push(`page=${page.trim()}`)
+    if (query.length > 0) {
+      query = query.join('&')
+    } else {
+      query = ''
+    }
+
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/self?${query}`,
+      {
+        method: 'GET',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(memberGetEventDataSelf(data))
+  }
+}
+
+//會員刪除自己發起的活動資料
+export const delEventData = data => ({
+  type: 'DEL_EVENTDATA',
+  value: data,
+})
+
+export const delEventDataAsync = eventId => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/${eventId}`,
+      {
+        method: 'DELETE',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(delEventData(data))
   }
 }
