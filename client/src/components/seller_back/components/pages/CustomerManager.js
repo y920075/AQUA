@@ -5,7 +5,9 @@ import {customerGetAsync,customerUseAsync} from '../../../../actions/seller/inde
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import $ from "jquery";
+import ProgressToMailBar from './ProgressToMailBar'
 
+import CrossSvg from '../../../../image/customer/cancel.svg'
 
 import CouponTableList from './CouponTableList'
 import './Style/CustomerMan.scss'
@@ -14,10 +16,10 @@ import './Style/CustomerMan.scss'
 function CustomerManager(props) {
 
 
-  const custommerArray = []
 
   const [customermail,setCustomerMail] = useState([])
   console.log(customermail)
+
   useEffect(() => {
     props.customerGetAsync()
     props.customerUseAsync()
@@ -47,15 +49,20 @@ customerMenuList.forEach(value => {
 }
 
 
-function getCustomerData(event) {
-  const customer_get = $('tr.tr-chin').find('td.active-chin-td')
-    ? $('tr.tr-chin').find('td.active-chin-td').attr('data-type')
-    : ''
-    console.log(customer_get)
-return customer_get
-  // props.getSellerCouponAsync(coup_cate_id)
-}
-
+// function getCustomerData(event) {
+//   const customer_get = $('tr.tr-chin').find('td.active-chin-td')
+//     ? $('tr.tr-chin').find('td.active-chin-td').attr('data-type')
+//     : ''
+//     console.log(customer_get)
+// return customer_get
+//   // props.getSellerCouponAsync(coup_cate_id)
+// }
+    function triggerDelete(index){
+      if(window.confirm("你確定要刪除這個顧客嗎?")){
+        customermail.splice(index, 1);
+        setCustomerMail([...customermail])
+     }
+      }
 
 
  const clickCustomer = (event) =>{
@@ -117,8 +124,30 @@ return customer_get
                 </tbody>
               </table>
                     </div>
-                  
-                    <h2>{customermail}</h2>
+                    <div className="d-flex my-4">   
+                    <div class="jumbotron jumbotron-fluid mx-5">
+                    <div class="container">
+                      <h1 class="display-4 mb-2">寄送名單</h1>
+                      <div className="d-flex flex-column">
+                      {customermail.map((element,index)=>{
+                       return  <span key={index} className="active-chin-td my-2 rounded">
+                       <div onClick={
+                         event =>{
+                         event.stopPropagation()
+                         event.preventDefault()
+                         triggerDelete(index)}}>
+                       <img width="30" height="30" src={CrossSvg}/>
+                       </div>
+                       {element += ", "}
+                       </span>
+                      })}
+                      </div>
+                    </div>
+                  </div>
+                    <ProgressToMailBar people={customermail}/>
+                    </div>
+                 
+
                   </div>
                 <h3 className="text-center my-5">優惠總表</h3>
                 <CouponTableList/>

@@ -134,3 +134,45 @@
     background: -moz-linear-gradient(top, #f2f2f2, #f0f0f0);
   }
 }
+.dai {
+  html,
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .progress-bar {
+    position: relative;
+    height: 20px;
+    width: 350px;
+    border-radius: 50px;
+  }
+
+  .filler {
+    background: #80f3e7;
+    height: 100%;
+    border-radius: inherit;
+    transition: width 0.2s ease-in;
+  }
+
+  button {
+    margin-right: 10px;
+    padding: 7px 12px;
+    font-size: 14px;
+    background: #d14836;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    outline: 0;
+  }
+
+  #vids {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #vids a:first-of-type {
+    margin-bottom: 5px;
+  }
+}
