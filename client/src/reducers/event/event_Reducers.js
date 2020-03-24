@@ -70,6 +70,16 @@ const delEventDataResponse = (state = {}, action) => {
   }
 }
 
+//會員取消自己報名的活動之後，後端回傳的資料
+const memberUnJoinEventResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'UNJOIN_EVENT':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
 const eventReducer = combineReducers({
   eventData,
@@ -79,5 +89,6 @@ const eventReducer = combineReducers({
   memberJoinEventResponse,
   memberEventDataSelf,
   delEventDataResponse,
+  memberUnJoinEventResponse,
 })
 export { eventReducer }

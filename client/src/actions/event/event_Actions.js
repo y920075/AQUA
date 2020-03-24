@@ -139,8 +139,10 @@ export const memberGetEventDataSelf = data => ({
   value: data,
 })
 
-export const memberGetEventDataAsync = (sort, page) => {
+export const memberGetEventDataAsync = (sort, page, nowClickTag) => {
   return async dispatch => {
+    let url = null
+
     let query = []
 
     if (sort) query.push(`sort=${sort.trim()}`)
@@ -151,12 +153,22 @@ export const memberGetEventDataAsync = (sort, page) => {
       query = ''
     }
 
-    const request = new Request(
-      `http://127.0.0.1:5000/member/event/self?${query}`,
-      {
-        method: 'GET',
-      }
-    )
+    //依據點擊的tag給予不同的路徑
+    // 1 = 取得會員自己發起的活動
+    // 2 = 取得會員報名的活動
+    switch (nowClickTag) {
+      case 1:
+        url = `http://127.0.0.1:5000/member/event/self?${query}`
+        break
+      case 2:
+        url = `http://127.0.0.1:5000/member/event/join?${query}`
+        break
+      default:
+    }
+
+    const request = new Request(url, {
+      method: 'GET',
+    })
 
     const response = await fetch(request)
     const data = await response.json()
@@ -182,5 +194,27 @@ export const delEventDataAsync = eventId => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(delEventData(data))
+  }
+}
+
+//會員報名一筆活動
+export const memberUnJoinEvent = data => ({
+  type: 'UNJOIN_EVENT',
+  value: data,
+})
+
+export const memberUnJoinEventAsync = eventId => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/join/${eventId}`,
+      {
+        method: 'DELETE',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(memberUnJoinEvent(data))
   }
 }

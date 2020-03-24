@@ -9,13 +9,13 @@ import { bindActionCreators } from 'redux'
 import {
   memberGetEventDataAsync,
   delEventDataAsync,
+  memberUnJoinEventAsync,
 } from '../../actions/event/event_Actions'
 
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import ManageMyEventContent from '../../components/event/MemberEventComponents/ManageMyEventContent'
 import AddEventContent from '../../components/event/MemberEventComponents/AddEventContent'
-import ManageMyJoinEventContent from '../../components/event/MemberEventComponents/ManageMyJoinEventContent'
 import Sidebar from '../../components/member/Sidebar'
 import Footer from '../../components/Footer'
 import '../../style/HS.scss'
@@ -24,7 +24,7 @@ function MemberEvent(props) {
   const [nowClickTag, setNowClickTag] = useState(1)
 
   useEffect(() => {
-    props.memberGetEventDataAsync()
+    props.memberGetEventDataAsync('', '', nowClickTag)
   }, [])
 
   const handleNavActive = event => {
@@ -77,19 +77,24 @@ function MemberEvent(props) {
             </nav>
             {(() => {
               switch (nowClickTag) {
+                case 1:
                 case 2:
-                  return <ManageMyJoinEventContent />
-                case 3:
-                  return <AddEventContent />
-                default:
                   return (
                     <ManageMyEventContent
                       memberEventDataSelf={props.memberEventDataSelf}
                       memberGetEventDataAsync={props.memberGetEventDataAsync}
                       delEventDataAsync={props.delEventDataAsync}
                       delEventDataResponse={props.delEventDataResponse}
+                      nowClickTag={nowClickTag}
+                      memberUnJoinEventAsync={props.memberUnJoinEventAsync}
+                      memberUnJoinEventResponse={
+                        props.memberUnJoinEventResponse
+                      }
                     />
                   )
+                case 3:
+                  return <AddEventContent />
+                default:
               }
             })()}
           </div>
@@ -105,6 +110,7 @@ const mapStateToProps = store => {
   return {
     memberEventDataSelf: store.eventReducer.memberEventDataSelf,
     delEventDataResponse: store.eventReducer.delEventDataResponse,
+    memberUnJoinEventResponse: store.eventReducer.memberUnJoinEventResponse,
   }
 }
 
@@ -114,6 +120,7 @@ const mapDispatchToProps = dispatch => {
     {
       memberGetEventDataAsync,
       delEventDataAsync,
+      memberUnJoinEventAsync,
     },
     dispatch
   )

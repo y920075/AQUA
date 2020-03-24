@@ -18,6 +18,12 @@ import EventPageButtons from '../EventPageButtons'
 function ManageMyEventContent(props) {
   const [hasLoading, setHasLoading] = useState(true)
   const [response, setResponse] = useState(false) //確認是否有收到刪除動作的response資料
+  const [unJoinResponse, setUnJoinResponse] = useState(false) //確認是否有收到取消報名動作的response資料
+
+  useEffect(() => {
+    props.memberGetEventDataAsync('', '', props.nowClickTag)
+    setHasLoading(true)
+  }, [props.nowClickTag])
 
   //每次資料有變動就將新資料存進本地state
   useEffect(() => {
@@ -36,7 +42,7 @@ function ManageMyEventContent(props) {
       if (props.delEventDataResponse.status === 201) {
         SweetAlert.success('已成功刪除一筆資料!')
         setResponse(false)
-        props.memberGetEventDataAsync()
+        props.memberGetEventDataAsync('', '', props.nowClickTag)
       } else {
         SweetAlert.errorAlert(
           props.delEventDataResponse.status,
@@ -47,11 +53,28 @@ function ManageMyEventContent(props) {
     }
   }, [response])
 
+  //每當unJoinResponse改變時就秀出提示視窗
+  useEffect(() => {
+    if (unJoinResponse) {
+      if (props.memberUnJoinEventResponse.status === 201) {
+        SweetAlert.success('已成功取消報名!')
+        setUnJoinResponse(false)
+        props.memberGetEventDataAsync('', '', props.nowClickTag)
+      } else {
+        SweetAlert.errorAlert(
+          props.memberUnJoinEventResponse.status,
+          props.memberUnJoinEventResponse.msg
+        )
+        setUnJoinResponse(false)
+      }
+    }
+  }, [unJoinResponse])
+
   //向伺服器取得新資料
   const getMemberEventData = page => {
     //取得select的值，作為類型、等級的篩選參數
     const sort = document.querySelector('select[name="sort"]').value
-    props.memberGetEventDataAsync(sort, page)
+    props.memberGetEventDataAsync(sort, page, props.nowClickTag)
   }
 
   return (
@@ -81,10 +104,30 @@ function ManageMyEventContent(props) {
                   return (
                     <div className="card mt-3" key={index}>
                       <div
-                        className="card-header"
+                        className="card-header d-flex justify-content-between"
                         style={{ background: '#c4cad1' }}
                       >
-                        {'活動編號：' + value.eventId}
+                        <p>{'活動編號：' + value.eventId}</p>
+                        {props.nowClickTag === 2 ? (
+                          <button
+                            type="button"
+                            className="btn btn-info"
+                            onClick={() => {
+                              const eventId = value.eventId
+                              SweetAlert.sendConfirm(
+                                '你確定要取消報名嗎?',
+                                setUnJoinResponse,
+                                true,
+                                props.memberUnJoinEventAsync,
+                                eventId
+                              )
+                            }}
+                          >
+                            取消報名
+                          </button>
+                        ) : (
+                          ''
+                        )}
                       </div>
                       <div className="row">
                         <div className="col-sm-8">
@@ -105,33 +148,51 @@ function ManageMyEventContent(props) {
                             <p className="card-text">
                               {'活動地點：' + value.eventLocation}
                             </p>
-                            <Link to="#" className="btn btn-primary">
-                              <i
-                                className="fas fa-edit"
-                                data-id={value.eventId}
-                              ></i>
-                            </Link>
-                            <button
-                              className="btn btn-primary"
-                              data-id={value.eventId}
-                              onClick={event => {
-                                const eventId = event.target.getAttribute(
-                                  'data-id'
-                                )
-                                SweetAlert.sendConfirm(
-                                  '你確定要刪除這筆活動嗎?',
-                                  setResponse,
-                                  true,
-                                  props.delEventDataAsync,
-                                  eventId
-                                )
-                              }}
-                            >
-                              <i
-                                className="far fa-trash-alt"
-                                data-id={value.eventId}
-                              ></i>
-                            </button>
+                            {props.nowClickTag === 2 ? (
+                              <p className="card-text">
+                                {'主辦者：' + value.loginId}
+                              </p>
+                            ) : (
+                              ''
+                            )}
+                            {props.nowClickTag === 2 ? (
+                              <Link
+                                to={'event/' + value.eventId}
+                                className="btn btn-primary"
+                              >
+                                詳情
+                              </Link>
+                            ) : (
+                              <div>
+                                <Link to="#" className="btn btn-primary">
+                                  <i
+                                    className="fas fa-edit"
+                                    data-id={value.eventId}
+                                  ></i>
+                                </Link>
+                                <button
+                                  className="btn btn-primary"
+                                  data-id={value.eventId}
+                                  onClick={event => {
+                                    const eventId = event.target.getAttribute(
+                                      'data-id'
+                                    )
+                                    SweetAlert.sendConfirm(
+                                      '你確定要刪除這筆活動嗎?',
+                                      setResponse,
+                                      true,
+                                      props.delEventDataAsync,
+                                      eventId
+                                    )
+                                  }}
+                                >
+                                  <i
+                                    className="far fa-trash-alt"
+                                    data-id={value.eventId}
+                                  ></i>
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="col-sm-4">
