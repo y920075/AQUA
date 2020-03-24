@@ -798,6 +798,8 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
+    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -875,6 +877,8 @@ router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
+    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
