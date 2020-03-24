@@ -80,6 +80,16 @@ const memberUnJoinEventResponse = (state = {}, action) => {
   }
 }
 
+//會員新增活動資料之後，後端回傳的資料
+const addEventDataResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_EVENTDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
 const eventReducer = combineReducers({
   eventData,
@@ -90,5 +100,6 @@ const eventReducer = combineReducers({
   memberEventDataSelf,
   delEventDataResponse,
   memberUnJoinEventResponse,
+  addEventDataResponse,
 })
 export { eventReducer }
