@@ -3,6 +3,22 @@ import './Style/CustomerMan.scss'
 
 
 // function ProgressBarToMailBar(props){
+
+//   const [percentage,SetPercentage] = useState(0)
+
+
+//           const ProgressBar = (percentage) => {
+//             return (
+//                 <div className="progress-bar">
+//                   <Filler percentagefill={percentage} />
+//                 </div>
+//               )
+//           }
+          
+//           const Filler = (percentage) => {
+//             return <div className="filler" style={{ width: `${percentagefill}%` }} />
+//           }
+
 //         console.log(props.people)
 //        return(
 //          <>
