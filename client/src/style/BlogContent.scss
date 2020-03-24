@@ -58,12 +58,17 @@ a {
   background-color: $Dbg;
 }
 .titlebar {
+  font-weight: bold;
   height: 80px;
   margin-bottom: 3.125rem;
   background-color: $Lg;
   display: flex;
   align-items: center;
-
+  p{
+    margin: 0;
+    font-size: 22px;
+    // text-align: center;
+  }
   .container {
     color: black;
     display: flex;
@@ -265,7 +270,7 @@ a {
         padding: 15px;
       }
     
-    button {
+    .contentSend {
       font-size: 16px;
       margin: 16px 0;
       background-color: #485a71;

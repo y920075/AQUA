@@ -4,6 +4,7 @@ import './index.scss'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
+
 //redux
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
@@ -20,11 +21,11 @@ import thunk from 'redux-thunk'
 
 //合併reducers
 const rootReducer = combineReducers({
-  ...blogReducer,
-  ...classReducer,
-  ...eventReducer,
-  ...itemReducer,
-  ...memberReducer,
+  blogReducer,
+  // ...classReducer,
+  // ...eventReducer,
+  // ...itemReducer,
+  // ...memberReducer,
 })
 
 //使用中介軟體時，建立store的方法，需要額外建立一個composeEnhancers

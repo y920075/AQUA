@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { withRouter } from 'react-router'
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Footer from '../../components/Footer'
 import Rside from '../../components/blog/Rside'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import '../../style/BlogContent.scss'
+import '../../image/image.png'
 
-function BlogContent() {
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import {
+  getBlogDataAsync,
+  // getAsideDataAsync,
+} from '../../actions/blog/blog_Actions'
+
+function BlogContent(props) {
+  const [blogData, setBlogData] = useState([])
+
+  useEffect(() => {
+    props.getBlogDataAsync()
+    // props.getAsideDataAsync()
+  }, [])
+  console.log(props.blogData.result)
+  
   return (
     <>
       <Header />
@@ -14,51 +33,60 @@ function BlogContent() {
       <div className="titlebarFix"></div>
       <div className="titlebar">
         <div className="container">
-          <h2>部落格</h2>
-          <ul>
+          <p>部落格</p>
+              {props.blogData.result ? (props.blogData.result.map((value , index)=>{
+              if( value.id==props.match.params.id)
+              return (
+          <ul key = {index}>
             <li>
-              <Link to="">首頁</Link>
+              <Link to="/blog">首頁</Link>
+            </li>
+            <li>
+              <Link to="">></Link>
+            </li>
+        
+
+            <li>
+              <Link to="">{value.categoryName}</Link>
             </li>
             <li>
               <Link to="">></Link>
             </li>
             <li>
-              <Link to="">旅行</Link>
-            </li>
-            <li>
-              <Link to="">></Link>
-            </li>
-            <li>
-              <Link to="">第一次的海外潛旅，獻給夏威夷</Link>
+              <Link to={'/blog/'+value.id}>{value.blogTitle}</Link>
             </li>
           </ul>
+          )}
+            )) : ''}
+
         </div>
       </div>
 
       <div className="container rao">
+
         {/* <!--blogContent--> */}
         <div className="row postContent">
-          <div className=" col-md-8 ">
+        {props.blogData.result ? (props.blogData.result.map((value , index)=>{
+              if( value.id==props.match.params.id)
+              return (
+          <div className=" col-md-8 " key = {index}>
             <div className="postImg">
-              <img src="./images/blog/card3.jpg" alt="" />
+            <Link to="">{value.blogImages}</Link>
             </div>
             <div className="postTitle">
               {' '}
               <Link to="">
-                <h2>第一次的海外潛旅，獻給夏威夷</h2>
+                <h2>{value.blogTitle}</h2>
               </Link>
             </div>
             <div className="postNav mb-3 d-flex justify-content-between">
               <div className="author">
-                <Link to="">AUQA</Link> -<time>2020-3-14</time>
+                <Link to="">AUQA</Link> -<time>{value.created_at.substring(0, 10)}</time>
               </div>
               <div className="postTag">
                 <ul>
                   <li>
-                    <Link to="">閒聊</Link>
-                  </li>
-                  <li>
-                    <Link to="">討論</Link>
+                    <Link to="">{value.categoryName}</Link>
                   </li>
                   <li>
                     <Link to="">
@@ -71,10 +99,7 @@ function BlogContent() {
             <div className="postBody">
               <hr align="left" />
               <p className="">
-                在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手或是只想浮潛玩水的人來說，都是不錯的選擇。在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手或是只想浮潛玩水的人來說，都是不錯的選擇。在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手
-                在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手或是只想浮潛玩水的人來說，都是不錯的選擇。在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手
-                在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手或是只想浮潛玩水的人來說，都是不錯的選擇。在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手
-                在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手或是只想浮潛玩水的人來說，都是不錯的選擇。在這趟旅行後，發現夏威夷其實有很多平易近人的潛點，尤其以浮潛著名的景點很多，生態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手態豐富，有很多魚群或大型生物可以看，對於初學潛水的新手對於初學潛水的新
+              {value.blogContent}
               </p>
             </div>
             <div className="postFooter">
@@ -85,12 +110,12 @@ function BlogContent() {
                 <ul>
                   <li>
                     <Link to="#" className="rounded-lg">
-                      生活方式
+                      {value.tagName1}
                     </Link>
                   </li>
                   <li>
                     <Link to="#" className="rounded-lg">
-                      水藍色
+                    {value.tagName2}
                     </Link>
                   </li>
                 </ul>
@@ -118,7 +143,7 @@ function BlogContent() {
                   <li>
                     <Link to="">
                       <figure>
-                        <img src="./images/blog/card2.jpg" alt="" />{' '}
+                        <img src="../../image/image.png" alt="" />
                       </figure>
                     </Link>
                     <h5>跳水假期</h5>
@@ -189,18 +214,33 @@ function BlogContent() {
                 <textarea name="" id="" className="col-md-12"></textarea>
               </div>
               <div className="d-flex justify-content-end">
-                <button className="badge badge-pill" type="button">
+                <button className="badge badge-pill contentSend" type="button">
                   送出
                 </button>
               </div>
             </div>
           </div>
+          )}
+            )) : ''}
           {/* <!--rSide--> */}
-          <Rside />
+          <Rside blogData={props.blogData}/>
         </div>
       </div>
     </>
   )
 }
 
-export default BlogContent
+
+const mapStateToProps = store => {
+  return {
+    blogData: store.blogReducer.blogData,
+    // asideData: store.itemReducer.asideData,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getBlogDataAsync }, dispatch)
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogContent))
+// export default BlogContent

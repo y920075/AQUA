@@ -59,7 +59,8 @@ body {
   width: 220px;
 }
 hr {
-  width: 65%;
+  margin: 0;
+  width: 70%;
 }
 .rao {
   a {
@@ -96,8 +97,10 @@ hr {
 
   .lCard,
   .rCard {
-    perspective: 1000px;
+    perspective: 100px;
+ 
     .card {
+      font-weight: bold;
         color: $Dg;
       width: 21rem;
       margin-bottom: 50px;
@@ -105,18 +108,27 @@ hr {
       transition: 0.3s;
       /* transform: translateZ(50px); */
       /* transform: scale(1.005); */
+      img:hover{
+        cursor: zoom-in;
+      }
       .card-text {
-        color: $Lg;
+        font-weight: bold;
+        color: $Dg;
       }
       &:hover {
-        transform: translateZ(-4px);
+        transform: translateZ(-.4px);
         box-shadow: none;
+        color: $Dg;
         /* transform: scale(1); */
       }
       .card-body {
+        &:hover{
+          cursor: pointer;
+        }
         a {
           color: $Dg;
           text-decoration: none;
+          // font-weight: bold;
         }
         .card-title {
           font-weight: bolder;
@@ -124,6 +136,9 @@ hr {
           &:hover {
             color: $Lb;
           }
+        }
+        .card-tag a{
+          margin: 0 10px;
         }
       }
     }
@@ -135,80 +150,6 @@ hr {
 
     }
   }
-  .rSide {
-    padding: 0 0 0 40px;
-    p {
-      color: $O;
-    }
-    hr {
-      border-top: rgba(0, 0, 0, 0.775) 1px solid;
-      width: 100%;
-      margin-top: 0;
-    }
-
-    span a {
-      color: $Lg;
-      background-color: $Dbg;
-      margin: 5px 5px 5px;
-      padding: 0px 10px 5px 10px;
-    }
-    a:hover {
-      color: $Lg;
-    }
-    .content {
-      background: $Lbg;
-      box-shadow: 0px 0px 5px 1px #000000;
-      padding: 20px 20px 0 20px;
-      .newpostPic {
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 0.5px solid rgb(0, 0, 0);
-        perspective: 1000px;
-        img {
-          width: 100%;
-          transition: 0.3s;
-          &:hover {
-            /* transform: scale(1.1); */
-            transform: translateZ(100px);
-          }
-        }
-      }
-    }
-    .form-control,
-    .custom-file-control,
-    .is-focused .form-control,
-    .is-focused .custom-file-control {
-      box-shadow: 0px 2px 3px 1px #000000;
-      border-radius: 6px 0px 0 6px;
-      background-color: #ffffff;
-      background-image: linear-gradient(to top, $O 3px, rgba(0, 0, 0, 0) 5px);
-    }
-    .btn {
-      background-color: $Lbg;
-      box-shadow: 2px 2px 3px 1px #000000;
-      i {
-        width: 50px;
-      }
-    }
-    ul {
-      list-style: none;
-      padding: 10px;
-      flex-wrap: wrap;
-      width: 350px;
-      display: flex;
-      justify-content: space-between;
-      li {
-        background-color: $Lbg;
-        padding: 0 10px;
-        margin: 3px;
-        a {
-          color: $Lg;
-        }
-      }
-    }
-  }
   @media screen and (max-width: 576px){
     .rSide{
       padding: 20px;
@@ -217,6 +158,7 @@ hr {
     }
   }
   .page {
+    margin-top: 30px;
     ul {
       list-style: none;
       display: flex;

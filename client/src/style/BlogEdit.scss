@@ -164,15 +164,15 @@ a {
         color: #ffffff;
       }
     }
-    .send {
+    .editSend {
       font-size: 16px;
       background-color: $Lbg;
       border: 1px $Lg solid;
       color: $Lg;
       padding: 10px 40px;
       &:hover {
-        // color: $Lbg;
-        // background-color: $Lg;
+        color: $Lbg;
+        background-color: $Lg;
       }
     }
   }

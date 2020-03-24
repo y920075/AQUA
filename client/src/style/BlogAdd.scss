@@ -142,27 +142,75 @@ a {
         color: black;
       }
     }
-    textarea{
+    textarea {
       font-weight: normal;
       border: $Lg 1px solid;
       border-radius: 6px;
       height: 270px;
       color: white;
       overflow: scroll-right;
-      padding: 15px ;
+      padding: 15px;
     }
-    .send {
+    .addTag {
+      // width: 50px;
+      input{
+        // width: 100px;
+        margin: 0;
+        padding: 0;
+      }
+      ::placeholder{
+        color: $Lg;
+      }
+
+   
+      .tagName1{
+        width: 100px;
+        text-align: center;
+        border-right: .5px $Lg solid ;
+        border-radius: 6px 0 0 6px;
+      }
+      .tagName2{
+        width: 100px;
+        text-align: center;
+        border-left: none ;
+        border-radius: 0 6px 6px 0;
+      }
+
+      .addImg {
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        width: 150px;
+        border: $Lg solid 1px;
+        border-radius: 6px;
+        &:hover{
+          cursor: pointer;
+        }
+        p{
+          margin: 10px 0 0 0;
+          color: $Lg;
+        }
+        input{
+          display: none;
+        }
+      }
+     img{
+       border-radius: 6px;
+      //  background-color: white;
+      border: 1px $Lg solid;
+     }
+    }
+    .addSend {
       font-size: 16px;
       background-color: $Lbg;
       border: 1px $Lg solid;
       color: $Lg;
       padding: 10px 40px;
-      &:hover{
+      &:hover {
         color: $Lbg;
         background-color: $Lg;
       }
     }
-
   }
   .relatedPost {
     margin: 3.125rem 0px;
@@ -193,5 +241,4 @@ a {
     width: 100%;
     background: $Lg;
   }
-
 }

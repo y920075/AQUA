@@ -1,11 +1,37 @@
-import React from 'react'
+import React ,{ useEffect, useState }from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Rside from '../../components/blog/Rside'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import '../../style/BlogAdd.scss'
+import addImg from '../../image/imgicon.png'
 
-function BlogAdd() {
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import {
+  getBlogDataAsync,
+  // getAsideDataAsync,
+} from '../../actions/blog/blog_Actions'
+
+function BlogAdd(props) {
+  const [blogData, setBlogData] = useState([])
+
+  useEffect(() => {
+    props.getBlogDataAsync()
+    // props.getAsideDataAsync()
+  }, [])
+
+
+  const [avatarFile, setAvatarFile] = useState('');
+    const [avatarDataFiles, setAvatarDataFiles] = useState('');
+    const handleChange = (event) => {
+        console.log(event.target.files)
+        setAvatarFile(URL.createObjectURL(event.target.files[0]))
+        console.log(event.target.files[0])
+        setAvatarDataFiles(event.target.files[0])
+    }
+
   return (
     <>
       <Header />
@@ -53,13 +79,26 @@ function BlogAdd() {
                 className="form-control mb-3"
                 placeholder="請輸入內文"
               ></textarea>
-              <div className="addFooter d-flex justify-content-between">
+              <div className="addFooter d-flex justify-content-between algin-content-center">
+
+              <div className="addTag d-flex">
                 <input
                   type="text"
-                  placeholder="請輸入標籤"
-                  className="form-control addInput"
+                  placeholder="輸入標籤"
+                  className="form-control addInput tagName1"
                 />
-                <button className="badge badge-pill" type="button">
+                <input
+                  type="text"
+                  placeholder="輸入標籤"
+                  className="form-control addInput tagName2"
+                />
+                <label class="  addImg ml-3 mr-1 ">
+                  <p>上傳檔案</p>
+                  <input  className="inputavatar" type="file" onChange={(event) => handleChange(event)}   /> 
+                </label>
+                <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
+              </div>
+                <button className="badge badge-pill addSend" type="button">
                   送出
                 </button>
               </div>
@@ -106,11 +145,24 @@ function BlogAdd() {
           </div>
 
           {/* <!--rSide--> */}
-          <Rside />
+          <Rside blogData={props.blogData}/>
         </div>
       </div>
     </>
   )
 }
 
-export default BlogAdd
+
+const mapStateToProps = store => {
+  return {
+    blogData: store.blogReducer.blogData,
+    // asideData: store.itemReducer.asideData,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ getBlogDataAsync }, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(BlogAdd)
+// export default BlogAdd
