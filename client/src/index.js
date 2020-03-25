@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 
 //導入reducers
-
+import { blogReducer } from './reducers/blog/blog_Reducers'
 import { locationReducer } from './reducers/location/location_Reducers'
 import { classReducer } from './reducers/class/class_Reducers'
 import { eventReducer } from './reducers/event/event_Reducers'
@@ -21,7 +21,7 @@ import thunk from 'redux-thunk'
 
 //合併reducers
 const rootReducer = combineReducers({
-  // ...blogReducer,
+  blogReducer,
   classReducer,
   eventReducer,
   sellerReducer,
