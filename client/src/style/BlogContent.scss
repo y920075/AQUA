@@ -36,18 +36,6 @@ body {
   /* .member */
 }
 
-ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-
-a {
-  text-decoration: none;
-  color: black;
-}
 .items-card img {
   /* object-fit: ; */
   width: 220px;
@@ -86,7 +74,19 @@ a {
   }
 }
 .rao {
-
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  
   .postImg {
     height: 475px;
     margin-bottom: 3.125rem;
