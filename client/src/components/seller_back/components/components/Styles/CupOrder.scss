@@ -1,0 +1,22 @@
+@import '../../../../../style/variable.scss';
+
+.bgcolor-chin {
+  background-color: $aquabackground;
+}
+.bgcolor-chin-2 {
+  background-color: $aquacolordenger;
+}
+.text-color-chin {
+  color: white !important;
+}
+.input-style-chin {
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
+.input-text-middle-chin {
+  input[type='text'] {
+    text-align: center;
+  }
+}

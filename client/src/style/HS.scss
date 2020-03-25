@@ -52,121 +52,162 @@ $white:#FFFFFF;
 
 //Register----------------------------------------
 
-.hsregister{
-    height: 100vh;
-    .btn.btn-info, .btn-info.custom-file-control::before{
-        color: $aquacolordanger;
-    }
-    .servicelink{
-        color: $aquacolordanger;
-    }
+.hsregister {
+  height: 100vh;
+  .btn.btn-info,
+  .btn-info.custom-file-control::before {
+    color: $aquacolordanger;
+  }
+  .servicelink {
+    color: $aquacolordanger;
+  }
 }
 .registercard-hs {
-    margin-top: 150px;
-    opacity: .92;
+  margin-top: 150px;
+  opacity: 0.92;
 }
 
 //Homepage-------------------------------------------
-.hshomepage{
-    height: 150vh;
+.hshomepage {
+  height: 150vh;
 }
-
 
 //User-------------------------------------------
-.inputavatar{
-    width: 300px;
-    height: 30px;
+.btn.btn-primary,
+.btn-primary.custom-file-control::before {
+  color: $aquacolordanger;
 }
-.btn.btn-primary, .btn-primary.custom-file-control::before{
-    color: $aquacolordanger;
-}
-.btn.btn-primary:hover, .btn-primary.custom-file-control:hover::before{
-    color: $aquacolordanger;
+.btn.btn-primary:hover,
+.btn-primary.custom-file-control:hover::before {
+  color: $aquacolordanger;
 }
 .infocard-hs {
-    margin-bottom: 30px;
-    opacity: .92;
-    border-radius: 10px; 
+  margin-bottom: 30px;
+  opacity: 0.92;
+  border-radius: 10px;
 }
 .pagetitle-hs {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color:$black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: $black;
 }
 .hrline-hs {
-    height: 1px;
-    background: #c4cad1;
-    border: none;
+  height: 1px;
+  background: #c4cad1;
+  border: none;
 }
 .avatar-hs {
-    margin-top: 10px;
-    height: 140px;
+  margin-top: 10px;
+  height: 140px;
 }
 .input-hs {
-    text-align: center;
+  text-align: center;
 }
 
 //Order----------------------------------------
-.hsclass{
-    li{
-        a{
-            color: $white;
-        }
-        a:hover{
-            color: $aquacolordanger;
-        }
+.hsclass {
+  li {
+    a {
+      color: $white;
     }
+    a:hover {
+      color: $aquacolordanger;
+    }
+  }
 }
 .orderimg-hs {
-    width: 150px;
-    height: 150px;
-    margin-top: 30px;
-    border-radius: 5px;
-    object-fit: contain;
+  width: 150px;
+  height: 150px;
+  margin-top: 30px;
+  border-radius: 5px;
+  object-fit: contain;
 }
 .orderselection-hs {
-    width: 90px;
+  width: 90px;
 }
-
 
 //Class----------------------------------------
-.hsorder{
-    li{
-        a{
-            color: $white;
-        }
-        a:hover{
-            color: $aquacolordanger;
-        }
+.hsorder {
+  li {
+    a {
+      color: $white;
     }
+    a:hover {
+      color: $aquacolordanger;
+    }
+  }
 }
 .classselection-hs {
-    width: 90px;
+  width: 90px;
 }
 .classimg-hs {
-    width: 150px;
-    height: 150px;
-    margin-top: 30px;
-    border-radius: 5px;
+  width: 150px;
+  height: 150px;
+  margin-top: 30px;
+  border-radius: 5px;
 }
 
 //Event----------------------------------------
-.hsevent{
-    li{
-        a{
-            color: $white;
-        }
-        a:hover{
-            color: $aquacolordanger;
-        }
+.hsevent {
+  li {
+    a {
+      color: $white;
     }
+    a:hover {
+      color: $aquacolordanger;
+    }
+  }
 }
 .eventselection-hs {
-    width: 90px;
+  width: 90px;
 }
 .eventimg-hs {
-    width: 150px;
-    height: 150px;
-    margin-top: 30px;
-    border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  // margin-top: 30px;
+  padding: 15px;
+  border-radius: 5px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.itemId-JY {
+  margin: 0;
+}
+
+.card-header-jy {
+  min-height: 50px;
+}
+
+.addClassForm {
+  background-color: white;
+
+  textarea {
+    resize: none;
+  }
+  .classDescBox {
+    height: 88.3%;
+    .form-control {
+      height: 100%;
+    }
+  }
+}
+.btn-box {
+  justify-content: center;
+  .btn {
+    width: 300px;
+  }
+}
+.select-jy {
+  color: rgba($color: #fff, $alpha: 0.6);
+  border-bottom: 1px solid rgba($color: #fff, $alpha: 0.6);
+}
+.switchbutton-jy {
+  min-height: 40px;
+  margin-right: 15px;
+  p{
+    margin: 0 5px 0 0 ;
+  }
+  color: rgba($color: #fff, $alpha: 0.6);
 }

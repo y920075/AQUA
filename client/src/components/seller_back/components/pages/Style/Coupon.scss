@@ -1,0 +1,16 @@
+@import '../../../../../style/variable.scss';
+.bgSet {
+  background: $aquabackground;
+  border-radius: 2rem 2rem 0 0;
+}
+.bg-btn-chin {
+  background-color: $aquacolordenger;
+}
+.active-chin {
+  color: rgb(248, 212, 9) !important;
+}
+.input-style-chin {
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 auto;
+}

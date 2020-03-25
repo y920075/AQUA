@@ -64,6 +64,7 @@ async  function step2(){
                             
                             if ( waveDir ) {
                                 waveDir = parseFloat(waveDir.match(/\d+/));
+                                weatherData.waveDirNum = waveDir;
                                 switch(true){
                                     case 22.5<waveDir && waveDir<67.4:
                                         waveDir = '東北';

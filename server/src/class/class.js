@@ -10,6 +10,29 @@ const router = express.Router();
 //Top LeveL Middleware
 router.use(bodyParser.urlencoded({extended:false}));
 router.use(bodyParser.json()); 
+
+//取得所有類型與等級資料
+router.get('/classtype/level',async (req,res)=>{
+
+    if ( req.query.onlyType ) {
+        const sql = `SELECT \`classTypeId\`,\`classTypeName\` FROM \`class_type\``
+        res.json(await db.queryAsync(sql))
+
+    } else if (req.query.getLevel){
+        const sql = `SELECT \`classLevelId\`,\`classLevel\` FROM \`class_level\` WHERE \`classTypeId\` = '${req.query.getLevel}'`
+        res.json(await db.queryAsync(sql))
+
+    } else {
+        const sql = `SELECT \`class_type\`.\`classTypeId\`,\`class_type\`.\`classTypeName\`,\`class_level\`.\`classLevelId\`,\`class_level\`.\`classLevel\`
+        FROM \`class_type\`
+        INNER JOIN \`class_level\`
+        USING(\`classTypeId\`)`
+        res.json(await db.queryAsync(sql))
+
+    }
+
+
+})
 //查詢列表資料
 /*
     預計從前台接收的資料
@@ -50,7 +73,7 @@ router.get('/class',(req,res)=>{
     const perPage = 6;
     const searchType = req.query.type && !req.query.level ? ` WHERE \`classType\` = '${req.query.type}' ` : '';
     const searchLevel = req.query.type && req.query.level ? ` WHERE \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
-    const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC`
+    const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}  , \`classId\` DESC` : ` ORDER BY \`created_at\` DESC , \`classId\` DESC`
     const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\` ${searchType}${searchLevel}`
     let page = req.query.page ? parseInt(req.query.page) : 1;
     let totalRows;
@@ -66,7 +89,9 @@ router.get('/class',(req,res)=>{
             if (page<1) page=1;
             if (page>totalPages) page=totalPages;
 
-            const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classStartDate\`,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+            const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,
+            \`classLocation\`,DATE_FORMAT(\`classStartDate\`,'%Y-%m-%d') as classStartDate,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+
                             FROM \`class_data\`
                             ${searchType}${searchLevel}
                             ${sort}
@@ -202,7 +227,7 @@ router.get('/class/:classId',(req,res)=>{
     req.body.classStartDate = 開課日期(input type="datetime-local")
     req.body.classEndDate = 結訓日期(input type="datetime-local")
     req.body.classPrice = 課程售價(6位數)
-    req.body.classIntroduction = 課程簡介(30字內)
+    req.body.classIntroduction = 課程簡介(100字內)
     req.body.classDesc = 課程說明(3000字內)
     req.body.classMAXpeople = 最大人數(3位數)
     req.body.classImg = 課程圖片 (png,jpg,gif)
@@ -218,6 +243,7 @@ router.get('/class/:classId',(req,res)=>{
 */
 
 router.post('/seller/class',upload.single('classImg'),(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -278,7 +304,7 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
             data.msg='課程簡介不可為空白';
             res.json(data)
             break;
-        case req.body.classIntroduction.length > 30:
+        case req.body.classIntroduction.length > 100:
             data.msg='課程簡介過長';
             res.json(data)
             break;
@@ -306,8 +332,8 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
     const sql = `INSERT INTO \`class_data\`
             (\`maxId\`, \`classId\`, \`className\`, \`classType\`, \`classLevel\`, \`classLocation\`, \`classFullLocation\`,
             \`classStartDate\`,\`classEndDate\`, \`classPrice\`,\`classIntroduction\`, \`classDesc\`, \`classMAXpeople\`, \`classNOWpeople\`, 
-            \`classImg\`, \`seller_id\`) 
-            VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?)`
+            \`classImg\`, \`seller_id\`, \`classTypeId\`, \`classLevelId\`) 
+            VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?, ?, ?)`
 
     const sqlMAX = `SELECT MAX(\`maxId\`) AS \`maxId\`
                 FROM \`class_data\` 
@@ -372,9 +398,12 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
                         req.body.classMAXpeople,
                         0,
                         classImg,
-                        req.session.seller_id
+                        req.session.seller_id,
+                        req.body.classTypeId,
+                        req.body.classLevelId,
                     ]
                     db.query(sql,sqlStmt,(error,result)=>{
+                        if (error) throw error
                         if ( result.affectedRows>0 ) {
                             data.status = 201;
                             data.msg = '新增成功'
@@ -425,12 +454,14 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
                 classIntroduction =     課程簡介
                 classImg =              課程圖片連結
                 classPrice =            課程售價
+                classNowPeople =        現在人數
             }
         ]
     }
 */
 
 router.get('/seller/class',(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status' : '401',
         'msg' : '尚未登入'
@@ -439,10 +470,14 @@ router.get('/seller/class',(req,res)=>{
         res.json(data)
     } else {
         const perPage = 6;
-        const searchType = req.query.type && !req.query.level ? `AND \`classType\` = '${req.query.type}' ` : '';
-        const searchLevel = req.query.type && req.query.level ? `AND  \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
-        const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC`
-        const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\`  WHERE \`seller_id\` = '${req.session.seller_id}' ${searchType}${searchLevel}`
+        let where = []
+        if(req.query.type) where.push(`\`class_data\`.\`classType\` = '${req.query.type}' `)
+        if(req.query.level) where.push(`\`class_data\`.\`classLevel\` = '${req.query.level}' `)
+        if (!req.query.expired) where.push(`\`class_data\`.\`classStartDate\` >= NOW()`)
+        if(where.length>0){where = ' AND ' + where.join(' AND ')}else{where=''}
+
+        const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`created_at\` DESC , \`classId\` DESC`
+        const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\`  WHERE \`seller_id\` = '${req.session.seller_id}' ${where}`
         let page = req.query.page ? parseInt(req.query.page) : 1;
         let totalRows;
         let totalPages;
@@ -457,10 +492,10 @@ router.get('/seller/class',(req,res)=>{
                 if (page<1) page=1;
                 if (page>totalPages) page=totalPages;
 
-                const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classStartDate\`,\`classIntroduction\`,\`classImg\`,\`classPrice\`
+                const sql = `   SELECT \`classId\`,\`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,DATE_FORMAT(\`classStartDate\`,'%Y-%m-%d') as classStartDate,\`classIntroduction\`,\`classImg\`,\`classPrice\`,\`classNowPeople\`
                                 FROM \`class_data\`
                                 WHERE \`seller_id\` = '${req.session.seller_id}'
-                                ${searchType}${searchLevel}
+                                ${where}
                                 ${sort}
                                 LIMIT  ${(page-1)*perPage}, ${perPage}`
                 return db.queryAsync(sql);
@@ -545,6 +580,8 @@ router.get('/seller/class',(req,res)=>{
 */
 
 router.get('/seller/class/:classId',(req,res)=>{
+    req.session.seller_id = 'S20010001'
+
     const data = {
         'status' : 404,
         'msg' :　'查無資料',
@@ -563,8 +600,8 @@ router.get('/seller/class/:classId',(req,res)=>{
                                 INNER JOIN \`class_coach_status\`
                                 ON \`class_coach\`.\`id\` = \`class_coach_status\`.\`coachId\`
                                 WHERE \`class_coach_status\`.\`classId\` = '${req.params.classId}'`
-        const sql = `SELECT \`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classFullLocation\`,\`classStartDate\`,
-                        \`classPrice\`,\`classIntroduction\`,\`classDesc\`,\`classMAXpeople\`,\`classNOWpeople\`,\`classImg\` 
+        const sql = `SELECT \`className\`,\`classType\`,\`classLevel\`,\`classLocation\`,\`classFullLocation\`,DATE_FORMAT(\`classStartDate\`, '%Y-%m-%dT%H:%i') as classStartDate,
+                        \`classPrice\`,\`classIntroduction\`,\`classDesc\`,\`classMAXpeople\`,\`classNOWpeople\`,\`classImg\`,\`classTypeId\`,\`classLevelId\`,DATE_FORMAT(\`classEndDate\`, '%Y-%m-%dT%H:%i') as classEndDate
                         FROM \`class_data\` 
                         WHERE \`seller_id\` = '${req.session.seller_id}' AND \`classId\` = '${req.params.classId}'`
         const findMemberDataSql = `SELECT \`class_member\`.\`memberId\`,\`class_member\`.\`memberMemo\`,\`my_member\`.\`fullName\`,
@@ -609,11 +646,13 @@ router.get('/seller/class/:classId',(req,res)=>{
     req.body.className = 課程名稱
     req.body.classType = 課程類型
     req.body.classLevel = 課程等級
+    req.body.classTypeId = 課程類型編號
+    req.body.classLevelId = 課程等級編號
     req.body.classStartDate = 開課日期(input type="datetime-local")
     req.body.classEndDate = 結訓日期(input type="datetime-local")
     req.body.classLocation = 課程地點(縣市)
     req.body.classFullLocation = 課程地點(完整)
-    req.body.classIntroduction = 課程簡介(30字內)
+    req.body.classIntroduction = 課程簡介(100字內)
     req.body.classDesc = 課程說明(3000字內)
     req.body.classMAXpeople = 最大人數
     req.body.classImg = 課程圖片
@@ -628,6 +667,7 @@ router.get('/seller/class/:classId',(req,res)=>{
 */
 
 router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -688,7 +728,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
             data.msg='課程簡介不可為空白';
             res.json(data)
             break;
-        case req.body.classIntroduction.length > 30:
+        case req.body.classIntroduction.length > 100:
             data.msg='課程簡介過長';
             res.json(data)
             break;
@@ -716,7 +756,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
     const sql =  `UPDATE \`class_data\`
                 SET \`className\` = ?, \`classType\` = ?, \`classLevel\` = ?, \`classLocation\` = ?, 
                     \`classFullLocation\` = ?,\`classStartDate\` = ?,\`classEndDate\` = ?, \`classPrice\` = ?,
-                    \`classIntroduction\` = ?, \`classDesc\` = ?, \`classMAXpeople\` = ?${classImg}
+                    \`classIntroduction\` = ?, \`classDesc\` = ?, \`classMAXpeople\` = ?, \`classTypeId\` = ?, \`classLevelId\` = ?${classImg}
                 WHERE \`classId\` = '${req.params.classId}' AND \`seller_id\` = '${req.session.seller_id}'`
     const sqlType = `SELECT \`classTypeName\`
                     FROM \`class_type\`
@@ -758,6 +798,8 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
                 req.body.classIntroduction,
                 req.body.classDesc,
                 req.body.classMAXpeople,
+                req.body.classTypeId,
+                req.body.classLevelId
             ]
 
             if ( req.file && req.file.originalname ) {
@@ -789,7 +831,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
     }
 })
 
-//賣家刪除自己的課程資料
+//賣家刪除自己的課程資料(連帶刪除所有報名資料)
 /*
     預計從前台接收的資料
     DELETE /seller/class/課程編號
@@ -804,6 +846,7 @@ router.put('/seller/class/:classId',upload.single('classImg'),(req,res)=>{
 */
 
 router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status':401,
         'msg':'尚未登入'
@@ -822,8 +865,10 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
             }
             return db.queryAsync(sql)
         })
-        .then(result=>{
+        .then(async result=>{
             if ( result.affectedRows>0 ) {
+                const sql = `DELETE FROM\`class_member\` WHERE \`classId\` = '${req.params.classId}'`
+                await db.queryAsync(sql)
                 data.status = 201;
                 data.msg = `編號${req.params.classId} 刪除成功`
                 res.json(data);
@@ -854,6 +899,7 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.post('/member/class/:classId',upload.none(),(req,res)=>{
+    req.session.memberId = 'M20010002'
     const data = {
         'status':401,
         'msg':'尚未登入'
@@ -961,6 +1007,7 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/class',(req,res)=>{
+    req.session.memberId = 'M20010002'
     const data = {
         'status' : '401',
         'msg' : '尚未登入'
@@ -969,14 +1016,20 @@ router.get('/member/class',(req,res)=>{
         res.json(data)
     } else {
         const perPage = 6;
-        const searchType = req.query.type && !req.query.level ? ` AND \`class_data\`.\`classType\` = '${req.query.type}' ` : '';
-        const searchLevel = req.query.type && req.query.level ? ` AND  \`class_data\`.\`classType\` = '${req.query.type}' AND \`class_data\`.\`classLevel\` = '${req.query.level}' ` : '';
-        const sort = req.query.sort ? ` ORDER BY \`class_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`class_data\`.\`created_at\` DESC`
+
+        let where = []
+        if(req.query.type) where.push(`\`class_data\`.\`classType\` = '${req.query.type}' `)
+        if(req.query.level) where.push(`\`class_data\`.\`classLevel\` = '${req.query.level}' `)
+        if (!req.query.expired) where.push(`\`class_data\`.\`classStartDate\` >= NOW()`)
+        if(where.length>0){where = ' AND ' + where.join(' AND ')}else{where=''}
+
+        
+        const sort = req.query.sort ? ` ORDER BY \`class_data\`.\`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}` : ` ORDER BY \`class_data\`.\`created_at\` DESC , \`classId\` DESC`
         const total_sql = ` SELECT COUNT(1) as 'rows' 
                             FROM \`class_data\`  
                             INNER JOIN \`class_member\`
                             ON \`class_data\`.\`classId\` = \`class_member\`.\`classId\`
-                            WHERE \`class_member\`.\`memberId\` = '${req.session.memberId}' ${searchType}${searchLevel}`
+                            WHERE \`class_member\`.\`memberId\` = '${req.session.memberId}' ${where}`
         let page = req.query.page ? parseInt(req.query.page) : 1;
         let totalRows;
         let totalPages;
@@ -997,7 +1050,7 @@ router.get('/member/class',(req,res)=>{
                                 FROM \`class_data\` 
                                 INNER JOIN \`class_member\`
                                 ON \`class_data\`.\`classId\` = \`class_member\`.\`classId\`
-                                WHERE \`class_member\`.\`memberId\` = '${req.session.memberId}' ${searchType}${searchLevel}
+                                WHERE \`class_member\`.\`memberId\` = '${req.session.memberId}' ${where}
                                 ${sort}
                                 LIMIT  ${(page-1)*perPage}, ${perPage}`
                 return db.queryAsync(sql);
@@ -1047,6 +1100,7 @@ router.get('/member/class',(req,res)=>{
 */
 
 router.delete('/member/class/:classId',(req,res)=>{
+    req.session.memberId = 'M20010002'
     const data = {
         'status':404,
         'msg':'查無報名資料'

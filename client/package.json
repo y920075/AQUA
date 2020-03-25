@@ -3,22 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sweetalert2/theme-material-ui": "^3.1.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "acorn": "^7.1.1",
+    "aos": "^3.0.0-beta.6",
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
+    "leaflet": "^1.6.0",
+    "mdbreact": "^4.25.4",
     "minimist": "^1.2.5",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
+    "react-fullpage": "^0.1.19",
+    "react-google-maps": "^9.4.5",
+    "react-image-gallery": "^1.0.6",
+    "react-leaflet": "^2.6.3",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "react-select": "^3.1.0",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "sweetalert2": "^9.10.2"
+    "styled-components": "^5.0.1",
+    "sweetalert2": "^9.10.5",
+    "sweetalert2-react-content": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,12 +57,12 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-react-app": "^5.2.0",
+    "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
     "prettier": "^1.19.1"
   }
 }

@@ -1,0 +1,21 @@
+.JY-container-seller-editclass {
+  background-color: white;
+  .addClassForm {
+    textarea {
+      resize: none;
+    }
+    .classDescBox {
+      height: 93%;
+      .form-control {
+        height: 100%;
+      }
+    }
+  }
+  .btn-box {
+    margin-top: 30px;
+    justify-content: center;
+    .btn {
+      width: 300px;
+    }
+  }
+}
