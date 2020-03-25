@@ -66,6 +66,7 @@ function Aside(props) {
           data-type="t000"
           onClick={event => {
             asideClick(event)
+            props.getDataFromServer()
           }}
         >
           全部商品
@@ -116,6 +117,7 @@ function Aside(props) {
           data-brand="all"
           onClick={event => {
             asideClick(event)
+            props.getDataFromServer()
           }}
         >
           所有品牌

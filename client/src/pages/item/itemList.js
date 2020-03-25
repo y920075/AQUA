@@ -100,7 +100,10 @@ function Items(props) {
           </div>
           <div className="col-md-9 list">
             <div className="row justify-content-between list-header">
-              <div className="col">{/* <Breadcrumb /> */}</div>
+              <div className="col">
+                {/* <Breadcrumb /> */}
+                <span class="material-icons d-md-none">filter_list</span>
+              </div>
 
               <div className="col text-right d-flex justify-content-end">
                 <form className="form-inline">
@@ -119,7 +122,7 @@ function Items(props) {
             <div className="row list-wrapper">
               {hasloading ? <h1>載入中</h1> : <ItemCard itemData={itemData} />}
             </div>
-            <div className="row list-page">
+            <div className="row list-page d-flex justify-content-center mt-3">
               {hasloading ? (
                 ''
               ) : (

@@ -39,6 +39,9 @@ function Header() {
               className="navbar-shopping-cart-icon"
               src="../images/logo/shopping_cart.png"
               alt=""
+              onClick={() => {
+                window.location = `/member/mycart`
+              }}
             />
           </button>
           {/* web menu */}

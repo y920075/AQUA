@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function ItemCard(props) {
-  console.log('itemcard', props)
+  // console.log('itemcard', props)
   return (
     <>
       {!props.itemData ? (
@@ -19,7 +19,7 @@ function ItemCard(props) {
               <img
                 className="list-card-img-top"
                 src={
-                  'http://127.0.0.1:5000/images/itemImg/test-item.jpg'
+                  `http://127.0.0.1:5000/images/itemImg/${value.itemImg}`
                   // + value.itemImg
                 }
                 alt=""

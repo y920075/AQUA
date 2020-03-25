@@ -50,10 +50,12 @@ $color5: #f15a24;
             // font-weight: 300;
             cursor: pointer;
             transition: 0.3s;
+
             &.active {
               color: $color5;
               font-weight: 500;
             }
+
             &:hover {
               // font-size: 1.2rem;
             }
@@ -67,6 +69,13 @@ $color5: #f15a24;
           // display: none;
           overflow: hidden;
         }
+        .brand-ul {
+          height: 280px;
+          overflow: auto;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
       }
     }
 
@@ -75,6 +84,10 @@ $color5: #f15a24;
         .form-inline {
           margin-bottom: 0;
         }
+
+        .material-icons {
+          padding: 12px 0;
+        }
       }
 
       &-wrapper {
@@ -82,12 +95,15 @@ $color5: #f15a24;
           //變小時出現
           padding: 0 0.438rem;
         }
+
         a {
           color: #fff;
+
           &:hover {
             text-decoration: none;
           }
         }
+
         .list-card {
           width: 13.75rem;
           position: relative;
@@ -125,6 +141,22 @@ $color5: #f15a24;
       }
 
       &-page {
+        span {
+          color: #fff;
+        }
+
+        .page-link {
+          transition: 0.5s;
+
+          &:hover {
+            z-index: 2;
+            color: $color5;
+            text-decoration: none;
+            background-color: rgba($color: #fff, $alpha: 0.5);
+            // border-color: #dee2e6;
+            cursor: pointer;
+          }
+        }
       }
     }
   }

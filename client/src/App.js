@@ -18,6 +18,18 @@ import ItemDetail from './pages/item/itemDetail'
 import ShoppingCart from './pages/order/shoppingCart'
 import CheckOut from './pages/order/checkOut'
 
+// Member
+import MemberLogin from './pages/members/MemberLogin'
+import MemberRegister from './pages/members/MemberRegister'
+import MemberUser from './pages/members/MemberUser'
+import MemberOrder from './pages/members/MemberOrder'
+import MemberHomepage from './pages/members/MemberHomepage'
+import MemberSellerLogin from './pages/members/ＭemberSellerLogin'
+import MemberBlog from './pages/members/MemberBlog'
+import MemberMessage from './pages/members/MemberMessage'
+
+import Home from './pages/Home'
+
 function App(props) {
   console.log(props)
   return (
@@ -54,14 +66,43 @@ function App(props) {
           <Route path="/member/checkout">
             <CheckOut />
           </Route>
+
+          {/* Member Routes */}
+          <Route path="/memberhomepage">
+            <MemberHomepage />
+          </Route>
+          <Route path="/memberuser">
+            <MemberUser />
+          </Route>
+          <Route path="/memberlogin">
+            <MemberLogin />
+          </Route>
+          <Route path="/membersellerlogin">
+            <MemberSellerLogin />
+          </Route>
+          <Route path="/memberregister">
+            <MemberRegister />
+          </Route>
+          <Route path="/memberorder">
+            <MemberOrder />
+          </Route>
           <Route path="/memberclass">
             <MemberClass />
           </Route>
           <Route path="/memberevent">
             <MemberEvent />
           </Route>
+          <Route path="/memberblog">
+            <MemberBlog />
+          </Route>
+          <Route path="/membermessage">
+            <MemberMessage />
+          </Route>
           <Route path="/location/:LocationID">
             <Divelocation />
+          </Route>
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </>

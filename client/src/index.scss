@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -15,21 +16,26 @@ code {
   height: 370px;
   overflow: hidden;
   margin-bottom: 3.125rem;
+
   img {
     width: 100%;
   }
+
   @media screen and (max-width: 540px) {
     height: 200px;
+
     img {
       object-fit: contain;
     }
   }
 }
+
 .Header-Navbar {
   @media screen and(max-width:540px) {
-    max-width: 375px;
+    // max-width: 375px;
   }
 }
+
 div.collapse.navbar-collapse {
   @media screen and (max-width: 540px) {
     display: flex !important;
@@ -38,14 +44,17 @@ div.collapse.navbar-collapse {
     transition: 1s;
   }
 }
+
 .JY_navMenuShow {
   display: flex !important;
   max-height: 500px !important;
 }
+
 .loading {
   text-align: center;
   color: white;
 }
+
 @import '../src/pages/class/class.scss';
 @import '../src/pages/class/classDetailStyle.scss';
 @import '../src/pages/event/event.scss';
@@ -54,3 +63,26 @@ div.collapse.navbar-collapse {
 @import '../src/pages/event/memberEvent.scss';
 @import '../src/pages/class/SellerClass.scss';
 @import '../src/pages/class/SellerEditClass.scss';
+
+.CW.index {
+  .container {
+    height: 100vh;
+    color: #ffffff;
+  }
+
+  .index {
+    &-video {
+      height: 100vh;
+
+    }
+
+    &-location {}
+
+    &-event {}
+
+    &-class {}
+
+    &-footer {}
+  }
+
+}

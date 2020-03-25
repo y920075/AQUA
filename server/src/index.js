@@ -2,6 +2,13 @@ const express =     require('express');
 const session =     require('express-session')
 const cors =        require('cors')
 const app =         express();
+
+// 引入氣象局API寫入函式
+const getTIdeData = require('./location/gettideinfo')
+
+//執行資料自動寫入DB
+// getTIdeData()
+
 app.use(session({
     saveUninitialized: false,
     resave: false, // 沒變更內容是否強制回存
@@ -12,10 +19,10 @@ app.use(session({
     }
 }))
 app.use(cors())
+app.use(require(__dirname + '/members/member'))
 app.use('/divelocation', require(__dirname+'/location/locationinfo') );
 //評論
 app.use('/comment', require(__dirname+'/comment/comment') );
-
 
 app.use(require(__dirname+'/location'))
 app.use(require(__dirname+'/class/class'))

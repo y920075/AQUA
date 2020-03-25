@@ -20,6 +20,7 @@ import AddClassContent from '../../components/class/SellerClassComponents/AddCla
 
 function SellerClass(props) {
   const [nowClickTag, setNowClickTag] = useState(1)
+  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
     props.getSellerClassDataAsunc()
@@ -27,11 +28,17 @@ function SellerClass(props) {
     props.getClassTypeLevelDataForSellerAsunc(true, false)
   }, [])
 
+  //每次按鈕被點擊時，就取得新資料
+  useEffect(() => {
+    getSellerClassData()
+  }, [isEnable])
+
+
   //向伺服器取得新資料
   const getSellerClassData = page => {
     //取得select的值，作為類型、等級的篩選參數
     const sort = document.querySelector('select[name="sort"]').value
-    props.getSellerClassDataAsunc(sort, page)
+    props.getSellerClassDataAsunc(sort, page, isEnable)
   }
 
   const handleNavActive = event => {
@@ -101,6 +108,8 @@ function SellerClass(props) {
                     getSellerClassData={getSellerClassData}
                     delClassDataAsunc={props.delClassDataAsunc}
                     delClassDataResponse={props.delClassDataResponse}
+                    setIsEnable={setIsEnable}
+                    isEnable={isEnable}
                   />
                 )
             }

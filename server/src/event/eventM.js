@@ -10,6 +10,7 @@ class event {
         let where = []
         if(req.query.type) where.push(`\`eventType\` = '${req.query.type}'`)
         if(req.query.q) where.push(`\`eventName\` LIKE '%${req.query.q}%'`)
+        if (!req.query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if(req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sql = `SELECT COUNT(1) as 'rows' FROM \`event_data\` ${where}`
@@ -54,6 +55,7 @@ class event {
         let where = []
         if(query.type) where.push(`\`event_data\`.\`eventType\` = '${query.type}'`)
         if(query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${query.q}%'`)
+        if (!query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC, \`event_data\`.\`eventId\` DESC`
 
@@ -77,6 +79,7 @@ class event {
         let where = []
         if(query.type) where.push(`\`event_data\`.\`eventType\` = '${query.type}'`)
         if(query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${query.q}%'`)
+        if (!query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC, \`event_data\`.\`eventId\` DESC`
 
@@ -118,8 +121,8 @@ class event {
         const sql = `INSERT INTO \`event_data\`
                     (\`maxId\`, \`eventId\`, \`eventName\`, \`eventType\`, \`eventLocation\`, \`eventFullLocation\`,
                     \`eventLocation_lat\`,\`eventLocation_lng\`, \`eventSponsor\`,\`eventStartDate\`, \`eventEndDate\`,
-                    \`eventDesc\`, \`eventNeedPeople\`,\`eventNowPeople\`, \`eventImg\`)
-                    VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`
+                    \`eventDesc\`, \`eventNeedPeople\`,\`eventNowPeople\`, \`eventImg\`,\`eventTypeId\`)
+                    VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?)`
         await db.queryAsync(sql,sqlStmt)
         .then(async result=>{
             if ( result.affectedRows>0 ) {
@@ -140,14 +143,14 @@ class event {
     //會員編輯一筆活動
     static async memberEditEventData(sqlStmt,req,lat,lng){
         let data = null
-        let eventImg = !req.file && !req.file.originalname ? '' : ',\`eventImg\` = ?'
+        let eventImg = !req.file ? '' : ',\`eventImg\` = ?'
         const sql =    `UPDATE \`event_data\`
-                        SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
+                        SET \`eventName\`=?,\`eventTypeId\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
                         \`eventLocation_lat\`=?,\`eventLocation_lng\`=?,\`eventStartDate\`=?,\`eventEndDate\`=?,
                         \`eventDesc\`=?,\`eventNeedPeople\`=?${eventImg}
                         WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
 
-        await db.queryAsync(sql,sqlStmt).then(result=>{
+        await db.queryAsync(sql,sqlStmt).then(async result=>{
             if ( result.affectedRows>0 ) {
                 const weatherSql = `UPDATE \`weather_data\`
                                     SET \`location_lng\`=?, \`location_lat\`=?,\`eventStartDate\`=?,\`weatherData_updated_at\`=?
@@ -158,9 +161,10 @@ class event {
                     req.body.eventStartDate,
                     '1970-01-01'
                 ]
+                data = result 
                 return db.queryAsync(weatherSql,weatherSqlStmt)
             }
-        }).then( result => data = result)
+        }).then( result => {})
         return data
     }
     //會員刪除一筆活動
@@ -213,6 +217,7 @@ class event {
         if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
         if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
         if (req.session.memberId) where.push(`\`eventSponsor\` = '${req.session.memberId}'`)
+        if (!req.query.expired) where.push(`\`eventStartDate\` >= NOW()`)
         if (where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         if (page<1) page=1;
         if (page>totalPages) page=totalPages;
@@ -241,8 +246,10 @@ class event {
                                 ON \`event_memeber\`.\`memberId\` = \`my_member\`.\`memberId\`
                                 WHERE \`event_memeber\`.\`eventId\` = '${req.params.eventId}'`
 
-        const sql =            `SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventFullLocation\`,\`eventStartDate\`,
-                                \`eventEndDate\`,\`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
+        const sql =            `SELECT \`eventId\`,\`eventName\`,\`eventTypeId\`,\`eventType\`,\`eventLocation\`,\`eventFullLocation\`,
+                                DATE_FORMAT(\`eventStartDate\`, '%Y-%m-%dT%H:%i') as eventStartDate,
+                                DATE_FORMAT(\`eventEndDate\`, '%Y-%m-%dT%H:%i') as eventEndDate,
+                                \`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
                                 FROM \`event_data\` 
                                 WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
 
@@ -384,6 +391,7 @@ class event {
         if (req.query.type) where.push(`\`event_data\`.\`eventType\` = '${req.query.type}'`)
         if (req.query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${req.query.q}%'`)
         if (req.session.memberId) where.push(`\`event_memeber\`.\`memberId\` = '${req.session.memberId}'`)
+        if (!req.query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
         if (where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
 
         const totalRows = await db.queryAsync( `SELECT COUNT(1) as 'rows' 
