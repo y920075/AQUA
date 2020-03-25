@@ -9,6 +9,9 @@ import addImg from '../../image/imgicon.png'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import {
   getBlogDataAsync,
   // getAsideDataAsync,
@@ -42,13 +45,13 @@ function BlogAdd(props) {
           <h2>部落格</h2>
           <ul>
             <li>
-              <Link to="">首頁</Link>
+              <Link to="/blog">首頁</Link>
             </li>
             <li>
               <Link to="">></Link>
             </li>
             <li>
-              <Link to="">新增文章</Link>
+              <Link to="/blogadd">新增文章</Link>
             </li>
           </ul>
         </div>
@@ -102,6 +105,7 @@ function BlogAdd(props) {
                   送出
                 </button>
               </div>
+              <CKEditor editor={ClassicEditor}/>
             </div>
             <div className="addHr">
               <hr align="left" />

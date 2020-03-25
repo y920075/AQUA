@@ -1,7 +1,7 @@
 import React , { useEffect, useState }from 'react'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, $CombinedState } from 'redux'
 
 import {
   getBlogDataAsync,
@@ -17,11 +17,17 @@ import { Link } from 'react-router-dom'
 import '../../style/Blog.scss'
 import _ from 'lodash'
 import RcViewer from '@hanyk/rc-viewer'
+import Zoom from 'react-reveal/Zoom'
+import sr from './ScrollReveal'
+import $ from 'jquery'
+
 
 
 function Blog(props) {
+
+
   const options={}
-  console.log(categoryData)
+  // console.log(categoryData)
 
   const [blogData, setBlogData] = useState([])
   // const [asideData, setAsideData] = useState([])
@@ -30,46 +36,28 @@ function Blog(props) {
 
 
   useEffect(() => {
-    props.getBlogDataAsync()
-    // props.getAsideDataAsync()
+
+ props.getBlogDataAsync()
   }, [])
+
+  useEffect(() => {
+      sr.reveal('.card',{
+
+    // origin: 'bottom',
+    duration: 2000,
+    delay: 0,
+    distance: '500px',
+    scale: 1,
+    // easing: 'ease',
+    // reset: true,
+  })
+
+  }, [props.blogData])
+
+
   console.log(props.blogData.result)
 
-  // useEffect(() => {
-  //   setHasLoading(true)
-
-  //   setTimeout(() => {
-  //     if (props.blogData) {
-  //       setBlogData(props.blogData.totalRows)
-  //       setHasLoading(false)
-  //     }
-  //   }, 500)
-  // }, [props.blogData])
-
-  // useEffect(() => {
-  //   setHasLoading(true)
-
-  //   setTimeout(() => {
-  //     if (props.asideData.status) {
-  //       setAsideData(props.asideData.asideData)
-  //       setHasLoading(false)
-  //     }
-  //   }, 500)
-  // }, [props.asideData])
-
-  // function getBlogData(page) {
-  //   const type = document.querySelector('.typeMenu .active')
-  //     ? document.querySelector('.typeMenu .active').getAttribute('data-type')
-  //     : ''
-  //   // const brand = document.querySelector('.typeMenu .active')
-  //   //   ? document.querySelector('.typeMenu .active').getAttribute('data-level')
-  //   //   : ''
-  //   //取得sort的select的值
-  //   const price = document.querySelector('select[name="sort"]').value
-  //   props.getClassDataAsync(type, brand, price, page)
-
-  //   props.getBlogDataAsync(page)
-  // }
+ 
 
 
 
@@ -83,16 +71,21 @@ function Blog(props) {
         <div className="row">
           <div className="col-sm-12 d-flex justify-content-center">
 
-              <div className="category">
+              <div className="category d-flex justify-content-center ">
+              <Zoom>
 
-              <Link to="#" className="badge badge-pill  addPost">
+              <Link to="/blogadd" className="badge badge-pill  addPost">
                 發文
               </Link>
+              </Zoom>
+
               {categoryData ? (categoryData.map((value , index)=>{
               return(
+                <Zoom>
               <Link to="#" className="badge badge-pill " key = {index}>
                 {value.categoryName}
               </Link>
+              </Zoom>
               )}
             )) : ''}
               </div>
@@ -106,11 +99,11 @@ function Blog(props) {
   justify-content-around cardContent">
             <div className=" col-sm-6 lCard " >
 
-            {/* <!--lCard--> */}
             {props.blogData.result ? (props.blogData.result.map((value , index)=>{
-              if( value.id%2===0)
+              {/* if( value.id%2===0) */}
               return (
-              <div className="card  rounded-lg " key = {index} >
+
+            <div className="card  rounded-lg " key = {index} >
               <RcViewer options={options}>
                 <img
                   className="card-img-top rounded-top "
@@ -134,7 +127,7 @@ function Blog(props) {
                   <hr align="left" />
                   <div className="d-flex justify-content-around">
                     <div className="card-tag d-flex justify-content-center">
-                      <Link to={'/blog/7'}>{value.tagName1}</Link>
+                      <Link to={'/blog/'+value.id}>{value.tagName1}</Link>
                       、
                       <Link to="">{value.tagName2}</Link>
                     </div>
@@ -148,6 +141,7 @@ function Blog(props) {
             )) : ''}
             {/* <!--rCard--> */}
             </div>
+
             <div className="col-md-6 rCard">
             {props.blogData.result ? (props.blogData.result.map((value , index)=>{
               if( value.id%2===1)
@@ -188,38 +182,10 @@ function Blog(props) {
               )}
             )) : ''}
             </div>
+            
           </div>
           {/* <!--rSide--> */}
           <Rside blogData={props.blogData}/>
-        </div>
-        <div class=" col-md-12 d-flex justify-content-center page">
-          <ul>
-            <li>
-              <a href="">
-                <i class="fas fa-chevron-left"></i>
-              </a>
-            </li>
-            <li class="ative">
-              <a href="">1</a>
-            </li>
-            <li>
-              <a href="">2</a>
-            </li>
-            <li>
-              <a href="">3</a>
-            </li>
-            <li>
-              <a href="">4</a>
-            </li>
-            <li>
-              <a href="">5</a>
-            </li>
-            <li>
-              <a href="">
-                <i class="fas fa-chevron-right"></i>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </>

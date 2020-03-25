@@ -9,6 +9,9 @@ body {
   height: 300vh;
   background-color: $Dbg;
 }
+h1{
+  color: #ffffff;
+}
 
 .navbar-shopping-cart-icon {
   opacity: 0.6;
@@ -92,14 +95,16 @@ hr {
   .category{
     width: 300px;
     text-align: center;
+    flex-wrap: wrap;
   }
 }
 
   .lCard,
   .rCard {
     perspective: 100px;
- 
+
     .card {
+      // visibility: hidden;
       font-weight: bold;
         color: $Dg;
       width: 21rem;

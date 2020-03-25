@@ -119,18 +119,6 @@ function BlogContent(props) {
                     </Link>
                   </li>
                 </ul>
-                <ul className="blogcontentPage">
-                  <li>
-                    <Link to="">
-                      <i className="fas fa-chevron-left"></i>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="">
-                      <i className="fas fa-chevron-right"></i>
-                    </Link>
-                  </li>
-                </ul>
               </div>
               <hr align="left" />
             </div>
@@ -143,7 +131,7 @@ function BlogContent(props) {
                   <li>
                     <Link to="">
                       <figure>
-                        <img src="../../image/image.png" alt="" />
+                        <img src="../../images/blog/card3.jpg" alt="" />
                       </figure>
                     </Link>
                     <h5>跳水假期</h5>
@@ -151,7 +139,7 @@ function BlogContent(props) {
                   <li>
                     <Link to="">
                       <figure>
-                        <img src="./images/blog/card4.jpg" alt="" />{' '}
+                        <img src="../../images/blog/card4.jpg" alt="" />
                       </figure>
                     </Link>
                     <h5>跳水假期</h5>
@@ -159,7 +147,7 @@ function BlogContent(props) {
                   <li>
                     <Link to="">
                       <figure>
-                        <img src="./images/blog/card5.jpg" alt="" />{' '}
+                        <img src="../../images/blog/card1.jpg" alt="" />
                       </figure>
                     </Link>
                     <h5>以自由潛水的方式，認識人之島</h5>
@@ -173,7 +161,7 @@ function BlogContent(props) {
               </div>
               <div className="commentContent ">
                 <figure>
-                  <img src="./images/blog/newPost2.jpg" alt="" />
+                  <img src="../../images/blog/newPost2.jpg" alt="" />
                 </figure>
                 <div className="commmentBody p-2">
                   <div className="commentAuthor">
@@ -190,7 +178,7 @@ function BlogContent(props) {
               </div>
               <div className="commentContent ">
                 <figure>
-                  <img src="./images/blog/newPost4.jpeg" alt="" />
+                  <img src="../../images/blog/newPost4.jpeg" alt="" />
                 </figure>
                 <div className="commmentBody p-2">
                   <div className="commentAuthor">
