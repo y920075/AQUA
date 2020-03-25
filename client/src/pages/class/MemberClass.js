@@ -32,7 +32,7 @@ import Loading from '../../components/class/Loading' //載入中圖示
 import '../../style/HS.scss'
 
 function MemberClass(props) {
-  const [hasLoading, setHasLoading] = useState(false) //是否載入中
+  const [hasLoading, setHasLoading] = useState(true) //是否載入中
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
@@ -69,15 +69,12 @@ function MemberClass(props) {
 
   return (
     <>
-      <Header />
-      <Banner BannerImgSrc="./images/member/coralreef.jpg" />
+      {/* <Header />
+      <Banner BannerImgSrc="./images/member/coralreef.jpg" /> */}
       {/* <!-- Orger Content --> */}
       <div className="container hsclass">
         <div className="row">
-          <div className="col-lg-3">
-            <Sidebar />
-          </div>
-          <div className="col-lg-9">
+          <div className="col-lg-12">
             <div className="order-select d-flex justify-content-end">
               <div className="d-flex switchbutton-jy align-items-center">
                 <p>包含已過期資料</p>
@@ -127,7 +124,7 @@ function MemberClass(props) {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

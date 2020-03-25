@@ -202,7 +202,7 @@ function ManageMyEventContent(props) {
                             ) : (
                               <div>
                                 <Link
-                                  to={'/memberevent/edit/' + value.eventId}
+                                  to={'/memberuser/event/edit/' + value.eventId}
                                   className="btn btn-primary"
                                 >
                                   <i

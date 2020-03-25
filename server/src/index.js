@@ -40,6 +40,23 @@ app.use(require(__dirname+'/location'))
 app.use(require(__dirname+'/class/class'))
 app.use(require(__dirname+'/class/coach'))
 app.use(require(__dirname+'/event/event'))
+//部落格
+app.use(require(__dirname + '/blog/blog'))
+
+app.get('/try-db', (req, res)=> {
+    const sql = "SELECT * FROM `blog`"
+    db.query(sql, (error, result, fields)=>{
+        if(!error){
+            res.json(result)
+        }else{
+            res.end(error)
+        }
+    })
+})
+
+
+
+
 
 app.use(require(__dirname+'/items/items'))
 app.use('/divelocation', require(__dirname+'/location/locationinfo') );

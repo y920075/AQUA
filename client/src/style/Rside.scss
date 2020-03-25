@@ -1,0 +1,100 @@
+$Dbg: #132948;
+$Lbg: #485a71;
+$Dg: #c4cad1;
+$Lg: #e2e4e8;
+$Lb: #47c9e5;
+$O: #fa5d07;
+
+  .rSide {
+    padding: 0 0 0 40px;
+    p {
+      color: $O;
+    }
+    .newsPost {
+      background: $Lbg;
+      box-shadow: 0px 0px 5px 1px #000000;
+      padding: 10px 10px 0 10px;
+      font-weight: bold;
+      .newpostLine{
+        margin-bottom: 10px;
+        border-bottom: 1px solid black;
+      }
+      .newpostPic {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 0.5px solid rgb(0, 0, 0);
+        perspective: 1000px;
+        img {
+          width: 100%;
+          transition: 0.3s;
+          &:hover {
+            /* transform: scale(1.1); */
+            transform: translateZ(100px);
+          }
+        }
+      }
+      .newspostContent{
+        width: 250px;
+        span a {
+          color: $Lg;
+          background-color: $Dbg;
+          margin: 3px;
+          padding: 0px 10px 5px 10px;
+        }
+        .newspostTitle {
+          margin-left: 5px;
+          a{
+          &:hover{
+            color: $Lg;
+          }
+        }
+        }
+      }
+    }
+    .search{
+      input{
+        padding-left: 10px;
+      }
+    }
+    .form-control,
+    .custom-file-control,
+    .is-focused .form-control,
+    .is-focused .custom-file-control {
+      box-shadow: 0px 2px 3px 1px #000000;
+      border-radius: 6px 0px 0 6px;
+      background-color: #ffffff;
+      background-image: linear-gradient(to top, $O 3px, rgba(0, 0, 0, 0) 5px);
+    }
+    .btn {
+      background-color: $Lbg;
+      box-shadow: 2px 2px 3px 1px #000000;
+      i {
+        width: 50px;
+      }
+    }
+    ul {
+      list-style: none;
+      padding: 10px;
+      flex-wrap: wrap;
+      width: 350px;
+      display: flex;
+      justify-content: space-between;
+      li {
+        background-color: $Lbg;
+        margin: 3px;
+        &:hover{
+          background-color: $Lg;
+        }
+        a {
+          font-weight: bold;
+          padding: 0 10px;
+          color: $Lg;
+          &:hover{
+            color: $Dbg;
+          }
+        }
+      }
+    }
+  }
