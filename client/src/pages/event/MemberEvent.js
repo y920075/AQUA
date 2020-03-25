@@ -14,6 +14,7 @@ import {
   addEventDataAsunc,
   getMemberEventDetailDataAsync,
   editEventDataAsunc,
+  memberUnOtherJoinEventAsync,
 } from '../../actions/event/event_Actions'
 import { getCityDataAsunc, getDistDataAsunc } from '../../actions/seller/index'
 
@@ -47,7 +48,7 @@ function MemberEvent(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="./images/member/coralreef.jpg" />
+      <Banner BannerImgSrc="/images/member/coralreef.jpg" />
 
       <div className="container hsevent jy-member-event">
         <div className="row">
@@ -68,6 +69,12 @@ function MemberEvent(props) {
                   }
                   editEventDataAsunc={props.editEventDataAsunc}
                   getDistDataAsunc={props.getDistDataAsunc}
+                  memberUnOtherJoinEventResponse={
+                    props.memberUnOtherJoinEventResponse
+                  }
+                  memberUnOtherJoinEventAsync={
+                    props.memberUnOtherJoinEventAsync
+                  }
                 />
               </Route>
               <Route path="/memberevent">
@@ -156,6 +163,8 @@ const mapStateToProps = store => {
     addEventDataResponse: store.eventReducer.addEventDataResponse,
     memberEventDetailData: store.eventReducer.memberEventDetailData,
     editEventDataResponse: store.eventReducer.editEventDataResponse,
+    memberUnOtherJoinEventResponse:
+      store.eventReducer.memberUnOtherJoinEventResponse,
   }
 }
 
@@ -172,6 +181,7 @@ const mapDispatchToProps = dispatch => {
       delEventDataAsync,
       addEventDataAsunc,
       editEventDataAsunc,
+      memberUnOtherJoinEventAsync,
     },
     dispatch
   )

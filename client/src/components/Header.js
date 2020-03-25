@@ -89,9 +89,12 @@ function Header() {
           <div className="collapse navbar-collapse" id="navbarMember">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
+                <Link to="/memberlogin">
                 <button type="button" className="btn btn-outline-light btn-sm">
                   Login
                 </button>
+                </Link>
+                
               </li>
             </ul>
           </div>

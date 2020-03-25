@@ -256,7 +256,7 @@ function ManageMyEventContent(props) {
                   )
                 })
               ) : (
-                <h2>查無相關資料</h2>
+                <h2 className="text-white">查無相關資料</h2>
               )}
             </>
           )}

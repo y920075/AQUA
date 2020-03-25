@@ -1,4 +1,5 @@
 import React from 'react'
+// import ccc from '../../public/images/member/coralreef.jpg'
 
 function Banner(props) {
   return (
