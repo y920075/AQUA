@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import swal from 'sweetalert2'
 import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
 
@@ -15,6 +16,19 @@ function ShoppingCart(props) {
   const [mycart, setMycart] = useState([])
   const [mycartDisplay, setMycartDisplay] = useState([])
   const [hasLoading, setHasLoading] = useState(false)
+  const localCart = JSON.parse(localStorage.getItem('cart'))
+  console.log(JSON.parse(localStorage.getItem('cart')).length)
+  function checkOut() {
+    if (localCart && localCart.length < 1) {
+      alert({
+        text: '購物車沒有商品',
+        icon: 'warning',
+        button: 'OK',
+      })
+    } else {
+      // props.changeSteps(1)
+    }
+  }
 
   async function getCartFromLocalStorage() {
     setHasLoading(true)
@@ -125,12 +139,14 @@ function ShoppingCart(props) {
                   <h5>NT$ {sum(mycartDisplay)}</h5>
                 </div>
                 <br />
-                <Link
+                <button
                   className="check-btn btn btn-lg w-100"
-                  to="/member/checkout"
+                  onClick={() => {
+                    checkOut()
+                  }}
                 >
                   前往結帳
-                </Link>
+                </button>
               </div>
             </div>
           </div>
