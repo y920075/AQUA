@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import SwitchButton from './MemberEventComponents/SwitchButton'
 
 //傳入方法 props.getEventData() = 向伺服器請求新的資料
-//2020-03-21
+//傳入方法 props.setIsEnable() = 設定開關狀態
+//傳入參數 props.isEnable() = 開關狀態
+//2020-03-25
 function EventSearchBar(props) {
   //每次點擊SwitchButton就改變state
   const toggleSwitchButton = () => {
@@ -11,7 +13,7 @@ function EventSearchBar(props) {
   return (
     <>
       <div className="row d-flex searchBox">
-        <div className="col-xl col-12">
+        <div className="col-xl-3 col-12">
           <div className="d-flex switchbutton-jy align-items-center justify-content-end">
             <p>包含已過期資料</p>
             <SwitchButton
@@ -21,7 +23,7 @@ function EventSearchBar(props) {
             />
           </div>
         </div>
-        <div className="col-xl col-12 d-flex">
+        <div className="col-xl-2 col-12 d-flex">
           <select
             name="type"
             className="form-control mx-2"
@@ -40,6 +42,8 @@ function EventSearchBar(props) {
                 })
               : ''}
           </select>
+        </div>
+        <div className="col-xl-2 col-12 d-flex">
           <select
             name="sort"
             className="form-control mx-2"
