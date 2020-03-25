@@ -142,7 +142,6 @@ export const memberGetEventDataSelf = data => ({
 })
 
 export const memberGetEventDataAsync = (sort, page, nowClickTag, isEnable) => {
-  console.log(isEnable)
   return async dispatch => {
     let url = null
 
@@ -235,6 +234,7 @@ export const addEventDataAsunc = formData => {
     const fd = new FormData()
     fd.append('eventName', formData.eventName)
     fd.append('eventTypeId', formData.eventTypeId)
+    fd.append('eventType', formData.eventType)
     fd.append('eventLocation', formData.eventLocation)
     fd.append('eventFullLocation', formData.eventFullLocation)
     fd.append('eventStartDate', formData.eventStartDate)
@@ -251,5 +251,61 @@ export const addEventDataAsunc = formData => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(addEventData(data))
+  }
+}
+
+//取得單一筆詳細資料
+export const getMemberEventDetailData = data => ({
+  type: 'GET_EVENTDETAILDATA_FORMEMBER',
+  value: data,
+})
+
+export const getMemberEventDetailDataAsync = eventId => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/self/${eventId}`,
+      {
+        method: 'GET',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(getMemberEventDetailData(data))
+  }
+}
+
+//編輯活動資料
+export const editEventData = data => ({
+  type: 'EDIT_EVENTDATA',
+  value: data,
+})
+
+//formData = 傳送過來的表單值
+export const editEventDataAsunc = (formData, eventId) => {
+  return async dispatch => {
+    const fd = new FormData()
+    fd.append('eventName', formData.eventName)
+    fd.append('eventTypeId', formData.eventTypeId)
+    fd.append('eventType', formData.eventType)
+    fd.append('eventLocation', formData.eventLocation)
+    fd.append('eventFullLocation', formData.eventFullLocation)
+    fd.append('eventStartDate', formData.eventStartDate)
+    fd.append('eventEndDate', formData.eventEndDate)
+    fd.append('eventDesc', formData.eventDesc)
+    fd.append('eventNeedPeople', formData.eventNeedPeople)
+    fd.append('eventImg', formData.eventImg)
+
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/${eventId}`,
+      {
+        method: 'PUT',
+        body: fd,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(editEventData(data))
   }
 }
