@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #132948;
+      }
+    </style>
+  </defs>
+  <path id="ic_stars_24px" class="cls-1" d="M8.993,2A7,7,0,1,0,16,9,7,7,0,0,0,8.993,2Zm2.968,11.2L9,11.415,6.039,13.2l.784-3.367L4.212,7.572l3.444-.294L9,4.1l1.344,3.171,3.444.294L11.177,9.826Z" transform="translate(-2 -2)"/>
+</svg>

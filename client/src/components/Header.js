@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function Header() {
@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <nav className="Header-Navbar navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
           {/* menu toggle */}
           <button
@@ -38,6 +38,10 @@ function Header() {
             <img
               className="navbar-shopping-cart-icon"
               src="../images/logo/shopping_cart.png"
+              alt=""
+              onClick={() => {
+                window.location = `/member/mycart`
+              }}
             />
           </button>
           {/* web menu */}
@@ -50,7 +54,7 @@ function Header() {
           >
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/event">
+                <Link className="nav-link" to="/eventlist">
                   揪團潛水
                 </Link>
               </li>
@@ -60,7 +64,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/location">
+                <Link className="nav-link" to="/location/L0002">
                   自由潛點
                 </Link>
               </li>
@@ -70,7 +74,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/store">
+                <Link className="nav-link" to="/items">
                   線上商店
                 </Link>
               </li>
@@ -85,9 +89,14 @@ function Header() {
           <div className="collapse navbar-collapse" id="navbarMember">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <button type="button" className="btn btn-outline-light btn-sm">
-                  Login
-                </button>
+                <Link to="/memberlogin">
+                  <button
+                    type="button"
+                    className="btn btn-outline-light btn-sm"
+                  >
+                    Login
+                  </button>
+                </Link>
               </li>
             </ul>
           </div>

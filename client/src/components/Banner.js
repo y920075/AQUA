@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
+// import ccc from '../../public/images/member/coralreef.jpg'
 
 function Banner(props) {
   return (
     <>
-      <div class="banner">
+      <div className="banner">
         <img src={props.BannerImgSrc} alt="" />
       </div>
     </>

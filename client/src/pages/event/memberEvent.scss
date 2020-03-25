@@ -1,0 +1,70 @@
+.jy-member-event {
+  .nav-pills-memberEvent {
+    color: #f15a24;
+    .nav-link {
+      background-color: #4e5f76;
+    }
+    .active {
+      background-color: white;
+    }
+  }
+}
+.JY-container-member-editevent {
+  .addClassForm {
+    background-color: white;
+
+    textarea {
+      resize: none;
+    }
+    .classDescBox {
+      height: 88.3%;
+      .form-control {
+        height: 100%;
+      }
+    }
+  }
+  .btn-box {
+    justify-content: center;
+    .btn {
+      width: 300px;
+    }
+  }
+  .select-jy {
+    color: rgba($color: #fff, $alpha: 0.6);
+    border-bottom: 1px solid rgba($color: #fff, $alpha: 0.6);
+  }
+  .switchbutton-jy {
+    min-height: 40px;
+    margin-right: 15px;
+    p {
+      margin: 0 5px 0 0;
+    }
+    color: rgba($color: #fff, $alpha: 0.6);
+  }
+  .joinMemberList-JY{
+    background-color: white;
+    .avatar{
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 10px auto 0 auto;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .card-body{
+      padding: 10px;
+    }
+    .text-group{
+      p{
+        margin: 0;
+      }
+      margin: 5px 0px;
+    }
+    .btn.btn-warning{
+      margin-top: 5px;
+    }
+  }
+}

@@ -24,19 +24,19 @@ router.use(bodyParser.json());
 // 自動更新天氣資訊
 const autoUpdateWeatherData = ()=>{
     const del = `DELETE FROM \`weather_data\` WHERE \`eventStartDate\` < DATE_FORMAT(NOW(),'%Y-%m-%d')`
-    const sql = `SELECT * FROM \`weather_data\` WHERE DATE_FORMAT(\`weatherData_updated_at\`,'%Y-%m-%d')< DATE_FORMAT(NOW(),'%Y-%m-%d')`
+    const sql = `SELECT * FROM \`weather_data\` WHERE DATE_FORMAT(\`weatherData_updated_at\`,'%Y-%m-%d')< DATE_FORMAT(NOW(),'%Y-%m-%d') AND \`eventStartDate\` >= DATE_FORMAT(NOW(),'%Y-%m-%d')`
     const nowDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     setTimeout( async ()=>{
         console.log(`----------------------------------------------`)
-        console.log(`${nowDate} 自動更新天氣資訊`)
-        console.log(`${nowDate} 刪除已過活動日期資料中...`)
-        await db.queryAsync(del).then(result=>{
-            if(result.affectedRows>0){
-                console.log(`${nowDate} 刪除完成，共刪除${result.affectedRows}筆資料`)
-            } else {
-                console.log(`${nowDate} 沒有未過期資料`)
-            }
-        })
+        // console.log(`${nowDate} 自動更新天氣資訊`)
+        // console.log(`${nowDate} 刪除已過活動日期資料中...`)
+        // await db.queryAsync(del).then(result=>{
+        //     if(result.affectedRows>0){
+        //         console.log(`${nowDate} 刪除完成，共刪除${result.affectedRows}筆資料`)
+        //     } else {
+        //         console.log(`${nowDate} 沒有未過期資料`)
+        //     }
+        // })
         console.log(`${nowDate} 搜索過期天氣資料中...`)
         await db.queryAsync(sql)
             .then( async result=>{
@@ -56,13 +56,81 @@ const autoUpdateWeatherData = ()=>{
                         await db.queryAsync(update).then(result=>console.log(`${nowDate} 編號 : ${id} 更新完成`))
                     }
                 } else {
-                    console.log(`${nowDate} 沒有未過期資料`)
+                    console.log(`${nowDate} 沒有過期資料`)
                 }
             })
         await autoUpdateWeatherData()
     },10000)
 }
 //autoUpdateWeatherData()
+
+//取得類型
+router.get('/event/type', async (req,res)=>{
+    const sql =    `SELECT \`eventTypeId\`,\`eventTypeName\`
+    FROM \`event_type\``
+    const data = await db.queryAsync(sql)
+    res.json(data)
+})
+
+//查詢所有活動列表(地圖用)
+/*
+    預計從前台接收的資料
+
+    GET /event?type=活動類型&sort=排序類型(類型,方法)&q=關鍵字
+
+    type =    活動類型
+    q =       關鍵字搜索
+    sort =    排序類型  (類型,方法) 
+
+        預計傳送回去的資料
+    {
+        status =        狀態碼 200=請求成功 404=查無資料
+        msg =           說明訊息
+        searchType =      搜索的活動類型
+        searchKeyword =   搜索的關鍵字
+        sortType =      設定的排序類型 
+        result : [
+            {
+                eventId =               活動編號
+                eventName =             活動名稱
+                eventType =             活動類型
+                eventLocation =         活動地點(僅縣市)
+                eventLocation_lat =     活動地點(緯度)
+                eventLocation_lng =     活動地點(經度)
+                eventSponsor =          活動發起人編號
+                loginId =               活動發起人帳號
+                eventStartDate =        活動日期
+                eventEndDate =          報名截止日期
+                eventNeedPeople =       徵求人數
+                eventNowPeople =        現在人數
+                eventImg =              活動圖片
+            }
+        ]
+    }
+*/
+router.get('/event/map',(req,res)=>{
+    db.queryAsync(eventSql.getAllEventDataForMap(req.query))
+    .then(result=>{
+        if ( result.length>0 ) {
+            res.json({
+                'status' :        200,
+                'msg':            '請求成功',
+                'searchType' :    req.query.type,
+                'searchKeyword' :   req.query.q,
+                'sortType' :      req.query.sort,
+                result
+            })
+        } else {
+            res.json({
+                'status' :        404,
+                'msg':            '查無任何資料',
+                'searchType' :    req.query.type,
+                'searchKeyword' :   req.query.q,
+                'sortType' :      req.query.sort,
+            })
+        }
+    })
+})
 
 //查詢所有活動列表
 /*
@@ -260,6 +328,7 @@ router.get('/event/:eventId',(req,res)=>{
 */
 
 router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
+    req.session.memberId = "M20010002"
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -366,7 +435,8 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
                 req.body.eventDesc,
                 req.body.eventNeedPeople,
                 0,
-                eventImg
+                eventImg,
+                req.body.eventTypeId
             ]
 
             const result = await eventSql.memberAddEventData(sqlStmt,eventId,eventLocationLat,eventLocationLng,req.body.eventStartDate)
@@ -410,7 +480,8 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
 */
 
 router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
-    const data = {
+    req.session.memberId = 'M20010002'
+    let data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
     }
@@ -491,6 +562,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
             const eventLocationLng = response.data.results[0].geometry.location.lng
             const sqlStmt = [
                 req.body.eventName,
+                req.body.eventTypeId,
                 eventType,
                 req.body.eventLocation,
                 req.body.eventFullLocation,
@@ -515,7 +587,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
                     }
                 })
             }
-
+            
             result = await eventSql.memberEditEventData(sqlStmt,req,eventLocationLat,eventLocationLng)
 
             if ( result.affectedRows>0 ) {
@@ -525,13 +597,13 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
             } else {
                 data.status = 500;
                 data.msg = '修改失敗'
-                res.json(data);
+                res.json(data)
             }
-        })
+           })
     }
 })
 
-//會員刪除自己發起的活動資料
+//會員刪除自己發起的活動資料(連帶刪除所有報名資料)
 /*
     預計從前台接收的資料
     DELETE /member/event/活動編號
@@ -540,13 +612,14 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
 
     預計傳送回去的資料
     {
-        status = 狀態碼 201=刪除成功 401=尚未登入
+        status = 狀態碼 201=刪除成功 401=尚未登入 403=沒有權限 404=找不到資料
         msg = 說明訊息
     }
 */
 
 router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
-    const data = {
+    req.session.memberId = 'M20010002'
+    let data = {
         'status':401,
         'msg':'尚未登入'
     }
@@ -554,7 +627,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
         res.json(data)
     } else {
         db.queryAsync(eventSql.getImgName(req))
-        .then(result=>{
+        .then(async result=>{
             if ( result.length>0 ) {
                 if ( result[0].eventImg !== 'noImg.jpg' && result[0].eventImg !== undefined ){
                     fs.unlink(`./public/images/eventImg/${result[0].eventImg}`,(error)=>{
@@ -562,20 +635,12 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
                         console.log('successfully deleted');
                     })
                 }
-                return eventSql.memberDelEventData(req)
-            } else {
+                data = await eventSql.memberDelEventData(req)
                 res.json(data)
-            }
-        })
-        .then(result=>{
-            if ( result.affectedRows>0 ) {
-                data.status = 201;
-                data.msg = `編號${req.params.eventId} 刪除成功`
-                res.json(data);
             } else {
-                data.status = 500;
-                data.msg = '刪除失敗'
-                res.json(data);
+                data.status = 404
+                data.msg = '找不到活動資料'
+                res.json(data)
             }
         })
     }
@@ -623,6 +688,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event/self', async (req,res)=>{
+    req.session.memberId = 'M20010002'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -630,7 +696,7 @@ router.get('/member/event/self', async (req,res)=>{
     if ( !req.session.memberId ) {
         res.json(data)
     } else {
-        const perPage = 8
+        const perPage = 6
         data = {...data, ...await eventSql.memberGetAllEventData(req,perPage)}
         data.status = data.eventData ? 201 : 404
         data.msg = data.eventData ? '請求成功' : '查無資料'
@@ -676,6 +742,7 @@ router.get('/member/event/self', async (req,res)=>{
 */
 
 router.get('/member/event/self/:eventId', async (req,res)=>{
+    req.session.memberId = 'M20010002'
     let data = {
         'status' : 404,
         'msg' :　'查無資料',
@@ -736,6 +803,8 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
+    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -774,6 +843,7 @@ router.get('/member/event/join',async (req,res)=>{
 */
 
 router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
+    req.session.memberId = 'M20010002'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -812,6 +882,8 @@ router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
+    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -848,6 +920,7 @@ router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
+    req.session.memberId = 'M20010002'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'

@@ -1,0 +1,133 @@
+.JY-event-container {
+  .searchBox {
+    // background-color: white;
+    padding: 0.938rem;
+    border-radius: 0.625rem;
+    select {
+      color: rgba($color: #ffffff, $alpha: 0.5);
+      border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.5);
+      option {
+        background-color: #132948;
+      }
+    }
+    .searchInput {
+      color: rgba($color: #ffffff, $alpha: 0.5);
+      border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.5);
+      &:focus {
+        border-bottom: 0px solid transparent;
+      }
+    }
+    .btn-search {
+      color: white;
+      border: 1px solid white;
+    }
+  }
+  .eventInfoBox {
+    margin: 0.938rem auto;
+    transition: 0.5s;
+    .eventContentBox {
+      background-color: white;
+      height: 34.375rem;
+      border-radius: 0.625rem;
+      overflow: hidden;
+      .eventImgBox {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        & > img {
+          transition: 0.5s;
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      $animate: all 0.2s ease-in-out;
+      .eventDetailBox {
+        color: #132948;
+        padding: 0.625rem;
+
+        h2 {
+          min-height: 52px;
+          text-align: center;
+          position: relative;
+          margin: 0;
+          &:before,
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 0px;
+            height: 2px;
+            margin: 0px 0 0;
+            transition: $animate;
+            transition-duration: 0.75s;
+            opacity: 0;
+            background-color: #ff5722;
+          }
+          &:before {
+            left: 50%;
+          }
+          &:after {
+            right: 50%;
+          }
+        }
+        ul {
+          padding: 0;
+          list-style: none;
+        }
+        & > ul.d-flex {
+          margin-top: 15px;
+        }
+        & > ul {
+          margin-bottom: 0;
+          li {
+            margin-right: 0.938rem;
+          }
+        }
+        .status {
+          margin-top: 0.938rem;
+          font-size: 1.125rem;
+          text-align: center;
+        }
+        .quota {
+          text-align: center;
+          font-size: 0.875rem;
+          span {
+            font-size: 1.125rem;
+          }
+        }
+      }
+    }
+
+    @media screen and(max-width:540px) {
+      // padding:0 8px;
+    }
+    @import './progress.scss';
+    .progress_container {
+      position: relative;
+      &::before {
+        content: attr(data-progress);
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.875rem;
+      }
+    }
+    &:hover {
+      .eventDetailBox > h2 {
+        &:before,
+        &:after {
+          opacity: 1;
+          width: 45%;
+        }
+      }
+      .eventImgBox > img {
+        transform: scale(1.2);
+      }
+      transform: translateY(-5px);
+    }
+  }
+  li.page-item {
+    cursor: pointer;
+  }
+}

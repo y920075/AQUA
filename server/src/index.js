@@ -2,12 +2,24 @@ const express =     require('express');
 const session =     require('express-session')
 const cors =        require('cors')
 const app =         express();
-const url = require('url');
-const bodyParser = require('body-parser');
-const multer = require('multer');
-const fs = require('fs');
-const upload = multer({dest: 'tmp_uploads/'})
-const db = require(__dirname + '/db_connect')
+
+// 引入氣象局API寫入函式
+const getTIdeData = require('./location/gettideinfo')
+const getWeekDate =  require('./location/getweekweather')
+const getnowseastate = require('./location/getnowseastate')
+//執行資料自動寫入DB
+// getTIdeData()
+// getWeekDate()
+// getnowseastate()
+
+setInterval(()=>{
+    getnowseastate()
+},3600000)
+//24小時
+setInterval(()=>{
+    getTIdeData()
+    getWeekDate()
+},86400000)
 
 app.use(session({
     saveUninitialized: false,
@@ -15,12 +27,14 @@ app.use(session({
     // secret = 加密用的字串，透過這個值去比對，可以自訂
     secret: '加密用的字串', 
     cookie: {
-        maxAge: 120000, // session的存活時間 單位毫秒
+        maxAge: 1200000, // session的存活時間 單位毫秒
     }
 }))
 app.use(cors())
-
-
+app.use(require(__dirname + '/members/member'))
+app.use('/divelocation', require(__dirname+'/location/locationinfo') );
+//評論
+app.use('/comment', require(__dirname+'/comment/comment') );
 
 app.use(require(__dirname+'/location'))
 app.use(require(__dirname+'/class/class'))
@@ -83,6 +97,9 @@ app.get('/try-db', (req, res)=> {
 
 
 
+
+app.use(require(__dirname+'/items/items'))
+app.use('/divelocation', require(__dirname+'/location/locationinfo') );
 
 
 
