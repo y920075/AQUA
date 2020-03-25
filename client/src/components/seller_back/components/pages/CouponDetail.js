@@ -24,7 +24,7 @@ function CouponDetail(props) {
             props['status'].coupon['status'] === 200 ? (
                 props['status'].coupon['result'].map((value,index)=>{
                     return (
-                        <div className="col-sm-4" key={index}>
+                        <div className="col-sm-4" key={value.coup_id}>
     
                             <div className="card my-3">
                                 <img  className="img-fluid card-img-top" src={ "http://localhost:5000/images/coup/" + value.coup_img} alt="" />

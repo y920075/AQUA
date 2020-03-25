@@ -50,6 +50,11 @@ function Sidebar(props) {
           </Link>
         </li>
         <li className="nav-item">
+          <Link className="nav-link sidebarlink-hs" to="/memberuser/coupon">
+            <i className="far fa-envelope"></i>優惠券
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link className="nav-link sidebarlink-hs" to="/help">
             <i className="far fa-question-circle"></i>幫助
           </Link>

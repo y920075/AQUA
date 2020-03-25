@@ -10,7 +10,7 @@ import TagSvg from '../../../../image/customer/tickMenu.svg'
 import './Style/CustomerMan.scss'
 
 function CouponTableList(props) {
-
+console.log(props.cutomeruse.table1)
   const [couponObj, setCouponObj] = useState({})
 
   // props.setChildCoupon
@@ -40,13 +40,13 @@ function CouponTableList(props) {
  
 
       const tableData1 = (props.cutomeruse.table1 ? (props.cutomeruse.table1.map((element,index)=>{
-        const { coup_name,coup_code, datecoup_one,datecoup_two} = element
+        const {  coup_over, coup_PriOrPer,coup_name,coup_code, datecoup_one,datecoup_two} = element
         return (
            <tr 
            className="tr-chin" 
            onClick={ event =>{
               typeInputActive(event) 
-              setCouponObj({...couponObj, coup_name,coup_code , datecoup_one ,datecoup_two})
+              setCouponObj({...couponObj , coup_over ,coup_PriOrPer, coup_name, coup_code , datecoup_one ,datecoup_two})
 
               // getCustomerData(event)
            }}
