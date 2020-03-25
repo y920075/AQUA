@@ -34,6 +34,7 @@ function BlogContent(props) {
       <div className="titlebar">
         <div className="container">
           <p>部落格</p>
+
               {props.blogData.result ? (props.blogData.result.map((value , index)=>{
               if( value.id==props.match.params.id)
               return (
@@ -44,8 +45,7 @@ function BlogContent(props) {
             <li>
               <Link to="">></Link>
             </li>
-        
-
+      
             <li>
               <Link to="">{value.categoryName}</Link>
             </li>
@@ -71,7 +71,7 @@ function BlogContent(props) {
               return (
           <div className=" col-md-8 " key = {index}>
             <div className="postImg">
-            <Link to="">{value.blogImages}</Link>
+            <img to="" src={'http://localhost:5000/images/blogImg/'+ value.blogImages}></img>
             </div>
             <div className="postTitle">
               {' '}
@@ -128,30 +128,19 @@ function BlogContent(props) {
               </div>
               <div className="relatedpostContent">
                 <ul>
+                {props.blogData.result ? props.blogData.result.map((value, index) => {
+                  Math.random(value.id)
+                  console.log(Math.random(value.id))
+                  return (
                   <li>
                     <Link to="">
                       <figure>
-                        <img src="../../images/blog/card3.jpg" alt="" />
+                      <img to="" src=""></img>
                       </figure>
                     </Link>
-                    <h5>跳水假期</h5>
+                    <h5>{Math.random(value.blogTitle)}</h5>
                   </li>
-                  <li>
-                    <Link to="">
-                      <figure>
-                        <img src="../../images/blog/card4.jpg" alt="" />
-                      </figure>
-                    </Link>
-                    <h5>跳水假期</h5>
-                  </li>
-                  <li>
-                    <Link to="">
-                      <figure>
-                        <img src="../../images/blog/card1.jpg" alt="" />
-                      </figure>
-                    </Link>
-                    <h5>以自由潛水的方式，認識人之島</h5>
-                  </li>
+                )}): ''}
                 </ul>
               </div>
             </div>

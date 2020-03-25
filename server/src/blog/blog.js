@@ -41,6 +41,8 @@ const db = require(__dirname + '/../db_connect');
 //             })
 //         })
 // })
+// router.get('/menber', (req, res)=>{
+// }
 router.get('/blog', (req, res)=>{
     console.log('')
     const perPage = 8

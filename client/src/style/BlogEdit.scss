@@ -36,21 +36,11 @@ body {
   /* .member */
 }
 
-ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 // p {
 //   color: $Lg;
 //   font-size: 16px;
 // }
 
-a {
-  text-decoration: none;
-  color: black;
-}
 .items-card img {
   /* object-fit: ; */
   width: 220px;
@@ -61,6 +51,12 @@ a {
   background-color: $Dbg;
 }
 .titlebar {
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   height: 80px;
   margin-bottom: 3.125rem;
   background-color: $Lg;
@@ -101,6 +97,13 @@ a {
 }
 
 .rao {
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  
+
+  
   .add {
     box-shadow: 0px 0px 5px 1px #000000;
     border-radius: 6px;
@@ -176,31 +179,37 @@ a {
       }
     }
   }
-  .relatedPost {
-    margin: 3.125rem 0px;
-    color: $Lg;
-    ul {
-      // justify-content: space-between;
-      li {
-        width: 230px;
-        margin: 0 10px;
+  // .relatedPost {
+  //   ul {
+  //     display: flex;
+  //     list-style: none;
+  //     margin: 0;
+  //     padding: 0;
+  //   }
+  //   margin: 3.125rem 0px;
+  //   color: $Lg;
+  //   ul {
+  //     // justify-content: space-between;
+  //     li {
+  //       width: 230px;
+  //       margin: 0 10px;
 
-        figure {
-          margin: 0;
-          height: 160px;
-          overflow: hidden;
-          perspective: 1000px;
-          img {
-            width: 100%;
-            transition: 0.3s;
-            &:hover {
-              transform: translateZ(100px);
-            }
-          }
-        }
-      }
-    }
-  }
+  //       figure {
+  //         margin: 0;
+  //         height: 160px;
+  //         overflow: hidden;
+  //         perspective: 1000px;
+  //         img {
+  //           width: 100%;
+  //           transition: 0.3s;
+  //           &:hover {
+  //             transform: translateZ(100px);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   .addHr {
     width: 100%;
     background: $Lg;
