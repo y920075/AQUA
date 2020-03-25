@@ -47,17 +47,13 @@ function MemberEvent(props) {
 
   return (
     <>
-      <Header />
-      <Banner BannerImgSrc="/images/member/coralreef.jpg" />
+      {/* <Banner BannerImgSrc="/images/member/coralreef.jpg" /> */}
 
       <div className="container hsevent jy-member-event">
         <div className="row">
-          <div className="col-lg-3">
-            <Sidebar />
-          </div>
-          <div className="col-lg-9">
+          <div className="col-lg-12">
             <Switch>
-              <Route path="/memberevent/edit/:eventId">
+              <Route path="/memberuser/event/edit/:eventId">
                 <MemberEditEvent
                   cityData={props.cityData}
                   distData={props.distData}
@@ -77,7 +73,7 @@ function MemberEvent(props) {
                   }
                 />
               </Route>
-              <Route path="/memberevent">
+              <Route path="/memberuser/event">
                 <nav className="nav nav-pills nav-justified nav-pills-memberEvent">
                   <button
                     className="nav-item nav-link active"
@@ -146,7 +142,6 @@ function MemberEvent(props) {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }
