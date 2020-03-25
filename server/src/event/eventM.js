@@ -240,7 +240,8 @@ class event {
         let data = {}
         const findMemberData = `SELECT \`event_memeber\`.\`memberId\`,\`event_memeber\`.\`memberMemo\`,
                                 \`my_member\`.\`loginId\`,\`my_member\`.\`gender\`,\`my_member\`.\`email\`,
-                                \`my_member\`.\`mobileNumber\`
+                                \`my_member\`.\`mobileNumber\`,
+                                \`my_member\`.\`avatar\`
                                 FROM \`event_memeber\` 
                                 LEFT JOIN \`my_member\`
                                 ON \`event_memeber\`.\`memberId\` = \`my_member\`.\`memberId\`
