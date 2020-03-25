@@ -62,57 +62,6 @@ function Wether() {
             </tbody>
           </table>
         </Tab>
-        <Tab eventKey="hours" title="逐三小時天氣預報">
-          <table className="weathertable">
-            <tbody>
-              <tr>
-                <td>\</td>
-                <td>0000</td>
-                <td>0300</td>
-                <td>0600</td>
-                <td>0900</td>
-                <td>1200</td>
-                <td>1500</td>
-                <td>1800</td>
-              </tr>
-              <tr>
-                <td>氣溫</td>
-                <td></td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>體感溫度</td>
-                <td>1</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>降雨機率</td>
-                <td>1</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>浪週期</td>
-                <td>1</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>浪高</td>
-                <td>1</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>浪向</td>
-                <td>1</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>浪高</td>
-                <td>1</td>
-                <td>2</td>
-              </tr>
-            </tbody>
-          </table>
-        </Tab>
         <Tab eventKey="Tide" title="一週潮汐預報">
           <table className="weathertable">
             <thead>

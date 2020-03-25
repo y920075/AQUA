@@ -5,9 +5,21 @@ const app =         express();
 
 // 引入氣象局API寫入函式
 const getTIdeData = require('./location/gettideinfo')
-
+const getWeekDate =  require('./location/getweekweather')
+const getnowseastate = require('./location/getnowseastate')
 //執行資料自動寫入DB
 // getTIdeData()
+// getWeekDate()
+// getnowseastate()
+
+setInterval(()=>{
+    getnowseastate()
+},3600000)
+//24小時
+setInterval(()=>{
+    getTIdeData()
+    getWeekDate()
+},86400000)
 
 app.use(session({
     saveUninitialized: false,
@@ -19,7 +31,7 @@ app.use(session({
     }
 }))
 app.use(cors())
-app.use('/divelocation', require(__dirname+'/location/locationinfo') );
+
 //評論
 app.use('/comment', require(__dirname+'/comment/comment') );
 
@@ -29,7 +41,7 @@ app.use(require(__dirname+'/class/coach'))
 app.use(require(__dirname+'/event/event'))
 
 app.use(require(__dirname+'/items/items'))
-
+app.use('/divelocation', require(__dirname+'/location/locationinfo') );
 
 
 
