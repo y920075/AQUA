@@ -53,6 +53,12 @@ body {
   background-color: $Dbg;
 }
 .titlebar {
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   height: 80px;
   margin-bottom: 3.125rem;
   background-color: $Lg;
@@ -93,12 +99,7 @@ body {
 }
 
 .rao {
-  ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+ 
   a {
     text-decoration: none;
     color: black;
