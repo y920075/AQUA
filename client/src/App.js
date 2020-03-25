@@ -22,11 +22,11 @@ import CheckOut from './pages/order/checkOut'
 import MemberLogin from './pages/members/MemberLogin'
 import MemberRegister from './pages/members/MemberRegister'
 import MemberUser from './pages/members/MemberUser'
-import MemberOrder from './pages/members/MemberOrder'
-import MemberHomepage from './pages/members/MemberHomepage'
-import MemberSellerLogin from './pages/members/ＭemberSellerLogin'
-import MemberBlog from './pages/members/MemberBlog'
-import MemberMessage from './pages/members/MemberMessage'
+// import MemberOrder from './pages/members/MemberOrder'
+// import MemberHomepage from './pages/members/MemberHomepage'
+// import MemberSellerLogin from './pages/members/ＭemberSellerLogin'
+// import MemberBlog from './pages/members/MemberBlog'
+// import MemberMessage from './pages/members/MemberMessage'
 
 import Home from './pages/Home'
 
@@ -68,15 +68,24 @@ function App(props) {
           </Route>
 
           {/* Member Routes */}
-          <Route path="/memberhomepage">
-            <MemberHomepage />
-          </Route>
           <Route path="/memberuser">
             <MemberUser />
           </Route>
           <Route path="/memberlogin">
             <MemberLogin />
           </Route>
+          <Route path="/memberregister">
+            <MemberRegister />
+          </Route>
+          
+          
+          {/* <Route path="/memberhomepage">
+            <MemberHomepage />
+          </Route>
+          <Route path="/memberuser">
+            <MemberUser />
+          </Route>
+          
           <Route path="/membersellerlogin">
             <MemberSellerLogin />
           </Route>
@@ -97,7 +106,9 @@ function App(props) {
           </Route>
           <Route path="/membermessage">
             <MemberMessage />
-          </Route>
+          </Route> */}
+
+
           <Route path="/location/:LocationID">
             <Divelocation />
           </Route>
