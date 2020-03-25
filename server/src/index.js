@@ -19,6 +19,7 @@ app.use(session({
     }
 }))
 app.use(cors())
+app.use(require(__dirname + '/members/member'))
 app.use('/divelocation', require(__dirname+'/location/locationinfo') );
 //評論
 app.use('/comment', require(__dirname+'/comment/comment') );
