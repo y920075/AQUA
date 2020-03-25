@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import SweetAlert from '../../components/class/SellerClassComponents/Sweetalert2'
 
-//引入action
 
 function MemberEditEvent(props) {
   const [eventId, setEventId] = useState(props.match.params.eventId)
@@ -156,8 +155,10 @@ function MemberEditEvent(props) {
                       : ''}
                   </select>
                 </div>
-                <div className="form-group col-md-3">
-                  <label htmlFor="">活動地點</label>
+              </div>
+              <label htmlFor="">活動地點</label>
+              <div className="form-row">
+                <div className="form-group col-md-6">
                   <select
                     className="form-control"
                     defaultValue=""
@@ -191,8 +192,7 @@ function MemberEditEvent(props) {
                       : ''}
                   </select>
                 </div>
-                <div className="form-group col-md-3">
-                  <label htmlFor=""></label>
+                <div className="form-group col-md-6">
                   <select
                     className="form-control"
                     defaultValue=""
@@ -226,7 +226,7 @@ function MemberEditEvent(props) {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-md-3">
+                <div className="form-group col-md-4">
                   <input
                     type="text"
                     name="eventLocation"
@@ -236,7 +236,7 @@ function MemberEditEvent(props) {
                     readOnly
                   />
                 </div>
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-8">
                   <input
                     type="text"
                     name="eventFullLocation"
@@ -252,7 +252,7 @@ function MemberEditEvent(props) {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-8">
                   <label htmlFor="">活動日期</label>
                   <input
                     type="datetime-local"
@@ -264,7 +264,9 @@ function MemberEditEvent(props) {
                     }}
                   />
                 </div>
-                <div className="form-group col-md-6">
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-8">
                   <label htmlFor="">報名截止日期</label>
                   <input
                     type="datetime-local"
@@ -278,7 +280,7 @@ function MemberEditEvent(props) {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-8">
                   <label htmlFor="">徵求人數</label>
                   <input
                     type="number"
@@ -318,18 +320,51 @@ function MemberEditEvent(props) {
               ></textarea>
             </div>
           </div>
-        </div>
-        <div className="col-12 btn-box d-flex">
-          <button
-            type="button"
-            className="btn btn-outline-warning"
-            onClick={() => {
-              //觸發編輯活動資料的事件
-              editEventData()
-            }}
-          >
-            送出
-          </button>
+          <div className="col-12 mt-4 mb-4">
+            <p>報名者名單</p>
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="col-12 btn-box d-flex">
+            <button
+              type="button"
+              className="btn btn-outline-warning"
+              onClick={() => {
+                //觸發編輯活動資料的事件
+                editEventData()
+              }}
+            >
+              送出
+            </button>
+          </div>
         </div>
       </div>
     </>
