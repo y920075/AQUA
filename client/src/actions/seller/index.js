@@ -437,7 +437,6 @@ export const customerUseAsync = (customerData, callback) => {
 
 //mail動作
 
-<<<<<<< HEAD
 export const customerMailData = data => ({
   type: 'MAIL_TRANSFER',
   value: data,
@@ -472,8 +471,6 @@ export const customerMailDataAsync = mailData => {
   }
 }
 
-=======
->>>>>>> 28e074d0c6b46799d04fb8d746808ffa925bb28a
 //----------------------賣家中心課程相關action----------------
 
 //取得賣家自己的課程資料
