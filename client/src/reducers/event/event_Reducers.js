@@ -110,6 +110,16 @@ const editEventDataResponse = (state = {}, action) => {
   }
 }
 
+//會員取消其他人的報名
+const memberUnOtherJoinEventResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'UNJOIN_OTHER_EVENT':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
 const eventReducer = combineReducers({
   eventData,
@@ -123,5 +133,6 @@ const eventReducer = combineReducers({
   editEventDataResponse,
   memberJoinEventResponse,
   memberUnJoinEventResponse,
+  memberUnOtherJoinEventResponse,
 })
 export { eventReducer }
