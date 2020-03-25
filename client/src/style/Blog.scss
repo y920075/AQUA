@@ -9,9 +9,7 @@ body {
   height: 300vh;
   background-color: $Dbg;
 }
-h1{
-  color: #ffffff;
-}
+
 
 .navbar-shopping-cart-icon {
   opacity: 0.6;
@@ -61,11 +59,15 @@ h1{
   /* object-fit: ; */
   width: 220px;
 }
-hr {
-  margin: 0;
-  width: 70%;
-}
+
 .rao {
+  h1{
+    color: #ffffff;
+  }
+  hr {
+    margin: 0;
+    width: 70%;
+  }
   a {
     color: #000000;
     text-decoration: none;
