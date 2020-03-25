@@ -43,46 +43,6 @@ app.use(require(__dirname+'/event/event'))
 //部落格
 app.use(require(__dirname + '/blog/blog'))
 
-app.post('/try-upload', upload.array('avatar', 12), (req, res)=>{
-    const output = {
-        success: false,
-        url: '',
-        msg: '',
-    }
-    console.log(req.files);
-    const arrayImg = req.files.length
-    for(let i=0; i<arrayImg; i++){
-        // console.log(req.files.originalname);
-        if(req.files[i] && req.files[i].originalname){
-            switch (req.files[i].mimetype) {
-                case 'image/jpeg':
-                case 'image/png':
-                case 'image/gif':
-                    fs.rename(req.files[i].path, './public/img/'+req.files[i].originalname, error=>{
-                        if(error){
-                            output.success = false;
-                            output.msg = '無法搬動檔案';
-                        } else {
-                            output.success = true
-                            output.url = '/img/'+req.files[i].originalname;
-                            output.msg = '';
-                        }
-                        res.json(output);
-                    });
-    
-                    break;
-                default:
-                    fs.unlink(req.files[i].path, error=>{
-                        output.msg = '不接受式這種檔案格';
-                        res.json(output);
-                    });
-            }
-        } else {
-            res.json(output);
-        }
-    }
-})
-
 app.get('/try-db', (req, res)=> {
     const sql = "SELECT * FROM `blog`"
     db.query(sql, (error, result, fields)=>{
