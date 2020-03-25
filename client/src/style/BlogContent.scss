@@ -80,7 +80,12 @@ body {
   }
 }
 .rao {
-
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   
   
   a {
@@ -92,6 +97,7 @@ body {
     height: 475px;
     margin-bottom: 3.125rem;
     img {
+      box-shadow: 0px 0px 5px 5px #000000;
       height: 100%;
       width: 100%;
       border-radius: 6px;
@@ -107,6 +113,7 @@ body {
     }
   }
   .postNav {
+    
     color: $Lg;
     a {
       color: $Lg;
@@ -121,7 +128,7 @@ body {
   }
   .postBody {
     p {
-      margin-bottom: 16px;
+      margin: 16px 0;
       color: $Lg;
       font-size: 16px;
     }
@@ -174,7 +181,6 @@ body {
     margin: 3.125rem 0px;
     color: $Lg;
     ul {
-      // justify-content: space-between;
       li {
         width: 230px;
         margin: 0 10px;

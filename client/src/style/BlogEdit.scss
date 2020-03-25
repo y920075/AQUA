@@ -179,37 +179,37 @@ body {
       }
     }
   }
-  .relatedPost {
-    ul {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    margin: 3.125rem 0px;
-    color: $Lg;
-    ul {
-      // justify-content: space-between;
-      li {
-        width: 230px;
-        margin: 0 10px;
+  // .relatedPost {
+  //   ul {
+  //     display: flex;
+  //     list-style: none;
+  //     margin: 0;
+  //     padding: 0;
+  //   }
+  //   margin: 3.125rem 0px;
+  //   color: $Lg;
+  //   ul {
+  //     // justify-content: space-between;
+  //     li {
+  //       width: 230px;
+  //       margin: 0 10px;
 
-        figure {
-          margin: 0;
-          height: 160px;
-          overflow: hidden;
-          perspective: 1000px;
-          img {
-            width: 100%;
-            transition: 0.3s;
-            &:hover {
-              transform: translateZ(100px);
-            }
-          }
-        }
-      }
-    }
-  }
+  //       figure {
+  //         margin: 0;
+  //         height: 160px;
+  //         overflow: hidden;
+  //         perspective: 1000px;
+  //         img {
+  //           width: 100%;
+  //           transition: 0.3s;
+  //           &:hover {
+  //             transform: translateZ(100px);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   .addHr {
     width: 100%;
     background: $Lg;

@@ -86,9 +86,9 @@ function Blog(props) {
             <div className=" col-sm-6 lCard ">
               {props.blogData.result
                 ? props.blogData.result.map((value, index) => {
-                    {
-                      /* if( value.id%2===0) */
-                    }
+                    
+                       if( value.id%2===0) 
+                  
                     return (
                       <div className="card  rounded-lg " key={index}>
                         <RcViewer options={options}>
@@ -156,7 +156,7 @@ function Blog(props) {
                               </h1>
                             </Link>
                             <p className="card-text ">
-                              {value.blogContent.substring(0, 50) + '...'}
+                              {value.blogContent.substring(0, 150) + '...'}
                             </p>
                             <hr align="left" />
                             <div className="d-flex justify-content-around">

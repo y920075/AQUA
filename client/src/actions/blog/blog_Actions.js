@@ -23,6 +23,7 @@ export const getBlogData = data => ({
       dispatch(getBlogData(data))
     }
   }
+  
 
 //   export const getBlogDataAsync = (type, tag, search, page) => {
 //       console.log("123")
