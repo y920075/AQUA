@@ -200,7 +200,7 @@ export const delEventDataAsync = eventId => {
   }
 }
 
-//會員報名一筆活動
+//會員取消報名活動
 export const memberUnJoinEvent = data => ({
   type: 'UNJOIN_EVENT',
   value: data,
@@ -307,5 +307,30 @@ export const editEventDataAsunc = (formData, eventId) => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(editEventData(data))
+  }
+}
+
+//會員取消其他人的報名
+export const memberUnOtherJoinEvent = data => ({
+  type: 'UNJOIN_OTHER_EVENT',
+  value: data,
+})
+
+export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
+  return async dispatch => {
+    const fd = new FormData()
+    fd.append('memberId', memberId)
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/unjoin/${eventId}`,
+      {
+        method: 'DELETE',
+        body: fd,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(memberUnOtherJoinEvent(data))
   }
 }
