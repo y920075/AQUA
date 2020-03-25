@@ -157,11 +157,12 @@ console.log(customerdata)
               <div className="row">
               <div className="col-sm-12">
               <select className="custom-select" onChange={event => handleChange(event)}>
-                <option defaultValue>全部顧客</option>
+                <option defaultValue>請選擇顧客族群:</option>
                 <option value="buyPercentHight">購買率高的顧客</option>
                 <option value="visitPercentHight">到訪率高的顧客</option>
                 <option value="commonPercentHight">常客</option>
                 <option value="other">其他顧客</option>
+                <option value="xxx">全部顧客</option>
 
               </select>
               <table className="table table-borderless">

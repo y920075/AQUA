@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-react-jsx-development": "^7.9.0",
     "@sweetalert2/theme-material-ui": "^3.1.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -33,6 +34,7 @@
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
+    "scrollreveal": "^4.0.6",
     "styled-components": "^5.0.1",
     "sweetalert2": "^9.10.5",
     "sweetalert2-react-content": "^3.0.1"
