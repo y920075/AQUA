@@ -1,52 +1,53 @@
+
 //主要背景色
-$aquabackground: #132948;
+$aquabackground:#132948;
 // 強調色
-$aquacolordanger: #f15a24;
+$aquacolordanger:#F15A24;
 //以下輔色，按深淺排列
-$aquacolorone: #31445f;
-$aquacolortwo: #4e5f76;
-$aquacolorthree: #c4cad1;
-$aquacolorfour: #e2e4e8;
+$aquacolorone:#31445F;
+$aquacolortwo:#4E5F76;
+$aquacolorthree:#C4CAD1;
+$aquacolorfour:#E2E4E8;
 //我的顏色
-$fontawesome: #009688;
-$black: #000000;
-$white: #ffffff;
+$fontawesome:#009688;
+$black:#000000;
+$white:#FFFFFF;
+
 
 //Sidebar----------------------------------------
-.avatar {
-  width: 130px;
-  height: 130px;
+.avatar{
+    width: 130px;
+    height: 130px;
 }
 .sidebarlink-hs {
-  color: $white;
+    color: $white;
 }
-.sidebarlink-hs:hover {
-  color: $aquacolordanger;
+.sidebarlink-hs:hover{
+    color: $aquacolordanger;
 }
 
 // Login----------------------------------------
-.signincard-hs {
-  margin-top: 150px;
-  opacity: 0.92;
+.signincard-hs{
+    margin-top: 150px;
+    opacity: .92;
 }
-.hslogin {
-  height: 70vh;
-  a {
-    color: $black;
-    i {
-      color: $fontawesome;
+.hslogin{
+    height: 70vh;
+    a{
+        color: $black;
+        i{
+            color: $fontawesome;
+        }
     }
-  }
-  .btn.btn-info,
-  .btn-info.custom-file-control::before {
-    color: $aquacolordanger;
-  }
-  .sellerlogin {
-    margin-top: 20px;
-    a {
-      color: $aquacolordanger;
+    .btn.btn-info, .btn-info.custom-file-control::before{
+        color: $aquacolordanger;
     }
-  }
+    .sellerlogin{
+        margin-top: 20px;
+        a{
+            color: $aquacolordanger;
+        }
+    }
 }
 
 //Register----------------------------------------

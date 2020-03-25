@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Template</title>
+    <link rel="stylesheet" href="bootstrap-material-design-dist/css/bootstrap-material-design.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,500,700&display=swap" rel="stylesheet">
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
+    <script src="https://kit.fontawesome.com/16f6be389d.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            height: 180vh;
+            background-color: #132948;
+        }
+
+        .navbar-shopping-cart-icon {
+            opacity: .6;
+        }
+
+        #num {
+            position: relative;
+        }
+
+        #num::after {
+            position: absolute;
+            content: "0";
+            display: block;
+            width: 16px;
+            height: 16px;
+            /* border: 1px solid red; */
+            background-color: red;
+            border-radius: 50%;
+            color: white;
+            font-size: .9rem;
+            top: 5%;
+            right: 5%;
+        }
+
+        @media (min-width: 576px) {
+            /* .member */
+        }
+
+        .banner {
+            width: 100%;
+            height: 370px;
+            overflow: hidden;
+            margin-bottom: 3.125rem;
+        }
+
+        .banner>img {
+            width: 100%;
+        }
+
+        .avatar {
+            width: 130px;
+            height: 130px;
+        }
+
+        .sidebarlink-hs {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="container"> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+        <div class="container">
+
+            <!-- menu toggle -->
+            <button class="navbar-toggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img style="vertical-align: baseline" src="./image/aquaLogo.png" alt="">
+            </a>
+
+            <!-- cart icon -->
+            <button id="num" class="navbar-toggler" type="button">
+                <img class="navbar-shopping-cart-icon" src="./image/shopping_cart.png"></img>
+            </button>
+
+            <!-- web menu -->
+            <div class="collapse navbar-collapse ">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">揪團潛水</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">文章分享</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">自由潛點</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">課程平台</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">線上商店</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">實用工具</a>
+                </ul>
+            </div><!-- member Login -->
+
+            <div class="collapse navbar-collapse " id="navbarMember">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <!-- <img class="navbar-shopping-cart-icon" src="shopping_cart.png"></img> -->
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-light btn-sm">Login</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- banner -->
+    <div class="banner">
+        <img src="./image/coralreef.jpg" alt="">
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <div>
+                    <img class="rounded-circle avatar mb-5" src="./image/nemo.jpg" alt="">
+                </div>
+                <ul class="nav flex-column" style="width: 150px;">
+                    <li onClick=navagateToIndex class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="fas fa-home"></i>首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="far fa-user"></i>個人資料</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="fas fa-receipt"></i>我的訂單</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="far fa-calendar-alt"></i>我的課程</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="fas fa-swimmer"></i>我的活動</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="far fa-edit"></i>我的PO文</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="far fa-envelope"></i>訊息管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="far fa-question-circle"></i>幫助</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sidebarlink-hs" href="#"><i class="fas fa-sign-out-alt"></i>登出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

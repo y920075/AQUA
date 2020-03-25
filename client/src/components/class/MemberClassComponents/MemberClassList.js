@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import SweetAlert from '../SellerClassComponents/Sweetalert2'
+import SweetAlert from '../SellerClassComponents/Sweetalert2' //自訂提示窗
+
+/*
+  傳入參數
+  memberClassData = 會員報名的所有課程資料
+  memberUnJoinClassResponse = 會員取消報名之後，後端回傳的資料
+  傳入方法
+  memberUnJoinClassAsync = 會員取消報名的動作
+  memberGetClassDataAsync = 取得新資料的動作
+  2020-03-25
+*/
 
 function MemberClassList(props) {
-  const [response, setResponse] = useState(false) //確認是否有收到刪除動作的response資料
+  const [response, setResponse] = useState(false) //確認是否有收到取消報名動作的response資料
 
   //每當response改變時就秀出提示視窗
   useEffect(() => {

@@ -10,12 +10,14 @@ import SwitchButton from '../../event/MemberEventComponents/SwitchButton'
   傳入參數
   sellerClassData = 此賣家自己擁有的全部課程資料
   delClassDataResponse = 刪除課程資料後，後端回傳的訊息
+  props.isEnable = 過期資料開關狀態
 
   傳入方法
   getSellerClassData = 取得賣家的全部課程資料
   delClassDataAsunc = 刪除一筆課程資料
+  props.setIsEnable = 切換過期資料開關狀態
 
-  2020-03-22
+  2020-03-25
 */
 
 function ManageClassContent(props) {

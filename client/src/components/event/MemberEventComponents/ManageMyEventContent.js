@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import SweetAlert from '../../class/SellerClassComponents/Sweetalert2'
+import SweetAlert from '../../class/SellerClassComponents/Sweetalert2' //自訂提示窗
 
 import Loading from '../../class/Loading' //載入中圖示
-import EventPageButtons from '../EventPageButtons'
-import SwitchButton from './SwitchButton'
+import EventPageButtons from '../EventPageButtons' //頁面按鈕
+import SwitchButton from './SwitchButton' //切換過期資料按鈕
 
 /*
   傳入參數
@@ -27,9 +27,10 @@ function ManageMyEventContent(props) {
   const [unJoinResponse, setUnJoinResponse] = useState(false) //確認是否有收到取消報名動作的response資料
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
+  //每次點擊頁籤就提示載入中並取得新資料
   useEffect(() => {
-    props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable)
     setHasLoading(true)
+    props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable)
   }, [props.nowClickTag])
 
   //每次資料有變動就將新資料存進本地state
@@ -200,7 +201,10 @@ function ManageMyEventContent(props) {
                               </Link>
                             ) : (
                               <div>
-                                <Link to="#" className="btn btn-primary">
+                                <Link
+                                  to={'/memberevent/edit/' + value.eventId}
+                                  className="btn btn-primary"
+                                >
                                   <i
                                     className="fas fa-edit"
                                     data-id={value.eventId}

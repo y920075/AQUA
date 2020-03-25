@@ -22,6 +22,7 @@ function AddEventContent(props) {
 
   //儲存表單值的本地state
   const [eventName, setEventName] = useState('')
+  const [eventType, setEventType] = useState('')
   const [eventTypeId, setEventTypeId] = useState('')
   const [eventLocation, setEventLocation] = useState('')
   const [eventFullLocation, setEventFullLocation] = useState('')
@@ -61,6 +62,7 @@ function AddEventContent(props) {
     const EventFormData = {
       eventName,
       eventTypeId,
+      eventType,
       eventLocation,
       eventFullLocation,
       eventStartDate,
@@ -106,6 +108,8 @@ function AddEventContent(props) {
                     id=""
                     className="form-control"
                     onChange={event => {
+                      const index = event.target.selectedIndex
+                      setEventType(event.target.options[index].textContent)
                       setEventTypeId(event.target.value) //設定活動類型到本地state
                     }}
                   >

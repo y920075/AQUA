@@ -1,0 +1,20 @@
+idd = 自動產生會員好用
+id = Auto Increment
+memberId = 會員編號
+loginId = 會員帳號
+loginPwd ＝ 會員密碼
+avatar = 會員頭像
+fullName = 全名
+gender = 性別
+birthDate = 生日 
+email = 電子郵件
+mobileNumber = 手機號碼
+address = 地址
+creditCard = 信用卡號
+myCart = 我的購物車
+joinDate = 加入日期
+currentStatus = 現行狀態
+rankCoin = 貝殼幣
+rankId = 級別名稱
+created_at 
+updated_at

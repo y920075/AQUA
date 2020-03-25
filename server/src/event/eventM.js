@@ -121,8 +121,8 @@ class event {
         const sql = `INSERT INTO \`event_data\`
                     (\`maxId\`, \`eventId\`, \`eventName\`, \`eventType\`, \`eventLocation\`, \`eventFullLocation\`,
                     \`eventLocation_lat\`,\`eventLocation_lng\`, \`eventSponsor\`,\`eventStartDate\`, \`eventEndDate\`,
-                    \`eventDesc\`, \`eventNeedPeople\`,\`eventNowPeople\`, \`eventImg\`)
-                    VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`
+                    \`eventDesc\`, \`eventNeedPeople\`,\`eventNowPeople\`, \`eventImg\`,\`eventTypeId\`)
+                    VALUES (? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?)`
         await db.queryAsync(sql,sqlStmt)
         .then(async result=>{
             if ( result.affectedRows>0 ) {
@@ -143,14 +143,14 @@ class event {
     //會員編輯一筆活動
     static async memberEditEventData(sqlStmt,req,lat,lng){
         let data = null
-        let eventImg = !req.file && !req.file.originalname ? '' : ',\`eventImg\` = ?'
+        let eventImg = !req.file ? '' : ',\`eventImg\` = ?'
         const sql =    `UPDATE \`event_data\`
-                        SET \`eventName\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
+                        SET \`eventName\`=?,\`eventTypeId\`=?,\`eventType\`=?,\`eventLocation\`=?,\`eventFullLocation\`=?,
                         \`eventLocation_lat\`=?,\`eventLocation_lng\`=?,\`eventStartDate\`=?,\`eventEndDate\`=?,
                         \`eventDesc\`=?,\`eventNeedPeople\`=?${eventImg}
                         WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
 
-        await db.queryAsync(sql,sqlStmt).then(result=>{
+        await db.queryAsync(sql,sqlStmt).then(async result=>{
             if ( result.affectedRows>0 ) {
                 const weatherSql = `UPDATE \`weather_data\`
                                     SET \`location_lng\`=?, \`location_lat\`=?,\`eventStartDate\`=?,\`weatherData_updated_at\`=?
@@ -161,9 +161,10 @@ class event {
                     req.body.eventStartDate,
                     '1970-01-01'
                 ]
+                data = result 
                 return db.queryAsync(weatherSql,weatherSqlStmt)
             }
-        }).then( result => data = result)
+        }).then( result => {})
         return data
     }
     //會員刪除一筆活動
@@ -228,8 +229,6 @@ class event {
                         ${where}
                         ${sort}
                         LIMIT  ${(page-1)*perPage}, ${perPage}`
-                        console.log(req.query)
-                        console.log(sql)
         data.totalPages = totalPages
         data.totalRows = totalRows[0].rows
         data.page = page
@@ -247,8 +246,10 @@ class event {
                                 ON \`event_memeber\`.\`memberId\` = \`my_member\`.\`memberId\`
                                 WHERE \`event_memeber\`.\`eventId\` = '${req.params.eventId}'`
 
-        const sql =            `SELECT \`eventId\`,\`eventName\`,\`eventType\`,\`eventFullLocation\`,\`eventStartDate\`,
-                                \`eventEndDate\`,\`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
+        const sql =            `SELECT \`eventId\`,\`eventName\`,\`eventTypeId\`,\`eventType\`,\`eventLocation\`,\`eventFullLocation\`,
+                                DATE_FORMAT(\`eventStartDate\`, '%Y-%m-%dT%H:%i') as eventStartDate,
+                                DATE_FORMAT(\`eventEndDate\`, '%Y-%m-%dT%H:%i') as eventEndDate,
+                                \`eventDesc\`,\`eventNeedPeople\`,\`eventNowPeople\`,\`eventImg\`
                                 FROM \`event_data\` 
                                 WHERE \`eventId\` = '${req.params.eventId}' AND \`eventSponsor\` = '${req.session.memberId}'`
 

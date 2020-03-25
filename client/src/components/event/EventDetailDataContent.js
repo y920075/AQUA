@@ -42,7 +42,10 @@ function EventDetailDataContent(props) {
             <div className="col-xl-6">
               <div className="eventImgBox">
                 <img
-                  src="http://127.0.0.1:5000/images/eventImg/noImg.jpg"
+                  src={
+                    'http://127.0.0.1:5000/images/eventImg/' +
+                    props.eventData.eventImg
+                  }
                   alt=""
                 />
               </div>

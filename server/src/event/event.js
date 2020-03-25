@@ -24,19 +24,19 @@ router.use(bodyParser.json());
 // 自動更新天氣資訊
 const autoUpdateWeatherData = ()=>{
     const del = `DELETE FROM \`weather_data\` WHERE \`eventStartDate\` < DATE_FORMAT(NOW(),'%Y-%m-%d')`
-    const sql = `SELECT * FROM \`weather_data\` WHERE DATE_FORMAT(\`weatherData_updated_at\`,'%Y-%m-%d')< DATE_FORMAT(NOW(),'%Y-%m-%d')`
+    const sql = `SELECT * FROM \`weather_data\` WHERE DATE_FORMAT(\`weatherData_updated_at\`,'%Y-%m-%d')< DATE_FORMAT(NOW(),'%Y-%m-%d') AND \`eventStartDate\` >= DATE_FORMAT(NOW(),'%Y-%m-%d')`
     const nowDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     setTimeout( async ()=>{
         console.log(`----------------------------------------------`)
-        console.log(`${nowDate} 自動更新天氣資訊`)
-        console.log(`${nowDate} 刪除已過活動日期資料中...`)
-        await db.queryAsync(del).then(result=>{
-            if(result.affectedRows>0){
-                console.log(`${nowDate} 刪除完成，共刪除${result.affectedRows}筆資料`)
-            } else {
-                console.log(`${nowDate} 沒有未過期資料`)
-            }
-        })
+        // console.log(`${nowDate} 自動更新天氣資訊`)
+        // console.log(`${nowDate} 刪除已過活動日期資料中...`)
+        // await db.queryAsync(del).then(result=>{
+        //     if(result.affectedRows>0){
+        //         console.log(`${nowDate} 刪除完成，共刪除${result.affectedRows}筆資料`)
+        //     } else {
+        //         console.log(`${nowDate} 沒有未過期資料`)
+        //     }
+        // })
         console.log(`${nowDate} 搜索過期天氣資料中...`)
         await db.queryAsync(sql)
             .then( async result=>{
@@ -56,7 +56,7 @@ const autoUpdateWeatherData = ()=>{
                         await db.queryAsync(update).then(result=>console.log(`${nowDate} 編號 : ${id} 更新完成`))
                     }
                 } else {
-                    console.log(`${nowDate} 沒有未過期資料`)
+                    console.log(`${nowDate} 沒有過期資料`)
                 }
             })
         await autoUpdateWeatherData()
@@ -435,7 +435,8 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
                 req.body.eventDesc,
                 req.body.eventNeedPeople,
                 0,
-                eventImg
+                eventImg,
+                req.body.eventTypeId
             ]
 
             const result = await eventSql.memberAddEventData(sqlStmt,eventId,eventLocationLat,eventLocationLng,req.body.eventStartDate)
@@ -479,7 +480,8 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
 */
 
 router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
-    const data = {
+    req.session.memberId = 'M20010002'
+    let data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
     }
@@ -560,6 +562,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
             const eventLocationLng = response.data.results[0].geometry.location.lng
             const sqlStmt = [
                 req.body.eventName,
+                req.body.eventTypeId,
                 eventType,
                 req.body.eventLocation,
                 req.body.eventFullLocation,
@@ -584,7 +587,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
                     }
                 })
             }
-
+            
             result = await eventSql.memberEditEventData(sqlStmt,req,eventLocationLat,eventLocationLng)
 
             if ( result.affectedRows>0 ) {
@@ -594,9 +597,9 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
             } else {
                 data.status = 500;
                 data.msg = '修改失敗'
-                res.json(data);
+                res.json(data)
             }
-        })
+           })
     }
 })
 
@@ -739,6 +742,7 @@ router.get('/member/event/self', async (req,res)=>{
 */
 
 router.get('/member/event/self/:eventId', async (req,res)=>{
+    req.session.memberId = 'M20010002'
     let data = {
         'status' : 404,
         'msg' :　'查無資料',

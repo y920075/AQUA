@@ -5,6 +5,7 @@ import {customerUseAsync} from '../../../../actions/seller/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import TagSvg from '../../../../image/customer/tickMenu.svg'
 
 import './Style/CustomerMan.scss'
 
@@ -45,12 +46,12 @@ function CouponTableList(props) {
            className="tr-chin" 
            onClick={ event =>{
               typeInputActive(event) 
-              setCouponObj({...couponObj, coup_name,coup_code, datecoup_one,datecoup_two})
+              setCouponObj({...couponObj, coup_name,coup_code , datecoup_one ,datecoup_two})
 
               // getCustomerData(event)
            }}
            key={index}>
-              <td><input type="checkbox" aria-label="Checkbox for following text input"/></td>
+              <td></td>
               <td>{coup_name}</td>
               <td>{datecoup_one}</td>
               <td>{datecoup_two}</td>
@@ -117,7 +118,7 @@ function CouponTableList(props) {
         <table className="table table-borderless">
         <thead  className="table-bgcolor-chin thead-dark">
           <tr>
-            <th scope="col">#</th>
+            <th scope="col"><img width="30" height="30" src={TagSvg}/></th>
             <th scope="col">優惠名</th>
             <th scope="col">優惠開始</th>
             <th scope="col">優惠結束</th>
@@ -132,7 +133,7 @@ function CouponTableList(props) {
         <table className="table table-borderless">
         <thead  className="table-bgcolor-chin thead-dark">
           <tr>
-          <th scope="col">#</th>
+          <th scope="col"><img width="30" height="30" src={TagSvg}/></th>
             <th scope="col">優惠名</th>
             <th scope="col">優惠開始</th>
             <th scope="col">優惠結束</th>
@@ -148,7 +149,7 @@ function CouponTableList(props) {
         <table className="table table-borderless">
         <thead  className="table-bgcolor-chin thead-dark">
           <tr>
-          <th scope="col">#</th>
+          <th scope="col"><img width="30" height="30" src={TagSvg}/></th>
             <th scope="col">優惠名</th>
             <th scope="col">優惠開始</th>
             <th scope="col">優惠結束</th>

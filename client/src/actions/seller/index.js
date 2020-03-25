@@ -435,7 +435,41 @@ export const customerUseAsync = (customerData, callback) => {
 //         }
 // }
 
-//儲存賣家選擇的狀態state
+//mail動作
+
+export const customerMailData = data => ({
+  type: 'MAIL_TRANSFER',
+  value: data,
+})
+export const customerMailDataAsync = mailData => {
+  return async dispatch => {
+    // {
+      //   "employee":{ "name":"John", "age":30, "city":"New York" }
+      //   }
+      const json = JSON.stringify(mailData)
+      console.log(json)
+    const request = new Request(
+      'http://localhost:5000/seller/customermanager/customer-mail',
+      {
+        method: 'POST',
+        body: json,
+        headers: new Headers({
+                        'Accept' : 'application/json',
+
+                        'Content-Type': 'application/json'
+                  
+                      }),
+      }
+    )
+    console.log(JSON.stringify(mailData))
+
+    const response = await fetch(request)
+    console.log(response)
+    const data = await response.json()
+    console.log(data)
+    dispatch(customerMailData(data))
+  }
+}
 
 //----------------------賣家中心課程相關action----------------
 
