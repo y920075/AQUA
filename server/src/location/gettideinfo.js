@@ -41,9 +41,9 @@ function getTideDate(){
                     dayTides[e].weatherElement[1].value,
                     dayTides[e].weatherElement[2].elementValue.value,
                 ]);
-                console.log( dayTides[e].weatherElement[2])
-                console.log( dayTides[e].weatherElement[2].elementValue)
-                console.log( dayTides[e].weatherElement[2].elementValue.value)
+                // console.log( dayTides[e].weatherElement[2])
+                // console.log( dayTides[e].weatherElement[2].elementValue)
+                // console.log( dayTides[e].weatherElement[2].elementValue.value)
             }
         }
         const ECtideinfo =  alltidedate.filter(area => area.locationName === '花蓮縣豐濱鄉')

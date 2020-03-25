@@ -50,7 +50,7 @@ function EventDetailDataContent(props) {
                 />
               </div>
             </div>
-            <div className="col-xl-4 eventInfoBox">
+            <div className="col-xl-5 eventInfoBox">
               <h1>{props.eventData.eventName}</h1>
               <p>
                 <img src="/images/eventImg/icons/detail/member.svg" alt="" />

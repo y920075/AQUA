@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import ReactDOM from 'react-dom'
-import { SectionsContainer, Section } from 'react-fullpage'
+
+import sr from './ScrollReveal'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 function Home() {
+  useEffect(() => {
+    sr.reveal('.fst', { delay: 500 })
+    AOS.init({
+      // initialise with other settings
+      duration: 2000,
+    })
+  })
   return (
     <>
       <Header />
@@ -24,17 +34,20 @@ function Home() {
         </section>
         <section className="index-location">
           <div className="container">
+            <div className="card" data-aos="fade-up">
+              123
+            </div>
             <h1>潛點</h1>
           </div>
         </section>
         <section className="index-event">
           <div className="container">
-            <h1>揪團</h1>
+            <h1 className="fst">揪團</h1>
           </div>
         </section>
         <section className="index-class">
           <div className="container">
-            <h1>課程</h1>
+            <h1 data-aos={'fade-up'}>課程</h1>
           </div>
         </section>
         <section className="index-footer">
