@@ -24,38 +24,53 @@ function EventWeatherContent(props) {
   return (
     <>
       <div className="d-flex weatherBox">
-        {weatherData.map((value, index) => {
-          return (
-            <div className="col-2">
-              <p>{value.date}</p>
-              <figure className="WxImg">
-                <img src={value.WxImg} alt="" />
-              </figure>
-              <ul className="d-flex">
-                <li>
-                  <img src="/images/eventImg/icons/detail/MaxT.svg" alt="" />
-                  {value.MaxT + '度'}
-                </li>
-                <li>
-                  <img src="/images/eventImg/icons/detail/MinT.svg" alt="" />
-                  {value.MinT + '度'}
-                </li>
-              </ul>
-              <p>{'降雨 ' + value.rain}</p>
-              <p>
-                <img src="/images/eventImg/icons/detail/waveH.svg" alt="" />
-                {value.waveH + '(m)'}
-              </p>
-              <p>
-                <i
-                  class="fas fa-angle-double-down"
-                  style={{ transform: 'rotate(' + value.waveDirNum + 'deg)' }}
-                ></i>
-                {'  ' + value.waveDir}
-              </p>
-            </div>
-          )
-        })}
+        {weatherData.length > 0 && weatherData[0]
+          ? weatherData.map((value, index) => {
+              return (
+                <>
+                  <div className="col-2" key={index}>
+                    <p>{value.date}</p>
+                    <figure className="WxImg">
+                      <img src={value.WxImg} alt="" />
+                    </figure>
+                    <ul className="d-flex">
+                      <li>
+                        <img
+                          src="/images/eventImg/icons/detail/MaxT.svg"
+                          alt=""
+                        />
+                        {value.MaxT + '度'}
+                      </li>
+                      <li>
+                        <img
+                          src="/images/eventImg/icons/detail/MinT.svg"
+                          alt=""
+                        />
+                        {value.MinT + '度'}
+                      </li>
+                    </ul>
+                    <p>{'降雨 ' + value.rain}</p>
+                    <p>
+                      <img
+                        src="/images/eventImg/icons/detail/waveH.svg"
+                        alt=""
+                      />
+                      {value.waveH + '(m)'}
+                    </p>
+                    <p>
+                      <i
+                        class="fas fa-angle-double-down"
+                        style={{
+                          transform: 'rotate(' + value.waveDirNum + 'deg)',
+                        }}
+                      ></i>
+                      {'  ' + value.waveDir}
+                    </p>
+                  </div>
+                </>
+              )
+            })
+          : ''}
       </div>
     </>
   )

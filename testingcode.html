@@ -1,0 +1,16 @@
+const User = () => {
+
+    useState(products, setProdcuts);
+
+    useEffect(() => {
+        fetch('/api/products').then(res => res.json()).then(res => setProducts(res))l
+    })
+
+
+    return (
+        products.map(product => {
+            return <div>{product.id}</div>
+        })
+    )
+
+}

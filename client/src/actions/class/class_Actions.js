@@ -105,12 +105,13 @@ export const memberGetClassData = data => ({
   value: data,
 })
 
-export const memberGetClassDataAsync = (sort, page) => {
+export const memberGetClassDataAsync = (sort, page, isEnable) => {
   return async dispatch => {
     let query = []
 
     if (sort) query.push(`sort=${sort.trim()}`)
     if (page) query.push(`page=${page.trim()}`)
+    if (isEnable) query.push(`expired=1`)
     if (query.length > 0) {
       query = query.join('&')
     } else {

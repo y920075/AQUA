@@ -30,6 +30,7 @@ import EventPageButtons from '../../components/event/EventPageButtons' //活動�
 function EventList(props) {
   const [eventData, serEventData] = useState([]) //本地存放活動資料的陣列
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
+  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
     props.getEventDataAsync() //取得活動資料
@@ -50,13 +51,18 @@ function EventList(props) {
     }, 500)
   }, [props.eventData])
 
+  //每次按鈕被點擊時，就取得新資料
+  useEffect(() => {
+    getEventData()
+  }, [isEnable])
+
   //向伺服器取得新資料
   const getEventData = page => {
     //取得select的值，作為類型、等級的篩選參數
     const type = document.querySelector('select[name="type"]').value
     const sort = document.querySelector('select[name="sort"]').value
     const q = document.querySelector('input.searchInput').value
-    props.getEventDataAsync(type, q, sort, page)
+    props.getEventDataAsync(type, q, sort, page, isEnable)
   }
 
   return (
@@ -67,6 +73,8 @@ function EventList(props) {
         <EventSearchBar
           eventTypeData={props.eventTypeData}
           getEventData={getEventData}
+          setIsEnable={setIsEnable}
+          isEnable={isEnable}
         />
         {hasloading ? (
           <Loading />

@@ -80,15 +80,48 @@ const memberUnJoinEventResponse = (state = {}, action) => {
   }
 }
 
+//會員新增活動資料之後，後端回傳的資料
+const addEventDataResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_EVENTDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
+//會員取得自己發起的單一筆活動詳細資料
+const memberEventDetailData = (state = {}, action) => {
+  switch (action.type) {
+    case 'GET_EVENTDETAILDATA_FORMEMBER':
+      return action.value
+    default:
+      return state
+  }
+}
+
+//會員編輯資料之後，後端回傳的資料
+const editEventDataResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'EDIT_EVENTDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
 const eventReducer = combineReducers({
   eventData,
   eventDataForMap,
   eventTypeData,
   eventDetailData,
-  memberJoinEventResponse,
+  memberEventDetailData,
   memberEventDataSelf,
   delEventDataResponse,
+  addEventDataResponse,
+  editEventDataResponse,
+  memberJoinEventResponse,
   memberUnJoinEventResponse,
 })
 export { eventReducer }

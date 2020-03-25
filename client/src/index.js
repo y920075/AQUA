@@ -14,7 +14,7 @@ import { locationReducer } from './reducers/location/location_Reducers'
 import { classReducer } from './reducers/class/class_Reducers'
 import { eventReducer } from './reducers/event/event_Reducers'
 import { itemReducer } from './reducers/item/item_Reducers'
-// import { memberReducer } from './reducers/member/member_Reducers'
+import { memberReducer } from './reducers/member/member_Reducers'
 import { sellerReducer } from './reducers/seller/sellerReducer'
 //引入中介軟體
 import thunk from 'redux-thunk'
@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
   sellerReducer,
   itemReducer,
   locationReducer,
-  // ...memberReducer,
+  memberReducer,
 })
 
 //使用中介軟體時，建立store的方法，需要額外建立一個composeEnhancers

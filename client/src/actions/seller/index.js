@@ -109,12 +109,6 @@ export const sellerInfoAsync = (sellerInfoData, callback) => {
   }
 }
 
-
-
-
-
-
-
 //從後端用get方法擷取seller的資料前端進行編輯
 
 export const sellerEdit = data => ({
@@ -272,13 +266,11 @@ export const insertSellerNewInsertCoupon = coupInsertData => ({
 export const insertSellerNewInsertCouponAsync = (coupFormData, callback) => {
   console.log(coupFormData)
   return async dispatch => {
-  
     const request = new Request(
       'http://localhost:5000/seller/coupon/insert_coup_data',
       {
         method: 'POST',
-        body:coupFormData,
-      
+        body: coupFormData,
       }
     )
 
@@ -292,126 +284,119 @@ export const insertSellerNewInsertCouponAsync = (coupFormData, callback) => {
   }
 }
 
-
 //贈品新增動作函數
 
 export const addGiviData = data => ({
-    type: 'ADD_GIVIDATA',
-    value: data,
-  })
-  export const addGiviDataAsync = GiviFormData => {
-    console.log(GiviFormData)
-    return async dispatch => {
-      const givi_fd = new FormData()
-      givi_fd.append('givi_cate_id', GiviFormData.givi_cate_id)
-      givi_fd.append('givi_name', GiviFormData.givi_name)
-      givi_fd.append('givi_img', GiviFormData.givi_img_upload)
-      givi_fd.append('givi_num', GiviFormData.givi_num)
-      
-  
-      const request = new Request(`http://localhost:5000/seller/coupon/coupon_givi`, {
+  type: 'ADD_GIVIDATA',
+  value: data,
+})
+export const addGiviDataAsync = GiviFormData => {
+  console.log(GiviFormData)
+  return async dispatch => {
+    const givi_fd = new FormData()
+    givi_fd.append('givi_cate_id', GiviFormData.givi_cate_id)
+    givi_fd.append('givi_name', GiviFormData.givi_name)
+    givi_fd.append('givi_img', GiviFormData.givi_img_upload)
+    givi_fd.append('givi_num', GiviFormData.givi_num)
+
+    const request = new Request(
+      `http://localhost:5000/seller/coupon/coupon_givi`,
+      {
         method: 'POST',
         body: givi_fd,
-      })
-  
-      const response = await fetch(request)
-      const data = await response.json()
-      console.log(data)
-      dispatch(addGiviData(data))
-    }
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(addGiviData(data))
   }
+}
 //常客管理動作函數
 //get
 export const customerGet = data => ({
-    type: 'CUSTOMER_GET',
-    value: data,
-  })
-  
-  export const customerGetAsync = (customerData, callback) => {
-    return async dispatch => {
+  type: 'CUSTOMER_GET',
+  value: data,
+})
 
-      let query = []
-      if (customerData) query.push(`searchType=${customerData.trim()}`)
-      console.log(query[0])
+export const customerGetAsync = (customerData, callback) => {
+  return async dispatch => {
+    let query = []
+    if (customerData) query.push(`searchType=${customerData.trim()}`)
+    console.log(query[0])
 
+    const request = new Request(
+      `http://localhost:5000/seller/customermanager/customer-search?${query[0]}`,
 
-      const request = new Request(
-        `http://localhost:5000/seller/customermanager/customer-search?${query[0]}`,
-  
-        {
-          method: 'GET',
-          headers: new Headers({
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          }),
-        }
-      )
-  
-  
-      const response = await fetch(request)
-      const data = await response.json()
-      console.log('res data', data)
-  
-      dispatch(customerGet(data))
-    }
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(customerGet(data))
   }
+}
 
-  export const customerUse = data => ({
-    type: 'CUSTOMER_USE',
-    value: data,
-  })
-  export const customerUseAsync = (customerData, callback) => {
-    return async dispatch => {
+export const customerUse = data => ({
+  type: 'CUSTOMER_USE',
+  value: data,
+})
+export const customerUseAsync = (customerData, callback) => {
+  return async dispatch => {
+    const request = new Request(
+      `http://localhost:5000/seller/customermanager/customer-coupon-use`,
 
-  
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
-      const request = new Request(
-        `http://localhost:5000/seller/customermanager/customer-coupon-use`,
-  
-        {
-          method: 'GET',
-          headers: new Headers({
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          }),
-        }
-      )
-  
-  
-      const response = await fetch(request)
-      const data = await response.json()
-      console.log('res data', data)
-  
-      dispatch(customerUse(data))
-    }
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(customerUse(data))
   }
-  // export const customerGetSort = data => ({
-  //   type: 'CUSTOMER_GET_SORT',
-  //   value: data,
-  // })
-  
-  // export const customerGetAsync = (customerData, callback) => {
-  //   return async dispatch => {
-  //     const request = new Request(
-  //       'http://localhost:5000/seller/customermanager/customer-search',
-  
-  //       {
-  //         method: 'GET',
-  //         headers: new Headers({
-  //           Accept: 'application/json',
-  //           'Content-Type': 'application/json',
-  //         }),
-  //       }
-  //     )
-  
-  
-  //     const response = await fetch(request)
-  //     const data = await response.json()
-  //     console.log('res data', data)
-  
-  //     dispatch(customerGet(data))
-  //   }
-  // }
+}
+// export const customerGetSort = data => ({
+//   type: 'CUSTOMER_GET_SORT',
+//   value: data,
+// })
+
+// export const customerGetAsync = (customerData, callback) => {
+//   return async dispatch => {
+//     const request = new Request(
+//       'http://localhost:5000/seller/customermanager/customer-search',
+
+//       {
+//         method: 'GET',
+//         headers: new Headers({
+//           Accept: 'application/json',
+//           'Content-Type': 'application/json',
+//         }),
+//       }
+//     )
+
+//     const response = await fetch(request)
+//     const data = await response.json()
+//     console.log('res data', data)
+
+//     dispatch(customerGet(data))
+//   }
+// }
 // //優惠券更新動作函數
 
 // export const sellerCouponUpdate = couponData => ({
@@ -450,9 +435,41 @@ export const customerGet = data => ({
 //         }
 // }
 
-//儲存賣家選擇的狀態state
+//mail動作
 
+export const customerMailData = data => ({
+  type: 'MAIL_TRANSFER',
+  value: data,
+})
+export const customerMailDataAsync = mailData => {
+  return async dispatch => {
+    // {
+      //   "employee":{ "name":"John", "age":30, "city":"New York" }
+      //   }
+      const json = JSON.stringify(mailData)
+      console.log(json)
+    const request = new Request(
+      'http://localhost:5000/seller/customermanager/customer-mail',
+      {
+        method: 'POST',
+        body: json,
+        headers: new Headers({
+                        'Accept' : 'application/json',
 
+                        'Content-Type': 'application/json'
+                  
+                      }),
+      }
+    )
+    console.log(JSON.stringify(mailData))
+
+    const response = await fetch(request)
+    console.log(response)
+    const data = await response.json()
+    console.log(data)
+    dispatch(customerMailData(data))
+  }
+}
 
 //----------------------賣家中心課程相關action----------------
 
@@ -462,12 +479,13 @@ export const getSellerClassData = data => ({
   value: data,
 })
 
-export const getSellerClassDataAsunc = (sort, page) => {
+export const getSellerClassDataAsunc = (sort, page, isEnable) => {
   return async dispatch => {
     let query = []
 
     if (sort) query.push(`sort=${sort.trim()}`)
     if (page) query.push(`page=${page.trim()}`)
+    if (isEnable) query.push(`expired=1`)
     if (query.length > 0) {
       query = query.join('&')
     } else {
@@ -665,7 +683,6 @@ export const editClassData = data => ({
   value: data,
 })
 
-//新增課程資料
 //formData = 傳送過來的表單值
 export const editClassDataAsunc = (formData, classId) => {
   return async dispatch => {

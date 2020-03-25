@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
-import SweetAlert from '../../components/class/SellerClassComponents/Sweetalert2'
 
 //引入redux元件
 import { connect } from 'react-redux'
@@ -21,7 +20,6 @@ function SellerEditClass(props) {
   const [classId, setClassId] = useState(props.match.params.classId)
 
   useEffect(() => {
-    const classId = props.match.params.classId
     props.getSellerClassDetailDataAsync(classId)
     props.getCityDataAsunc()
     props.getClassTypeLevelDataForSellerAsunc(true, false)

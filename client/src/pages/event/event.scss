@@ -25,12 +25,6 @@
   .eventInfoBox {
     margin: 0.938rem auto;
     transition: 0.5s;
-    &:hover {
-      .eventImgBox > img {
-        transform: scale(1.2);
-      }
-      transform: translateY(-5px);
-    }
     .eventContentBox {
       background-color: white;
       height: 32.5rem;
@@ -50,19 +44,12 @@
       $animate: all 0.2s ease-in-out;
       .eventDetailBox {
         color: #132948;
-        padding: 10px;
-        &:hover{
-          h2{
-            &:before,
-            &:after {
-              opacity: 1;
-              width: 45%;
-            }
-          }
-        }
+        padding: 0.625rem;
+
         h2 {
           text-align: center;
           position: relative;
+          margin: 0;
           &:before,
           &:after {
             content: '';
@@ -87,22 +74,25 @@
           padding: 0;
           list-style: none;
         }
+        & > ul.d-flex {
+          margin-top: 15px;
+        }
         & > ul {
           margin-bottom: 0;
           li {
-            margin-right: 30px;
+            margin-right: 0.938rem;
           }
         }
         .status {
-          margin-top: 15px;
-          font-size: 18px;
+          margin-top: 0.938rem;
+          font-size: 1.125rem;
           text-align: center;
         }
         .quota {
           text-align: center;
-          font-size: 14px;
+          font-size: 0.875rem;
           span {
-            font-size: 18px;
+            font-size: 1.125rem;
           }
         }
       }
@@ -119,8 +109,21 @@
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 14px;
+        font-size: 0.875rem;
       }
+    }
+    &:hover {
+      .eventDetailBox > h2 {
+        &:before,
+        &:after {
+          opacity: 1;
+          width: 45%;
+        }
+      }
+      .eventImgBox > img {
+        transform: scale(1.2);
+      }
+      transform: translateY(-5px);
     }
   }
   li.page-item {

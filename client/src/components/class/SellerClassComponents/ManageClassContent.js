@@ -4,17 +4,20 @@ import SweetAlert from './Sweetalert2'
 
 import Loading from '../Loading' //載入中圖示
 import EventPageButtons from '../../event/EventPageButtons'
+import SwitchButton from '../../event/MemberEventComponents/SwitchButton'
 
 /*
   傳入參數
   sellerClassData = 此賣家自己擁有的全部課程資料
   delClassDataResponse = 刪除課程資料後，後端回傳的訊息
+  props.isEnable = 過期資料開關狀態
 
   傳入方法
   getSellerClassData = 取得賣家的全部課程資料
   delClassDataAsunc = 刪除一筆課程資料
+  props.setIsEnable = 切換過期資料開關狀態
 
-  2020-03-22
+  2020-03-25
 */
 
 function ManageClassContent(props) {
@@ -49,6 +52,12 @@ function ManageClassContent(props) {
     }
   }, [response])
 
+  //每次點擊SwitchButton就改變state
+  const toggleSwitchButton = () => {
+    props.setIsEnable(!props.isEnable)
+  }
+
+  //刪除資料的事件
   const delClassData = classId => {
     SweetAlert.sendConfirm(
       '確定要刪除嗎?',
@@ -64,6 +73,14 @@ function ManageClassContent(props) {
       <div className="row">
         <div className="col-xl-3">
           <div className="sortSelect">
+            <div className="d-flex switchbutton-jy align-items-center">
+              <p>包含已過期資料</p>
+              <SwitchButton
+                type="button"
+                active={props.isEnable}
+                clicked={toggleSwitchButton}
+              />
+            </div>
             <select
               name="sort"
               className="form-control"
@@ -155,6 +172,12 @@ function ManageClassContent(props) {
                             <button
                               className="btn btn-outline-primary"
                               data-id={value.classId}
+                              disabled={
+                                new Date(value.classStartDate).getTime() <
+                                new Date().getTime()
+                                  ? true
+                                  : false
+                              }
                               onClick={event => {
                                 const classId = event.target.getAttribute(
                                   'data-id'

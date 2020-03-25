@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>REGISTER</title>
+  <link rel="stylesheet" href="bootstrap-material-design-dist/css/bootstrap-material-design.css">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,500,700&display=swap" rel="stylesheet">
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
+  <script src="https://kit.fontawesome.com/16f6be389d.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      height: 100vh;
+      background-image: url('./image/18043001_01.jpg');
+    }
+
+    .navbar-shopping-cart-icon {
+      opacity: .6;
+    }
+
+    #num {
+      position: relative;
+    }
+
+    #num::after {
+      position: absolute;
+      content: "0";
+      display: block;
+      width: 16px;
+      height: 16px;
+      /* border: 1px solid red; */
+      background-color: red;
+      border-radius: 50%;
+      color: white;
+      font-size: .9rem;
+      top: 5%;
+      right: 5%;
+    }
+
+    @media (min-width: 576px) {
+      /* .member */
+    }
+
+    .registercard-hs {
+      height: 100vh;
+      opacity: .92;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div class="container"> -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+    <div class="container">
+
+      <!-- menu toggle -->
+      <button class="navbar-toggler" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Logo -->
+      <a class="navbar-brand" href="#">
+        <img style="vertical-align: baseline" src="./image/aquaLogo.png" alt="">
+      </a>
+
+      <!-- cart icon -->
+      <button id="num" class="navbar-toggler" type="button">
+        <img class="navbar-shopping-cart-icon" src="./image/shopping_cart.png"></img>
+      </button>
+
+      <!-- web menu -->
+      <div class="collapse navbar-collapse ">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">揪團潛水</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">文章分享</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">自由潛點</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">課程平台</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">線上商店</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">實用工具</a>
+        </ul>
+      </div><!-- member Login -->
+
+      <div class="collapse navbar-collapse " id="navbarMember">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <!-- <img class="navbar-shopping-cart-icon" src="shopping_cart.png"></img> -->
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-outline-light btn-sm">Login</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- banner
+  <div class="banner">
+    <img src="./image/18043001_01.jpg" alt="">
+  </div> -->
+
+  <!-- register card -->
+  <div class="container">
+    <div class="registercard-hs row d-flex align-items-center">
+      <div class="card col-md-6 mx-auto">
+        <!-- Default form register -->
+        <form class="text-center p-5" action="#!">
+
+          <p class="h4 mb-4">註冊</p>
+
+          <!-- Full Name -->
+          <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Name">
+
+          <!-- E-mail -->
+          <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+          <!-- Password -->
+          <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password"
+            aria-describedby="defaultRegisterFormPasswordHelpBlock">
+          <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+            At least 8 characters and 1 digit
+          </small>
+
+          <!-- Re-enter password -->
+          <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Re-Enter Password"
+            aria-describedby="defaultRegisterFormPasswordHelpBlock">
+          <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+            At least 8 characters and 1 digit
+          </small>
+
+          <!-- Phone number -->
+          <!-- <input type="text" id="defaultRegisterPhonePassword" class="form-control" placeholder="Phone number"
+            aria-describedby="defaultRegisterFormPhoneHelpBlock">
+          <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
+            Optional - for two step authentication
+          </small> -->
+
+          <!-- Sign up button -->
+          <button class="btn btn-info my-4 btn-block" type="submit">立即註冊!</button>
+
+          <!-- Social register -->
+          <p>其他登入方式:</p>
+
+          <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+          <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+          <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
+          <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
+          <a href="#" class="mx-2" role="button"><i class="fab fa-google light-blue-text"></i></a>
+
+
+          <hr>
+
+          <!-- Terms of service -->
+          <p>點擊
+            <em>立即註冊！</em> 即表示您同意我們的服務條款
+            <a href="" target="_blank">服務條款</a>
+
+        </form>
+        <!-- Default form register -->
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -42,7 +42,10 @@ function EventDetailDataContent(props) {
             <div className="col-xl-6">
               <div className="eventImgBox">
                 <img
-                  src="http://127.0.0.1:5000/images/eventImg/noImg.jpg"
+                  src={
+                    'http://127.0.0.1:5000/images/eventImg/' +
+                    props.eventData.eventImg
+                  }
                   alt=""
                 />
               </div>
@@ -103,7 +106,9 @@ function EventDetailDataContent(props) {
               className="btn-join btn btn-raised btn-warning"
               disabled={
                 props.eventData.eventNowPeople >=
-                props.eventData.eventNeedPeople
+                  props.eventData.eventNeedPeople ||
+                new Date(props.eventData.eventStartDate).getTime() <
+                  new Date().getTime()
                   ? true
                   : false
               }

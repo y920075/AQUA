@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import SweetAlert from '../../class/SellerClassComponents/Sweetalert2'
+import SweetAlert from '../../class/SellerClassComponents/Sweetalert2' //自訂提示窗
 
 import Loading from '../../class/Loading' //載入中圖示
-import EventPageButtons from '../EventPageButtons'
+import EventPageButtons from '../EventPageButtons' //頁面按鈕
+import SwitchButton from './SwitchButton' //切換過期資料按鈕
 
 /*
   傳入參數
+    nowClickTag = 現在點擊的頁籤
+    memberEventDataSelf = 會員自己發起的所有活動資料/會員報名的所有活動資料 依據tag而有不同
+    delEventDataResponse = 會員刪除活動之後，後端回傳的資料
+    memberUnJoinEventResponse = 會員取消報名資後，後端回傳的資料
+    
+    傳入方法
+    delEventDataAsync = 刪除活動的action
+    memberGetEventDataAsync = 取得資料的action
+    memberUnJoinEventAsync = 取消報名的action
   
-
-  傳入方法
-  
-
-  
+    2020-03-24
 */
 
 function ManageMyEventContent(props) {
-  const [hasLoading, setHasLoading] = useState(true)
+  const [hasLoading, setHasLoading] = useState(true) //是否載入中
   const [response, setResponse] = useState(false) //確認是否有收到刪除動作的response資料
   const [unJoinResponse, setUnJoinResponse] = useState(false) //確認是否有收到取消報名動作的response資料
+  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
+  //每次點擊頁籤就提示載入中並取得新資料
   useEffect(() => {
-    props.memberGetEventDataAsync('', '', props.nowClickTag)
     setHasLoading(true)
+    props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable)
   }, [props.nowClickTag])
 
   //每次資料有變動就將新資料存進本地state
@@ -42,7 +50,7 @@ function ManageMyEventContent(props) {
       if (props.delEventDataResponse.status === 201) {
         SweetAlert.success('已成功刪除一筆資料!')
         setResponse(false)
-        props.memberGetEventDataAsync('', '', props.nowClickTag)
+        props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable) //刪除完成的時候刷新一次資料
       } else {
         SweetAlert.errorAlert(
           props.delEventDataResponse.status,
@@ -59,7 +67,7 @@ function ManageMyEventContent(props) {
       if (props.memberUnJoinEventResponse.status === 201) {
         SweetAlert.success('已成功取消報名!')
         setUnJoinResponse(false)
-        props.memberGetEventDataAsync('', '', props.nowClickTag)
+        props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable) //取消報名完成的時候刷新一次資料
       } else {
         SweetAlert.errorAlert(
           props.memberUnJoinEventResponse.status,
@@ -70,29 +78,50 @@ function ManageMyEventContent(props) {
     }
   }, [unJoinResponse])
 
+  //每次按鈕被點擊時，就取得新資料
+  useEffect(() => {
+    getMemberEventData()
+  }, [isEnable])
+
   //向伺服器取得新資料
   const getMemberEventData = page => {
     //取得select的值，作為類型、等級的篩選參數
     const sort = document.querySelector('select[name="sort"]').value
-    props.memberGetEventDataAsync(sort, page, props.nowClickTag)
+    props.memberGetEventDataAsync(sort, page, props.nowClickTag, isEnable)
+  }
+
+  //每次點擊SwitchButton就改變state
+  const toggleSwitchButton = () => {
+    setIsEnable(!isEnable)
   }
 
   return (
     <>
       <div className="event-select">
-        <select
-          name="sort"
-          className="form-control"
-          onChange={() => {
-            getMemberEventData()
-          }}
-        >
-          <option value="">選擇排序方式</option>
-          <option value="eventStartDate,asc">日期由近到遠</option>
-          <option value="eventStartDate,desc">日期由遠到近</option>
-          <option value="eventNowPeople,asc">報名人數由少至多</option>
-          <option value="eventNowPeople,desc">報名人數由多至少</option>
-        </select>
+        <div className="d-flex justify-content-end align-items-center">
+          <div className="d-flex switchbutton-jy align-items-center">
+            <p>包含已過期資料</p>
+            <SwitchButton
+              type="button"
+              active={isEnable}
+              clicked={toggleSwitchButton}
+            />
+          </div>
+
+          <select
+            name="sort"
+            className="form-control col-sm-2 select-jy"
+            onChange={() => {
+              getMemberEventData()
+            }}
+          >
+            <option value="">排序方式</option>
+            <option value="eventStartDate,asc">日期由近到遠</option>
+            <option value="eventStartDate,desc">日期由遠到近</option>
+            <option value="eventNowPeople,asc">報名人數由少至多</option>
+            <option value="eventNowPeople,desc">報名人數由多至少</option>
+          </select>
+        </div>
         <div className="eventhistory">
           {hasLoading ? (
             <Loading />
@@ -104,14 +133,22 @@ function ManageMyEventContent(props) {
                   return (
                     <div className="card mt-3" key={index}>
                       <div
-                        className="card-header d-flex justify-content-between"
+                        className="card-header  py-1 d-flex justify-content-between align-items-center card-header-jy"
                         style={{ background: '#c4cad1' }}
                       >
-                        <p>{'活動編號：' + value.eventId}</p>
+                        <p className="itemId-JY">
+                          {'活動編號：' + value.eventId}
+                        </p>
                         {props.nowClickTag === 2 ? (
                           <button
                             type="button"
                             className="btn btn-info"
+                            disabled={
+                              new Date(value.eventStartDate).getTime() <
+                              new Date().getTime()
+                                ? true
+                                : false
+                            }
                             onClick={() => {
                               const eventId = value.eventId
                               SweetAlert.sendConfirm(
@@ -130,7 +167,7 @@ function ManageMyEventContent(props) {
                         )}
                       </div>
                       <div className="row">
-                        <div className="col-sm-8">
+                        <div className="col-sm-5">
                           <div className="card-body">
                             <h5 className="card-title">{value.eventName}</h5>
                             <p className="card-text">
@@ -164,7 +201,10 @@ function ManageMyEventContent(props) {
                               </Link>
                             ) : (
                               <div>
-                                <Link to="#" className="btn btn-primary">
+                                <Link
+                                  to={'/memberevent/edit/' + value.eventId}
+                                  className="btn btn-primary"
+                                >
                                   <i
                                     className="fas fa-edit"
                                     data-id={value.eventId}
@@ -172,6 +212,12 @@ function ManageMyEventContent(props) {
                                 </Link>
                                 <button
                                   className="btn btn-primary"
+                                  disabled={
+                                    new Date(value.eventStartDate).getTime() <
+                                    new Date().getTime()
+                                      ? true
+                                      : false
+                                  }
                                   data-id={value.eventId}
                                   onClick={event => {
                                     const eventId = event.target.getAttribute(
@@ -195,7 +241,7 @@ function ManageMyEventContent(props) {
                             )}
                           </div>
                         </div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-7">
                           <img
                             className="eventimg-hs"
                             src={
