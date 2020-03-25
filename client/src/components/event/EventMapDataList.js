@@ -21,10 +21,18 @@ function EventDataList(props) {
               status = '已過期'
 
             return (
-              <Fade bottom>
-                <div className="col-xl-3 col-10 eventInfoBox" key={index}>
-                  <div className="eventContentBox">
-                    <div className="eventImgBox">
+              <Fade bottom key={index}>
+                <div
+                  className={
+                    index === 0
+                      ? 'col-xl-12 col-10 eventInfoBox eventMapList-JY mt-0'
+                      : 'col-xl-12 col-10 eventInfoBox eventMapList-JY boxHide'
+                  }
+                  key={index}
+                  data-eventId={value.eventId}
+                >
+                  <div className="eventContentBox d-flex">
+                    <div className="eventImgBox col-7">
                       <img
                         src={
                           'http://127.0.0.1:5000/images/eventImg/' +
@@ -33,7 +41,7 @@ function EventDataList(props) {
                         alt=""
                       />
                     </div>
-                    <div className="eventDetailBox">
+                    <div className="eventDetailBox col-5">
                       <h2 className="eventTitle">{value.eventName}</h2>
                       <ul className="d-flex">
                         <li>
@@ -78,14 +86,14 @@ function EventDataList(props) {
                           ></div>
                         </div>
                       </div>
-                    </div>
-                    <div className="d-flex justify-content-center">
-                      <Link
-                        className="btn-more btn btn-raised btn-warning"
-                        to={'/event/' + value.eventId}
-                      >
-                        了解詳情
-                      </Link>
+                      <div className="d-flex justify-content-center">
+                        <Link
+                          className="btn-more btn btn-raised btn-warning mt-3"
+                          to={'/event/' + value.eventId}
+                        >
+                          了解詳情
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

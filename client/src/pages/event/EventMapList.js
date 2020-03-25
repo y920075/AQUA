@@ -28,6 +28,7 @@ import EventSearchBar from '../../components/event/EventSearchBar'
 
 function EventMapList(props) {
   const [eventDataForMap, setEventDataForMap] = useState([])
+  const [eventDataForMapinView, setEventDataForMapinView] = useState([])
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
@@ -51,6 +52,8 @@ function EventMapList(props) {
     getEventData()
   }, [isEnable])
 
+  useEffect(() => {}, [])
+
   const getEventData = () => {
     const type = document.querySelector('select[name="type"]').value
     const sort = document.querySelector('select[name="sort"]').value
@@ -61,6 +64,14 @@ function EventMapList(props) {
   let ref //建立一個ref
 
   const onBoundsChanged = () => {
+    const boxList = document.querySelectorAll(
+      'div.col-xl-12.col-10.eventInfoBox.eventMapList-JY'
+    )
+    boxList.forEach(value => {
+      value.style.display = 'none'
+    })
+    console.log(boxList)
+    let arr = []
     eventDataForMap.map(value => {
       if (
         ref.getBounds().contains({
@@ -68,10 +79,13 @@ function EventMapList(props) {
           lng: parseFloat(value.eventLocation_lng),
         })
       ) {
-        console.log(value.eventId)
+        document.querySelector(
+          `div.col-xl-12.col-10.eventInfoBox.eventMapList-JY[data-eventId="${value.eventId}"]`
+        ).style.display = 'block'
+        arr.push(value)
       }
     })
-    //console.log(ref.getBounds().contains({ lat: 121, lng: 121 }))
+    console.log(arr)
   }
 
   const MyMapComponent = withScriptjs(
@@ -84,9 +98,10 @@ function EventMapList(props) {
       >
         <MarkerClusterer gridSize={30}>
           {eventDataForMap
-            ? eventDataForMap.map(value => {
+            ? eventDataForMap.map((value, index) => {
                 return (
                   <Marker
+                    key={index}
                     position={{
                       lat: parseFloat(value.eventLocation_lat),
                       lng: parseFloat(value.eventLocation_lng),
@@ -122,13 +137,13 @@ function EventMapList(props) {
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`}
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={
-                    <div style={{ width: `100%`, height: `100%` }} />
+                    <div style={{ width: `100%`, height: `1200px` }} />
                   }
                   mapElement={<div style={{ height: `100%` }} />}
                 />
               </div>
               <div className="col-4 eventListBox">
-                <EventMapDataList eventData={props.eventDataForMap.result} />
+                <EventMapDataList eventData={eventDataForMap} />
               </div>
             </div>
           </>
