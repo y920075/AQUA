@@ -86,6 +86,15 @@ const cutomeruse =(state = {},action) => {
   }
 }
 
+
+const customermailtransfer =(state = {},action) => {
+  switch (action.type) {
+      case 'MAIL_TRANSFER':
+        return action.value
+      default:
+          return state
+  }
+}
 // const memberEmail = (state = {}, action) => {
 //   switch (action.type) {
 //     case 'STORE_EMAIL':
@@ -198,6 +207,7 @@ const sellerReducer = combineReducers({
   giviAdd,
   customer,
   cutomeruse,
+  customermailtransfer,
   sellerClassData,
   cityData,
   distData,

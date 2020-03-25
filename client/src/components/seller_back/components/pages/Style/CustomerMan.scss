@@ -9,7 +9,8 @@
 
 .active-chin-td {
   background-color: rgb(250, 250, 0);
-  border: 4px solid $aquacolortwo !important;
+  background-image: no-repeat url(../../../../../image/customer/check.svg) !important;
+  // border: 4px solid $aquacolortwo !important;
 }
 .chin {
   table a:link {
