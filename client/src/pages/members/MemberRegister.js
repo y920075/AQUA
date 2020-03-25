@@ -57,6 +57,7 @@ function MemberRegister(props) {
         fd.append('email', userData.email)
         fd.append('loginId', userData.username)
         fd.append('loginPwd', userData.password)
+        // fd.append('mobileNumber', userData.number)
 
 
 

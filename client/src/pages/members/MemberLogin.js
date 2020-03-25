@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userLoginAsync } from '../../actions/member/memberActions'
 import { withRouter, Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import Header from '../../components/Header'
 import '../../style/HS.scss'
 
@@ -16,7 +17,6 @@ function MemberLogin(props) {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-
     const [error, setError] = useState(false)
     const [errorMessages, setErrorMessages] = useState([])
 
@@ -69,7 +69,7 @@ function MemberLogin(props) {
                             <div>
                                 <div className="custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" id="defaultLoginFormRemember" />
-                                    <label className="custom-control-label" for="defaultLoginFormRemember">記住我</label>
+                                    <label className="custom-control-label">記住我</label>
                                 </div>
                             </div>
 
@@ -114,7 +114,7 @@ function MemberLogin(props) {
 
 // 取得Redux中isAuth的值
 const mapStateToProps = store => {
-    return { isAuth: store.user.isAuth }
+    return { isAuth: store.memberReducer.user.isAuth }
 }
 
 // 指示dispatch要綁定哪些action creators

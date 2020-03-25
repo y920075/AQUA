@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
   ...classReducer,
   ...eventReducer,
   ...itemReducer,
-  ...memberReducer,
+  memberReducer,
 })
 
 //使用中介軟體時，建立store的方法，需要額外建立一個composeEnhancers

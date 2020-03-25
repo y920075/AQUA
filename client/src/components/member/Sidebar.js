@@ -3,11 +3,11 @@ import {Link} from 'react-router-dom'
 import '../../style/HS.scss'
 
 
-function Sidebar() {
+function Sidebar(props) {
     return <>
         {/* Sidebar */}
         <div>
-            <img className="rounded-circle avatar mb-5" src="./images/member/nemo.jpg" alt=""></img>
+            <img className="rounded-circle avatar mb-5" src={'http://127.0.0.1:5000/images/memberImg/' + props.SidebarImgSrc} alt=""></img>
         </div>
         <ul className="nav flex-column hssidebar" style={{ width: "150px" }}>
             <li className="nav-item">

@@ -1,46 +1,6 @@
-//註冊
-// action = {type, value}
-// type: ADD_VALUE, MINUS_VALUE
-// ex. action = {type: 'ADD_VALUE', value: 10}
+import Swal from 'sweetalert2'
 
-export const addValue = value => ({ type: 'ADD_VALUE', value: value })
-export const minusValue = value => ({ type: 'MINUS_VALUE', value: value })
-
-// 模擬與伺服器相連
-export const addValueAsync = value => {
-  return dispatch => {
-    setTimeout(() => {
-      console.log('delay 3s to add value')
-
-      dispatch(addValue(value))
-    }, 3000)
-  }
-}
-
-export const initValue = value => ({ type: 'INIT_VALUE', value: value })
-
-// 模擬與伺服器相連
-export const initValueAsync = value => {
-  return async dispatch => {
-    // 注意資料格式要設定，伺服器才知道是json格式
-    const request = new Request('http://localhost:5000/members/register', {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'appliaction/json',
-      }),
-    })
-
-    const response = await fetch(request)
-    const data = await response.json()
-
-    // 設定資料
-    dispatch(initValue(data.total))
-  }
-}
-
-
-// 登入
+//Register
 // action = {type, value}
 // type: ADD_VALUE, MINUS_VALUE
 // ex. action = {type: 'ADD_VALUE', value: 10}
@@ -72,76 +32,84 @@ export const userRegisterAsync = (userData, callback) => {
   }
 }
 
+
+//Login
 export const userLogin = userData => ({
   type: 'USER_LOGIN',
   data: userData,
 })
 
 export const userLoginAsync = (userData, callback) => {
+  console.log(userData)
   return async dispatch => {
+    const fd = new FormData()
+    fd.append('loginId', userData.username)
+    fd.append('loginPwd', userData.password)
+
     const request = new Request(
-      'http://localhost:5000/users/?username=' + userData.username,
+      'http://localhost:5000/members/login',
       {
-        method: 'GET',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        }),
+        method: 'POST',
+        body: fd,
       }
     )
-
-    console.log(JSON.stringify(userData))
-
     const response = await fetch(request)
     const data = await response.json()
     console.log('res data', data)
 
-    if (data.length > 0) {
-      if (data[0].password === userData.password) {
+    if (data.success) {
+      if (data.loginPwd == userData.loginPwd) {
+        localStorage.setItem('username', data.username)
+        localStorage.setItem('memberId', data.memberId)
+
         // 設定資料
+        console.log(userData)
         dispatch(userLogin(userData))
-        alert('登入成功')
+        // alert('登入')
+        Swal.fire(
+          '歡迎回來!',
+          'Redirect in 5 seconds...!',
+          'success'
+        )
+        setTimeout(function () {
+          window.location.href = './memberuser'
+        }, 5000);
       } else {
-        alert('密碼錯誤')
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '密碼錯誤!',
+        })
       }
     } else {
-      alert('沒有這個帳號')
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '沒有這個帳號!',
+      })
     }
   }
 }
 
-// export const addValue = value => ({ type: 'ADD_VALUE', value: value })
-// export const minusValue = value => ({ type: 'MINUS_VALUE', value: value })
+// get user info 
+export const getuserDetailData = data => ({
+  type: 'GET_USERINFO',
+  value: data,
+})
 
-// // 模擬與伺服器相連
-// export const addValueAsync = value => {
-//   return dispatch => {
-//     setTimeout(() => {
-//       console.log('delay 3s to add value')
+export const getuserDetailDataAsync = memberId => {
+  return async dispatch => {
+    const request = new Request(`http://127.0.0.1:5000/members/${memberId}`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
 
-//       dispatch(addValue(value))
-//     }, 3000)
-//   }
-// }
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(getuserDetailData(data))
+  }
+}
 
-// export const initValue = value => ({ type: 'INIT_VALUE', value: value })
-
-// // 模擬與伺服器相連
-// export const initValueAsync = value => {
-//   return async dispatch => {
-//     // 注意資料格式要設定，伺服器才知道是json格式
-//     const request = new Request('http://localhost:5555/counter/1', {
-//       method: 'GET',
-//       headers: new Headers({
-//         Accept: 'application/json',
-//         'Content-Type': 'appliaction/json',
-//       }),
-//     })
-
-//     const response = await fetch(request)
-//     const data = await response.json()
-
-//     // 設定資料
-//     dispatch(initValue(data.total))
-//   }
-// }

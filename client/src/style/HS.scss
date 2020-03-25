@@ -73,6 +73,10 @@ $white:#FFFFFF;
 
 
 //User-------------------------------------------
+.inputavatar{
+    width: 300px;
+    height: 30px;
+}
 .btn.btn-primary, .btn-primary.custom-file-control::before{
     color: $aquacolordanger;
 }

@@ -13,49 +13,49 @@ function Header() {
   }
 
   return (<>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div className="container">
         {/* menu toggle */}
-        <button class="navbar-toggler" type="button" onClick={() => { openMenu() }}>
-          <span class="navbar-toggler-icon"></span>
+        <button className="navbar-toggler" type="button" onClick={() => { openMenu() }}>
+          <span className="navbar-toggler-icon"></span>
         </button>
         {/* Logo */}
-        <Link class="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/">
           <img style={{ verticalalign: "baseline" }} src="../images/logo/aquaLogo.png" alt="" />
         </Link>
         {/* cart icon */}
-        <button id="num" class="navbar-toggler" type="button" >
-          <img class="navbar-shopping-cart-icon" src="../images/logo/shopping_cart.png" />
+        <button id="num" className="navbar-toggler" type="button" >
+          <img className="navbar-shopping-cart-icon" src="../images/logo/shopping_cart.png" />
         </button>
         {/* web menu */}
-        <div class={rwdOpen ? "collapse navbar-collapse JY_navMenuShow" : "collapse navbar-collapse"} >
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <Link class="nav-link" to="/event">揪團潛水</Link>
+        <div className={rwdOpen ? "collapse navbar-collapse JY_navMenuShow" : "collapse navbar-collapse"} >
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link className="nav-link" to="/event">揪團潛水</Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/blog">文章分享</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="/blog">文章分享</Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/location">自由潛點</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="/location">自由潛點</Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/Class">課程平台</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Class">課程平台</Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="/store">線上商店</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="/store">線上商店</Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link" to="#">實用工具</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="#">實用工具</Link>
             </li>
           </ul>
         </div>
         {/* member Login */}
-        <div class="collapse navbar-collapse" id="navbarMember">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+        <div className="collapse navbar-collapse" id="navbarMember">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
               <Link to="/memberlogin">
-                <button type="button" class="btn btn-outline-light btn-sm">Login</button>
+                <button type="button" className="btn btn-outline-light btn-sm">Login</button>
               </Link>
             </li>
           </ul>

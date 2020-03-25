@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import Class from './pages/class/class'
-// import Sidebar from './components/member/Sidebar'
 
 // Member
 import MemberLogin from './pages/members/MemberLogin'
