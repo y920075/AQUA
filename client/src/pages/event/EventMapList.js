@@ -28,7 +28,6 @@ import EventSearchBar from '../../components/event/EventSearchBar'
 
 function EventMapList(props) {
   const [eventDataForMap, setEventDataForMap] = useState([])
-  const [eventDataForMapinView, setEventDataForMapinView] = useState([])
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
@@ -46,11 +45,6 @@ function EventMapList(props) {
       }
     }, 500)
   }, [props.eventDataForMap])
-
-  //每次按鈕被點擊時，就取得新資料
-  useEffect(() => {
-    getEventData()
-  }, [isEnable])
 
   useEffect(() => {}, [])
 
@@ -70,8 +64,6 @@ function EventMapList(props) {
     boxList.forEach(value => {
       value.style.display = 'none'
     })
-    console.log(boxList)
-    let arr = []
     eventDataForMap.map(value => {
       if (
         ref.getBounds().contains({
@@ -82,10 +74,8 @@ function EventMapList(props) {
         document.querySelector(
           `div.col-xl-12.col-10.eventInfoBox.eventMapList-JY[data-eventId="${value.eventId}"]`
         ).style.display = 'block'
-        arr.push(value)
       }
     })
-    console.log(arr)
   }
 
   const MyMapComponent = withScriptjs(
@@ -95,6 +85,7 @@ function EventMapList(props) {
         ref={mapRef => (ref = mapRef)} //綁定ref到我們定義的ref裡，這樣才能參照到地圖物件，然後取得方法
         defaultCenter={{ lat: 23.5, lng: 120.8 }}
         onBoundsChanged={onBoundsChanged}
+        options={{ gestureHandling: 'greedy' }}
       >
         <MarkerClusterer gridSize={30}>
           {eventDataForMap
@@ -118,7 +109,7 @@ function EventMapList(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="./images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="./images/eventImg/eventBanner1.png" />
       <div className="container-fluid JY-event-container-maplist">
         <EventSearchBar
           getEventData={getEventData}

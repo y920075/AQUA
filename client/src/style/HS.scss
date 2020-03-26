@@ -161,9 +161,16 @@ $white:#FFFFFF;
 .eventselection-hs {
   width: 90px;
 }
+.eventContent-MEMBER-JY{
+  max-height: 340px;
+  .col-sm-5,.col-sm-7{
+    max-height: 340px;
+  }
+}
 .eventimg-hs {
   width: 100%;
   height: 100%;
+  object-fit: cover;
   // margin-top: 30px;
   padding: 15px;
   border-radius: 5px;

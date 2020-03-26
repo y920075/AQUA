@@ -21,7 +21,7 @@ function EventDataList(props) {
               status = '已過期'
 
             return (
-              <Fade bottom key={index}>
+              <Fade right key={index}>
                 <div
                   className={
                     index === 0
