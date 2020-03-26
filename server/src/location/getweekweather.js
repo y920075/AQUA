@@ -142,7 +142,6 @@ function getweekDate(){
                 SCweekdata[y])
             }
     })
-    
 
 }
 

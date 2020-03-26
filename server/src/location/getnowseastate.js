@@ -62,6 +62,7 @@ function getnowseastate(){
         }
 
         seastatereport.push([
+            '東北角',
             NELocationName,
             NEStationId,
             NEobstime,
@@ -114,6 +115,7 @@ function getnowseastate(){
         }
 
         seastatereport.push([
+            '花東海岸',
             ECLocationName,
             ECStationId,
             ECobstime,
@@ -166,6 +168,7 @@ function getnowseastate(){
         }
 
         seastatereport.push([
+            '東部離島',
             islandsLocationName,
             islandsStationId,
             islandsobstime,
@@ -217,6 +220,7 @@ function getnowseastate(){
         }
 
         seastatereport.push([
+            '墾丁',
             SCLocationName,
             SCStationId,
             SCobstime,
@@ -228,7 +232,7 @@ function getnowseastate(){
         ])
         // return console.log(seastatereport);
         const deletedata = "DELETE FROM `seastate`"
-        const sql = "INSERT INTO `seastate` (`locationName`,`stationId`,`date`,`seatemperature`,`temperature`,`waveheight`,`waveperiod`,`wavedirection`) VALUES (?,?,?,?,?,?,?,?)"
+        const sql = "INSERT INTO `seastate` (`Area`,`locationName`,`stationId`,`date`,`seatemperature`,`temperature`,`waveheight`,`waveperiod`,`wavedirection`) VALUES (?,?,?,?,?,?,?,?,?)"
             db.queryAsync(deletedata)
             for(y=0 ; y<seastatereport.length ; y++){ 
             db.queryAsync(sql ,

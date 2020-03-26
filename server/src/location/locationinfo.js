@@ -54,4 +54,34 @@ router.get('/images' , (req, res)=>{
     })
     
 })
+router.get('/seastate' , (req, res)=>{
+    const seastate = "SELECT * FROM seastate";
+    db.queryAsync(seastate)
+    .then(result=>{
+        res.json({
+            seastate: result
+    })
+    })
+    
+})
+router.get('/weekweather' , (req, res)=>{
+    const weekweather = "SELECT * FROM location_weekweather";
+    db.queryAsync(weekweather)
+    .then(result=>{
+        res.json({
+            weekweather: result
+    })
+    })
+    
+})
+router.get('/tide' , (req, res)=>{
+    const tide = "SELECT * FROM tide";
+    db.queryAsync(tide)
+    .then(result=>{
+        res.json({
+            tide: result
+    })
+    })
+    
+})
 module.exports = router;

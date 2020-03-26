@@ -17,7 +17,7 @@ import Area from '../../components/divelocation/Area'
 import Map from '../../components/divelocation/map'
 import Images from '../../components/divelocation/Images'
 import Locusinfo from '../../components/divelocation/Locusinfo'
-import Wether from '../../components/divelocation/Wether'
+import Weather from '../../components/divelocation/Weather'
 import Comment from '../../components/comment/Comment'
 
 function Divelocation() {
@@ -50,7 +50,7 @@ function Divelocation() {
         </section>
         <section className="divelocussection regionwether">
           <h1>地區天氣預報與實時海象</h1>
-          <Wether />
+          <Weather />
         </section>
         <section className="divelocussection">
           <h1>潛友評論</h1>
