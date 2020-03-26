@@ -166,7 +166,7 @@ function ManageMyEventContent(props) {
                           ''
                         )}
                       </div>
-                      <div className="row">
+                      <div className="row eventContent-MEMBER-JY">
                         <div className="col-sm-5">
                           <div className="card-body">
                             <h5 className="card-title">{value.eventName}</h5>
@@ -202,7 +202,7 @@ function ManageMyEventContent(props) {
                             ) : (
                               <div>
                                 <Link
-                                  to={'/memberevent/edit/' + value.eventId}
+                                  to={'/memberuser/event/edit/' + value.eventId}
                                   className="btn btn-primary"
                                 >
                                   <i

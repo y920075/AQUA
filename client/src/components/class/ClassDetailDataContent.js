@@ -77,7 +77,9 @@ function ClassDetailDataContent(props) {
                 className="btn-join btn btn-raised btn-warning"
                 disabled={
                   props.classData.classNOWpeople >=
-                  props.classData.classMAXpeople
+                    props.classData.classMAXpeople ||
+                  new Date(props.classData.classStartDate).getTime() <
+                    new Date().getTime()
                     ? true
                     : false
                 }
@@ -108,10 +110,18 @@ function ClassDetailDataContent(props) {
                   )
                 }}
               >
-                {props.classData.classNOWpeople >=
-                props.classData.classMAXpeople
-                  ? '已額滿'
-                  : '馬上報名'}
+                {(() => {
+                  switch (true) {
+                    case props.classData.classNOWpeople >=
+                      props.classData.classMAXpeople:
+                      return '已額滿'
+                    case new Date(props.classData.classStartDate).getTime() <
+                      new Date().getTime():
+                      return '已過期'
+                    default:
+                      return '馬上報名'
+                  }
+                })()}
               </button>
             </div>
           </div>

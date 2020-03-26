@@ -17,21 +17,22 @@ figure {
 .bg-aqua-chin {
   background-color: $aquacolorone;
 }
+.chin {
+  %hrstyle {
+    margin-top: 0.5rem;
+    margin: 0;
+    border: 0;
+    color: $aquabackground;
+    background-color: $aquabackground;
+  }
 
-%hrstyle {
-  margin-top: 0.5rem;
-  margin: 0;
-  border: 0;
-  color: $aquabackground;
-  background-color: $aquabackground;
-}
+  hr {
+    @extend %hrstyle;
+    height: 0.2rem;
+  }
 
-hr {
-  @extend %hrstyle;
-  height: 0.2rem;
-}
-
-.hr-small {
-  @extend %hrstyle;
-  height: 0.02rem;
+  .hr-small {
+    @extend %hrstyle;
+    height: 0.02rem;
+  }
 }

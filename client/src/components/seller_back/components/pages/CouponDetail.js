@@ -1,10 +1,21 @@
-import React from 'react'
+import React,{ useEffect} from 'react'
 import Loading from '../components/Loading'
 import {NavLink} from 'react-router-dom'
 import './Style/CouponDetail.scss'
-
+import Sr from '../ScrollReveal'
 
 function CouponDetail(props) {
+    console.log(props)
+    useEffect(() => {
+       Sr.reveal( 
+        '.card',{ 
+        //  origin: 'right',
+         duration: 1000,
+         delay: 150,
+         distance: '500px',
+         scale: 1,
+         easing: 'ease',} )
+    }, [ props['status'].coupon['result']])
     console.log(props['status'].coupon)
     return (
 
