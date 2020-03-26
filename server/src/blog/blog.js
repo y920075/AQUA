@@ -45,7 +45,7 @@ const db = require(__dirname + '/../db_connect');
 // }
 router.get('/blog', (req, res)=>{
     console.log('')
-    const perPage = 8
+    const perPage = 50
     let where = []
     if (req.query.category) where.push(`\`categoryName\` ='${req.query.category}'`)
     if (req.query.brand) where.push(`\`tagName\` ='${req.query.tag}'`)

@@ -104,17 +104,20 @@ body {
   .lCard,
   .rCard {
     perspective: 100px;
-
     .card {
       // visibility: hidden;
       font-weight: bold;
-        color: $Dg;
+      color: $Dg;
       width: 21rem;
       margin-bottom: 50px;
       box-shadow: 2px 2px 7px 5px #000000;
-      transition: 0.3s;
-      /* transform: translateZ(50px); */
-      /* transform: scale(1.005); */
+      transition: 0.5s;
+      &:hover {
+        transform: matrix3d(0.99,0,0.00,0,0.00,0.99,0.00,0,0,0,1,0,0,0,0,1);
+        // transform: translateZ(-.4px);
+      box-shadow: none;
+        color: $Dg;
+      }
       img:hover{
         cursor: zoom-in;
       }
@@ -122,12 +125,7 @@ body {
         font-weight: bold;
         color: $Dg;
       }
-      &:hover {
-        transform: translateZ(-.4px);
-        box-shadow: none;
-        color: $Dg;
-        /* transform: scale(1); */
-      }
+
       .card-body {
         &:hover{
           cursor: pointer;

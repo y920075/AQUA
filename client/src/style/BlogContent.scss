@@ -148,7 +148,7 @@ body {
       margin: 0 5px 5px 5px;
       padding: 0px 10px;
       &:hover {
-        color: $Lbg;
+        color: black;
         background-color: $Lg;
       }
     }
@@ -158,24 +158,7 @@ body {
     }
 
   }
-  .blogcontentPage {
-    li,
-    a {
-      width: 30px;
-      height: 30px;
-      // border: 1px rgb(255, 255, 255) solid;
-      border-radius: 50%;
-      background-color: $Lbg;
-      align-items: center;
-      justify-content: center;
-      display: flex;
-      margin: 0 3px;
-      a {
-        padding: 10px;
-        color: $Lg;
-      }
-    }
-  }
+
   
   .relatedPost {
     margin: 3.125rem 0px;
@@ -191,7 +174,10 @@ body {
           overflow: hidden;
           perspective: 1000px;
           img {
+            height: 100%;
             width: 100%;
+            background-size: cover;
+            // background-size: cover;
             transition: 0.3s;
             &:hover {
               transform: translateZ(100px);
