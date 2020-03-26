@@ -4,10 +4,6 @@ const categoryData= [
         categoryName: '全部'
     },
     {
-        categoryId: 2,
-        categoryName: '討論'
-    },
-    {
         categoryId: 3,
         categoryName: '教學'
     },
@@ -34,11 +30,16 @@ const categoryData= [
     {
         categoryId: 9,
         categoryName: '揪團'
+    }, 
+    {
+        categoryId: 11,
+        categoryName: '討論'
     },
     {
         categoryId: 10,
         categoryName: '其他'
-    }
+    },   
+
 ]
 
 export  default categoryData

@@ -21,7 +21,7 @@ function getTideDate(){
     .then(function(response){
         const alltidedate = response.data.cwbopendata.dataset.location
         const NEtideinfo =  alltidedate.filter(area => area.locationName === '新北市貢寮區')
-        const weekNEtideinfo = NEtideinfo[0].time.slice(0,7)
+        const weekNEtideinfo = NEtideinfo[0].time.slice(0,3)
         const StationId = NEtideinfo[0].stationId
         const LocationName = NEtideinfo[0].locationName
         
@@ -47,7 +47,7 @@ function getTideDate(){
             }
         }
         const ECtideinfo =  alltidedate.filter(area => area.locationName === '花蓮縣豐濱鄉')
-        const weekECtideinfo = ECtideinfo[0].time.slice(0,7)
+        const weekECtideinfo = ECtideinfo[0].time.slice(0,3)
 
         const ECStationId = ECtideinfo[0].stationId
         const ECLocationName = ECtideinfo[0].locationName 
@@ -70,7 +70,7 @@ function getTideDate(){
             }
         }
         const GItideinfo =  alltidedate.filter(area => area.locationName === '臺東縣綠島鄉')
-        const weekGItideinfo = GItideinfo[0].time.slice(0,7)
+        const weekGItideinfo = GItideinfo[0].time.slice(0,3)
 
         const GIStationId = GItideinfo[0].stationId
         const GILocationName = GItideinfo[0].locationName 
@@ -93,7 +93,7 @@ function getTideDate(){
             }
         }
         const Otideinfo =  alltidedate.filter(area => area.locationName === '臺東縣蘭嶼鄉')
-        const weekOtideinfo = Otideinfo[0].time.slice(0,7)
+        const weekOtideinfo = Otideinfo[0].time.slice(0,3)
 
         const OStationId = Otideinfo[0].stationId
         const OLocationName = Otideinfo[0].locationName 
@@ -116,7 +116,7 @@ function getTideDate(){
             }
         }
         const SCtideinfo =  alltidedate.filter(area => area.locationName === '屏東縣恆春鎮')
-        const weekSCtideinfo = SCtideinfo[0].time.slice(0,7)
+        const weekSCtideinfo = SCtideinfo[0].time.slice(0,3)
 
         const SCStationId = SCtideinfo[0].stationId
         const SCLocationName = SCtideinfo[0].locationName 

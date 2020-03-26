@@ -11,7 +11,7 @@ const getnowseastate = require('./location/getnowseastate')
 // getTIdeData()
 // getWeekDate()
 // getnowseastate()
-
+//一小時
 setInterval(()=>{
     getnowseastate()
 },3600000)
