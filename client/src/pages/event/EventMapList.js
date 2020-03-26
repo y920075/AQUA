@@ -67,18 +67,21 @@ function EventMapList(props) {
     boxList.forEach(value => {
       value.style.display = 'none'
     })
-    eventDataForMap.map(value => {
-      if (
-        ref.getBounds().contains({
-          lat: parseFloat(value.eventLocation_lat),
-          lng: parseFloat(value.eventLocation_lng),
-        })
-      ) {
-        document.querySelector(
-          `div.col-xl-12.col-10.eventInfoBox.eventMapList-JY[data-eventId="${value.eventId}"]`
-        ).style.display = 'block'
-      }
-    })
+    if (eventDataForMap && eventDataForMap.length > 0) {
+      
+      eventDataForMap.map(value => {
+        if (
+          ref.getBounds().contains({
+            lat: parseFloat(value.eventLocation_lat),
+            lng: parseFloat(value.eventLocation_lng),
+          })
+        ) {
+          document.querySelector(
+            `div.col-xl-12.col-10.eventInfoBox.eventMapList-JY[data-eventId="${value.eventId}"]`
+          ).style.display = 'block'
+        }
+      })
+    }
   }
 
   const MyMapComponent = withScriptjs(
