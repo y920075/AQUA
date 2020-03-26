@@ -46,7 +46,10 @@ function EventMapList(props) {
     }, 500)
   }, [props.eventDataForMap])
 
-  useEffect(() => {}, [])
+  //每次按鈕被點擊時，就取得新資料
+  useEffect(() => {
+    getEventData()
+  }, [isEnable])
 
   const getEventData = () => {
     const type = document.querySelector('select[name="type"]').value

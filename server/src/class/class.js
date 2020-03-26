@@ -71,10 +71,16 @@ router.get('/classtype/level',async (req,res)=>{
 */
 router.get('/class',(req,res)=>{
     const perPage = 6;
-    const searchType = req.query.type && !req.query.level ? ` WHERE \`classType\` = '${req.query.type}' ` : '';
-    const searchLevel = req.query.type && req.query.level ? ` WHERE \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
+
+    let where = []
+    if(req.query.type) where.push(`\`classType\` = '${req.query.type}' `)
+    if(req.query.level) where.push(`\`classLevel\` = '${req.query.level}' `)
+    if (!req.query.expired) where.push(`\`classStartDate\` >= NOW()`)
+    if(where.length>0){where = ' WHERE ' + where.join(' AND ')}else{where=''}
+
+
     const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}  , \`classId\` DESC` : ` ORDER BY \`created_at\` DESC , \`classId\` DESC`
-    const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\` ${searchType}${searchLevel}`
+    const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\` ${where}`
     let page = req.query.page ? parseInt(req.query.page) : 1;
     let totalRows;
     let totalPages;
@@ -93,7 +99,7 @@ router.get('/class',(req,res)=>{
             \`classLocation\`,DATE_FORMAT(\`classStartDate\`,'%Y-%m-%d') as classStartDate,\`classIntroduction\`,\`classImg\`,\`classPrice\`
 
                             FROM \`class_data\`
-                            ${searchType}${searchLevel}
+                            ${where}
                             ${sort}
                             LIMIT  ${(page-1)*perPage}, ${perPage}`
             return db.queryAsync(sql);
