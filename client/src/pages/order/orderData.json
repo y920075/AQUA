@@ -1,0 +1,10 @@
+{
+  "orderId": "",
+  "orderMemberId": "",
+  "orderData": [
+    { "orderItemId": "", "checkPrice": "", "checkQty": "" },
+    { "orderItemId": "", "checkPrice": "", "checkQty": "" },
+    { "orderItemId": "", "checkPrice": "", "checkQty": "" },
+    { "orderItemId": "", "checkPrice": "", "checkQty": "" }
+  ]
+}

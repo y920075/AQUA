@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import swal from 'sweetalert2'
 import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
+import { memberCheckOutAsync } from '../../actions/order/order_Actions'
 
 //引入元件
 import Header from '../../components/Header'
@@ -17,7 +18,7 @@ function ShoppingCart(props) {
   const [mycartDisplay, setMycartDisplay] = useState([])
   const [hasLoading, setHasLoading] = useState(false)
   const localCart = JSON.parse(localStorage.getItem('cart'))
-  console.log(JSON.parse(localStorage.getItem('cart')).length)
+  // console.log(JSON.parse(localStorage.getItem('cart')).length)
   function checkOut() {
     if (localCart && localCart.length < 1) {
       alert({
@@ -27,6 +28,7 @@ function ShoppingCart(props) {
       })
     } else {
       // props.changeSteps(1)
+      // props.memberCheckOutAsync(cartData)
     }
   }
 
@@ -63,7 +65,7 @@ function ShoppingCart(props) {
         newMycartDisplay = [...newMycartDisplay, newItem]
       }
     }
-    console.log(newMycartDisplay)
+    console.log('newMycartDisplay', newMycartDisplay)
     setMycartDisplay(newMycartDisplay)
   }, [mycart])
 
