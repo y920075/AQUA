@@ -68,7 +68,7 @@ function EventList(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="./images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="./images/eventImg/eventBanner1.png" />
       <div className="container JY-event-container">
         <EventSearchBar
           eventTypeData={props.eventTypeData}

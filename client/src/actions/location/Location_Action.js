@@ -82,3 +82,63 @@ export const fetchImages = () => {
       })
   }
 }
+//取得海況
+export const getSeastate = data => ({
+  type: 'GET_SEASTATES',
+  value: data,
+})
+export const fetchSeastate = () => {
+  return dispatch => {
+    axios
+      .get('http://localhost:5000/divelocation/seastate')
+      .then(function(response) {
+        // Success
+        const Seastate = response.data
+        dispatch(getSeastate(Seastate))
+      })
+      .catch(function(error) {
+        // Error
+        console.log(error)
+      })
+  }
+}
+//取得一周預報
+export const getWeeklyreport = data => ({
+  type: 'GET_WEEKREPORT',
+  value: data,
+})
+export const fetchWeeklyreport = () => {
+  return dispatch => {
+    axios
+      .get('http://localhost:5000/divelocation/weekweather')
+      .then(function(response) {
+        // Success
+        const Weeklyreport = response.data
+        dispatch(getWeeklyreport(Weeklyreport))
+      })
+      .catch(function(error) {
+        // Error
+        console.log(error)
+      })
+  }
+}
+//取得潮汐預報
+export const getTidereport = data => ({
+  type: 'GET_TIDEREPORT',
+  value: data,
+})
+export const fetchgetTidereport = () => {
+  return dispatch => {
+    axios
+      .get('http://localhost:5000/divelocation/tide')
+      .then(function(response) {
+        // Success
+        const getTidereports = response.data
+        dispatch(getTidereport(getTidereports))
+      })
+      .catch(function(error) {
+        // Error
+        console.log(error)
+      })
+  }
+}

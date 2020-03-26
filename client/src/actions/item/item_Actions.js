@@ -1,4 +1,4 @@
-//取得課程列表資料
+//取得商品列表資料
 export const getItemData = data => ({
   type: 'GET_ITEMDATA',
   value: data,

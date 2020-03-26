@@ -10,6 +10,14 @@ import Footer from '../components/Footer'
 
 function Home() {
   useEffect(() => {
+    // if (localStorage.getItem('cart')) {
+    //   const cart = JSON.parse(localStorage.getItem('cart'))
+    //   this.props.data.cart = cart
+    //   this.setState({ cart })
+    // } else {
+    //   localStorage.setItem('cart', JSON.stringify(this.props.data.cart))
+    // }
+
     sr.reveal('.fst', { delay: 500 })
     AOS.init({
       // initialise with other settings
@@ -23,7 +31,7 @@ function Home() {
         <section className="index-video overflow-hidden">
           <div className="index-video-bg">
             <video
-              src="http://127.0.0.1:5000/video/Big_Buck_Bunny_1080_10s_2MB.mp4"
+              src="http://127.0.0.1:5000/video/indexvideo.mp4"
               loop
               autoPlay
               muted

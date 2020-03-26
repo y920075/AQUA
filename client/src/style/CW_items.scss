@@ -50,6 +50,14 @@ $color5: #f15a24;
             // font-weight: 300;
             cursor: pointer;
             transition: 0.3s;
+            position: relative;
+
+            &:before,
+            &:after {
+              content: '';
+              position: absolute;
+              transition: transform .5s ease;
+            }
 
             &.active {
               color: $color5;
@@ -63,15 +71,34 @@ $color5: #f15a24;
         }
 
         .type-ul {
-          // transition: 0.3s;
           padding-left: 2.3rem;
           height: 0px;
-          // display: none;
           overflow: hidden;
         }
+
+        .type-li,
+        .brand-li,
+        .price-li {
+          overflow: hidden;
+
+          &:before {
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 1px;
+            background: #fff;
+            transform: translateX(-100%);
+          }
+
+          &:hover:before {
+            transform: translateX(0);
+          }
+        }
+
         .brand-ul {
           height: 280px;
           overflow: auto;
+
           &::-webkit-scrollbar {
             display: none;
           }
@@ -131,11 +158,9 @@ $color5: #f15a24;
           }
 
           &-body {
-            .item-name {
-            }
+            .item-name {}
 
-            .item-price {
-            }
+            .item-price {}
           }
         }
       }
@@ -165,8 +190,7 @@ $color5: #f15a24;
     color: #fff;
 
     .detail {
-      &-header {
-      }
+      &-header {}
 
       &-main {
         padding: 0 0.938rem;
@@ -202,20 +226,18 @@ $color5: #f15a24;
 
         .info {
           @media (max-width: 768px) {
+
             //變小時出現
             div {
               margin-top: 1rem;
             }
           }
 
-          &-header {
-          }
+          &-header {}
 
-          &-size {
-          }
+          &-size {}
 
-          &-qty {
-          }
+          &-qty {}
 
           &-btn {
             .addcart-btn {
@@ -250,8 +272,7 @@ $color5: #f15a24;
       margin-bottom: 0;
     }
 
-    .cart-header {
-    }
+    .cart-header {}
 
     .table-wrapper {
       .card {
@@ -271,17 +292,13 @@ $color5: #f15a24;
             }
 
             &-info {
-              .item-name {
-              }
+              .item-name {}
 
-              .item-qty {
-              }
+              .item-qty {}
 
-              .item-price {
-              }
+              .item-price {}
 
-              .item-delete {
-              }
+              .item-delete {}
             }
           }
         }
@@ -289,6 +306,7 @@ $color5: #f15a24;
     }
 
     .check-wrapper {
+
       .card-header,
       .card-body,
       .card-footer {
@@ -322,8 +340,7 @@ $color5: #f15a24;
 
     .form-wrapper {
       .card {
-        &-header {
-        }
+        &-header {}
 
         &-body {
           .form-label {
@@ -347,8 +364,7 @@ $color5: #f15a24;
 
     .check-wrapper {
       .card {
-        &-header {
-        }
+        &-header {}
 
         &-body {
           label {
@@ -381,15 +397,12 @@ $color5: #f15a24;
     }
 
     .order {
-      &-header {
-      }
+      &-header {}
 
-      &-wrapper {
-      }
+      &-wrapper {}
 
       &-detail-wrapper {
-        .order-item {
-        }
+        .order-item {}
       }
     }
 

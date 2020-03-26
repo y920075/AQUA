@@ -56,7 +56,7 @@ function EventDetail(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/eventImg/eventBanner1.png" />
       <div className="container JY-event-container-detail">
         {hasloading ? (
           <Loading />

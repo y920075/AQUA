@@ -166,7 +166,7 @@ function ManageMyEventContent(props) {
                           ''
                         )}
                       </div>
-                      <div className="row">
+                      <div className="row eventContent-MEMBER-JY">
                         <div className="col-sm-5">
                           <div className="card-body">
                             <h5 className="card-title">{value.eventName}</h5>

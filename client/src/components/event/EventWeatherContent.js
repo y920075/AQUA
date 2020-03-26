@@ -28,7 +28,7 @@ function EventWeatherContent(props) {
           ? weatherData.map((value, index) => {
               return (
                 <>
-                  <div className="col-2" key={index}>
+                  <div className="col-xl-2 col-6 weatherInfo" key={index}>
                     <p>{value.date}</p>
                     <figure className="WxImg">
                       <img src={value.WxImg} alt="" />
