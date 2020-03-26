@@ -24,6 +24,12 @@ function BlogAdd(props) {
     // props.getAsideDataAsync()
   }, [])
 
+  let relatedPostData = [];
+  if(props.blogData.result && props.blogData.result.length){
+    relatedPostData = [...props.blogData.result];
+    relatedPostData.sort((_a,b)=>Math.random()-.5);
+    relatedPostData = relatedPostData.slice(0,3);
+  }
 
   const [avatarFile, setAvatarFile] = useState('');
   const [avatarDataFiles, setAvatarDataFiles] = useState('');
@@ -109,39 +115,25 @@ function BlogAdd(props) {
                   </div>
                 </div>    
                 </div>
-                <div className="addHr">
-              <hr align="left" />
-            </div>
-            <div className="relatedPost">
+                <div className="relatedPost">
               <div className="relatedpostTitle">
                 <h5 className="mb-3">相關文章</h5>
               </div>
               <div className="relatedpostContent">
                 <ul>
+                {relatedPostData ? relatedPostData.map((value, index) => {
+                  console.log(value)
+                    return (
+
                   <li>
-                    <Link href="">
+                    <Link to="">
                       <figure>
-                        <img src="./images/blog/card1.jpg" alt="" />{' '}
+                      <img to="" src={'http://localhost:5000/images/blogImg/'+ value.blogImages}/>
                       </figure>
                     </Link>
-                    <h5>放鬆時刻</h5>
+                    <h5>{value.blogTitle}</h5>
                   </li>
-                  <li>
-                    <Link href="">
-                      <figure>
-                        <img src="./images/blog/card2.jpg" alt="" />{' '}
-                      </figure>
-                    </Link>
-                    <h5>跳水假期</h5>
-                  </li>
-                  <li>
-                    <Link href="">
-                      <figure>
-                        <img src="./images/blog/card4.jpg" alt="" />{' '}
-                      </figure>
-                    </Link>
-                    <h5>以自由潛水的方式，認識人之島</h5>
-                  </li>
+                  )}): ''}
                 </ul>
               </div>
             </div>
