@@ -30,6 +30,18 @@ function ClassListCategory(props) {
         <ul className="typeMenu">
           <li>
             <span
+              data-type=""
+              className="levelTitle"
+              onClick={event => {
+                typeMenuActive(event)
+                props.getClassData()
+              }}
+            >
+              查看全部
+            </span>
+          </li>
+          <li>
+            <span
               data-type="AIDA 國際自由潛水證照班"
               className="levelTitle"
               onClick={event => {

@@ -74,7 +74,7 @@ function CouponTableList(props) {
               // getCustomerData(event)
            }}
            key={index}>
-              <td><input type="checkbox" aria-label="Checkbox for following text input"/></td>
+              <td></td>
               <td>{coup_name}</td>
               <td>{datecoup_three}</td>
               <td>{datecoup_four}</td>
@@ -96,7 +96,7 @@ function CouponTableList(props) {
               // getCustomerData(event)
            }}
            key={index}>
-              <td><input type="checkbox" aria-label="Checkbox for following text input"/></td>
+              <td></td>
               <td>{coup_name}</td>
               <td>{datecoup_five}</td>
               <td>{datecoup_six}</td>
