@@ -909,7 +909,7 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.post('/member/class/:classId',upload.none(),(req,res)=>{
-    req.session.memberId = 'M20010002'
+    
     const data = {
         'status':401,
         'msg':'尚未登入'

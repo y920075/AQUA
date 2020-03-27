@@ -46,6 +46,7 @@ export const getClassDataAsync = (type, level, sort, page, isEnable) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }),
+      credentials: 'include',
     })
 
     const response = await fetch(request)
