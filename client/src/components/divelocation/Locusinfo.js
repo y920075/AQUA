@@ -18,6 +18,7 @@ export class Locusinfo extends React.Component {
     currentlocation = DivelocationInfo.filter(
       localinfo => localinfo.LocationID === currentid.LocationID
     )
+    console.log(this.props)
     return (
       <div>
         {currentlocation.map((value, index) => {
