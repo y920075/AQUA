@@ -11,7 +11,7 @@ const getnowseastate = require('./location/getnowseastate')
 // getTIdeData()
 // getWeekDate()
 // getnowseastate()
-
+//一小時
 setInterval(()=>{
     getnowseastate()
 },3600000)
@@ -30,7 +30,28 @@ app.use(session({
         maxAge: 1200000, // session的存活時間 單位毫秒
     }
 }))
-app.use(cors())
+
+const whitelist = [
+    'http://localhost:3000',
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'http://127.0.0.1:3000',
+    undefined,
+];
+
+const corsOptions = {
+    credentials: true,
+    origin: function(origin, callback){
+        console.log('origin:', origin);
+        if(whitelist.indexOf(origin) !== -1){
+            callback(null, true); // 允許
+        } else {
+            callback(null, false); // 不允許
+        }
+    }
+};
+
+app.use(cors(corsOptions))
 app.use(require(__dirname + '/members/member'))
 app.use('/divelocation', require(__dirname+'/location/locationinfo') );
 //評論

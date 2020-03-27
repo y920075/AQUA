@@ -35,16 +35,15 @@ function Blog(props) {
   }, [])
 
   useEffect(() => {
-    sr.reveal('.card', {
+    sr.reveal('.cardHover', {
       // origin: 'bottom',
       duration: 2000,
-      delay: 0,
+      delay: 100,
       distance: '500px',
-      scale: 1,
-      // easing: 'ease',
-      // reset: true,
     })
   }, [props.blogData])
+
+
 
   console.log(props.blogData.result)
 
@@ -87,14 +86,15 @@ function Blog(props) {
               {props.blogData.result
                 ? props.blogData.result.map((value, index) => {
                     
-                       if( value.id%2===0) 
+                  if (value.id % 2 === 0)
                   
                     return (
+                      <div className="cardHover">
                       <div className="card  rounded-lg " key={index}>
                         <RcViewer options={options}>
                           <img
                             className="card-img-top rounded-top "
-                            src="./images/blog/card1.jpg"
+                            src={'http://localhost:5000/images/blogImg/'+ value.blogImages}
                           />
                         </RcViewer>
                         <div className="card-body">
@@ -126,22 +126,23 @@ function Blog(props) {
                           </div>
                         </div>
                       </div>
+                      </div>
                     )
                   })
                 : ''}
               {/* <!--rCard--> */}
             </div>
-
             <div className="col-md-6 rCard">
               {props.blogData.result
                 ? props.blogData.result.map((value, index) => {
                     if (value.id % 2 === 1)
                       return (
+                        <div className="cardHover">
                         <div className="card  rounded-lg ">
                           <RcViewer options={options}>
                             <img
                               className="img-fluid rounded-top "
-                              src="./images/blog/card3.jpg"
+                              src={'http://localhost:5000/images/blogImg/'+ value.blogImages}
                               alt="Card3 image cap"
                             />
                           </RcViewer>
@@ -169,6 +170,7 @@ function Blog(props) {
                               </div>
                             </div>
                           </div>
+                        </div>
                         </div>
                       )
                   })

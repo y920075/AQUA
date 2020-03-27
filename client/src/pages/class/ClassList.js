@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 //引入redux元件
 import { connect } from 'react-redux'
@@ -31,12 +30,17 @@ import EventPageButtons from '../../components/event/EventPageButtons' //課程�
 function Class(props) {
   const [classData, setClassData] = useState([]) //存放課程列表的陣列
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
+  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   //取得初始資料
   useEffect(() => {
     props.getTypeLevelDataAsync()
     props.getClassDataAsync()
   }, [])
+
+  useEffect(() => {
+    getClassData()
+  }, [isEnable])
 
   //判斷資料是否已載入進來
   useEffect(() => {
@@ -61,7 +65,7 @@ function Class(props) {
       : ''
     //取得sort的select的值
     const sort = document.querySelector('select[name="sort"]').value
-    props.getClassDataAsync(type, level, sort, page)
+    props.getClassDataAsync(type, level, sort, page, isEnable)
   }
 
   return (
@@ -77,6 +81,8 @@ function Class(props) {
           <div className="col-xl-9 col-sm-12">
             <ClassSortBar
               getClassData={getClassData}
+              setIsEnable={setIsEnable}
+              isEnable={isEnable}
               searchType={props.classData ? props.classData.searchType : ''}
             />
             {hasloading ? <Loading /> : <ClassDataList classData={classData} />}

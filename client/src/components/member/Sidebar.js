@@ -20,7 +20,7 @@ function Sidebar(props) {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link sidebarlink-hs" to="/memberuser/user">
+          <Link className="nav-link sidebarlink-hs" to="/memberuser/user/:memberId">
             <i className="far fa-user"></i>個人資料
           </Link>
         </li>

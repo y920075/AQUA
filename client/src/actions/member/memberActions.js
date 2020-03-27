@@ -32,7 +32,6 @@ export const userRegisterAsync = (userData, callback) => {
   }
 }
 
-
 //Login
 export const userLogin = userData => ({
   type: 'USER_LOGIN',
@@ -46,13 +45,11 @@ export const userLoginAsync = (userData, callback) => {
     fd.append('loginId', userData.username)
     fd.append('loginPwd', userData.password)
 
-    const request = new Request(
-      'http://localhost:5000/members/login',
-      {
-        method: 'POST',
-        body: fd,
-      }
-    )
+    const request = new Request('http://localhost:5000/members/login', {
+      method: 'POST',
+      body: fd,
+      credentials: 'include',
+    })
     const response = await fetch(request)
     const data = await response.json()
     console.log('res data', data)
@@ -66,14 +63,10 @@ export const userLoginAsync = (userData, callback) => {
         console.log(userData)
         dispatch(userLogin(userData))
         // alert('登入')
-        Swal.fire(
-          '歡迎回來!',
-          'Redirect in 5 seconds...!',
-          'success'
-        )
-        setTimeout(function () {
+        Swal.fire('歡迎回來!', 'Redirect in 5 seconds...!', 'success')
+        setTimeout(function() {
           window.location.href = './memberuser'
-        }, 5000);
+        }, 5000)
       } else {
         Swal.fire({
           icon: 'error',
@@ -91,7 +84,7 @@ export const userLoginAsync = (userData, callback) => {
   }
 }
 
-// get user info 
+// get user info
 export const getuserDetailData = data => ({
   type: 'GET_USERINFO',
   value: data,
@@ -99,7 +92,7 @@ export const getuserDetailData = data => ({
 
 export const getuserDetailDataAsync = memberId => {
   return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/members/${memberId}`, {
+    const request = new Request(`http://127.0.0.1:5000/members/M20030003`, {
       method: 'GET',
       headers: new Headers({
         Accept: 'application/json',
@@ -110,8 +103,10 @@ export const getuserDetailDataAsync = memberId => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(getuserDetailData(data))
+    console.log(getuserDetailData(data))
   }
 }
+<<<<<<< HEAD
 
 
 //從賣家那裏得到優惠券的使用資料
@@ -136,3 +131,5 @@ export const getUserCouponDetaiAsync = (usercoupondata) => {
     dispatch(getUserCouponDetail(data))
   }
 }
+=======
+>>>>>>> 2ec1442104660a92bc9eda1411406bf7f0f687fa

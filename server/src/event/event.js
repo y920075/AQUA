@@ -81,6 +81,7 @@ router.get('/event/type', async (req,res)=>{
     type =    活動類型
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -142,6 +143,7 @@ router.get('/event/map',(req,res)=>{
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -462,6 +464,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
     經緯度由eventFullLocation透過Google API取得後存入
 
     req.body.eventName =            活動名稱
+    req.body.eventType =            活動類別
     req.body.eventTypeId =          活動類別編號
     req.body.eventLocation =        活動地點(縣市)
     req.body.eventFullLocation =    活動地點(完整)
@@ -657,6 +660,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -770,6 +774,7 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -803,7 +808,7 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
-    req.session.memberId = 'M20010002'
+    req.session.memberId = 'M20010004'
 
     let data = {
         'status' : 401,
@@ -843,7 +848,7 @@ router.get('/member/event/join',async (req,res)=>{
 */
 
 router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010002'
+    req.session.memberId = 'M20010004'
     let data = {
         'status' : 401,
         'msg' : '尚未登入'

@@ -6,32 +6,21 @@ import { bindActionCreators } from 'redux'
 import { fetchInfos } from '../../actions/location/Location_Action'
 
 export class Locusinfo extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      currentlocation: [],
-    }
-  }
   componentDidMount() {
     this.props.fetchInfos()
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.LocusInfos !== prevProps.LocusInfos) {
-      const localinfo = this.props.LocusInfos.DivelocationInfo
-      //   console.log(localinfo)
-      const currentid = this.props.match.params
-      //   console.log(currentid)
-      this.setState({
-        currentlocation: localinfo.filter(
-          localinfo => localinfo.LocationID === currentid.LocationID
-        ),
-      })
-    }
-  }
   render() {
+    let { DivelocationInfo = [] } = this.props.LocusInfos
+    //   console.log(localinfo)
+    const currentid = this.props.match.params
+    //   console.log(currentid)
+    let currentlocation
+    currentlocation = DivelocationInfo.filter(
+      localinfo => localinfo.LocationID === currentid.LocationID
+    )
     return (
       <div>
-        {this.state.currentlocation.map((value, index) => {
+        {currentlocation.map((value, index) => {
           return (
             <div key={index}>
               <h2 className="locationh2">{value.LocationName}</h2>

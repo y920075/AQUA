@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
+//引入Google Map組件
 import {
   withScriptjs,
   withGoogleMap,
@@ -23,11 +24,11 @@ import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Footer from '../../components/Footer'
 import Loading from '../../components/class/Loading'
-import EventDataList from '../../components/event/EventDataList'
+import EventMapDataList from '../../components/event/EventMapDataList'
 import EventSearchBar from '../../components/event/EventSearchBar'
 
 function EventMapList(props) {
-  const [eventDataForMap, setEventDataForMap] = useState([])
+  const [eventDataForMap, setEventDataForMap] = useState([]) //存放地圖專用資料
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
@@ -36,6 +37,7 @@ function EventMapList(props) {
     props.getEventTypeDataAsync()
   }, [])
 
+  //每當eventDataForMap改變時就提示載入中
   useEffect(() => {
     setHasLoading(true)
     setTimeout(() => {
@@ -58,14 +60,54 @@ function EventMapList(props) {
     props.getEventDataForMapAsync(type, q, sort, isEnable)
   }
 
+  let ref //建立一個ref，用來接收地圖參照
+
+  //處理地圖邊界改變時的事件
+  const onBoundsChanged = () => {
+    //boxList = 找到所有列表上的資料
+    const boxList = document.querySelectorAll(
+      'div.col-xl-12.col-10.eventInfoBox.eventMapList-JY'
+    )
+    //透過forEach將所有資料隱藏起來
+    boxList.forEach(value => {
+      value.style.display = 'none'
+    })
+
+    if (eventDataForMap && eventDataForMap.length > 0) {
+      eventDataForMap.map(value => {
+        //運用Google Map Api
+        //.getBounds() = 可以取得目前窗口的邊界值
+        //.contains() = 可以確認傳入的經緯度是不是有在剛剛取得的範圍內，有就回傳true
+        if (
+          ref.getBounds().contains({
+            lat: parseFloat(value.eventLocation_lat),
+            lng: parseFloat(value.eventLocation_lng),
+          })
+        ) {
+          //如果有符合的對象，就顯示他們
+          document.querySelector(
+            `div.col-xl-12.col-10.eventInfoBox.eventMapList-JY[data-eventId="${value.eventId}"]`
+          ).style.display = 'block'
+        }
+      })
+    }
+  }
+
   const MyMapComponent = withScriptjs(
     withGoogleMap(props => (
-      <GoogleMap defaultZoom={8} defaultCenter={{ lat: 23.5, lng: 120.8 }}>
+      <GoogleMap
+        defaultZoom={8}
+        ref={mapRef => (ref = mapRef)} //綁定ref到我們定義的ref裡，這樣才能參照到地圖物件，然後取得方法
+        defaultCenter={{ lat: 23.5, lng: 120.8 }}
+        onBoundsChanged={onBoundsChanged}
+        options={{ gestureHandling: 'greedy' }}
+      >
         <MarkerClusterer gridSize={30}>
           {eventDataForMap
-            ? eventDataForMap.map(value => {
+            ? eventDataForMap.map((value, index) => {
                 return (
                   <Marker
+                    key={index}
                     position={{
                       lat: parseFloat(value.eventLocation_lat),
                       lng: parseFloat(value.eventLocation_lng),
@@ -82,8 +124,8 @@ function EventMapList(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="./images/ClassBanner.jpg" />
-      <div className="container JY-event-container-maplist">
+      <Banner BannerImgSrc="./images/eventImg/eventBanner1.png" />
+      <div className="container-fluid JY-event-container-maplist">
         <EventSearchBar
           getEventData={getEventData}
           eventTypeData={props.eventTypeData}
@@ -95,19 +137,19 @@ function EventMapList(props) {
         ) : (
           <>
             <div className="row">
-              <div className="col-9">
+              <div className="col-8">
                 <MyMapComponent
                   isMarkerShown
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`}
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={
-                    <div style={{ width: `100%`, height: `800px` }} />
+                    <div style={{ width: `100%`, height: `1200px` }} />
                   }
                   mapElement={<div style={{ height: `100%` }} />}
                 />
               </div>
-              <div className="col-3 eventListBox">
-                <EventDataList eventData={props.eventDataForMap.result} />
+              <div className="col-4 eventListBox">
+                <EventMapDataList eventData={eventDataForMap} />
               </div>
             </div>
           </>

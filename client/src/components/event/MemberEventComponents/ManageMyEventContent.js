@@ -9,7 +9,7 @@ import SwitchButton from './SwitchButton' //切換過期資料按鈕
 /*
   傳入參數
     nowClickTag = 現在點擊的頁籤
-    memberEventDataSelf = 會員自己發起的所有活動資料/會員報名的所有活動資料 依據tag而有不同
+    memberEventDataSelf = 會員自己發起的所有活動資料/會員報名的所有活動資料 依據nowClickTag而有不同
     delEventDataResponse = 會員刪除活動之後，後端回傳的資料
     memberUnJoinEventResponse = 會員取消報名資後，後端回傳的資料
     
@@ -166,7 +166,7 @@ function ManageMyEventContent(props) {
                           ''
                         )}
                       </div>
-                      <div className="row">
+                      <div className="row eventContent-MEMBER-JY">
                         <div className="col-sm-5">
                           <div className="card-body">
                             <h5 className="card-title">{value.eventName}</h5>
@@ -194,7 +194,7 @@ function ManageMyEventContent(props) {
                             )}
                             {props.nowClickTag === 2 ? (
                               <Link
-                                to={'event/' + value.eventId}
+                                to={'/event/' + value.eventId}
                                 className="btn btn-primary"
                               >
                                 詳情
