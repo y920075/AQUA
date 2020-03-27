@@ -99,7 +99,7 @@ export const getuserDetailData = data => ({
 
 export const getuserDetailDataAsync = memberId => {
   return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/members/${memberId}`, {
+    const request = new Request(`http://127.0.0.1:5000/members/M20030003`, {
       method: 'GET',
       headers: new Headers({
         Accept: 'application/json',
@@ -110,6 +110,7 @@ export const getuserDetailDataAsync = memberId => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(getuserDetailData(data))
+    console.log(getuserDetailData(data))
   }
 }
 

@@ -31,7 +31,7 @@ import MemberUser from './pages/members/MemberUser'
 import Home from './pages/Home'
 
 function App(props) {
-  console.log(props)
+  // console.log(props)
   return (
     <Router>
       <>
