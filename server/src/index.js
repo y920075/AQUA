@@ -9,7 +9,7 @@ const getWeekDate =  require('./location/getweekweather')
 const getnowseastate = require('./location/getnowseastate')
 //執行資料自動寫入DB
 // getTIdeData()
-// getWeekDate()
+getWeekDate()
 // getnowseastate()
 //一小時
 setInterval(()=>{
@@ -83,6 +83,8 @@ app.use('/seller', require(__dirname+'/basic_information/basic_information') );
 //引用顧客管理
 app.use('/seller/customermanager', require(__dirname+'/customermanagement/customermanagement') );
 
+//引用前端getcoupon資料
+// app.use('/seller/getcoupon', require(__dirname+'/coupon/couponget') );
 
 
 

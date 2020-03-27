@@ -371,7 +371,9 @@ router.get('/user-coupondata',(req,res)=>{
     \`coup01_allorder\`.\`coup_code\` AS order_coup_code,\`coup02_goods\`.\`coup_code\` AS goods_coup_code,\`coup03_givi\`.\`coup_code\` AS givi_coup_code,  
     \`coup01_allorder\`.\`coup_start\` AS order_coup_start,\`coup02_goods\`.\`coup_start\` AS goods_coup_start,\`coup03_givi\`.\`coup_start\` AS givi_coup_start,  
     \`coup01_allorder\`.\`coup_end\` AS order_coup_end,\`coup02_goods\`.\`coup_end\` AS goods_coup_end,\`coup03_givi\`.\`coup_end\` AS givi_coup_end,
-    \`coup01_allorder\`.\`coup_img\` AS order_coup_img,\`coup02_goods\`.\`coup_img\` AS goods_coup_img,\`coup03_givi\`.\`coup_img\` AS givi_coup_img  
+    \`coup01_allorder\`.\`coup_img\` AS order_coup_img,\`coup02_goods\`.\`coup_img\` AS goods_coup_img,\`coup03_givi\`.\`coup_img\` AS givi_coup_img,
+    \`coup01_allorder\`.\`coup_over\` AS order_over,\`coup02_goods\`.\`coup_over\` AS goods_over,\`coup03_givi\`.\`coup_over\` AS givi_over,
+    \`coup01_allorder\`.\`coup_PriOrPer\` AS order_pri_perc,\`coup02_goods\`.\`coup_PriOrPer\` AS goods_pri_perc
     FROM \`couptomember\` 
     LEFT JOIN \`coup01_allorder\` ON \`couptomember\`.\`coup_code\` = \`coup01_allorder\`.\`coup_code\` 
     LEFT JOIN \`coup03_givi\` ON \`couptomember\`.\`coup_code\` = \`coup03_givi\`.\`coup_code\`
@@ -393,26 +395,14 @@ router.get('/user-coupondata',(req,res)=>{
     // user_coupon.forEach((elm,idx)=>{
     //     console.log(elm)
     //     if(elm.coup_code.substr(0,2) == "II" || elm.coup_code.substr(0,2) == "PI" || elm.coup_code.substr(0,2) == "PM" || elm.coup_code.substr(0,2) == "PI"){
-    //         const sql_order_one = `SELECT * FROM \`coup01_allorder\` WHERE \`coup_code\` = "${elm.coup_code}" or `
-    //         db.queryAsync(sql_order_one)
-    //         .then(r=>{
-    //             return r
-    //         })
+    //       
     //     }else if(elm.coup_code.substr(0,3) == "III" || elm.coup_code.substr(0,3) == "PII" || elm.coup_code.substr(0,3) == "PMI" || elm.coup_code.substr(0,3) == "IMI"){
-    //         const sql_item_two = `SELECT * FROM \`coup02_goods\` WHERE \`coup_code\` = "${elm.coup_code}"`
-    //         db.queryAsync(sql_item_two)
-    //         .then(r=>{
-    //             return r
-
-    //         })
+    //       
+    //        
     //     }else{
-    //         const sql_givi_three = `SELECT * FROM \`coup03_givi\` WHERE \`coup_code\` = "${elm.coup_code}"`
-    //         db.queryAsync(sql_givi_three)
-    //         .then(r=>{
-    //             return r
+    //        
 
-
-    //         })
+    //        
     //     }
 
         
