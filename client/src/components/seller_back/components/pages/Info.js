@@ -37,7 +37,7 @@ function Info(props) {
         return basic_info.map((value,index)=>{
           console.log(JSON.parse(value.shop_img))
           return(
-        <div className="col-lg-6" key={index} >
+        <div className="col-lg-6 chin" key={index} >
           <div className="pb-3 flex-column text-center">
                 <div className="mb-3">
                 <div>
@@ -112,7 +112,7 @@ props.sellerInfo ? (
 
   return (
  
-  <div className="container-fluid">
+  <div className="container-fluid chin">
   <div className="py-4 d-flex justify-content-between">
  
     <h2 className="mb-3">基本資料:</h2>

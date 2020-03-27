@@ -15,7 +15,10 @@ function ClassDataList(props) {
         props.classData.map((value, index) => {
           return (
             <Fade bottom>
-              <div className="row classBox" key={index}>
+              <div
+                className={index === 0 ? 'row classBox mt-0' : 'row classBox'}
+                key={index}
+              >
                 <div className="col-xl-7 col-12 classImgBox">
                   <img
                     src={

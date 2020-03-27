@@ -73,7 +73,6 @@ class event {
                     ${sort}`
         return sql
     }
-
     //取得所有活動資料
     static getAllEventData(query,totalPages,perPage){
         let where = []

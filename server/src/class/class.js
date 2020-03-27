@@ -43,6 +43,7 @@ router.get('/classtype/level',async (req,res)=>{
     level =   課程等級
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
     
     預計傳送回去的資料
     {
@@ -71,10 +72,16 @@ router.get('/classtype/level',async (req,res)=>{
 */
 router.get('/class',(req,res)=>{
     const perPage = 6;
-    const searchType = req.query.type && !req.query.level ? ` WHERE \`classType\` = '${req.query.type}' ` : '';
-    const searchLevel = req.query.type && req.query.level ? ` WHERE \`classType\` = '${req.query.type}' AND \`classLevel\` = '${req.query.level}' ` : '';
+
+    let where = []
+    if(req.query.type) where.push(`\`classType\` = '${req.query.type}' `)
+    if(req.query.level) where.push(`\`classLevel\` = '${req.query.level}' `)
+    if (!req.query.expired) where.push(`\`classStartDate\` >= NOW()`)
+    if(where.length>0){where = ' WHERE ' + where.join(' AND ')}else{where=''}
+
+
     const sort = req.query.sort ? ` ORDER BY \`${req.query.sort.split(',')[0]}\` ${req.query.sort.split(',')[1]}  , \`classId\` DESC` : ` ORDER BY \`created_at\` DESC , \`classId\` DESC`
-    const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\` ${searchType}${searchLevel}`
+    const total_sql = `SELECT COUNT(1) as 'rows' FROM \`class_data\` ${where}`
     let page = req.query.page ? parseInt(req.query.page) : 1;
     let totalRows;
     let totalPages;
@@ -93,7 +100,7 @@ router.get('/class',(req,res)=>{
             \`classLocation\`,DATE_FORMAT(\`classStartDate\`,'%Y-%m-%d') as classStartDate,\`classIntroduction\`,\`classImg\`,\`classPrice\`
 
                             FROM \`class_data\`
-                            ${searchType}${searchLevel}
+                            ${where}
                             ${sort}
                             LIMIT  ${(page-1)*perPage}, ${perPage}`
             return db.queryAsync(sql);
@@ -220,8 +227,8 @@ router.get('/class/:classId',(req,res)=>{
     現在人數由後台預設為0
 
     req.body.className = 課程名稱(50字內)
-    req.body.classTypeId = 課程類型
-    req.body.classLevelId = 課程等級
+    req.body.classTypeId = 課程類型編號
+    req.body.classLevelId = 課程等級編號
     req.body.classLocation = 課程地點(縣市)
     req.body.classFullLocation = 課程地點(完整)
     req.body.classStartDate = 開課日期(input type="datetime-local")
@@ -430,6 +437,7 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
     level =   課程等級
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否包含已過期資料
     req.session.seller_id = 賣家ID
 
     預計傳送回去的資料
@@ -554,7 +562,9 @@ router.get('/seller/class',(req,res)=>{
             {
                 className =             課程名稱
                 classType =             課程類型
+                classTypeId =           課程類型編號
                 classLevel =            課程等級
+                classLevelId =          課程等級編號
                 classDate =             開課日期
                 classLocation =         開課地點(縣市)
                 classFullLocation =     開課地點(完整)
@@ -899,7 +909,7 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.post('/member/class/:classId',upload.none(),(req,res)=>{
-    req.session.memberId = 'M20010002'
+    
     const data = {
         'status':401,
         'msg':'尚未登入'
@@ -977,6 +987,7 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
     level =   課程等級
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
     req.session.memberId = 會員編號
 
     預計傳送回去的資料

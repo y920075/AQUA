@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
 
 //引入redux元件
 import { connect } from 'react-redux'
@@ -56,7 +55,7 @@ function EventDetail(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/eventImg/eventBanner1.png" />
       <div className="container JY-event-container-detail">
         {hasloading ? (
           <Loading />

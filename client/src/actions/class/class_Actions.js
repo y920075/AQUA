@@ -25,7 +25,7 @@ export const getClassData = data => ({
   value: data,
 })
 
-export const getClassDataAsync = (type, level, sort, page) => {
+export const getClassDataAsync = (type, level, sort, page, isEnable) => {
   return async dispatch => {
     let query = []
 
@@ -33,6 +33,7 @@ export const getClassDataAsync = (type, level, sort, page) => {
     if (level) query.push(`level=${level.trim()}`)
     if (sort) query.push(`sort=${sort.trim()}`)
     if (page) query.push(`page=${page.trim()}`)
+    if (isEnable) query.push(`expired=1`)
     if (query.length > 0) {
       query = query.join('&')
     } else {
@@ -45,6 +46,7 @@ export const getClassDataAsync = (type, level, sort, page) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }),
+      credentials: 'include',
     })
 
     const response = await fetch(request)

@@ -37,7 +37,7 @@ itemRouter.get('/items', (req, res)=>{
     let page = req.query.page ? parseInt(req.query.page) : 1
 
     const total = `SELECT COUNT(DISTINCT \`itemName\`) num FROM \`items\` WHERE \`itemStatus\` = 'active' ${where}`
-    console.log('total',total)
+    // console.log('total',total)
     db.queryAsync(total)
         .then(result=>{
             totalRows = result[0].num
@@ -137,6 +137,7 @@ itemRouter.get('/member/orders', (req, res)=>{
     console.log('賣家訂單列表請求')
     const perPage = 10
     let where = []
+    req.session.memberId = 'M20010002'
     const memberSession = req.session.memberId
     if (req.query.memberId) {
         where.push(`\`orderMemberId\` = '${req.query.memberId}'`)
@@ -193,6 +194,41 @@ itemRouter.get('/member/orders', (req, res)=>{
 })
 
 // 訂單新增
+itemRouter.post('/member/checkout', upload.none(), (req, res)=>{
+
+    const memberId = 'M20010002'
+    const orderData = req.body.orderData 
+    // 是陣列 裡面物件有 itemid checkprice checkty
+
+    let totalorder //先算出總筆數
+    const total = `SELECT COUNT(DISTINCT \`orderId\`) num FROM \`orders\``
+    db.queryAsync(total)
+    .then(result=>{
+        totalorder = 'O200401'+(result[0].num+1)
+        console.log(totalorder)
+
+        const sql = `INSERT INTO \`orders\`(
+            \`orderId\`, 
+            \`orderMemberId\`, 
+            \`orderItemId\`, 
+            \`checkPrice\`, 
+            \`checkQty\`, 
+            \`checkSubtotal\`) 
+            VALUES (${totalorder},${memberId},?,?,?,?)`
+        for (let i = 0; i < orderData.length; i++) {
+            db.queryAsync(sql, [
+                orderData[i].orderItemId,
+                orderData[i].checkPrice,
+                orderData[i].checkQty,
+                orderData[i].checkSubtotal
+            ])        
+        }
+    })
+})
+
+
+
+
 itemRouter.post('/member/mycart', upload.none(), (req, res)=>{
     console.log('賣家訂單新增')
     const sql = `INSERT INTO \`orders\`(
