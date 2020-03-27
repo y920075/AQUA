@@ -24,7 +24,10 @@ function MemberCoupon(props){
                           <div
                               className="card-header py-1 d-flex justify-content-between align-items-center"
                             >
-                              <p >優惠編號：{value.coup_id}</p>
+                              <p >優惠編號：{value.order_coup_code ? value.order_coup_code : <h2 hidden>其他種類的優惠編號 </h2>}
+                              {value.givi_coup_code ? value.givi_coup_code : <h2 hidden>其他種類的優惠編號 </h2>}
+                              {value.goods_coup_code ? value.goods_coup_code : <h2 hidden>其他種類的優惠編號 </h2>}
+                              </p>
 
                             </div>
                             <div className="row">
@@ -32,19 +35,31 @@ function MemberCoupon(props){
                                 <div className="card-body">
                                   <h5 className="card-title">優惠名稱:{value.coup_name}</h5>
                                   <p className="card-text">
-                                    類型：{value.coup_cate_id == "coup002" ? "商品優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
-                                    {value.coup_cate_id == "coup001" ? "全單滿額類型優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
-                                    {value.coup_cate_id == "coup003" ? "贈品類型優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
+                                    類型：{value.goods_cate_id == "coup002" ? "商品優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
+                                    {value.order_cate_id == "coup001" ? "全單滿額類型優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
+                                    {value.givi_cate_id == "coup003" ? "贈品類型優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
 
                                   </p>
                                   <p className="card-text">
-                                    折扣碼：{value.coup_code}
-                                  </p>
+                                    折扣碼：{value.goods_coup_code ? value.goods_coup_code : <h2 hidden>"其他種類coup_code"</h2>}
+                                          {value.order_coup_code ? value.order_coup_code : <h2 hidden>"其他種類coup_code"</h2>} 
+                                          {value.givi_coup_code ? value.givi_coup_code : <h2 hidden>"其他種類coup_code"</h2>} 
+
+                                                                           </p>
+                               
                                   <p className="card-text">
-                                    起始日期：{value.coup_start}
+                                    起始日期：
+                                    {value.givi_coup_start ? value.givi_coup_start : <h2 hidden>"其他種類coup_start"</h2>} 
+                                    {value.order_coup_start ? value.order_coup_start : <h2 hidden>"其他種類coup_start"</h2>} 
+                                    {value.goods_coup_start ? value.goods_coup_start : <h2 hidden>"其他種類coup_start"</h2>} 
+
                                   </p>
                                   <p className="card-text">
                                   結束日期：{value.coup_end}
+                                  {value.givi_coup_end ? value.givi_coup_end : <h2 hidden>"其他種類coup_end"</h2>} 
+                                  {value.order_coup_end ? value.order_coup_end : <h2 hidden>"其他種類coup_end"</h2>} 
+                                  {value.goods_coup_end ? value.goods_coup_end : <h2 hidden>"其他種類coup_end"</h2>} 
+
                                   </p>
                                   {/* <Link
                                     className="btn btn-primary"
@@ -55,11 +70,33 @@ function MemberCoupon(props){
                                 </div>
                               </div>
                               <div className="col-sm-6">
-                                <img
+                                {<img
                                  height="250"
-                                  src={"http://localhost:5000/images/coup/" + value.coup_img}
+                                  src={"http://localhost:5000/images/coup/" + value.order_coup_img }
                                   alt=""
-                                />
+                                /> ? <img
+                                 height="250"
+                                  src={"http://localhost:5000/images/coup/" + value.order_coup_img}
+                                  alt=""
+                                /> :<img hidden/>}
+                                  {<img
+                                 height="250"
+                                  src={"http://localhost:5000/images/coup/" + value.goods_coup_img}
+                                  alt=""
+                                /> ? <img
+                                 height="250"
+                                  src={"http://localhost:5000/images/coup/" + value.goods_coup_img}
+                                  alt=""
+                                /> :<img hidden/>}
+                                  {<img
+                                 height="250"
+                                  src={"http://localhost:5000/images/coup/" + value.givi_coup_img}
+                                  alt=""
+                                /> ? <img
+                                 height="250"
+                                  src={"http://localhost:5000/images/coup/" + value.givi_coup_img}
+                                  alt=""
+                                /> :<img hidden/>}
                               </div>
                             </div>
                           </div>

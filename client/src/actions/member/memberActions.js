@@ -120,7 +120,7 @@ export const getUserCouponDetail = data => ({
   value: data,
 })
 
-export const getUserCouponDetaiAsync = usercoupondata => {
+export const getUserCouponDetaiAsync = (usercoupondata) => {
   return async dispatch => {
     const request = new Request(`http://127.0.0.1:5000/seller/customermanager/user-coupondata`, {
       method: 'GET',
