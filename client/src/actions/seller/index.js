@@ -465,6 +465,36 @@ export const customerMailDataAsync = (mailData, callback) => {
   }
 }
 
+//對於前端輸入的優惠馬去後台抓取資料
+
+
+export const getNowCoupData = data => ({
+  type: 'NOWCOUPDATA',
+  value: data,
+})
+export const getNowCoupDataAsync = (getCoupData, callback) => {
+  return async dispatch => {
+    const request = new Request(
+      `http://localhost:5000/seller/getcoupon/usercouponget`,
+
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(getNowCoupData(data))
+  }
+}
+
+
 //----------------------賣家中心課程相關action----------------
 
 //取得賣家自己的課程資料
