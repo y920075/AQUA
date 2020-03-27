@@ -10,15 +10,7 @@ function EventDataList(props) {
       <div className="row">
         {props.eventData && props.eventData.length > 0 ? (
           props.eventData.map((value, index) => {
-            // 變數 status = 判斷目前人數或時間決定顯示什麼
-            let status = '火熱揪團中'
             let progress = (value.eventNowPeople / value.eventNeedPeople) * 100
-
-            if (value.eventNeedPeople === value.eventNowPeople)
-              status = '已額滿'
-
-            if (new Date(value.eventEndDate).getTime() < new Date().getTime())
-              status = '已過期'
 
             return (
               <Fade right key={index}>
@@ -67,7 +59,6 @@ function EventDataList(props) {
                           活動日期：{value.eventStartDate}
                         </li>
                       </ul>
-                      <p className="status">{status}</p>
                       <p className="quota">
                         徵求 <span>{value.eventNeedPeople}</span> 人 還剩{' '}
                         <span>

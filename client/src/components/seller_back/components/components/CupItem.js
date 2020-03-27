@@ -7,18 +7,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { insertSellerNewInsertCouponAsync } from '../../../../actions/seller'
+import {cateData} from './itemType'
 
 
 
-// function CupItem(props) {
-//     console.log(props.item.coupon)
-//     return(
-//         <>
-//         </>
-//     )
-// }
 function CupItem(props) {
-    console.log(props.item.coupon['table7'])
+  console.log(props)
+    console.log(cateData.typeData)
     const [coup_cate_id,setCoup_cate_id] = useState("coup002")
 
     const [item,setItem] = useState(null)
@@ -69,11 +64,8 @@ function CupItem(props) {
         props.insertSellerNewInsertCouponAsync()
       },[]);
 
-    // console.log(props.order.coupon["overprice"])
     const handleCoupChange = (event) => {
-        console.log(event.target.files)
         setCoupFile(URL.createObjectURL(event.target.files[0]))
-        console.log(event.target.files[0])
         setCoupDataFiles(event.target.files[0])
  
       }
@@ -106,7 +98,6 @@ function CupItem(props) {
         // const form = event.target;
         // const coup_data = new FormData(form);
 
-        // console.log(coup_data)
 
 
 
@@ -185,7 +176,6 @@ function CupItem(props) {
        
        
         props.insertSellerNewInsertCouponAsync(coupon_fd, () => alert('成功新增'))
-        // console.log(props.insertSellerNewInsertCouponAsync());
       }
    
     return (
@@ -213,8 +203,8 @@ function CupItem(props) {
                 <div className="form-group my-3 input-text-middle-chin">
                 <select name="itemType" className="custom-select" onChange={event =>setItem(event.target.value)}>
                 <option defaultValue="套用商品種類">套用商品種類</option>
-                 { props.item.coupon['table7']?( props.item.coupon['table7'].map((item,index) => {
-                      return <option key={index} value={item.itemTypeId}>{item.itemTypeId}</option>
+                 { cateData ?( cateData.map((item,index) => {
+                      return <option key={index} value={item.itemCategory}>{item.itemCategory}</option>
 
                 })):<h2>沒有從上層傳過來的資料</h2>
                     }

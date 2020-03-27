@@ -48,26 +48,34 @@ $fontcolor: #FFFF;
     }
 }
 .regionwether{
-    height: 730px;
+    min-height: 730px;
 }
 .nav-item{
     color: #FFFF !important;
 }
 .weathertable{
+    overflow: auto;
+    max-height: 100%;
     thead{
         th{
             height: 50px;
-            width: 150px;
+            min-width: 150px;
             background-color: #31445F;
             text-align: center;
+            color: #FFFF;
         }
     }
     tr{
         td{
             height: 50px;
-            width: 150px;
+            min-width: 150px;
             background-color: #31445F;
             text-align: center;
+            color: #FFFF;
+        }
+        .WeatherDescription{
+            text-align: left;
+            color: #FFFF;
         }
     }
 }
