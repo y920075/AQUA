@@ -42,7 +42,6 @@ const whitelist = [
 const corsOptions = {
     credentials: true,
     origin: function(origin, callback){
-        console.log('origin:', origin);
         if(whitelist.indexOf(origin) !== -1){
             callback(null, true); // 允許
         } else {
@@ -84,6 +83,8 @@ app.use('/seller', require(__dirname+'/basic_information/basic_information') );
 //引用顧客管理
 app.use('/seller/customermanager', require(__dirname+'/customermanagement/customermanagement') );
 
+//引用前端getcoupon資料
+// app.use('/seller/getcoupon', require(__dirname+'/coupon/couponget') );
 
 
 

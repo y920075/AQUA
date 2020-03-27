@@ -101,11 +101,13 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
                 req.session.password = login_info.loginPwd;
                 req.session.username = login_info.loginId;
                 req.session.memberId = login_info.memberId;
+                console.log(req.session)
                 res.json(login_info)//傳輸資料到前端
             } else {
                 res.json(login_info)
             }
         })
+        
 });
 
 

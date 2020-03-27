@@ -18,6 +18,7 @@ import Loading from '../../components/class/Loading' //載入中圖示
 import EventDataList from '../../components/event/EventDataList' //活動資料列表
 import EventSearchBar from '../../components/event/EventSearchBar' //活動搜索框
 import EventPageButtons from '../../components/event/EventPageButtons' //活動頁數按鈕
+import { Link } from 'react-router-dom'
 
 /*
   store參數 props.eventTypeData = 活動類別資料
@@ -68,6 +69,11 @@ function EventList(props) {
     <>
       <Header />
       <Banner BannerImgSrc="./images/eventImg/eventBanner1.png" />
+      <div className="d-flex justify-content-center">
+        <Link to="/eventmaplist" type="button" class="btn btn-outline-primary">
+          用地圖查找
+        </Link>
+      </div>
       <div className="container JY-event-container">
         <EventSearchBar
           eventTypeData={props.eventTypeData}
