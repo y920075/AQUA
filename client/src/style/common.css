@@ -1,0 +1,17 @@
+.footbody {
+  width: 100%;
+  height: 100px;
+  background-color: #31445f;
+}
+.aqualogo {
+  width: 100px;
+  height: 30px;
+  background-image: url(../image/aquaLogo.png);
+  background-repeat: no-repeat;
+}
+.footlink a {
+  color: white;
+}
+.footbody p {
+  color: white;
+}
