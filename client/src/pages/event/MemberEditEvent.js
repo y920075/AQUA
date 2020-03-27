@@ -69,6 +69,7 @@ function MemberEditEvent(props) {
     )
   }, [addressDist])
 
+  //把取得的資料放進本地state
   useEffect(() => {
     if (props.memberEventDetailData.eventData) {
       props.getDistDataAsunc(
