@@ -75,6 +75,14 @@ app.get('/try-db', (req, res)=> {
     })
 })
 
+//賣家相關路由
+//引用coupon
+app.use('/seller/coupon', require(__dirname+'/coupon/coupon') );
+app.use('/seller', require(__dirname+'/basic_information/basic_information') );
+
+
+//引用顧客管理
+app.use('/seller/customermanager', require(__dirname+'/customermanagement/customermanagement') );
 
 
 
