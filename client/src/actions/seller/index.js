@@ -444,21 +444,20 @@ export const customerMailData = data => ({
 export const customerMailDataAsync = mailData => {
   return async dispatch => {
     // {
-      //   "employee":{ "name":"John", "age":30, "city":"New York" }
-      //   }
-      const json = JSON.stringify(mailData)
-      console.log(json)
+    //   "employee":{ "name":"John", "age":30, "city":"New York" }
+    //   }
+    const json = JSON.stringify(mailData)
+    console.log(json)
     const request = new Request(
       'http://localhost:5000/seller/customermanager/customer-mail',
       {
         method: 'POST',
         body: json,
         headers: new Headers({
-                        'Accept' : 'application/json',
+          Accept: 'application/json',
 
-                        'Content-Type': 'application/json'
-                  
-                      }),
+          'Content-Type': 'application/json',
+        }),
       }
     )
     console.log(JSON.stringify(mailData))
