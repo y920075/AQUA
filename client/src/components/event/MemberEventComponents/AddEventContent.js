@@ -7,12 +7,15 @@ import EventPageButtons from '../EventPageButtons'
 
 /*
   傳入參數
-  
-
+  typeData = 類型資料
+  cityData = 全台城市資料
+  distData = 相對應地區資料
   傳入方法
-  
+  addEventDataResponse = 新增完成之後，後端回傳的資料
+  handleGetDistData = 處理取得地區資料的action
+  addEventDataAsunc = 新增活動資料的action
 
-  
+  2020-03-26
 */
 
 function AddEventContent(props) {
@@ -39,7 +42,6 @@ function AddEventContent(props) {
       if (props.addEventDataResponse.status === 201) {
         SweetAlert.success('已成功新增一筆資料!')
         setResponse(false)
-        props.setNowClickTag(1)
       } else {
         SweetAlert.errorAlert(
           props.addEventDataResponse.status,

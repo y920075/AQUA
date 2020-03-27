@@ -41,7 +41,8 @@ function CupOrder(props) {
     const [coupTimes, setCoupTimes] = useState(0)
 
     //優惠碼
-    const [coupCode, setCoupCode] = useState(props.order.coupon["code1"])
+    const code = props.order.coupon["code1"]
+    const [coupCode, setCoupCode] = useState(code)
 
     //優惠id
     const [coupId, setcoupId] = useState(props.order.coupon["coup_id"])
@@ -77,8 +78,69 @@ function CupOrder(props) {
         // 修改 state
         setMinusorpercent({ isEnable: !minusorpercent.isEnable });
       }
+      useEffect(() => {
+        if (price.isEnable == true && minusorpercent.isEnable == true) {
+           setCoupCode("PM" + code)
+        } else if(price.isEnable == false && minusorpercent.isEnable == true){
+          setCoupCode("IM" + code)
+        } else if(price.isEnable == true && minusorpercent.isEnable == false){
+            setCoupCode("PI" + code)
+        }else {
+          setCoupCode("II" + code)
+        }
 
+      }, [price.isEnable, minusorpercent.isEnable])
+      // let input = ( <input
+      //             readOnly 
+      //             type="text"
+      //             name="coup_code"
+      //             className="form-control my-3"
+      //             id="exampleInputPassword1"
+      //             defaultValue={"PM" + coupCode}
+      //             onChange={(event) => {setCoupCode(event.target.value)}}
+      //                />)
 
+      // if (price.isEnable == true && minusorpercent.isEnable == true) {
+      //   input = <input
+      //                     readOnly 
+      //                     type="text"
+      //                     name="coup_code"
+      //                     className="form-control my-3"
+      //                     id="exampleInputPassword1"
+      //                     defaultValue={"PM" + coupCode}
+      //                     // onChange={(event) => {setCoupCode(event.target.value)}}
+      //                 />;
+      // } else if(price.isEnable == false && minusorpercent.isEnable == true){
+      //   input = <input
+      //           readOnly 
+      //           type="text"
+      //           name="coup_code"
+      //           className="form-control my-3"
+      //           id="exampleInputPassword1"
+      //           defaultValue={"IM" + coupCode}
+                
+      //       />;
+      // } else if(price.isEnable == true && minusorpercent.isEnable == false){
+      //   input = <input
+      //             readOnly 
+      //             type="text"
+      //             name="coup_code"
+      //             className="form-control my-3"
+      //             id="exampleInputPassword1"
+      //             defaultValue={"PP" + coupCode}
+      //             // onChange={(event) => {setCoupCode(event.target.value)}}
+      //         />;
+      // }else {
+      //   input = <input
+      //           readOnly 
+      //           type="text"
+      //           name="coup_code"
+      //           className="form-control my-3"
+      //           id="exampleInputPassword1"
+      //           defaultValue={"IP" + coupCode}
+      //           // onChange={(event) => {setCoupCode(event.target.value)}}
+      //       />;
+      // }
       const handleSubmit = e =>{
         let error = false
         let errorMessages = []
@@ -234,17 +296,17 @@ function CupOrder(props) {
                     </div>
                 <div className="form-group my-3">
                         <label htmlFor="exampleInputPassword1">優惠券密碼(無需自行輸入)</label>
+                   
                         <input
                             readOnly 
                             type="text"
                             name="coup_code"
                             className="form-control my-3"
                             id="exampleInputPassword1"
-                            defaultValue={coupCode}
-                            onChange={(event) => {setCoupCode(event.target.value)}}
-
-                        />
-                        
+                            // defaultValue={"PM" + coupCode}
+                            value={coupCode}
+                            // onChange={(event) => {setCoupCode(event.target.value)}}
+                              />
                         </div>
                  
                 </div>

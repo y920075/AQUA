@@ -16,6 +16,7 @@ import UserEvent from '../../pages/event/MemberEvent'
 import UserOrder from '../mContent/UserOrder'
 import UserBlog from '../mContent/UserBlog'
 import UserMessage from '../mContent/UserMessage'
+import MemberCoupon from '../mContent/MemberCoupon'
 import image from '../../image/memberImage/coralreef.jpg'
 
 function MemberUser() {
@@ -48,6 +49,9 @@ function MemberUser() {
               </Route>
               <Route path="/memberuser/message">
                 <UserMessage />
+              </Route>
+              <Route path="/memberuser/coupon">
+                <MemberCoupon />
               </Route>
             </Switch>
           </div>

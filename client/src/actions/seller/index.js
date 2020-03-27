@@ -441,32 +441,26 @@ export const customerMailData = data => ({
   type: 'MAIL_TRANSFER',
   value: data,
 })
-export const customerMailDataAsync = mailData => {
+export const customerMailDataAsync = (mailData, callback) => {
   return async dispatch => {
-    // {
-      //   "employee":{ "name":"John", "age":30, "city":"New York" }
-      //   }
-      const json = JSON.stringify(mailData)
-      console.log(json)
+    const json = JSON.stringify(mailData)
     const request = new Request(
-      'http://localhost:5000/seller/customermanager/customer-mail',
+      'http://localhost:5000/seller/customermanager/customer-coupon-insert',
       {
         method: 'POST',
         body: json,
         headers: new Headers({
-                        'Accept' : 'application/json',
-
-                        'Content-Type': 'application/json'
-                  
-                      }),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
       }
     )
-    console.log(JSON.stringify(mailData))
 
     const response = await fetch(request)
-    console.log(response)
     const data = await response.json()
     console.log(data)
+    callback()
+
     dispatch(customerMailData(data))
   }
 }

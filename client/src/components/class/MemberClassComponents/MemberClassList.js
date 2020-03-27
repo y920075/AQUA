@@ -34,7 +34,7 @@ function MemberClassList(props) {
 
   return (
     <>
-      {props.memberClassData.status && props.memberClassData.status !== 404 ? (
+      {props.memberClassData.status && props.memberClassData.status !== 404  ? (
         props.memberClassData.result.map((value, index) => {
           return (
             <div className="card mt-3" key={index}>
@@ -84,7 +84,7 @@ function MemberClassList(props) {
                     </p>
                     <Link
                       className="btn btn-primary"
-                      to={'class/' + value.classId}
+                      to={'/class/' + value.classId}
                     >
                       詳細
                     </Link>

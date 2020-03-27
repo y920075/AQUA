@@ -11,9 +11,11 @@ import SweetAlert from './Sweetalert2'
     levelData = 依據選擇的類型得到相對應等級資料
     editClassDataResponse = 編輯資料之後，後端傳送過來的資料
 
+    //傳入方法
     editClassDataAsunc = 編輯一筆資料的action
     getDistDataAsunc = 取得地區資料的action
     getClassTypeLevelDataForSellerAsunc = 取得類型及等級的action
+    2020-03-26
 */
 
 function EditClassDataContent(props) {

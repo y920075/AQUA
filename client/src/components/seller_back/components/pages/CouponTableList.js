@@ -10,7 +10,7 @@ import TagSvg from '../../../../image/customer/tickMenu.svg'
 import './Style/CustomerMan.scss'
 
 function CouponTableList(props) {
-
+console.log(props.cutomeruse.table1)
   const [couponObj, setCouponObj] = useState({})
 
   // props.setChildCoupon
@@ -40,21 +40,21 @@ function CouponTableList(props) {
  
 
       const tableData1 = (props.cutomeruse.table1 ? (props.cutomeruse.table1.map((element,index)=>{
-        const { coup_name,coup_code, datecoup_one,datecoup_two} = element
+        const { coup_img, coup_over, coup_PriOrPer,coup_name,coup_code, datecoup_time_start,datecoup_time_end} = element
         return (
            <tr 
            className="tr-chin" 
            onClick={ event =>{
               typeInputActive(event) 
-              setCouponObj({...couponObj, coup_name,coup_code , datecoup_one ,datecoup_two})
+              setCouponObj({...couponObj ,coup_img , coup_over ,coup_PriOrPer, coup_name, coup_code , datecoup_time_start ,datecoup_time_end})
 
               // getCustomerData(event)
            }}
            key={index}>
               <td></td>
               <td>{coup_name}</td>
-              <td>{datecoup_one}</td>
-              <td>{datecoup_two}</td>
+              <td>{datecoup_time_start}</td>
+              <td>{datecoup_time_end}</td>
     
   
            </tr>
@@ -65,19 +65,19 @@ function CouponTableList(props) {
     )
 
     const tableData2 = (props.cutomeruse.table1 ? (props.cutomeruse.table2.map((element,index)=>{
-        const { coup_name,coup_code, datecoup_three,datecoup_four} = element
+        const {coup_over , coup_PriOrPer, coup_img,coup_name,coup_code, datecoup_time_start,datecoup_time_end} = element
         return (
            <tr  className="tr-chin" 
            onClick={ event =>{
               typeInputActive(event) 
-              setCouponObj({...couponObj, coup_name,coup_code, datecoup_three,datecoup_four})
+              setCouponObj({...couponObj,coup_over , coup_PriOrPer, coup_img, coup_name,coup_code, datecoup_time_start,datecoup_time_end})
               // getCustomerData(event)
            }}
            key={index}>
               <td></td>
               <td>{coup_name}</td>
-              <td>{datecoup_three}</td>
-              <td>{datecoup_four}</td>
+              <td>{datecoup_time_start}</td>
+              <td>{datecoup_time_end}</td>
     
   
            </tr>
@@ -87,19 +87,19 @@ function CouponTableList(props) {
       
     )
     const tableData3 = (props.cutomeruse.table1 ? (props.cutomeruse.table3.map((element,index)=>{
-        const { coup_name,coup_code, datecoup_five,datecoup_six} = element
+        const { coup_img, coup_name,coup_code,datecoup_time_start,datecoup_time_end} = element
         return (
            <tr className="tr-chin" 
            onClick={ event =>{
               typeInputActive(event) 
-              setCouponObj({...couponObj, coup_name, coup_code,  datecoup_five,datecoup_six})
+              setCouponObj({...couponObj, coup_img,  coup_name, coup_code,  datecoup_time_start,datecoup_time_end})
               // getCustomerData(event)
            }}
            key={index}>
               <td></td>
               <td>{coup_name}</td>
-              <td>{datecoup_five}</td>
-              <td>{datecoup_six}</td>
+              <td>{datecoup_time_start}</td>
+              <td>{datecoup_time_end}</td>
     
   
            </tr>

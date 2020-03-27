@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import SwitchButton from '../../components/event/MemberEventComponents/SwitchButton'
 
 //引入redux元件
@@ -22,10 +21,6 @@ import {
   memberUnJoinClassAsync = 會員取消報名的動作
 */
 
-import Header from '../../components/Header' //導航列
-import Banner from '../../components/Banner' //橫幅廣告
-import Sidebar from '../../components/member/Sidebar' //側欄
-import Footer from '../../components/Footer' //頁腳
 import EventPageButtons from '../../components/event/EventPageButtons' //頁數按鈕
 import MemberClassList from '../../components/class/MemberClassComponents/MemberClassList' //會員課程列表
 import Loading from '../../components/class/Loading' //載入中圖示
@@ -69,8 +64,6 @@ function MemberClass(props) {
 
   return (
     <>
-      {/* <Header />
-      <Banner BannerImgSrc="./images/member/coralreef.jpg" /> */}
       {/* <!-- Orger Content --> */}
       <div className="container hsclass">
         <div className="row">
@@ -124,7 +117,6 @@ function MemberClass(props) {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </>
   )
 }

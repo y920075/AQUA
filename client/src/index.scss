@@ -64,6 +64,11 @@ div.collapse.navbar-collapse {
 @import '../src/pages/class/SellerClass.scss';
 @import '../src/pages/class/SellerEditClass.scss';
 
+$color1: #132948;
+$color2: #31445f;
+$color3: #4e5f76;
+$color5: #f15a24;
+
 .CW.index {
   .container {
     height: 100vh;
@@ -79,13 +84,77 @@ div.collapse.navbar-collapse {
       }
     }
 
-    &-location {}
+    &-btn {
+      color: $color5;
+      border: 2px solid $color5;
+      border-radius: 0.125rem;
+      padding: 4px 2rem;
 
-    &-event {}
+      &:hover {
+        color: #fff;
+        background-color: $color5;
+      }
+    }
 
-    &-class {}
+    &-location {
+      .container {
+        padding: 5rem 3rem;
+        position: relative;
+        border: 3px solid #fff;
 
-    &-footer {}
+        .index-btn {
+          position: absolute;
+          bottom: 30%;
+          right: 10%;
+        }
+
+        .display-2 {
+          position: absolute;
+          letter-spacing: 10px;
+          font-weight: 700;
+          z-index: 1;
+          top: 15%;
+          left: 10px;
+        }
+        .carousel {
+          width: 80%;
+          &:hover .slide .legend {
+            opacity: inherit;
+          }
+        }
+        .carousel .slide {
+          background: none;
+        }
+        .loca {
+          &-name {
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+            position: absolute;
+            bottom: 40%;
+            left: 5%;
+          }
+          &-weather {
+          }
+        }
+        .legend {
+          height: 200px;
+          bottom: 20px;
+          border-radius: 0.25rem;
+          background: #fff;
+        }
+      }
+    }
+
+    &-event {
+    }
+
+    &-class {
+    }
+
+    &-footer {
+    }
   }
-
 }
