@@ -106,7 +106,6 @@ export const getuserDetailDataAsync = memberId => {
     console.log(getuserDetailData(data))
   }
 }
-<<<<<<< HEAD
 
 
 //從賣家那裏得到優惠券的使用資料
@@ -131,5 +130,3 @@ export const getUserCouponDetaiAsync = (usercoupondata) => {
     dispatch(getUserCouponDetail(data))
   }
 }
-=======
->>>>>>> 2ec1442104660a92bc9eda1411406bf7f0f687fa
