@@ -50,6 +50,9 @@ function MemberUser() {
               <Route path="/memberuser/message">
                 <UserMessage />
               </Route>
+              <Route path="/memberuser/coupon">
+                <MemberCoupon />
+              </Route>
             </Switch>
           </div>
         </div>

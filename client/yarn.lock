@@ -9618,7 +9618,7 @@ react-bootstrap@^1.0.0-beta.17:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
-react-chartjs-2@2.9.0:
+react-chartjs-2@2.9.0, react-chartjs-2@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-2.9.0.tgz#d054dbdd763fbe9a76296a4ae0752ea549b76d9e"
   integrity sha512-IYwqUUnQRAJ9SNA978vxulHJTcUFTJk2LDVfbAyk0TnJFZZG7+6U/2flsE4MCw6WCbBjTTypy8T82Ch7XrPtRw==
@@ -9656,11 +9656,7 @@ react-dev-utils@^10.2.0:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-<<<<<<< HEAD
-react-dom@^16.12.0:
-=======
 react-dom@^16.12.0, react-dom@^16.13.0:
->>>>>>> b9e402ddd0696b7225a67cba7fa3f696fc7a05c3
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
   integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
@@ -9963,11 +9959,7 @@ react-transition-group@^2.2.1, react-transition-group@^2.5.3:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-<<<<<<< HEAD
-react@^16.12.0:
-=======
 react@^16.12.0, react@^16.13.0:
->>>>>>> b9e402ddd0696b7225a67cba7fa3f696fc7a05c3
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==

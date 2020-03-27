@@ -116,7 +116,7 @@ console.log(customerdata)
  }
   const tableData = 
   (props.customer.result ? (props.customer.result.map((element,index)=>{
-      const {comcus_id, comcus_name, comcus_img, comcus_gmail, comcus_buy_perc, comcus_visit_perc } = element
+      const {comcus_id, memberId ,seller_id, comcus_name, comcus_img, comcus_gmail, comcus_buy_perc, comcus_visit_perc } = element
       return (
          <tr className="tr-chin" key={index}>
             <td  
@@ -129,6 +129,8 @@ console.log(customerdata)
               setCustomerData([
                 ...customerdata,
                 {
+                  memberId:memberId,
+                  seller_id:seller_id,
                   cutomerName:comcus_name,
                   cutomerEmail:comcus_gmail
                 }
@@ -207,11 +209,11 @@ console.log(customerdata)
                   {/* <ProgressToMailBar people={customermail}/> */}
            
                     <div className="row">
-                      <div className="col-sm-12">
+                      <div className="col-sm-12 text-center ">
                       <button onClick={e => {
                                 e.preventDefault()
                                 // handleTransferEmail()
-                                handleTransferData()}} className="btn btn-secondary">寄送優惠券</button>                     
+                                handleTransferData()}} className="btn bg-btn-chin">寄送優惠券</button>                     
                       </div>
                     </div>
                   </div>

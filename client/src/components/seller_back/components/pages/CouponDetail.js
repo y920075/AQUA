@@ -6,6 +6,8 @@ import Sr from '../ScrollReveal'
 
 function CouponDetail(props) {
     console.log(props)
+
+    
     useEffect(() => {
        Sr.reveal( 
         '.card',{ 
@@ -27,7 +29,7 @@ function CouponDetail(props) {
                         <div className="col-sm-4" key={value.coup_id}>
     
                             <div className="card my-3">
-                                <img  className="img-fluid card-img-top" src={ "http://localhost:5000/images/coup/" + value.coup_img} alt="" />
+                                <img  height="250" className="card-img-top" src={ "http://localhost:5000/images/coup/" + value.coup_img} alt="" />
                                 <div className="card-body text-wrap">
                                     <h4 className="card-title text-center">{value.coup_name}</h4>
                                     <div className="d-flex">

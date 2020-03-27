@@ -449,7 +449,7 @@ export const customerMailDataAsync = mailData => {
       const json = JSON.stringify(mailData)
       console.log(json)
     const request = new Request(
-      'http://localhost:5000/seller/customermanager/customer-mail',
+      'http://localhost:5000/seller/customermanager/customer-coupon-insert',
       {
         method: 'POST',
         body: json,
