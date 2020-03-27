@@ -21,8 +21,8 @@ export class Weather extends React.Component {
     let idfour = currentid[3]
     let idfive = currentid[4]
     let idtonum = idfour + idfive
-    console.log(this.props.LocusWeeklyreport)
-    console.log(this.props.LocusTidereport)
+    // console.log(this.props.LocusWeeklyreport)
+    // console.log(this.props.LocusTidereport)
     let { weekweather = [] } = this.props.LocusWeeklyreport
     let { seastate = [] } = this.props.LocusSeastate
     let { tide = [] } = this.props.LocusTidereport
@@ -60,16 +60,15 @@ export class Weather extends React.Component {
       )
       currenttide = tide.filter(area => area.StationId === '001416')
     }
-    let today = new Date().getDate()
-    console.log(today)
-    console.log(currentseastate)
-    console.log(currentweekweather)
-    console.log(currenttide)
+    // console.log(currentseastate)
+    // console.log(currentweekweather)
+    // console.log(currenttide)
+
     return (
       <div>
         <Tabs>
           <Tab eventKey="SeaForNow" title="現在海況">
-            <table className="weathertable">
+            <table className="table weathertable">
               <thead>
                 <tr>
                   <th>觀測時間</th>
@@ -97,25 +96,29 @@ export class Weather extends React.Component {
             </table>
           </Tab>
           <Tab eventKey="Week" title="一周天氣預報">
-            <table className="weathertable">
+            <table className="table weathertable">
               <thead>
                 <tr>
-                  {currentweekweather.map((value, index) => {
-                    return <th key="index">{value.Date}</th>
-                  })}
+                  <th>日期</th>
+                  <th>氣候描述</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  {currentweekweather.map((value, index) => {
-                    return <td key="index">{value.WeatherDescription}</td>
-                  })}
-                </tr>
+                {currentweekweather.map((value, index) => {
+                  return (
+                    <tr>
+                      <td>{value.Date}</td>
+                      <td className="WeatherDescription">
+                        {value.WeatherDescription}
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </Tab>
           <Tab eventKey="Tide" title="潮汐預報">
-            <table className="weathertable">
+            <table className="table weathertable ">
               <thead>
                 <tr>
                   <th>日期</th>
