@@ -95,6 +95,16 @@ const customermailtransfer =(state = {},action) => {
           return state
   }
 }
+
+
+const getNowCoupData = (state = {},action) => {
+  switch (action.type) {
+      case 'NOWCOUPDATA':
+        return action.value
+      default:
+          return state
+  }
+}
 // const memberEmail = (state = {}, action) => {
 //   switch (action.type) {
 //     case 'STORE_EMAIL':
@@ -195,6 +205,7 @@ const SellerClassDetailData = (state = {}, action) => {
   }
 }
 
+
 //----------------------賣家中心課程相關reducer----------------
 
 // 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
@@ -208,6 +219,7 @@ const sellerReducer = combineReducers({
   customer,
   cutomeruse,
   customermailtransfer,
+  getNowCoupData,
   sellerClassData,
   cityData,
   distData,

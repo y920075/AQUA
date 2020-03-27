@@ -111,6 +111,7 @@ function ItemDetail(props) {
                         name: `${itemData[0].itemName}`,
                         amount: 1,
                         price: `${itemData[0].itemPrice}`,
+                        itemCategoryId: `${itemData[0].itemCategoryId}`
                       })
                     }}
                     className="addcart-btn btn btn-lg w-100"
