@@ -51,22 +51,23 @@ function ShoppingCart(props) {
     setTimeout(() => {
       setHasLoading(false)
     }, 500)
-
-    let newMycartDisplay = [...mycartDisplay]
-    for (let i = 0; i < mycart.length; i++) {
-      const index = newMycartDisplay.findIndex(
-        value => value.id === mycart[i].id
-      )
-      if (index !== -1) {
-        console.log('findindex', index)
-        newMycartDisplay[index].amount++
-      } else {
-        const newItem = { amout: 1, ...mycart[i] }
-        newMycartDisplay = [...newMycartDisplay, newItem]
+    if (mycart) {
+      let newMycartDisplay = [...mycartDisplay]
+      for (let i = 0; i < mycart.length; i++) {
+        const index = newMycartDisplay.findIndex(
+          value => value.id === mycart[i].id
+        )
+        if (index !== -1) {
+          console.log('findindex', index)
+          newMycartDisplay[index].amount++
+        } else {
+          const newItem = { amount: 1, ...mycart[i] }
+          newMycartDisplay = [...newMycartDisplay, newItem]
+        }
       }
+      console.log('newMycartDisplay', newMycartDisplay)
+      setMycartDisplay(newMycartDisplay)
     }
-    console.log('newMycartDisplay', newMycartDisplay)
-    setMycartDisplay(newMycartDisplay)
   }, [mycart])
 
   const sum = items => {
