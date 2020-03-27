@@ -6,12 +6,16 @@
 #text-table-chin {
   color: $aquacolorfour !important;
 }
-
+.bg-btn-chin {
+  background-color: $aquacolordenger;
+  color: wheat;
+}
 .active-chin-td {
   background-color: rgb(250, 250, 0);
   background-image: no-repeat url(../../../../../image/customer/check.svg) !important;
   // border: 4px solid $aquacolortwo !important;
 }
+
 .chin {
   table a:link {
     color: #666;

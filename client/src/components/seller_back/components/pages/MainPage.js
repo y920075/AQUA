@@ -1,8 +1,32 @@
-import React from 'react'
-function MainPage() {
+import React,{Component,useState} from 'react'
+
+import {Line} from 'react-chartjs-2'
+
+
+export default class MainPage extends Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data:{
+        labels:["hwer","1adas","qweeqw","qwe","ttert"],
+        datasets: [{
+            label:"Member1",
+            backgroundColor:"rgba(78, 95 ,118, 0.5)",
+            data: [12,15,747,123,2,3]
+          },{
+            label:"Member2",
+            backgroundColor:"rgba(255, 0 ,255, 0.75)",
+            data: [12,15,77,13,2,3]
+          }]
+      
+      }
+    }
+  }
+  render(){
     return (
-        <div className="conteiner">          
-        <div className="row">
+      <div className="conteiner">          
+          <div className="row">
         <section>
           <div className="container-fluid">
             <div className="row">
@@ -82,11 +106,54 @@ function MainPage() {
           </div>
         </section>
         </div>
+        <div className="row">
+          <div  className="col-sm-12">
+            <Line
+              options={{
+                responsive:true
+              }}
+              data={this.state.data}
+            />
+          </div>
+        </div>
       </div>
     )
+  }
 }
 
+// function MainPage(props) {
+
+//   const [chartDataSet,SetChartDat] = useState([{}])
+//       SetChartDat(
+//                 [{
+//                   labels:["hwer","1adas","qweeqw","qwe","ttert"],
+//                   dataset: [{
+//                             labels:"Member1",
+//                             backgroundColor:"rgba(255, 0 ,255, 0.88)",
+//                             data: [12,15,747,123,2,3]
+//                           },{
+//                               labels:"Member2",
+//                               backgroundColor:"rgba(255, 0 ,255, 0.75)",
+//                               data: [12,15,77,13,2,3]
+//                             }]
+    
+//                }])
+//     return (
+
+//         <div className="row">
+//           <div  className="col-sm-12">
+//             <Line
+//               options={{
+//                 responsive:true
+//               }}
+//               data = {chartDataSet}
+//             />
+//           </div>
+//         </div>
+//     )
+// }
 
 
-export default MainPage
+
+// export default MainPage
 

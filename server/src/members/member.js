@@ -112,27 +112,46 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
 
 
 //會員更改資料
-memberRouter.get('/members/:memberId', (req, res) => {
+memberRouter.get('/members/M20030003', (req, res) => {
     // console.log('會員修改')
+console.log(req)
+    const memberObj = {
+        result:"",
+        success:false,
+        memberId:"M20030003",
+    }
     const memberId = req.params.memberId
     const sql = `SELECT 
                 \`avatar\`,
                 \`fullName\`, 
                 \`mobileNumber\`, 
                 \`email\`, 
-                \`address\`
-                FROM \`my_member\` WHERE \`memberId\`='${memberId}'`
+                \`address\`,
+                \`memberId\`,
+                \`JoinDate\`
+                FROM \`my_member\` WHERE \`memberId\`='M20030003'`
 
     db.queryAsync(sql)
         .then(r => {
-            return res.status(200).json(r)
+            memberObj.result = r;
+            memberObj.success = true;
+            // return res.status(200).json(r)
             // res.render('edit', {row: r[0]})
+            
+            return res.json(memberObj)
         })
         .catch(err => {
             return res.status(500).json(err)
         })
 })
-memberRouter.post('/members/:memberId', upload.single(), (req, res) => {
+
+memberRouter.post('/members/M20030003', upload.single(), (req, res) => {
+    const memberObj = {
+        result:"",
+        success:false,
+        memberId:"M20030003",
+        avatar:"DefaultImgage.jpg"
+    }
     const sql = `UPDATE \`my_member\` SET 
                 \`avatar\`=?,
                 \`fullName\`=?,
@@ -142,12 +161,13 @@ memberRouter.post('/members/:memberId', upload.single(), (req, res) => {
                  WHERE \`memberId\`=?`
 
     db.queryAsync(sql, [
-        avatar,
+        memberObj.avatar,
         req.body.fullName,
         req.body.mobileNumber,
         req.body.email,
         req.body.address,
-        req.params.memberId
+        memberObj.memberId
+        // req.params.memberId
     ])
         .then(r => {
             console.log('修改資料成功')

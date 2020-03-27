@@ -48,7 +48,8 @@ function CupItem(props) {
     const [coupTimes, setCoupTimes] = useState(0)
 
     //優惠碼
-    const [coupCode, setCoupCode] = useState(props.item.coupon["code2"])
+    const codeItem = props.item.coupon["code2"]
+    const [coupCode, setCoupCode] = useState(codeItem)
 
     //優惠id
     const [coupId, setcoupId] = useState(props.item.coupon["coup_id"])
@@ -85,6 +86,18 @@ function CupItem(props) {
         setMinusorpercent({ isEnable: !minusorpercent.isEnable });
       }
 
+      useEffect(() => {
+        if (price.isEnable == true && minusorpercent.isEnable == true) {
+           setCoupCode("PMI" + codeItem)
+        } else if(price.isEnable == false && minusorpercent.isEnable == true){
+          setCoupCode("IMI" + codeItem)
+        } else if(price.isEnable == true && minusorpercent.isEnable == false){
+            setCoupCode("PII" + codeItem)
+        }else {
+          setCoupCode("III" + codeItem)
+        }
+
+      }, [price.isEnable, minusorpercent.isEnable])
 
       const handleSubmit = e =>{
         let error = false
@@ -265,8 +278,9 @@ function CupItem(props) {
                             name="coup_code"
                             className="form-control my-3"
                             id="exampleInputPassword1"
-                            defaultValue={coupCode}
-                            onChange={(event) => {setCoupCode(event.target.value)}}
+                            value={coupCode}
+                            // defaultValue={coupCode}
+                            // onChange={(event) => {setCoupCode(event.target.value)}}
 
                         />
                         
