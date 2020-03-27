@@ -584,13 +584,7 @@ router.get('/coupon_getdata',(req,res)=>{
     // let totalRows;
     // let totalPages;
     if( searchType === "coup001" ){
-        // const searchCoup_over = req.query.coup_over  && !req.query.coup_PriOrPer ? ` WHERE \`coup_over\` = '${req.query.coup_over}' ` : '';
-        
-        // const searchCoup_PriOrPer = !req.query.coup_over  && req.query.coup_PriOrPer ? ` WHERE \`coup_PriOrPer\` = '${req.query.coup_PriOrPer}' ` : '';
-
-        // const searchCoup_All_coup001 = req.query.coup_over && req.query.coup_PriOrPer ? ` WHERE \`coup_over\` = '${req.query.coup_over}'  AND \`coup_PriOrPer\` = '${req.query.coup_PriOrPer}' ` : '';
-        
-        // const total_sql_coup001 = `SELECT COUNT(1) as 'rows' FROM \`coup01_allorder\` ${searchCoup_over}${searchCoup_PriOrPer}${searchCoup_All_coup001}`;
+       
         const total_sql_coup001 = `SELECT * FROM \`coup01_allorder\``;
 
         db.queryAsync(total_sql_coup001)

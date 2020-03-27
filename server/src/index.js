@@ -84,6 +84,8 @@ app.use('/seller', require(__dirname+'/basic_information/basic_information') );
 //引用顧客管理
 app.use('/seller/customermanager', require(__dirname+'/customermanagement/customermanagement') );
 
+//引用前端getcoupon資料
+// app.use('/seller/getcoupon', require(__dirname+'/coupon/couponget') );
 
 
 
