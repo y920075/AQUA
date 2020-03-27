@@ -18,8 +18,7 @@ export class Comment extends React.Component {
       pageid: '',
       memberid: '',
       membername: '',
-      commenttime: '',
-      commentitdelf: '',
+      commentitself: '',
     }
   }
   componentDidMount() {
@@ -40,27 +39,33 @@ export class Comment extends React.Component {
         id => id.Locationid === currentparams
       )
     }
-    let datapageid = this.state.pageid
-    let datamemberid = this.state.memberid
+
+    let pageid = this.state.pageid
+    let memberid = this.state.memberid
     let membername = this.state.membername
-    let datacommenttime = this.state.commenttime
-    let commentitdelf = this.state.commentitdelf
+    let commentitself = this.state.commentitself
     const sentcommentdatatodb = () => {
+      this.setState({
+        pageid: currentparams,
+        memberid: 'M20010002',
+        membername: 'Anna Tulius',
+      })
+
       let sentcommentdata = {
-        datapageid,
-        datamemberid,
+        pageid,
+        memberid,
         membername,
-        datacommenttime,
-        commentitdelf,
+        commentitself,
       }
       SweetAlert.sendConfirm(
         '確定要送出嗎?',
-        true,
+        this.props.fetchLocationcomment(),
+        '',
         this.props.Submmitlocationcomment,
         sentcommentdata
       )
     }
-
+    console.log(this.state)
     return (
       <div>
         <div className="commentboard">
@@ -97,10 +102,26 @@ export class Comment extends React.Component {
             <div className="inputarea">
               <form>
                 <div className="comentitself">
-                  <textarea name="comment" id="" cols="30" rows="10"></textarea>
+                  <textarea
+                    name="comment"
+                    id=""
+                    cols="30"
+                    rows="10"
+                    onChange={event => {
+                      this.setState({
+                        commentitself: event.target.value,
+                      })
+                    }}
+                  ></textarea>
                 </div>
                 <div className="d-flex justify-content-end sentcomment">
-                  <button type="button" className="btn">
+                  <button
+                    type="button"
+                    className="btn"
+                    onClick={() => {
+                      sentcommentdatatodb() //觸發新增活動資料的事件
+                    }}
+                  >
                     送出
                   </button>
                 </div>
