@@ -33,7 +33,12 @@ function MemberCoupon(props){
                             <div className="row">
                               <div className="col-sm-6">
                                 <div className="card-body">
-                                  <h5 className="card-title">優惠名稱:{value.coup_name}</h5>
+                                  <h5 className="card-title">優惠名稱:
+                                  {value.order_coup_name ? value.order_coup_name :<h2 hidden>"其他種類優惠券名稱"</h2>}
+                                  {value.goods_coup_name ? value.goods_coup_name :<h2 hidden>"其他種類優惠券名稱"</h2>}
+                                  {value.givi_coup_name ? value.givi_coup_name :<h2 hidden>"其他種類優惠券名稱"</h2>}
+
+                                  </h5>
                                   <p className="card-text">
                                     類型：{value.goods_cate_id == "coup002" ? "商品優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
                                     {value.order_cate_id == "coup001" ? "全單滿額類型優惠券" : <h2 hidden>"其他種類優惠券"</h2>}
