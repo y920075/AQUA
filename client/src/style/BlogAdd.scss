@@ -36,12 +36,10 @@ body {
   /* .member */
 }
 
-
 // p {
 //   color: $Lg;
 //   font-size: 16px;
 // }
-
 
 .items-card img {
   /* object-fit: ; */
@@ -99,12 +97,15 @@ body {
 }
 
 .rao {
+  font-weight: 300;
 
   a {
     text-decoration: none;
     color: black;
+
   }
   .add {
+
     box-shadow: 0px 0px 5px 1px #000000;
     border-radius: 6px;
     background-color: $Lbg;
@@ -112,8 +113,7 @@ body {
     margin-bottom: 3.125rem;
     padding: 20px;
 
-    h5 {
-      font-weight: normal;
+    p {
       color: $Lg;
       width: 60px;
       border: $Lg 1px solid;
@@ -121,18 +121,22 @@ body {
       text-align: center;
       padding: 5px 5px;
       margin-bottom: 16px;
+
     }
     ::placeholder {
       color: $Lg;
+      font-weight: 300;
+
     }
     .addInput {
-      font-weight: normal;
       color: $Lg;
       width: 300px;
       border: $Lg 1px solid;
       border-radius: 6px;
       margin-right: 10px;
       padding-left: 15px;
+      font-weight: 300;
+
     }
     select {
       text-align: center;
@@ -144,39 +148,42 @@ body {
       border-radius: 6px;
       option {
         color: black;
+        font-weight: 300;
+
       }
     }
     textarea {
-      font-weight: normal;
       border: $Lg 1px solid;
       border-radius: 6px;
       height: 270px;
       color: white;
       overflow: scroll-right;
       padding: 15px;
+      font-weight: 300;
+
     }
     .addTag {
       // width: 50px;
-      input{
+      input {
         // width: 100px;
         margin: 0;
         padding: 0;
       }
-      ::placeholder{
+      ::placeholder {
         color: $Lg;
+
       }
 
-   
-      .tagName1{
+      .tagName1 {
         width: 100px;
         text-align: center;
-        border-right: .5px $Lg solid ;
+        border-right: 0.5px $Lg solid;
         border-radius: 6px 0 0 6px;
       }
-      .tagName2{
+      .tagName2 {
         width: 100px;
         text-align: center;
-        border-left: none ;
+        border-left: none;
         border-radius: 0 6px 6px 0;
       }
 
@@ -187,25 +194,29 @@ body {
         width: 150px;
         border: $Lg solid 1px;
         border-radius: 6px;
-        &:hover{
+        &:hover {
           cursor: pointer;
         }
-        p{
+        h6 {
           margin: 10px 0 0 0;
           color: $Lg;
+          font-weight: 300;
+
         }
-        input{
+        input {
           display: none;
         }
       }
-     img{
-       border-radius: 6px;
-      //  background-color: white;
-      border: 1px $Lg solid;
-     }
+      img {
+        border-radius: 6px;
+        //  background-color: white;
+        border: 1px $Lg solid;
+      }
     }
     .addSend {
       font-size: 16px;
+      font-weight: 300;
+
       background-color: $Lbg;
       border: 1px $Lg solid;
       color: $Lg;
@@ -215,34 +226,5 @@ body {
         background-color: $Lg;
       }
     }
-  }
-  // .relatedPost {
-  //   margin: 3.125rem 0px;
-  //   color: $Lg;
-  //   ul {
-  //     // justify-content: space-between;
-  //     li {
-  //       width: 230px;
-  //       margin: 0 10px;
-
-  //       figure {
-  //         margin: 0;
-  //         height: 160px;
-  //         overflow: hidden;
-  //         perspective: 1000px;
-  //         img {
-  //           width: 100%;
-  //           transition: 0.3s;
-  //           &:hover {
-  //             transform: translateZ(100px);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  .addHr {
-    width: 100%;
-    background: $Lg;
   }
 }

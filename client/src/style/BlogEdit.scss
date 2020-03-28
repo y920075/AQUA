@@ -103,14 +103,14 @@ body {
   }
   
   .add {
+    
     box-shadow: 0px 0px 5px 1px #000000;
     border-radius: 6px;
     background-color: $Lbg;
     height: 475px;
     margin-bottom: 3.125rem;
     padding: 20px;
-    h5 {
-      font-weight: normal;
+    p {
       color: $Lg;
       width: 60px;
       border: $Lg 1px solid;
@@ -153,7 +153,7 @@ body {
       padding: 15px;
     }
     .delete {
-      font-weight: normal;
+      font-weight: 300;
       font-size: 16px;
       background-color:$Lbg;
       border: 1px red solid;
@@ -166,6 +166,7 @@ body {
       }
     }
     .editSend {
+      font-weight: 300;
       font-size: 16px;
       background-color: $Lbg;
       border: 1px $Lg solid;
@@ -177,39 +178,4 @@ body {
       }
     }
   }
-  // .relatedPost {
-  //   ul {
-  //     display: flex;
-  //     list-style: none;
-  //     margin: 0;
-  //     padding: 0;
-  //   }
-  //   margin: 3.125rem 0px;
-  //   color: $Lg;
-  //   ul {
-  //     // justify-content: space-between;
-  //     li {
-  //       width: 230px;
-  //       margin: 0 10px;
-
-  //       figure {
-  //         margin: 0;
-  //         height: 160px;
-  //         overflow: hidden;
-  //         perspective: 1000px;
-  //         img {
-  //           width: 100%;
-  //           transition: 0.3s;
-  //           &:hover {
-  //             transform: translateZ(100px);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-  // .addHr {
-  //   width: 100%;
-  //   background: $Lg;
-  // }
 }

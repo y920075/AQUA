@@ -58,7 +58,7 @@ body {
   background-color: $Lg;
   display: flex;
   align-items: center;
-  p{
+  p {
     margin: 0;
     font-size: 22px;
     // text-align: center;
@@ -86,17 +86,18 @@ body {
     margin: 0;
     padding: 0;
   }
-  
-  
+
   a {
     text-decoration: none;
     color: black;
   }
-  
+
   .postImg {
-    height: 475px;
+    // width: 730px;
+    height: 490px;
     margin-bottom: 3.125rem;
     img {
+      object-fit: cover;
       box-shadow: 0px 0px 5px 5px #000000;
       height: 100%;
       width: 100%;
@@ -104,16 +105,13 @@ body {
     }
   }
   .postTitle {
-    a {
-      h2 {
-        margin-bottom: 16px;
-        font-weight: bold;
-        color: $O;
-      }
+    h2 {
+      margin-bottom: 16px;
+      font-weight: bold;
+      color: $O;
     }
   }
   .postNav {
-    
     color: $Lg;
     a {
       color: $Lg;
@@ -156,47 +154,18 @@ body {
       width: 83%;
       background: $Lg;
     }
-
   }
 
-  
-  .relatedPost {
-    margin: 3.125rem 0px;
-    color: $Lg;
-    ul {
-      li {
-        width: 230px;
-        margin: 0 10px;
-
-        figure {
-          margin: 0;
-          height: 160px;
-          overflow: hidden;
-          perspective: 1000px;
-          img {
-            height: 100%;
-            width: 100%;
-            background-size: cover;
-            // background-size: cover;
-            transition: 0.3s;
-            &:hover {
-              transform: translateZ(100px);
-            }
-          }
-        }
-      }
-    }
-  }
   .comment {
     h5 {
       color: $O;
       margin-bottom: 16px;
     }
+  }
     .commentContent {
       border-radius: 6px;
       background: $Lbg;
       display: flex;
-      // justify-content: space-between;
       align-items: start;
       margin-bottom: 8px;
       figure {
@@ -233,14 +202,13 @@ body {
         time {
           color: $Dbg;
         }
-        .commmentbodyText P{
+        .commmentbodyText p {
           color: $Lg;
           font-size: 16px;
-      
         }
       }
     }
-  }
+
   .postComment {
     h5 {
       color: $O;
@@ -251,18 +219,16 @@ body {
       height: 200px;
     }
 
+    textarea {
+      height: 200px;
+      background-color: $Lbg;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      overflow: scroll-right;
+      padding: 15px;
+    }
 
-
-      textarea {
-        height: 200px;
-        background-color: $Lbg;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        overflow: scroll-right;
-        padding: 15px;
-      }
-    
     .contentSend {
       font-size: 16px;
       margin: 16px 0;

@@ -1,0 +1,44 @@
+$Dbg: #132948;
+$Lbg: #485a71;
+$Dg: #c4cad1;
+$Lg: #e2e4e8;
+$Lb: #47c9e5;
+$O: #fa5d07;
+
+.relatedPost {
+  margin: 3.125rem 0px;
+  color: $Lg;
+  font-weight: 300;
+
+  ul {
+    a{
+      color: $Lg;
+    // &:hover{
+    //   color: $Lbg;
+    // }
+    }
+    li {
+      width: 230px;
+      margin: 0 10px;
+      figure {
+        border: 1px solid $Dg;  
+        border-radius: 6px;     
+        padding: 5px;
+        margin: 0;
+        height: 160px;
+        &:hover {
+          box-shadow: 0 0 2px 2px $O;
+          cursor: zoom-in;
+          border-radius: 6px;     
+        }
+        img {
+          object-fit: cover;
+          border-radius: 6px;     
+          height: 100%;
+          width: 100%;
+ 
+        }
+      }
+    }
+  }
+}

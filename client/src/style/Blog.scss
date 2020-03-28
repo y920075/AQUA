@@ -78,12 +78,15 @@ body {
 
   .category {
     margin-bottom: 3.125rem;
-    a {
+
+    span,a {
+      font-weight: 300;
       color: $Lg;
       background: $Lbg;
       padding: 5px 15px;
       margin: 5px 5px;
       &:hover {
+        cursor: pointer;
         background: $Lb;
         color: #000;
       }
@@ -94,7 +97,10 @@ body {
     }
   }
 @media screen and (max-width: 576px){
-  .category{
+  span{
+    display: inline-block;
+  }
+  ul{
     width: 300px;
     text-align: center;
     flex-wrap: wrap;
@@ -104,14 +110,15 @@ body {
   .lCard,
   .rCard {
     perspective: 100px;
+
     .card {
-      // visibility: hidden;
-      font-weight: bold;
       color: $Dg;
       width: 21rem;
       margin-bottom: 50px;
       box-shadow: 2px 2px 7px 5px #000000;
       transition: 0.5s;
+      font-weight: 300;
+
       &:hover {
         transform: matrix3d(0.99,0,0.00,0,0.00,0.99,0.00,0,0,0,1,0,0,0,0,1);
         // transform: translateZ(-.4px);
@@ -122,7 +129,7 @@ body {
         cursor: zoom-in;
       }
       .card-text {
-        font-weight: bold;
+        font-weight: 300;
         color: $Dg;
       }
 
@@ -133,7 +140,6 @@ body {
         a {
           color: $Dg;
           text-decoration: none;
-          // font-weight: bold;
         }
         .card-title {
           font-weight: bolder;
@@ -141,6 +147,9 @@ body {
           &:hover {
             color: $Lb;
           }
+        }
+        .card-text:hover{
+          cursor: text;
         }
         .card-tag a{
           margin: 0 10px;
