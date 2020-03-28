@@ -45,7 +45,6 @@ function AddClassContent(props) {
       if (props.addClassDataResponse.status === 201) {
         SweetAlert.success('已成功新增一筆資料!')
         setResponse(false)
-        props.setNowClickTag(2)
       } else {
         SweetAlert.errorAlert(
           props.addClassDataResponse.status,

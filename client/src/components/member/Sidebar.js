@@ -20,7 +20,10 @@ function Sidebar(props) {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link sidebarlink-hs" to="/memberuser/user/:memberId">
+          <Link
+            className="nav-link sidebarlink-hs"
+            to="/memberuser/user/:memberId"
+          >
             <i className="far fa-user"></i>個人資料
           </Link>
         </li>
@@ -47,6 +50,11 @@ function Sidebar(props) {
         <li className="nav-item">
           <Link className="nav-link sidebarlink-hs" to="/memberuser/message">
             <i className="far fa-envelope"></i>訊息管理
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link sidebarlink-hs" to="/memberuser/coupon">
+            <i className="far fa-envelope"></i>優惠券
           </Link>
         </li>
         <li className="nav-item">

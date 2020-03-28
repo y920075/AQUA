@@ -9,7 +9,7 @@ const getWeekDate =  require('./location/getweekweather')
 const getnowseastate = require('./location/getnowseastate')
 //執行資料自動寫入DB
 // getTIdeData()
-// getWeekDate()
+getWeekDate()
 // getnowseastate()
 //一小時
 setInterval(()=>{
@@ -42,7 +42,6 @@ const whitelist = [
 const corsOptions = {
     credentials: true,
     origin: function(origin, callback){
-        console.log('origin:', origin);
         if(whitelist.indexOf(origin) !== -1){
             callback(null, true); // 允許
         } else {
@@ -75,7 +74,17 @@ app.get('/try-db', (req, res)=> {
     })
 })
 
+//賣家相關路由
+//引用coupon
+app.use('/seller/coupon', require(__dirname+'/coupon/coupon') );
+app.use('/seller', require(__dirname+'/basic_information/basic_information') );
 
+
+//引用顧客管理
+app.use('/seller/customermanager', require(__dirname+'/customermanagement/customermanagement') );
+
+//引用前端getcoupon資料
+// app.use('/seller/getcoupon', require(__dirname+'/coupon/couponget') );
 
 
 

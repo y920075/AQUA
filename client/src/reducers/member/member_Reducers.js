@@ -62,12 +62,22 @@ const userData = (state = {}, action) => {
       return state
   }
 }
+//會員得到優惠券資料
+const userCouponData = (state = {}, action) => {
+  switch (action.type) {
+    case 'GET_USERCOUPON':
+      return action.value
+    default:
+      return state
+  }
+}
 
 // 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
 const memberReducer = combineReducers({
   // counter,
   userData,
   user,
+  userCouponData
 })
 
 export { memberReducer }

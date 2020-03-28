@@ -13,6 +13,7 @@ import Banner from '../../components/Banner'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ItemDetail(props) {
+  console.log(props)
   const [mycart, setMycart] = useState([])
   const [itemData, setItemData] = useState({})
   const [hasloading, setHasLoading] = useState(false)
@@ -108,16 +109,18 @@ function ItemDetail(props) {
                         // amount: 1,
                         // price: {itemData.itemPrice}
                         id: `${itemData[0].itemId}`,
+                        img: `${itemData[0].itemImg}`,
                         name: `${itemData[0].itemName}`,
                         amount: 1,
                         price: `${itemData[0].itemPrice}`,
+                        itemCategoryId: `${itemData[0].itemCategoryId}`,
                       })
                     }}
                     className="addcart-btn btn btn-lg w-100"
                   >
                     加入購物車
                   </button>
-                  <a
+                  <div
                     name=""
                     id=""
                     className="btn btn-danger btn-lg w-100"
@@ -125,7 +128,7 @@ function ItemDetail(props) {
                     role="button"
                   >
                     詢問商品細節
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
