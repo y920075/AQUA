@@ -125,6 +125,11 @@ const memberUnOtherJoinEventResponse = (state = {}, action) => {
 const memberChatListData = (state = [], action) => {
   switch (action.type) {
     case 'MEMBER_GET_CHATLIST':
+      return action.value
+    default:
+      return state
+  }
+}
 
 //是否按下已過期按鈕
 const isEnable = (state = false, action) => {
