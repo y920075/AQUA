@@ -120,6 +120,12 @@ const memberUnOtherJoinEventResponse = (state = {}, action) => {
   }
 }
 
+
+//會員取得聊天室列表
+const memberChatListData = (state = [], action) => {
+  switch (action.type) {
+    case 'MEMBER_GET_CHATLIST':
+
 //是否按下已過期按鈕
 const isEnable = (state = false, action) => {
   switch (action.type) {
@@ -145,6 +151,7 @@ const eventReducer = combineReducers({
   memberJoinEventResponse,
   memberUnJoinEventResponse,
   memberUnOtherJoinEventResponse,
+  memberChatListData,
   isEnable,
 })
 export { eventReducer }

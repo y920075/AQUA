@@ -1,0 +1,106 @@
+.messageContent {
+  height: 100%;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .chatRoomList {
+    background-color: #4e5f76;
+    list-style: none;
+    padding: 0;
+    overflow: auto;
+    height: 594px;
+    position: relative;
+    .chatListTitle {
+      background-color: #31445f;
+      padding: 15px;
+      color: white;
+      text-align: center;
+      p {
+        margin: 0;
+      }
+    }
+    .chatRoomSelect {
+      background-color: #4e5f76;
+      select {
+        color: rgba($color: #000000, $alpha: 0.6);
+        option {
+          background-color: #4e5f76;
+        }
+      }
+    }
+    ul {
+      padding: 0;
+      li {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+        padding: 7px;
+        color: rgba($color: #000000, $alpha: 0.6);
+        cursor: pointer;
+        p {
+          margin: 0;
+          font-size: 14px;
+          text-overflow: ellipsis;
+          white-space:nowrap;
+          overflow:hidden
+        }
+      }
+      .active {
+        color: rgba($color: #f15a24, $alpha: 1);
+        background-color: #e2e4e8;
+        border-right: 7px solid #31445f;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .viewArea {
+    background-color: #c4cad1;
+    padding: 0;
+    .chatEeventTitle {
+      background-color: #e2e4e8;
+      padding: 15px;
+    }
+    .msgArea {
+      padding: 15px;
+      width: 100%;
+      min-height: 500px;
+      max-height: 500px;
+      overflow: auto;
+      position: relative;
+      // background-color: white;
+      .startChat {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        p {
+          font-size: 14px;
+        }
+      }
+
+      .memberAvatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .msgTime{
+        font-size: 10px;
+      }
+    }
+    .inputArea {
+      background-color: #e2e4e8;
+      .btn {
+        width: 100%;
+        margin: 0;
+        color: #3f51b5;
+      }
+    }
+  }
+}
