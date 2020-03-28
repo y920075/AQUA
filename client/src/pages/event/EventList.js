@@ -28,7 +28,6 @@ import { Link } from 'react-router-dom'
   2020-03-21
 */
 function EventList(props) {
-  const [eventData, serEventData] = useState([]) //本地存放活動資料的陣列
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
