@@ -5,15 +5,16 @@ import { userLoginAsync } from '../../actions/member/memberActions'
 import { withRouter, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import Header from '../../components/Header'
+import Background from '../members/Background'
 import '../../style/HS.scss'
 
 
 
 function MemberLogin(props) {
-    //set background img
-    useEffect(() => {
-        require('../../style/bg.css')
-    }, []);
+    // //set background img
+    // useEffect(() => {
+    //     require('../../style/bg.css')
+    // }, []);
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -47,9 +48,7 @@ function MemberLogin(props) {
 
     return <>
         <Header />
-
-        {/* insert background image here */}
-        <div className="backgroundImg"></div>
+        <Background />
 
         {/* <!-- sign-in content --> */}
         <div className="container hslogin">
@@ -93,11 +92,11 @@ function MemberLogin(props) {
                         {/* <!-- Social login --> */}
                         <p>其他登入方式：</p>
 
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-facebook-f light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-twitter light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-linkedin-in light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-github light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-google light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-facebook-f light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-twitter light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-linkedin-in light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-github light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-google light-blue-text"></i></a>
 
                         {/* Seller Login */}
                         <p className="sellerlogin">賣家登入？
