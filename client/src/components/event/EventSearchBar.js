@@ -8,7 +8,7 @@ import SwitchButton from './MemberEventComponents/SwitchButton'
 function EventSearchBar(props) {
   //每次點擊SwitchButton就改變state
   const toggleSwitchButton = () => {
-    props.setIsEnable(!props.isEnable)
+    props.setIsEnable(!!props.isEnable)
   }
   return (
     <>

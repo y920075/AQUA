@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import {
   getEventDataAsync,
   getEventTypeDataAsync,
+  switchButtonisEnable,
 } from '../../actions/event/event_Actions'
 
 //引入自訂元件
@@ -29,7 +30,6 @@ import { Link } from 'react-router-dom'
 */
 function EventList(props) {
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
-  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
     props.getEventTypeDataAsync() //取得活動類型資料
@@ -50,7 +50,7 @@ function EventList(props) {
   //每次按鈕被點擊時，就取得新資料
   useEffect(() => {
     getEventData()
-  }, [isEnable])
+  }, [props.isEnable])
 
   //向伺服器取得新資料
   const getEventData = page => {
@@ -58,7 +58,7 @@ function EventList(props) {
     const type = document.querySelector('select[name="type"]').value
     const sort = document.querySelector('select[name="sort"]').value
     const q = document.querySelector('input.searchInput').value
-    props.getEventDataAsync(type, q, sort, page, isEnable)
+    props.getEventDataAsync(type, q, sort, page, props.isEnable)
   }
 
   return (
@@ -74,8 +74,8 @@ function EventList(props) {
         <EventSearchBar
           eventTypeData={props.eventTypeData}
           getEventData={getEventData}
-          setIsEnable={setIsEnable}
-          isEnable={isEnable}
+          setIsEnable={props.switchButtonisEnable}
+          isEnable={props.isEnable}
         />
         {hasloading ? (
           <Loading />
@@ -99,13 +99,14 @@ const mapStateToProps = store => {
   return {
     eventData: store.eventReducer.eventData,
     eventTypeData: store.eventReducer.eventTypeData,
+    isEnable: store.eventReducer.isEnable,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { getEventDataAsync, getEventTypeDataAsync },
+    { getEventDataAsync, getEventTypeDataAsync, switchButtonisEnable },
     dispatch
   )
 }

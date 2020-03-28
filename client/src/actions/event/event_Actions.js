@@ -341,3 +341,9 @@ export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
     dispatch(memberUnOtherJoinEvent(data))
   }
 }
+
+//是否按下已過期按鈕
+export const switchButtonisEnable = isEnable => ({
+  type: 'SWITCHBUTTON_ENABLE',
+  value: !isEnable,
+})
