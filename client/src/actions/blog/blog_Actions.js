@@ -5,54 +5,76 @@ export const getBlogData = data => ({
     value: data,
   })
   export const getBlogDataAsync = (blogInfoData, callback) => {
+    // console.log(blogInfoData)
     return async dispatch => {
-      const request = new Request('http://localhost:5000/blog', {
+      let query=[]
+      if (blogInfoData) query.push(`blogInfoData=${blogInfoData.trim()}`)
+      // console.log(blogInfoData)
+
+      const request = new Request(`http://localhost:5000/blog?${query}`, {
         method: 'GET',
         headers: new Headers({
           Accept: 'application/json',
           'Content-Type': 'application/json',
         }),
       })
-  
-      console.log(JSON.stringify(blogInfoData))
+      
+      // console.log(JSON.stringify(blogInfoData))
   
       const response = await fetch(request)
       const data = await response.json()
-      console.log('res data', data)
+      // console.log('res data', data)
   
       dispatch(getBlogData(data))
     }
   }
-  
-
-//   export const getBlogDataAsync = (type, tag, search, page) => {
-//       console.log("123")
-//     return async dispatch => {
-//       let query = []
-  
-//       if (type) query.push(`type=${type.trim()}`)
-//       if (tag) query.push(`tag=${tag.trim()}`)
-//       if (search) query.push(`search=${search.trim()}`)
-//       if (page) query.push(`page=${page.trim()}`)
-//       if (query.length > 0) {
-//         query = query.join('&')
-//       } else {
-//         query = ''
-//       }
-//           console.log('query', query)
 
 
-//     const request = new Request(`http://127.0.0.1:5000/blog?${query}`, {
-//     method: 'GET',
-//     headers: new Headers({
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json',
-//     }),
-//     })
+//取得文章評論
+export const getBlogCommentsData = data => ({
+  type: 'GET_BLOGCOMMENTSDATA',
+  value: data,
+})
 
-//     const response = await fetch(request)
-//     const data = await response.json()
-//     // console.log(data)
-//     dispatch(getBlogData(data))
-//   }
-// }
+export const getBlogCommentsDataAsync = (blogCommentsData, callback) => {
+  // console.log(blogCommentsData)
+  return async dispatch => {
+
+    const request = new Request('http://localhost:5000/blog/comments', {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+    
+    // console.log(JSON.stringify(blogCommentsData))
+
+    const response = await fetch(request)
+    const data = await response.json()
+
+    dispatch(getBlogCommentsData(data))
+  }
+}
+
+//新增評論
+export const addContentCommentsDataAsync = (contentCommentsData, callback) => {
+  console.log(contentCommentsData)
+  return async dispatch => {
+    const request = new Request(
+      'http://localhost:5000/blog/addComments',
+      {
+        method: 'POST',
+        body: contentCommentsData,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(addContentCommentsDataAsync(data))
+
+    // callback()
+  }
+}

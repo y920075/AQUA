@@ -6,6 +6,8 @@ $Lb: #47c9e5;
 $O: #fa5d07;
 
   .rSide {
+    font-weight: 300;
+
     padding: 0 0 0 40px;
     p {
       color: $O;
@@ -14,7 +16,7 @@ $O: #fa5d07;
       background: $Lbg;
       box-shadow: 0px 0px 5px 1px #000000;
       padding: 10px 10px 0 10px;
-      font-weight: bold;
+      // font-weight: bold;
       .newpostLine{
         margin-bottom: 10px;
         border-bottom: 1px solid black;
@@ -81,22 +83,31 @@ $O: #fa5d07;
       padding: 10px;
       flex-wrap: wrap;
       width: 350px;
-      display: flex;
-      justify-content: space-between;
       li {
         background-color: $Lbg;
-        margin: 3px;
+        margin: 4px;
         &:hover{
           background-color: $Lg;
         }
         a {
-          font-weight: bold;
-          padding: 0 10px;
+          // font-weight: bold;
+          padding: 0 12px;
           color: $Lg;
           &:hover{
             color: $Dbg;
           }
         }
       }
+    }
+    .scrolltop{
+      position: fixed;
+      right: 180px;
+      bottom: 10px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: $Lg;
+       
     }
   }

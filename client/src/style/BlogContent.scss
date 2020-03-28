@@ -25,7 +25,10 @@ $O: #fa5d07;
   background-color: $Lg;
   display: flex;
   align-items: center;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
   p {
     margin: 0;
     font-size: 22px;
@@ -58,17 +61,22 @@ $O: #fa5d07;
     padding: 0;
   }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
   a {
     text-decoration: none;
     color: black;
   }
 
   .postImg {
-    height: 475px;
+    // width: 730px;
+    height: 490px;
     margin-bottom: 3.125rem;
 
     img {
+      object-fit: cover;
       box-shadow: 0px 0px 5px 5px #000000;
       height: 100%;
       width: 100%;
@@ -77,17 +85,18 @@ $O: #fa5d07;
   }
 
   .postTitle {
-    a {
-      h2 {
-        margin-bottom: 16px;
-        font-weight: bold;
-        color: $O;
-      }
+    h2 {
+      margin-bottom: 16px;
+      font-weight: bold;
+      color: $O;
     }
   }
 
   .postNav {
+<<<<<<< HEAD
+=======
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
     color: $Lg;
 
     a {
@@ -139,9 +148,10 @@ $O: #fa5d07;
       width: 83%;
       background: $Lg;
     }
-
   }
 
+<<<<<<< HEAD
+=======
 
   .relatedPost {
     margin: 3.125rem 0px;
@@ -174,17 +184,21 @@ $O: #fa5d07;
     }
   }
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
   .comment {
     h5 {
       color: $O;
       margin-bottom: 16px;
     }
+<<<<<<< HEAD
+  }
+=======
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
     .commentContent {
       border-radius: 6px;
       background: $Lbg;
       display: flex;
-      // justify-content: space-between;
       align-items: start;
       margin-bottom: 8px;
 
@@ -229,6 +243,14 @@ $O: #fa5d07;
         time {
           color: $Dbg;
         }
+<<<<<<< HEAD
+        .commmentbodyText p {
+          color: $Lg;
+          font-size: 16px;
+        }
+      }
+    }
+=======
 
         .commmentbodyText P {
           color: $Lg;
@@ -238,6 +260,7 @@ $O: #fa5d07;
       }
     }
   }
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
 
   .postComment {
     h5 {
@@ -250,7 +273,18 @@ $O: #fa5d07;
       height: 200px;
     }
 
+    textarea {
+      height: 200px;
+      background-color: $Lbg;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      overflow: scroll-right;
+      padding: 15px;
+    }
 
+<<<<<<< HEAD
+=======
 
     textarea {
       height: 200px;
@@ -262,6 +296,7 @@ $O: #fa5d07;
       padding: 15px;
     }
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
     .contentSend {
       font-size: 16px;
       margin: 16px 0;

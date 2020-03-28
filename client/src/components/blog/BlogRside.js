@@ -5,32 +5,31 @@ import { bindActionCreators } from 'redux'
 
 import {
   getBlogDataAsync,
-  // getAsideDataAsync,
 } from '../../actions/blog/blog_Actions'
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
-import '../../style/Rside.scss'
+import '../../style/BlogRside.scss'
 
-function Rside(props) {
+function BlogRside(props) {
   const [blogData, setBlogData] = useState([])
-
+  // console.log(props)
   let tagNameData = [];
-  if(props.blogData.result && props.blogData.result.length){
-    tagNameData = [...props.blogData.result];
-    tagNameData = tagNameData.slice(0,10);
+  if(props.blogData.newpost && props.blogData.newpost.length){
+    tagNameData = [...props.blogData.newpost];
+    tagNameData = tagNameData.slice(0,8);
   }
   return (
     <>
       <div className="col-md-4 rSide ">
-        <p className="justify-content-center d-flex">最新文章</p>
+        <p className="justify-content-start d-flex">最新文章</p>
         <div className="newsPost  rounded-lg mb-5">
           {/* <!--newPost--> */}
-          {props.blogData.result ? (props.blogData.result.map((value , index)=>{
+          {props.blogData.newpost ? (props.blogData.newpost.map((value , index)=>{
             if(index < 4)
             return (
           <div className="d-flex newpostLine">
             <figure className="newpostPic mr-3">
-              <img src="./images/blog/newPost2.jpg" />
+              <img src="/images/blog/newPost2.jpg" />
             </figure>
             <div className="newspostContent">
               <span className="d-flex test justify-content-start">
@@ -42,7 +41,7 @@ function Rside(props) {
                 </Link>
               </span>
               <div className="newspostTitle">
-               <Link>{value.blogTitle}</Link> 
+               <Link to={'/blog/' + value.id}>{value.blogTitle}</Link> 
               </div>
             </div>
           </div>
@@ -61,11 +60,10 @@ function Rside(props) {
         </div>
         {/* <!--tag--> */}
         <div className="popularTag">
-          <p className="justify-content-center d-flex">熱門標籤</p>
+          <p className="justify-content-start d-flex">熱門標籤</p>
           <div>
-            <ul>
+            <ul className="justify-content-start d-flex">
             {tagNameData ? tagNameData.map((value , index)=>{
-              console.log(value)
             return (
               
               <>
@@ -82,7 +80,11 @@ function Rside(props) {
             </ul>
           </div>
         </div>
+        <button className="scrolltop">
+        <i class="fas fa-angle-up fa-2x	"></i>        </button>
+
       </div>
+
     </>
   )
 }
@@ -97,5 +99,5 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ getBlogDataAsync }, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Rside)
+export default connect(mapStateToProps, mapDispatchToProps)(BlogRside)
 // export default Rside

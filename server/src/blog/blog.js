@@ -6,56 +6,24 @@ const router = express.Router();
 const fs =require('fs')
 const db = require(__dirname + '/../db_connect');
 
-// 文章列表(用params)
-// router.get('/blog/:page?', (req, res)=>{
-//     console.log("456")
-//     const perPage = 8;
-//     let totalRows, totalPages
-//     let page = req.params.page ? parseInt(req.params.page) : 1;
 
-//     const t_sql = "SELECT COUNT(1) num FROM `blog`";
-//     db.queryAsync(t_sql)
-//         .then(result=>{
-//             totalRows = result[0].num; //總筆數
-//             totalPages = Math.ceil(totalRows/perPage); //總頁數
-            
-//             if(page<1) page=1;
-//             if(page>totalPages) page=totalPages;
-    
-//             const sql = `SELECT * FROM \`blog\` ORDER BY id DESC LIMIT ${(page-1)*perPage}, ${perPage}`;
-    
-//             return db.queryAsync(sql);
-//         })
-//         .then(result=>{
-//                         // const fm = "YYYY-MM-DD";
-//             // result.forEach((row, idx)=>{
-//             //     row.birthday = moment(row.birthday).format(fm)
-//             // })
+//取得文章資料
+router.get('/blog/', (req, res)=>{
+    console.log(req.query)
+    let data = {
+        'status': 200,
+        'msg': '請求成功',
+        newpost:[],
+        result:[]
+    }
+    const searchType = req.query.blogInfoData ? `WHERE \`categoryName\`= "${req.query.blogInfoData}"`: '';
 
-
-//             res.json({
-//                 totalRows,
-//                 totalPages,
-//                 page,
-//                 rows: result
-//             })
-//         })
-// })
-// router.get('/menber', (req, res)=>{
-// }
-router.get('/blog', (req, res)=>{
-    console.log('')
     const perPage = 50
     let where = []
-    if (req.query.category) where.push(`\`categoryName\` ='${req.query.category}'`)
-    if (req.query.brand) where.push(`\`tagName\` ='${req.query.tag}'`)
-    // if (req.query.price) where.push(`\`itemPrice\` > '${req.query.price.split(",")[0]}' AND \`itemPrice\` < '${req.query.price.split(",")[1]}'`)
-    // if(where.length>0){where = 'AND '+where.join(' AND ')}else{where=''}
-    
 
     let totalRows, totalPages
     let page = req.query.page ? parseInt(req.query.page) : 1
-
+    data.page = page
     const t_sql = "SELECT COUNT(1) num FROM `blog`";
     db.queryAsync(t_sql)
         .then(result=>{
@@ -66,19 +34,27 @@ router.get('/blog', (req, res)=>{
             if(page>totalPages) page=totalPages;
     
             const sql = `SELECT * FROM \`blog\` ORDER BY id DESC LIMIT ${(page-1)*perPage}, ${perPage}`;
-    
+            data.totalRows = totalRows
+            data.totalPages = totalPages
             return db.queryAsync(sql);
         })
+
+.then(result=> {
+    const categoryName_sql=  `SELECT * FROM \`blog\`  ${searchType} ORDER BY \`id\` DESC , \`blogTitle\` DESC `;
+    return db.queryAsync(categoryName_sql)
+    
+})
+.then(result=> {
+    data.result = result
+    const newpostsql = `SELECT * FROM \`blog\` ORDER BY id DESC LIMIT ${(page-1)*perPage}, ${perPage}`;
+    
+    return db.queryAsync(newpostsql);
+    
+})
 .then(result=>{
+    data.newpost = result
            if (result.length>0) {
-                res.json({
-                    'status': 200,
-                    'msg': '請求成功',
-                    totalRows,
-                    totalPages,
-                    page,
-                    result
-                })
+                res.json(data)
             } else{
                 res.status(404).json({
                     'status': 404,
@@ -92,9 +68,55 @@ router.get('/blog', (req, res)=>{
         })
 })
 
+//取得評論資料
+router.get('/blog/comments', (_req, res)=>{
+    let data = {
+        'status': 200,
+        'msg': '請求成功',
+        result:[]
+    }
 
-router.get('/add', (req, res)=>{
-     res.send('123');
+    const blogComments_sql = `SELECT * FROM \`blog_comments\``;
+    return db.queryAsync(blogComments_sql)
+
+    .then(result=>{
+        data.result = result
+            if (result.length>0) {
+                    res.json(data)
+                } else{
+                    res.status(404).json({
+                        'status': 404,
+                        'msg': '查無符合條件'
+                    })
+                }
+    })
+    .catch(err=>{
+        console.log(err)
+        return res.status(500).json(err)
+    })
+})
+
+router.post('/blog/addComments', upload.none(), (req, res)=>{
+    // res.json(req.body)
+    // 先檢查輸入
+    const sql = `INSERT INTO \`blog_comments\`(
+        \`content\`) 
+        VALUES (?)`
+
+    db.queryAsync(sql, [
+        req.body.content
+        ])
+
+    .then(r=>{
+        console.log('新增資料寫入成功')
+        return res.json(req.body)
+        // res.redirect(req.baseUrl + '/list')
+    })
+    .catch(err=>{
+        console.log('新增資料寫入失敗')
+        // return res.json(err)
+    })
+    
 })
 
 router.post('/add', upload.single('av'), (req, res)=>{

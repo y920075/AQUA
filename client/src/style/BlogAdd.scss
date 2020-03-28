@@ -5,6 +5,49 @@ $Lg: #e2e4e8;
 $Lb: #47c9e5;
 $O: #fa5d07;
 
+<<<<<<< HEAD
+body {
+  height: 300vh;
+  background-color: #132948;
+}
+
+.navbar-shopping-cart-icon {
+  opacity: 0.6;
+  /* position: relative; */
+}
+
+#num {
+  position: relative;
+}
+#num::after {
+  position: absolute;
+  content: '0';
+  display: block;
+  width: 16px;
+  height: 16px;
+  /* border: 1px solid red; */
+  background-color: red;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.9rem;
+  top: 5%;
+  right: 5%;
+}
+@media (min-width: 576px) {
+  /* .member */
+}
+
+// p {
+//   color: $Lg;
+//   font-size: 16px;
+// }
+
+.items-card img {
+  /* object-fit: ; */
+  width: 220px;
+}
+=======
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
 .titlebarFix {
   height: 80px;
   width: 100%;
@@ -63,13 +106,16 @@ $O: #fa5d07;
 }
 
 .rao {
+  font-weight: 300;
 
   a {
     text-decoration: none;
     color: black;
+
   }
 
   .add {
+
     box-shadow: 0px 0px 5px 1px #000000;
     border-radius: 6px;
     background-color: $Lbg;
@@ -77,8 +123,7 @@ $O: #fa5d07;
     margin-bottom: 3.125rem;
     padding: 20px;
 
-    h5 {
-      font-weight: normal;
+    p {
       color: $Lg;
       width: 60px;
       border: $Lg 1px solid;
@@ -86,20 +131,24 @@ $O: #fa5d07;
       text-align: center;
       padding: 5px 5px;
       margin-bottom: 16px;
+
     }
 
     ::placeholder {
       color: $Lg;
+      font-weight: 300;
+
     }
 
     .addInput {
-      font-weight: normal;
       color: $Lg;
       width: 300px;
       border: $Lg 1px solid;
       border-radius: 6px;
       margin-right: 10px;
       padding-left: 15px;
+      font-weight: 300;
+
     }
 
     select {
@@ -113,17 +162,20 @@ $O: #fa5d07;
 
       option {
         color: black;
+        font-weight: 300;
+
       }
     }
 
     textarea {
-      font-weight: normal;
       border: $Lg 1px solid;
       border-radius: 6px;
       height: 270px;
       color: white;
       overflow: scroll-right;
       padding: 15px;
+      font-weight: 300;
+
     }
 
     .addTag {
@@ -134,11 +186,23 @@ $O: #fa5d07;
         margin: 0;
         padding: 0;
       }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
       ::placeholder {
         color: $Lg;
+
       }
 
+<<<<<<< HEAD
+      .tagName1 {
+        width: 100px;
+        text-align: center;
+        border-right: 0.5px $Lg solid;
+        border-radius: 6px 0 0 6px;
+      }
+=======
 
       .tagName1 {
         width: 100px;
@@ -147,6 +211,7 @@ $O: #fa5d07;
         border-radius: 6px 0 0 6px;
       }
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
       .tagName2 {
         width: 100px;
         text-align: center;
@@ -161,21 +226,36 @@ $O: #fa5d07;
         width: 150px;
         border: $Lg solid 1px;
         border-radius: 6px;
+<<<<<<< HEAD
+        &:hover {
+          cursor: pointer;
+        }
+        h6 {
+=======
 
         &:hover {
           cursor: pointer;
         }
 
         p {
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
           margin: 10px 0 0 0;
           color: $Lg;
-        }
+          font-weight: 300;
 
+        }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
         input {
           display: none;
         }
       }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
       img {
         border-radius: 6px;
         //  background-color: white;
@@ -185,6 +265,8 @@ $O: #fa5d07;
 
     .addSend {
       font-size: 16px;
+      font-weight: 300;
+
       background-color: $Lbg;
       border: 1px $Lg solid;
       color: $Lg;
@@ -196,6 +278,9 @@ $O: #fa5d07;
       }
     }
   }
+<<<<<<< HEAD
+}
+=======
 
   // .relatedPost {
   //   margin: 3.125rem 0px;
@@ -227,3 +312,4 @@ $O: #fa5d07;
     background: $Lg;
   }
 }
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
