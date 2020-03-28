@@ -11,13 +11,14 @@ export class Locusinfo extends React.Component {
   }
   render() {
     let { DivelocationInfo = [] } = this.props.LocusInfos
-    //   console.log(localinfo)
+    // console.log(this.props)
     const currentid = this.props.match.params
     //   console.log(currentid)
     let currentlocation
     currentlocation = DivelocationInfo.filter(
       localinfo => localinfo.LocationID === currentid.LocationID
     )
+    console.log(this.props)
     return (
       <div>
         {currentlocation.map((value, index) => {

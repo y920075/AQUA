@@ -81,6 +81,7 @@ router.get('/event/type', async (req,res)=>{
     type =    活動類型
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -142,6 +143,7 @@ router.get('/event/map',(req,res)=>{
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -328,7 +330,7 @@ router.get('/event/:eventId',(req,res)=>{
 */
 
 router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
-    req.session.memberId = "M20010002"
+
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -462,6 +464,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
     經緯度由eventFullLocation透過Google API取得後存入
 
     req.body.eventName =            活動名稱
+    req.body.eventType =            活動類別
     req.body.eventTypeId =          活動類別編號
     req.body.eventLocation =        活動地點(縣市)
     req.body.eventFullLocation =    活動地點(完整)
@@ -480,7 +483,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
 */
 
 router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -618,7 +621,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
 */
 
 router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status':401,
         'msg':'尚未登入'
@@ -657,6 +660,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -688,7 +692,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event/self', async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -742,7 +746,7 @@ router.get('/member/event/self', async (req,res)=>{
 */
 
 router.get('/member/event/self/:eventId', async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 404,
         'msg' :　'查無資料',
@@ -770,6 +774,7 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
     q =       關鍵字搜索
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
 
         預計傳送回去的資料
     {
@@ -803,7 +808,6 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
-    req.session.memberId = 'M20010002'
 
     let data = {
         'status' : 401,
@@ -843,7 +847,7 @@ router.get('/member/event/join',async (req,res)=>{
 */
 
 router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -882,7 +886,6 @@ router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010002'
 
     let data = {
         'status' : 401,
@@ -920,7 +923,7 @@ router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -937,6 +940,42 @@ router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
             res.json(data)
         }
     }
+})
+
+//會員取得聊天室列表(報名參加以及自己發起的)
+/*
+    開始日期超過7天之後的不列出，即表示聊天室只開放到過期之後7天
+    傳入參數
+    req.query.mylist 1 = 自己發起的 2 = 自己報名 預設為全部
+*/
+router.get('/member/event/chatList',async (req,res)=>{
+
+    let mySelfEventData = []
+    let myJoinEventData = []
+
+    const findMySelfEventSql = `SELECT \`eventId\`,\`eventName\`
+    FROM \`event_data\` 
+    WHERE \`eventSponsor\` = 'M20010002' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
+
+    const findMyJoinEventsql = `SELECT \`event_memeber\`.\`eventId\`,\`event_data\`.\`eventName\`
+    FROM \`event_memeber\` 
+    LEFT JOIN \`event_data\`
+    ON \`event_data\`.\`eventId\` = \`event_memeber\`.\`eventId\`
+    WHERE \`memberId\` = 'M20010002' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
+
+    if ( req.query.mylist === '1' ) {
+        mySelfEventData = await db.queryAsync(findMySelfEventSql)
+    } else if ( req.query.mylist === '2' ) {
+        myJoinEventData = await db.queryAsync(findMyJoinEventsql)
+    } else {
+        mySelfEventData = await db.queryAsync(findMySelfEventSql)
+        myJoinEventData = await db.queryAsync(findMyJoinEventsql)
+    }
+    
+    const result = [...myJoinEventData,...mySelfEventData]
+    res.json(result)
+    
+    
 })
 
 module.exports = router

@@ -5,51 +5,12 @@ $Lg: #e2e4e8;
 $Lb: #47c9e5;
 $O: #fa5d07;
 
-body {
-  height: 300vh;
-  background-color: #132948;
-}
-
-.navbar-shopping-cart-icon {
-  opacity: 0.6;
-  /* position: relative; */
-}
-
-#num {
-  position: relative;
-}
-#num::after {
-  position: absolute;
-  content: '0';
-  display: block;
-  width: 16px;
-  height: 16px;
-  /* border: 1px solid red; */
-  background-color: red;
-  border-radius: 50%;
-  color: white;
-  font-size: 0.9rem;
-  top: 5%;
-  right: 5%;
-}
-@media (min-width: 576px) {
-  /* .member */
-}
-
-// p {
-//   color: $Lg;
-//   font-size: 16px;
-// }
-
-.items-card img {
-  /* object-fit: ; */
-  width: 220px;
-}
 .titlebarFix {
   height: 80px;
   width: 100%;
   background-color: $Dbg;
 }
+
 .titlebar {
   ul {
     display: flex;
@@ -57,6 +18,7 @@ body {
     margin: 0;
     padding: 0;
   }
+
   height: 80px;
   margin-bottom: 3.125rem;
   background-color: $Lg;
@@ -68,6 +30,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     h2 {
       margin: 0;
     }
@@ -79,17 +42,20 @@ body {
     }
   }
 }
+
 .form-control,
 .custom-file-control,
 .is-focused .form-control,
 .is-focused .custom-file-control {
   background-image: linear-gradient(to top, $Lg 1px, rgba(0, 0, 0, 0) 1px);
 }
+
 .custom-select:focus {
   border-color: #ffffff;
   outline: 0;
   box-shadow: none;
 }
+
 .custom-control-label::before,
 .custom-file-label,
 .custom-select {
@@ -101,7 +67,7 @@ body {
     text-decoration: none;
     color: black;
   }
-  
+
   .add {
     
     box-shadow: 0px 0px 5px 1px #000000;
@@ -110,7 +76,13 @@ body {
     height: 475px;
     margin-bottom: 3.125rem;
     padding: 20px;
+<<<<<<< HEAD
     p {
+=======
+
+    h5 {
+      font-weight: normal;
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
       color: $Lg;
       width: 60px;
       border: $Lg 1px solid;
@@ -119,9 +91,11 @@ body {
       padding: 5px 5px;
       margin-bottom: 16px;
     }
+
     ::placeholder {
       color: $Lg;
     }
+
     .addInput {
       font-weight: normal;
       color: $Lg;
@@ -131,6 +105,7 @@ body {
       margin-right: 10px;
       padding-left: 15px;
     }
+
     select {
       text-align: center;
       text-align-last: center;
@@ -139,10 +114,12 @@ body {
       width: 100px;
       border: $Lg 1px solid;
       border-radius: 6px;
+
       option {
         color: black;
       }
     }
+
     textarea {
       font-weight: normal;
       border: $Lg 1px solid;
@@ -152,19 +129,23 @@ body {
       overflow: scroll-right;
       padding: 15px;
     }
+
     .delete {
       font-weight: 300;
       font-size: 16px;
-      background-color:$Lbg;
+      background-color: $Lbg;
       border: 1px red solid;
       color: red;
       padding: 10px 40px;
+
       &:hover {
-        background-color:red;
-        border: 1px red solid;;
+        background-color: red;
+        border: 1px red solid;
+        ;
         color: #ffffff;
       }
     }
+
     .editSend {
       font-weight: 300;
       font-size: 16px;
@@ -172,10 +153,50 @@ body {
       border: 1px $Lg solid;
       color: $Lg;
       padding: 10px 40px;
+
       &:hover {
         color: $Lbg;
         background-color: $Lg;
       }
     }
   }
+<<<<<<< HEAD
+=======
+
+  // .relatedPost {
+  //   ul {
+  //     display: flex;
+  //     list-style: none;
+  //     margin: 0;
+  //     padding: 0;
+  //   }
+  //   margin: 3.125rem 0px;
+  //   color: $Lg;
+  //   ul {
+  //     // justify-content: space-between;
+  //     li {
+  //       width: 230px;
+  //       margin: 0 10px;
+
+  //       figure {
+  //         margin: 0;
+  //         height: 160px;
+  //         overflow: hidden;
+  //         perspective: 1000px;
+  //         img {
+  //           width: 100%;
+  //           transition: 0.3s;
+  //           &:hover {
+  //             transform: translateZ(100px);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // .addHr {
+  //   width: 100%;
+  //   background: $Lg;
+  // }
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
 }

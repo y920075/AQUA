@@ -5,6 +5,7 @@ $Lg: #e2e4e8;
 $Lb: #47c9e5;
 $O: #fa5d07;
 
+<<<<<<< HEAD
 body {
   height: 300vh;
   background-color: #132948;
@@ -45,11 +46,14 @@ body {
   /* object-fit: ; */
   width: 220px;
 }
+=======
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
 .titlebarFix {
   height: 80px;
   width: 100%;
   background-color: $Dbg;
 }
+
 .titlebar {
   ul {
     display: flex;
@@ -57,6 +61,7 @@ body {
     margin: 0;
     padding: 0;
   }
+
   height: 80px;
   margin-bottom: 3.125rem;
   background-color: $Lg;
@@ -68,6 +73,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     h2 {
       margin: 0;
     }
@@ -79,17 +85,20 @@ body {
     }
   }
 }
+
 .form-control,
 .custom-file-control,
 .is-focused .form-control,
 .is-focused .custom-file-control {
   background-image: linear-gradient(to top, $Lg 1px, rgba(0, 0, 0, 0) 1px);
 }
+
 .custom-select:focus {
   border-color: #ffffff;
   outline: 0;
   box-shadow: none;
 }
+
 .custom-control-label::before,
 .custom-file-label,
 .custom-select {
@@ -104,6 +113,7 @@ body {
     color: black;
 
   }
+
   .add {
 
     box-shadow: 0px 0px 5px 1px #000000;
@@ -123,11 +133,13 @@ body {
       margin-bottom: 16px;
 
     }
+
     ::placeholder {
       color: $Lg;
       font-weight: 300;
 
     }
+
     .addInput {
       color: $Lg;
       width: 300px;
@@ -138,6 +150,7 @@ body {
       font-weight: 300;
 
     }
+
     select {
       text-align: center;
       text-align-last: center;
@@ -146,12 +159,14 @@ body {
       width: 100px;
       border: $Lg 1px solid;
       border-radius: 6px;
+
       option {
         color: black;
         font-weight: 300;
 
       }
     }
+
     textarea {
       border: $Lg 1px solid;
       border-radius: 6px;
@@ -162,24 +177,41 @@ body {
       font-weight: 300;
 
     }
+
     .addTag {
+
       // width: 50px;
       input {
         // width: 100px;
         margin: 0;
         padding: 0;
       }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
       ::placeholder {
         color: $Lg;
 
       }
 
+<<<<<<< HEAD
       .tagName1 {
         width: 100px;
         text-align: center;
         border-right: 0.5px $Lg solid;
         border-radius: 6px 0 0 6px;
       }
+=======
+
+      .tagName1 {
+        width: 100px;
+        text-align: center;
+        border-right: .5px $Lg solid;
+        border-radius: 6px 0 0 6px;
+      }
+
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
       .tagName2 {
         width: 100px;
         text-align: center;
@@ -194,25 +226,43 @@ body {
         width: 150px;
         border: $Lg solid 1px;
         border-radius: 6px;
+<<<<<<< HEAD
         &:hover {
           cursor: pointer;
         }
         h6 {
+=======
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        p {
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
           margin: 10px 0 0 0;
           color: $Lg;
           font-weight: 300;
 
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
         input {
           display: none;
         }
       }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
       img {
         border-radius: 6px;
         //  background-color: white;
         border: 1px $Lg solid;
       }
     }
+
     .addSend {
       font-size: 16px;
       font-weight: 300;
@@ -221,10 +271,45 @@ body {
       border: 1px $Lg solid;
       color: $Lg;
       padding: 10px 40px;
+
       &:hover {
         color: $Lbg;
         background-color: $Lg;
       }
     }
   }
+<<<<<<< HEAD
 }
+=======
+
+  // .relatedPost {
+  //   margin: 3.125rem 0px;
+  //   color: $Lg;
+  //   ul {
+  //     // justify-content: space-between;
+  //     li {
+  //       width: 230px;
+  //       margin: 0 10px;
+
+  //       figure {
+  //         margin: 0;
+  //         height: 160px;
+  //         overflow: hidden;
+  //         perspective: 1000px;
+  //         img {
+  //           width: 100%;
+  //           transition: 0.3s;
+  //           &:hover {
+  //             transform: translateZ(100px);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  .addHr {
+    width: 100%;
+    background: $Lg;
+  }
+}
+>>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e

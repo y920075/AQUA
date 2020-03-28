@@ -9,7 +9,7 @@ const getWeekDate =  require('./location/getweekweather')
 const getnowseastate = require('./location/getnowseastate')
 //執行資料自動寫入DB
 // getTIdeData()
-// getWeekDate()
+getWeekDate()
 // getnowseastate()
 //一小時
 setInterval(()=>{
@@ -30,7 +30,27 @@ app.use(session({
         maxAge: 1200000, // session的存活時間 單位毫秒
     }
 }))
-app.use(cors())
+
+const whitelist = [
+    'http://localhost:3000',
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'http://127.0.0.1:3000',
+    undefined,
+];
+
+const corsOptions = {
+    credentials: true,
+    origin: function(origin, callback){
+        if(whitelist.indexOf(origin) !== -1){
+            callback(null, true); // 允許
+        } else {
+            callback(null, false); // 不允許
+        }
+    }
+};
+
+app.use(cors(corsOptions))
 app.use(require(__dirname + '/members/member'))
 app.use('/divelocation', require(__dirname+'/location/locationinfo') );
 //評論
@@ -54,7 +74,17 @@ app.get('/try-db', (req, res)=> {
     })
 })
 
+//賣家相關路由
+//引用coupon
+app.use('/seller/coupon', require(__dirname+'/coupon/coupon') );
+app.use('/seller', require(__dirname+'/basic_information/basic_information') );
 
+
+//引用顧客管理
+app.use('/seller/customermanager', require(__dirname+'/customermanagement/customermanagement') );
+
+//引用前端getcoupon資料
+// app.use('/seller/getcoupon', require(__dirname+'/coupon/couponget') );
 
 
 

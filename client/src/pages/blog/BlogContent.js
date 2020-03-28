@@ -47,7 +47,7 @@ function BlogContent(props) {
       const commentsData_fd = new FormData()
       commentsData_fd.append('cotentComments', commentsData.cotentComments)
     
-      props.addContentCommentsDataAsync(commentsData_fd, () => alert('成功新增'))
+      props.addContentCommentsDataAsync(commentsData_fd)
     
   }
 

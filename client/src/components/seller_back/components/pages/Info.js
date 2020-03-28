@@ -19,7 +19,7 @@ import { sellerInfoAsync } from '../../../../actions/seller'
 
 function Info(props) {
   //傳過來的props.seller_Inof是一個物件
-  console.log(props.sellerInfo)
+  console.log(props)
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
 
   useEffect( () => {

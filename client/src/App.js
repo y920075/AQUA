@@ -33,12 +33,17 @@ import MemberUser from './pages/members/MemberUser'
 
 import Home from './pages/Home'
 
+import Chat from './pages/chat/Chat'
+
 function App(props) {
   // console.log(props)
   return (
     <Router>
       <>
         <Switch>
+        <Route path="/chatchatchat">
+            <Chat />
+          </Route>
           <Route path="/blog/:id">
             <BlogContent />
           </Route>

@@ -120,6 +120,28 @@ const memberUnOtherJoinEventResponse = (state = {}, action) => {
   }
 }
 
+
+//會員取得聊天室列表
+const memberChatListData = (state = [], action) => {
+  switch (action.type) {
+    case 'MEMBER_GET_CHATLIST':
+      return action.value
+    default:
+      return state
+  }
+}
+
+//是否按下已過期按鈕
+const isEnable = (state = false, action) => {
+  switch (action.type) {
+    case 'SWITCHBUTTON_ENABLE':
+      console.log(action)
+      return action.value
+    default:
+      return state
+  }
+}
+
 //合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
 const eventReducer = combineReducers({
   eventData,
@@ -134,5 +156,7 @@ const eventReducer = combineReducers({
   memberJoinEventResponse,
   memberUnJoinEventResponse,
   memberUnOtherJoinEventResponse,
+  memberChatListData,
+  isEnable,
 })
 export { eventReducer }
