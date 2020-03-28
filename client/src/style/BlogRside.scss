@@ -111,3 +111,10 @@ $O: #fa5d07;
        
     }
   }
+  @media screen and (max-width: 576px) {
+    .rSide {
+      padding: 20px;
+      margin-bottom: 30px;
+      order: -1;
+    }
+  }

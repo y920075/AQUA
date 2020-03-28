@@ -58,6 +58,12 @@ export const getBlogCommentsDataAsync = (blogCommentsData, callback) => {
 }
 
 //新增評論
+
+export const addContentCommentsData = data => ({
+  type: 'POST_ADDCONTENTCOMMENTS',
+  value: data,
+})
+
 export const addContentCommentsDataAsync = (contentCommentsData, callback) => {
   console.log(contentCommentsData)
   return async dispatch => {
@@ -73,7 +79,7 @@ export const addContentCommentsDataAsync = (contentCommentsData, callback) => {
     const data = await response.json()
     console.log('res data', data)
 
-    dispatch(addContentCommentsDataAsync(data))
+    dispatch(addContentCommentsData(data))
 
     // callback()
   }

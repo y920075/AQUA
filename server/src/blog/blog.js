@@ -96,26 +96,38 @@ router.get('/blog/comments', (_req, res)=>{
     })
 })
 
+//新增評論資料
 router.post('/blog/addComments', upload.none(), (req, res)=>{
+    console.log(req.body)
     // res.json(req.body)
     // 先檢查輸入
-    const sql = `INSERT INTO \`blog_comments\`(
-        \`content\`) 
-        VALUES (?)`
+    const comments = {
+        success:false,
+        error:'',
+        status:0,
+        body:req.body,
+        "commentsData": ""
+    };
+
+    const sql = `INSERT INTO \`blog_comments\` (\`content\`) VALUES (?)`
 
     db.queryAsync(sql, [
         req.body.content
         ])
 
     .then(r=>{
+        comments.status = 202;
+        comments.commentsData = r;
+        comments.success = true;
         console.log('新增資料寫入成功')
-        return res.json(req.body)
+        return res.json(comments)
         // res.redirect(req.baseUrl + '/list')
     })
-    .catch(err=>{
-        console.log('新增資料寫入失敗')
-        // return res.json(err)
-    })
+    .catch(error=>{
+        console.log(error)
+        return res.send(error);
+        // return res.json(comments);            
+    }); 
     
 })
 

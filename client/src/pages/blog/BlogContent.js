@@ -41,13 +41,13 @@ function BlogContent(props) {
       }
 
       const commentsData = { 
-        cotentComments
+        cotentComments,
       }
     
       const commentsData_fd = new FormData()
       commentsData_fd.append('cotentComments', commentsData.cotentComments)
     
-      props.addContentCommentsDataAsync(commentsData_fd)
+      props.addContentCommentsDataAsync(commentsData_fd, () => alert('成功新增'))
     
   }
 
@@ -194,32 +194,34 @@ function BlogContent(props) {
            </>
             )}
             ) : ''}
+            <form name="cotentform" method="post">
             <div className="postComment">
               <div className="postcommentTitle">
                 <h5>發表評論</h5>
               </div>
-              <form name="cotentform">
               <div className="postcommentBody">
-                <textarea 
+                <input 
+                                type="text"
+
                   name="cotentComments"
                   onChange={event => setCotentComments(event.target.value)}
                   className="col-md-12">
-                </textarea>
+                </input>
               </div>
               <div className="d-flex justify-content-end">
                 <button 
                 className="badge badge-pill contentSend" 
-                type="button"
                 onClick={e => {
-                        e.preventDefault()
-                        handleSubmit()
-                        }}
+                e.preventDefault()
+                handleSubmit()
+              }}
                 >
                   送出
                 </button>
               </div>
-              </form>
             </div>
+            </form>
+
           </div>
           <BlogRside blogData={props.blogData}/>
         </div>

@@ -27,12 +27,7 @@ $O: #fa5d07;
   .category {
     margin-bottom: 3.125rem;
 
-<<<<<<< HEAD
-    span,a {
-      font-weight: 300;
-=======
-    a {
->>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
+    span, a {
       color: $Lg;
       background: $Lbg;
       padding: 5px 15px;
@@ -50,16 +45,6 @@ $O: #fa5d07;
       background: $O;
     }
   }
-<<<<<<< HEAD
-@media screen and (max-width: 576px){
-  span{
-    display: inline-block;
-  }
-  ul{
-    width: 300px;
-    text-align: center;
-    flex-wrap: wrap;
-=======
 
   @media screen and (max-width: 576px) {
     .category {
@@ -67,7 +52,6 @@ $O: #fa5d07;
       text-align: center;
       flex-wrap: wrap;
     }
->>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
   }
 
   .lCard,
@@ -80,13 +64,9 @@ $O: #fa5d07;
       margin-bottom: 50px;
       box-shadow: 2px 2px 7px 5px #000000;
       transition: 0.5s;
-<<<<<<< HEAD
-      font-weight: 300;
-=======
->>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
 
       &:hover {
-        transform: matrix3d(0.99, 0, 0.00, 0, 0.00, 0.99, 0.00, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+        transform: matrix3d(0.995, 0, 0.00, 0, 0.00, 0.995, 0.00, 0, 0, 0, 1, 0, 0, 0, 0, 1);
         // transform: translateZ(-.4px);
         box-shadow: none;
         color: $Dg;
@@ -99,6 +79,9 @@ $O: #fa5d07;
       .card-text {
         font-weight: 300;
         color: $Dg;
+        &:hover{
+          cursor:text
+        }
       }
 
       .card-body {
@@ -119,15 +102,8 @@ $O: #fa5d07;
             color: $Lb;
           }
         }
-<<<<<<< HEAD
-        .card-text:hover{
-          cursor: text;
-        }
-        .card-tag a{
-=======
 
         .card-tag a {
->>>>>>> 201bb8efca10e8c9d28e8634cea4f8cd9b0b7b1e
           margin: 0 10px;
         }
       }
@@ -148,52 +124,6 @@ $O: #fa5d07;
       margin-bottom: 30px;
       order: -1;
     }
-  }
-
-  .page {
-    margin-top: 30px;
-
-    ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-
-      .ative {
-        background-color: $O;
-      }
-
-      li {
-        width: 30px;
-        height: 30px;
-        // border: 1px rgb(255, 255, 255) solid;
-        border-radius: 50%;
-        background-color: $Lbg;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        margin: 0 3px;
-
-        &:hover {
-          background-color: $O;
-        }
-
-        .ative {
-          background-color: $O;
-        }
-
-        a {
-          padding: 10px;
-          color: $Lg;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 576px) {
-    .page {
-      order: 1;
-    }
-
   }
 
 }
