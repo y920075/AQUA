@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import Header from '../../components/Header'
+import Background from '../members/Background'
 import '../../style/HS.scss'
 
 
 
+
 function MemberRegister(props) {
-    //set background img
-    useEffect(() => {
-        require('../../style/bg.css')
-    }, []);
+
+    // //set background img
+    // useEffect(() => {
+    //     require('../../style/bg.css')
+    // }, []);
 
     //Register function 
     const [name, setName] = useState('')
@@ -81,12 +84,14 @@ function MemberRegister(props) {
 
     return <>
         <Header />
+        <Background />
         {/* <!-- register card --> */}
         <div className="container hsregister">
+
             <div className="registercard-hs row d-flex align-items-center">
                 <div className="card col-md-6 mx-auto">
                     {/* <!-- Default form register --> */}
-                    <form className="text-center p-4" action="">
+                    <form className="rgform text-center p-4" action="">
 
                         <p className="h4 mb-4">註冊</p>
 
@@ -123,11 +128,11 @@ function MemberRegister(props) {
                         {/* <!-- Social register --> */}
                         <p>其他登入方式:</p>
 
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-facebook-f light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-twitter light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-linkedin-in light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-github light-blue-text"></i></a>
-                        <a href="#" className="mx-2" role="button"><i className="fab fa-google light-blue-text"></i></a>
+                        <a href="#" className="otherlogin mx-2" role="button"><i className="otherlogin fab fa-facebook-f light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-twitter light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-linkedin-in light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-github light-blue-text"></i></a>
+                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-google light-blue-text"></i></a>
 
 
                         <hr />
@@ -135,7 +140,7 @@ function MemberRegister(props) {
                         {/* <!-- Terms of service --> */}
                         <p>點擊
                             <em>立即註冊！</em> 即表示您同意我們的服務條款
-                            <a className="servicelink" href="" target="_blank">服務條款</a>
+                            <a className="agreementlink" href="" target="_blank">服務條款</a>
                         </p>
                     </form>
                     {/* <!-- Default form register --> */}
