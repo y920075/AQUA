@@ -33,7 +33,6 @@ function EventList(props) {
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
-    props.getEventDataAsync() //取得活動資料
     props.getEventTypeDataAsync() //取得活動類型資料
   }, [])
 
@@ -45,8 +44,6 @@ function EventList(props) {
       if (props.eventData.status) {
         //確認有收到資料之後設定載入中為false
         setHasLoading(false)
-        //同時把資料設定到本地state
-        serEventData(props.eventData.result)
       }
     }, 500)
   }, [props.eventData])
@@ -85,7 +82,7 @@ function EventList(props) {
           <Loading />
         ) : (
           <>
-            <EventDataList eventData={eventData} />
+            <EventDataList eventData={props.eventData.result} />
             <EventPageButtons
               totalPages={props.eventData.totalPages}
               getDataFromServer={getEventData}
