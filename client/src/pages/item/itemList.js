@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -26,13 +25,12 @@ function Items(props) {
   const [itemData, setItemData] = useState([])
   const [asideData, setAsideData] = useState([])
   const [hasloading, setHasLoading] = useState(false)
-  // console.log('cateData', cateData)
 
   useEffect(() => {
     props.getItemDataAsync()
     props.getAsideDataAsync()
   }, [])
-
+  // 渲染後載入商品
   useEffect(() => {
     setHasLoading(true)
 
@@ -43,7 +41,7 @@ function Items(props) {
       }
     }, 500)
   }, [props.itemData])
-
+  // 渲染後 載入側欄
   useEffect(() => {
     setHasLoading(true)
 
@@ -54,7 +52,7 @@ function Items(props) {
       }
     }, 500)
   }, [props.asideData])
-
+  // 取得參數傳入 action
   function getItemData(page) {
     const type = document.querySelector('.type-li.active')
       ? document.querySelector('.type-li.active').getAttribute('data-type')
@@ -68,22 +66,8 @@ function Items(props) {
       ? document.querySelector('.price-li.active').getAttribute('data-price')
       : ''
     props.getItemDataAsync(type, brand, price, page)
-
-    // props.getItemDataAsync(page)
   }
 
-  // function getAsideData(page) {
-  //   props.getAsideDataAsync(page)
-  // }
-
-  // const getItemData = page => {
-  //   const category = document.querySelector('select[name="type"]').value
-  //   const brand = document.querySelector('select[name="sort"]').value
-  //   const price = document.querySelector('input.searchInput').value
-  //   props.getItemDataAsync(page)
-  // }
-
-  // console.log(props.asideData)
   return (
     <>
       <Header />

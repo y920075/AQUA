@@ -194,10 +194,10 @@ itemRouter.get('/member/orders', (req, res)=>{
 })
 
 // 訂單新增
-itemRouter.post('/member/checkout', upload.none(), (req, res)=>{
-
+itemRouter.post('/member/checkout', (req, res)=>{
+    console.log('訂單新增',req.body)
     const memberId = 'M20010002'
-    const orderData = req.body.orderData 
+    const orderItems = req.body.orderItems 
     // 是陣列 裡面物件有 itemid checkprice checkty
 
     let totalorder //先算出總筆數
@@ -214,13 +214,16 @@ itemRouter.post('/member/checkout', upload.none(), (req, res)=>{
             \`checkPrice\`, 
             \`checkQty\`, 
             \`checkSubtotal\`) 
-            VALUES (${totalorder},${memberId},?,?,?,?)`
-        for (let i = 0; i < orderData.length; i++) {
+            VALUES (?,?,?,?,?,?)`
+        for (let i = 0; i < orderItems.length; i++) {
             db.queryAsync(sql, [
-                orderData[i].orderItemId,
-                orderData[i].checkPrice,
-                orderData[i].checkQty,
-                orderData[i].checkSubtotal
+                totalorder,
+                memberId,
+                orderItems[i].orderItemId,
+                orderItems[i].checkPrice,
+                orderItems[i].checkQty,
+                // orderItemId[i].checkSubtotal
+                '123'
             ])        
         }
     })

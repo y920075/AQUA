@@ -14,6 +14,7 @@ import { locationReducer } from './reducers/location/location_Reducers'
 import { classReducer } from './reducers/class/class_Reducers'
 import { eventReducer } from './reducers/event/event_Reducers'
 import { itemReducer } from './reducers/item/item_Reducers'
+import { orderReducer } from './reducers/order/order_Reducers'
 import { memberReducer } from './reducers/member/member_Reducers'
 import { sellerReducer } from './reducers/seller/sellerReducer'
 import { commentReducer } from './reducers/comment/comment_Reducers'
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   eventReducer,
   sellerReducer,
   itemReducer,
+  orderReducer,
   locationReducer,
   memberReducer,
   commentReducer,

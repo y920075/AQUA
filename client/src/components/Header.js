@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-function Header() {
+function Header(props) {
+  const { handleDelete } = props
   const [showCart, setShowCart] = useState(false)
   const [count, setCount] = useState(0)
   const [mycart, setMycart] = useState([])
   const [mycartDisplay, setMycartDisplay] = useState([])
   const [hasLoading, setHasLoading] = useState(false)
   const [rwdOpen, setRwdOpen] = useState(false)
+
+  const localCart = JSON.parse(localStorage.getItem('cart'))
+
   async function openMenu() {
     if (rwdOpen) {
       await setRwdOpen(false)
@@ -19,34 +23,26 @@ function Header() {
   }
   // shopping cart toggle menu
   async function showMenu(event) {
-    console.log('cart')
     setShowCart(!showCart)
-    console.log(showCart)
     event.stopPropagation()
   }
   // close toggle by click window
   window.addEventListener('click', () => {
-    console.log('window')
     setShowCart(false)
   })
   // defult localstorage cart
-
   async function getCartFromLocalStorage() {
     setHasLoading(true)
-
-    let newCart = []
-    newCart = localStorage.getItem('cart')
-
-    console.log(JSON.parse(newCart))
-
-    setMycart(JSON.parse(newCart))
+    setMycart(localCart)
   }
+  // 渲染後上動畫
   useEffect(() => {
     AOS.init({
       // initialise with other settings
       duration: 300,
     })
   })
+  //
   useEffect(() => {
     getCartFromLocalStorage()
   }, [])
@@ -69,7 +65,7 @@ function Header() {
           newMycartDisplay = [...newMycartDisplay, newItem]
         }
       }
-      console.log('newMycartDisplay', newMycartDisplay)
+      // console.log('newMycartDisplay', newMycartDisplay)
       setMycartDisplay(newMycartDisplay)
       setCount(newMycartDisplay.length)
     }
@@ -175,7 +171,14 @@ function Header() {
                               </div>
                               <div className="d-flex justify-content-between">
                                 <span>NT$ {value.price}</span>
-                                <span className="del" onClick={() => {}}>
+                                <span
+                                  className="del"
+                                  onClick={() =>
+                                    handleDelete({
+                                      id: `${value.id}`,
+                                    })
+                                  }
+                                >
                                   刪除
                                 </span>
                               </div>
