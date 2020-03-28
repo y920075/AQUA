@@ -467,7 +467,6 @@ export const customerMailDataAsync = (mailData, callback) => {
 
 //對於前端輸入的優惠馬去後台抓取資料
 
-
 export const getNowCoupData = data => ({
   type: 'NOWCOUPDATA',
   value: data,
@@ -493,7 +492,6 @@ export const getNowCoupDataAsync = (getCoupData, callback) => {
     dispatch(getNowCoupData(data))
   }
 }
-
 
 //----------------------賣家中心課程相關action----------------
 

@@ -56,7 +56,7 @@ $color5: #f15a24;
             &:after {
               content: '';
               position: absolute;
-              transition: transform .5s ease;
+              transition: transform 0.5s ease;
             }
 
             &.active {
@@ -158,9 +158,11 @@ $color5: #f15a24;
           }
 
           &-body {
-            .item-name {}
+            .item-name {
+            }
 
-            .item-price {}
+            .item-price {
+            }
           }
         }
       }
@@ -190,7 +192,8 @@ $color5: #f15a24;
     color: #fff;
 
     .detail {
-      &-header {}
+      &-header {
+      }
 
       &-main {
         padding: 0 0.938rem;
@@ -226,18 +229,20 @@ $color5: #f15a24;
 
         .info {
           @media (max-width: 768px) {
-
             //變小時出現
             div {
               margin-top: 1rem;
             }
           }
 
-          &-header {}
+          &-header {
+          }
 
-          &-size {}
+          &-size {
+          }
 
-          &-qty {}
+          &-qty {
+          }
 
           &-btn {
             .addcart-btn {
@@ -267,12 +272,21 @@ $color5: #f15a24;
 
   &-shoppingCart {
     color: #132948;
+    .chin_btn {
+      background-color: #132948;
+      color: white;
+      border-radius: 1rem;
+      &:hover {
+        background-color: #f15a24;
+      }
+    }
 
     h6 {
       margin-bottom: 0;
     }
 
-    .cart-header {}
+    .cart-header {
+    }
 
     .table-wrapper {
       .card {
@@ -292,13 +306,17 @@ $color5: #f15a24;
             }
 
             &-info {
-              .item-name {}
+              .item-name {
+              }
 
-              .item-qty {}
+              .item-qty {
+              }
 
-              .item-price {}
+              .item-price {
+              }
 
-              .item-delete {}
+              .item-delete {
+              }
             }
           }
         }
@@ -306,7 +324,6 @@ $color5: #f15a24;
     }
 
     .check-wrapper {
-
       .card-header,
       .card-body,
       .card-footer {
@@ -340,7 +357,8 @@ $color5: #f15a24;
 
     .form-wrapper {
       .card {
-        &-header {}
+        &-header {
+        }
 
         &-body {
           .form-label {
@@ -364,7 +382,8 @@ $color5: #f15a24;
 
     .check-wrapper {
       .card {
-        &-header {}
+        &-header {
+        }
 
         &-body {
           label {
@@ -397,12 +416,15 @@ $color5: #f15a24;
     }
 
     .order {
-      &-header {}
+      &-header {
+      }
 
-      &-wrapper {}
+      &-wrapper {
+      }
 
       &-detail-wrapper {
-        .order-item {}
+        .order-item {
+        }
       }
     }
 
@@ -430,4 +452,14 @@ $color5: #f15a24;
       }
     }
   }
+}
+.active-chin-check {
+  // background: url(../../src/image/customer/sale-tag.png) 50px 50px no-repeat;
+  background-size: 3rem 3rem;
+  background-repeat: no-repeat;
+
+  background-color: transparent;
+  background-image: url(../../src/image/customer/sale-tag.png);
+  transition: ease 0.5;
+  // // border: 4px solid $aquacolortwo !important;
 }

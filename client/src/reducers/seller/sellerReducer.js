@@ -57,52 +57,49 @@ const sellerInfo = (state = {}, action) => {
   }
 }
 
-const giviAdd =  (state = {},action) => {
-    switch (action.type) {
-        case 'ADD_GIVIDATA':
-            return action.value
-        default:
-            return state
-    }
-}
-const customer =  (state = {},action) => {
-    switch (action.type) {
-        case 'CUSTOMER_GET':
-            return action.value
-        case 'CUSTOMER_USE':
-          return action.value
-        default:
-            return state
-    }
-}
-
-
-const cutomeruse =(state = {},action) => {
+const giviAdd = (state = {}, action) => {
   switch (action.type) {
-      case 'CUSTOMER_USE':
-        return action.value
-      default:
-          return state
+    case 'ADD_GIVIDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+const customer = (state = {}, action) => {
+  switch (action.type) {
+    case 'CUSTOMER_GET':
+      return action.value
+    case 'CUSTOMER_USE':
+      return action.value
+    default:
+      return state
   }
 }
 
-
-const customermailtransfer =(state = {},action) => {
+const cutomeruse = (state = {}, action) => {
   switch (action.type) {
-      case 'MAIL_TRANSFER':
-        return action.value
-      default:
-          return state
+    case 'CUSTOMER_USE':
+      return action.value
+    default:
+      return state
   }
 }
 
-
-const getNowCoupData = (state = {},action) => {
+const customermailtransfer = (state = {}, action) => {
   switch (action.type) {
-      case 'NOWCOUPDATA':
-        return action.value
-      default:
-          return state
+    case 'MAIL_TRANSFER':
+      return action.value
+    default:
+      return state
+  }
+}
+
+const getNowCoupData = (state = {}, action) => {
+  switch (action.type) {
+    case 'NOWCOUPDATA':
+      return action.value
+    default:
+      return state
   }
 }
 // const memberEmail = (state = {}, action) => {
@@ -204,7 +201,6 @@ const SellerClassDetailData = (state = {}, action) => {
       return state
   }
 }
-
 
 //----------------------賣家中心課程相關reducer----------------
 

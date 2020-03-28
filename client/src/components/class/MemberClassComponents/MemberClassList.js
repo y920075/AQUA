@@ -34,7 +34,7 @@ function MemberClassList(props) {
 
   return (
     <>
-      {props.memberClassData.status && props.memberClassData.status !== 404  ? (
+      {props.memberClassData.status && props.memberClassData.status !== 404 ? (
         props.memberClassData.result.map((value, index) => {
           return (
             <div className="card mt-3" key={index}>

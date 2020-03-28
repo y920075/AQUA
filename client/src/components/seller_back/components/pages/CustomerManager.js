@@ -40,7 +40,6 @@ function CustomerManager(props) {
     props.customerGetAsync(selectType)
   }
 
-
   //類別選單的點擊掛上active
   function typeInputActive(event) {
     //找到所有代表等級的li元素
@@ -50,10 +49,8 @@ function CustomerManager(props) {
     })
 
     event.target.classList.add('active-chin-td') //為被點擊的目標新增active
- 
   }
 
-  
   function triggerDelete(index) {
     if (window.confirm('你確定要刪除這個顧客嗎?')) {
       customerdata.splice(index, 1)
@@ -216,7 +213,6 @@ function CustomerManager(props) {
   )
 }
 const mapStateToProps = store => {
-
   return {
     customer: store.sellerReducer.customer,
     customermailtransfer: store.sellerReducer.customermailtransfer,
