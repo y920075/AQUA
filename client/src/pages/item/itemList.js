@@ -102,7 +102,9 @@ function Items(props) {
             <div className="row justify-content-between list-header">
               <div className="col">
                 {/* <Breadcrumb /> */}
-                <span class="material-icons d-md-none">filter_list</span>
+                <span class="material-icons d-md-none" onClick={() => {}}>
+                  filter_list
+                </span>
               </div>
 
               <div className="col text-right d-flex justify-content-end">

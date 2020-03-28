@@ -17,7 +17,7 @@ function CartItem(props) {
                 </div>
                 <div className="card-item-img col-4 col-md-2 d-flex align-items-center">
                   <img
-                    src="http://127.0.0.1:5000/images/itemImg/test-item.jpg"
+                    src={`http://127.0.0.1:5000/images/itemImg/${value.img}`}
                     alt=""
                   />
                 </div>

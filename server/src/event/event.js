@@ -330,7 +330,7 @@ router.get('/event/:eventId',(req,res)=>{
 */
 
 router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
-    req.session.memberId = "M20010002"
+
     const data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -483,7 +483,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
 */
 
 router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 412,
         'msg' : '資料驗證失敗'
@@ -621,7 +621,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
 */
 
 router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status':401,
         'msg':'尚未登入'
@@ -692,7 +692,7 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event/self', async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -746,7 +746,7 @@ router.get('/member/event/self', async (req,res)=>{
 */
 
 router.get('/member/event/self/:eventId', async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 404,
         'msg' :　'查無資料',
@@ -808,7 +808,6 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
-    req.session.memberId = 'M20010004'
 
     let data = {
         'status' : 401,
@@ -848,7 +847,7 @@ router.get('/member/event/join',async (req,res)=>{
 */
 
 router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010004'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -887,7 +886,6 @@ router.post('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010002'
 
     let data = {
         'status' : 401,
@@ -925,7 +923,7 @@ router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
-    req.session.memberId = 'M20010002'
+
     let data = {
         'status' : 401,
         'msg' : '尚未登入'

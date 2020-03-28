@@ -520,6 +520,7 @@ export const getSellerClassDataAsunc = (sort, page, isEnable) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }),
+      credentials: 'include',
     })
 
     const response = await fetch(request)
@@ -649,6 +650,7 @@ export const addClassDataAsunc = formData => {
     const request = new Request(`http://127.0.0.1:5000/seller/class`, {
       method: 'POST',
       body: fd,
+      credentials: 'include',
     })
 
     const response = await fetch(request)
@@ -669,6 +671,7 @@ export const delClassDataAsunc = classId => {
       `http://127.0.0.1:5000/seller/class/${classId}`,
       {
         method: 'DELETE',
+        credentials: 'include',
       }
     )
 
@@ -690,6 +693,7 @@ export const getSellerClassDetailDataAsync = classId => {
       `http://127.0.0.1:5000/seller/class/${classId}`,
       {
         method: 'GET',
+        credentials: 'include',
       }
     )
 
@@ -729,6 +733,7 @@ export const editClassDataAsunc = (formData, classId) => {
       {
         method: 'PUT',
         body: fd,
+        credentials: 'include',
       }
     )
 

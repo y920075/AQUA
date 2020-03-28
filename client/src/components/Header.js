@@ -1,7 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 function Header() {
+  const [showCart, setShowCart] = useState(false)
+  const [count, setCount] = useState(0)
+  const [mycart, setMycart] = useState([])
+  const [mycartDisplay, setMycartDisplay] = useState([])
+  const [hasLoading, setHasLoading] = useState(false)
   const [rwdOpen, setRwdOpen] = useState(false)
   async function openMenu() {
     if (rwdOpen) {
@@ -10,6 +17,63 @@ function Header() {
       await setRwdOpen(true)
     }
   }
+  // shopping cart toggle menu
+  async function showMenu(event) {
+    console.log('cart')
+    setShowCart(!showCart)
+    console.log(showCart)
+    event.stopPropagation()
+  }
+  // close toggle by click window
+  window.addEventListener('click', () => {
+    console.log('window')
+    setShowCart(false)
+  })
+  // defult localstorage cart
+
+  async function getCartFromLocalStorage() {
+    setHasLoading(true)
+
+    let newCart = []
+    newCart = localStorage.getItem('cart')
+
+    console.log(JSON.parse(newCart))
+
+    setMycart(JSON.parse(newCart))
+  }
+  useEffect(() => {
+    AOS.init({
+      // initialise with other settings
+      duration: 300,
+    })
+  })
+  useEffect(() => {
+    getCartFromLocalStorage()
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHasLoading(false)
+    }, 500)
+    if (mycart) {
+      let newMycartDisplay = [...mycartDisplay]
+      for (let i = 0; i < mycart.length; i++) {
+        const index = newMycartDisplay.findIndex(
+          value => value.id === mycart[i].id
+        )
+        if (index !== -1) {
+          console.log('findindex', index)
+          newMycartDisplay[index].amount++
+        } else {
+          const newItem = { amount: 1, ...mycart[i] }
+          newMycartDisplay = [...newMycartDisplay, newItem]
+        }
+      }
+      console.log('newMycartDisplay', newMycartDisplay)
+      setMycartDisplay(newMycartDisplay)
+      setCount(newMycartDisplay.length)
+    }
+  }, [mycart])
 
   return (
     <>
@@ -33,17 +97,7 @@ function Header() {
               alt=""
             />
           </Link>
-          {/* cart icon */}
-          <button id="num" className="navbar-toggler" type="button">
-            <img
-              className="navbar-shopping-cart-icon"
-              src="../images/logo/shopping_cart.png"
-              alt=""
-              onClick={() => {
-                window.location = `/member/mycart`
-              }}
-            />
-          </button>
+
           {/* web menu */}
           <div
             className={
@@ -85,20 +139,79 @@ function Header() {
               </li>
             </ul>
           </div>
-          {/* member Login */}
-          <div className="collapse navbar-collapse" id="navbarMember">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link to="/memberlogin">
-                  <button
-                    type="button"
-                    className="btn btn-outline-light btn-sm"
-                  >
-                    Login
-                  </button>
-                </Link>
-              </li>
-            </ul>
+          <div className="navbar-rside d-flex">
+            {/* cart icon */}
+            <div className="navbar-cart mr-3 align-self-center">
+              <img
+                className="navbar-shopping-cart-icon"
+                src="../images/logo/cart_icon.png"
+                alt=""
+                // onMouseOver={hover}
+                // onMouseOut={hover}
+                onClick={showMenu}
+                // onClick={() => {
+                //   window.location = `/member/mycart`
+                // }}
+              />
+              <div className="cart-dot">
+                <p>{count}</p>
+              </div>
+              {showCart ? (
+                <div class="card mt-5 cart-card" data-aos="zoom-in-down">
+                  <div class="card-body">
+                    {mycartDisplay.length != 0 ? (
+                      mycartDisplay.map((value, index) => {
+                        return (
+                          <div className="d-flex cart-item" key={index}>
+                            <figure>
+                              <img
+                                className=""
+                                src={`http://127.0.0.1:5000/images/itemImg/${value.img}`}
+                              />
+                            </figure>
+                            <div className="d-flex flex-column row-info">
+                              <div className="">
+                                <div className="text-nowrap">{value.name}</div>
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <span>NT$ {value.price}</span>
+                                <span className="del" onClick={() => {}}>
+                                  刪除
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })
+                    ) : (
+                      <h2>購物車是空的喔!</h2>
+                    )}
+                  </div>
+                  <div className="card-footer">
+                    <Link
+                      className="d-flex justify-content-center"
+                      to="/member/mycart"
+                    >
+                      查看我的購物車
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+
+            {/* member Login */}
+            <div className="collapse navbar-collapse" id="navbarMember">
+              <Link to="/memberlogin">
+                <button type="button" className="btn btn-outline-light btn-sm">
+                  Login
+                </button>
+              </Link>
+              <div className="avatar" onClick={showMenu}>
+                <img />
+              </div>
+            </div>
           </div>
         </div>
       </nav>

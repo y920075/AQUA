@@ -30,6 +30,7 @@ router.get('/blog' , (req, res)=>{
 })
 //接收留言寫入資料庫
 router.post('/sentlocationcomment',upload.none(),(req,res)=>{
+    console.log(req.body)
     // req.session.memberID = ''
     // const date = {
     //     'status':401,
@@ -38,21 +39,16 @@ router.post('/sentlocationcomment',upload.none(),(req,res)=>{
     // if ( !req.session.memberId ) {
     //     res.json(data)
     // } else
-    const sql = "INSERT INTO `comment_location` (`comment_id`,`Locationid`,`member_id`,`member_name`,`comment_date`,`comment`) VALUE (?,?,?,?,?,?)"
+    const sql = "INSERT INTO `comment_location` (`comment_id`,`Locationid`,`member_id`,`member_name`,`comment`) VALUE (?,?,?,?,?)"
     let commentid = "L" + moment().format('YYYYMMDDHHMMSS')
-    let memberID = 'M20010002'
-    let membername = "Valeriana Flavia"
     console.log(commentid)
     let sqlStmt = [
         commentid,
-        req.params.LocationID,
-        memberID,
-        membername,
-        // req.session.memberID,
-        // req.session.membername,
-        req.body.comment_date,
-        req.body.comment
+        req.body.pageid,
+        req.body.memberID,
+        req.body.membername,
+        req.body.commentitself,
     ]
-    db.queryAsync(aql , sqlStmt)
+    db.queryAsync(sql , sqlStmt)
 })
 module.exports = router;
