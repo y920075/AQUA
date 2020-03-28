@@ -55,7 +55,7 @@ class event {
         let where = []
         if(query.type) where.push(`\`event_data\`.\`eventType\` = '${query.type}'`)
         if(query.q) where.push(`\`event_data\`.\`eventName\` LIKE '%${query.q}%'`)
-        if (!query.expired) where.push(`\`event_data\`.\`eventStartDate\` >= NOW()`)
+        if (!query.expired) where.push(`\`event_data\`.\`eventEndDate\` >= NOW()`)
         if(where.length>0){where = 'WHERE '+where.join(' AND ')}else{where=''}
         const sort = query.sort ? ` ORDER BY \`event_data\`.\`${query.sort.split(',')[0]}\` ${query.sort.split(',')[1]}` : ` ORDER BY \`event_data\`.\`created_at\` DESC, \`event_data\`.\`eventId\` DESC`
 

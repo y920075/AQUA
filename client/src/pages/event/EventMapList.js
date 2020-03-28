@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux'
 import {
   getEventDataForMapAsync,
   getEventTypeDataAsync,
+  switchButtonisEnable,
 } from '../../actions/event/event_Actions'
 
 //引入自訂元件
@@ -51,13 +52,13 @@ function EventMapList(props) {
   //每次按鈕被點擊時，就取得新資料
   useEffect(() => {
     getEventData()
-  }, [isEnable])
+  }, [props.isEnable])
 
   const getEventData = () => {
     const type = document.querySelector('select[name="type"]').value
     const sort = document.querySelector('select[name="sort"]').value
     const q = document.querySelector('input.searchInput').value
-    props.getEventDataForMapAsync(type, q, sort, isEnable)
+    props.getEventDataForMapAsync(type, q, sort, props.isEnable)
   }
 
   let ref //建立一個ref，用來接收地圖參照
@@ -102,7 +103,7 @@ function EventMapList(props) {
         onBoundsChanged={onBoundsChanged}
         options={{ gestureHandling: 'greedy' }}
       >
-        <MarkerClusterer gridSize={30}>
+        <MarkerClusterer gridSize={20}>
           {eventDataForMap
             ? eventDataForMap.map((value, index) => {
                 return (
@@ -129,8 +130,8 @@ function EventMapList(props) {
         <EventSearchBar
           getEventData={getEventData}
           eventTypeData={props.eventTypeData}
-          setIsEnable={setIsEnable}
-          isEnable={isEnable}
+          setIsEnable={props.switchButtonisEnable}
+          isEnable={props.isEnable}
         />
         {hasloading ? (
           <Loading />
@@ -165,13 +166,14 @@ const mapStateToProps = store => {
   return {
     eventDataForMap: store.eventReducer.eventDataForMap,
     eventTypeData: store.eventReducer.eventTypeData,
+    isEnable: store.eventReducer.isEnable,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { getEventDataForMapAsync, getEventTypeDataAsync },
+    { getEventDataForMapAsync, getEventTypeDataAsync, switchButtonisEnable },
     dispatch
   )
 }
