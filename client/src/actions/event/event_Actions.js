@@ -330,7 +330,28 @@ export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
 
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(memberUnOtherJoinEvent(data))
+  }
+}
+
+//取得聊天室列表
+export const memberGetChatList = data => ({
+  type: 'MEMBER_GET_CHATLIST',
+  value: data,
+})
+
+export const memberGetChatListAsync = mylist => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/chatList?mylist=${mylist}`,
+      {
+        method: 'GET',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(memberGetChatList(data))
   }
 }

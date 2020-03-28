@@ -22,6 +22,7 @@
     "leaflet": "^1.6.0",
     "mdbreact": "^4.25.4",
     "minimist": "^1.2.5",
+    "moment-timezone": "^0.5.28",
     "node-sass": "^4.13.1",
     "rc-viewer": "0.0.9",
     "react": "^16.13.0",
