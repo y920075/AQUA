@@ -19,7 +19,7 @@ router.get('/blog/', (req, res)=>{
     const searchType = req.query.blogInfoData ? `WHERE \`categoryName\`= "${req.query.blogInfoData}"`: '';
 
     const perPage = 50
-    let where = []
+    // let where = []
 
     let totalRows, totalPages
     let page = req.query.page ? parseInt(req.query.page) : 1
@@ -106,13 +106,13 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
         error:'',
         status:0,
         body:req.body,
-        "commentsData": ""
+        commentsData: ""
     };
 
-    const sql = `INSERT INTO \`blog_comments\` (\`content\`) VALUES (?)`
+    const sql ='INSERT INTO \`blog_comments\` (\`content\`) VALUES (?)'
 
     db.queryAsync(sql, [
-        req.body.content
+        req.body.cotentComments   //content
         ])
 
     .then(r=>{
@@ -123,11 +123,11 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
         return res.json(comments)
         // res.redirect(req.baseUrl + '/list')
     })
-    .catch(error=>{
-        console.log(error)
-        return res.send(error);
-        // return res.json(comments);            
-    }); 
+    .catch(err=>{
+        console.log(err)
+        return res.json(err)
+    })
+
     
 })
 

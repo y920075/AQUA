@@ -23,31 +23,39 @@ import RcViewer from '@hanyk/rc-viewer'
 function BlogContent(props) {
   //拿資料
   const [blogData, setBlogData] = useState([])
-  const [blogCommentsData, setBlogCommentsData] = useState([])
+  const [blogCommentsData, setBlogCommentsData] = useState([123])
+  const [contentCommentsData, setContentCommentsData] = useState([])
   //新增評論
-  const [cotentComments,setCotentComments] = useState(null)
+  const [cotentComments,setCotentComments] = useState([])
 
   const [error, setError] = useState(false)
   const [errorMessages, setErrorMessages] = useState([])
+  useEffect(() => {
+    props.getBlogDataAsync()
+    props.getBlogCommentsDataAsync()
+    props.addContentCommentsDataAsync()
+  }, [])
+  // console.log(getBlogCommentsDataAsync)
 
 
-  const handleSubmit = e =>{
+
+  const handleSubmit = e=>{
     let error = false
     let errorMessages = []
 
-      if (!cotentComments) {
-        error = true
-        errorMessages.push('評論內容沒填')
-      }
+      // if (!cotentComments) {
+      //   error = true
+      //   errorMessages.push('評論內容沒填')
+      // }
 
-      const commentsData = { 
-        cotentComments,
+      const addCommentsData = { 
+        cotentComments
       }
     
       const commentsData_fd = new FormData()
-      commentsData_fd.append('cotentComments', commentsData.cotentComments)
+      commentsData_fd.append('cotentComments', addCommentsData.cotentComments)
     
-      props.addContentCommentsDataAsync(commentsData_fd, () => alert('成功新增'))
+      props.addContentCommentsDataAsync(commentsData_fd)
     
   }
 
@@ -55,11 +63,7 @@ function BlogContent(props) {
 
 
 
-  useEffect(() => {
-    props.getBlogDataAsync()
-    props.getBlogCommentsDataAsync()
-    props.addContentCommentsDataAsync()
-  }, [])
+
   // console.log(props.blogCommentsData)
 
   let relatedPostData = [];
@@ -200,20 +204,20 @@ function BlogContent(props) {
                 <h5>發表評論</h5>
               </div>
               <div className="postcommentBody">
-                <input 
+                <textarea 
                                 type="text"
 
                   name="cotentComments"
                   onChange={event => setCotentComments(event.target.value)}
                   className="col-md-12">
-                </input>
+                </textarea>
               </div>
               <div className="d-flex justify-content-end">
                 <button 
                 className="badge badge-pill contentSend" 
                 onClick={e => {
                 e.preventDefault()
-                handleSubmit()
+                handleSubmit(e)
               }}
                 >
                   送出
@@ -235,7 +239,7 @@ const mapStateToProps = store => {
   return {
     blogData: store.blogReducer.blogData,
     blogCommentsData: store.blogReducer.blogCommentsData,
-    addContentComments: store.blogReducer.addContentComments
+    contentCommentsData: store.blogReducer.contentCommentsData
   }
 }
 

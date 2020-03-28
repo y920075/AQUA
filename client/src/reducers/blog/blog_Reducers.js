@@ -21,9 +21,9 @@ const blogCommentsData = (state = {}, action) => {
 }
 
 //新增文章評論
-const addContentComments = (state = {}, action) => {
+const contentCommentsData = (state = {}, action) => {
   switch (action.type) {
-    case 'POST_ADDCONTENTCOMMENTS':
+    case 'ADD_CONTENTCOMMENTSDATA':
       return action.value
     default:
       return state
@@ -35,6 +35,6 @@ const addContentComments = (state = {}, action) => {
 const blogReducer = combineReducers({
   blogData,
   blogCommentsData,
-  addContentComments,
+  contentCommentsData,
 })
 export { blogReducer }

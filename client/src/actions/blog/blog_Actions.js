@@ -37,7 +37,7 @@ export const getBlogCommentsData = data => ({
 })
 
 export const getBlogCommentsDataAsync = (blogCommentsData, callback) => {
-  // console.log(blogCommentsData)
+  console.log(blogCommentsData)
   return async dispatch => {
 
     const request = new Request('http://localhost:5000/blog/comments', {
@@ -60,18 +60,18 @@ export const getBlogCommentsDataAsync = (blogCommentsData, callback) => {
 //新增評論
 
 export const addContentCommentsData = data => ({
-  type: 'POST_ADDCONTENTCOMMENTS',
+  type: 'ADD_CONTENTCOMMENTSDATA',
   value: data,
 })
 
-export const addContentCommentsDataAsync = (contentCommentsData, callback) => {
-  console.log(contentCommentsData)
+export const addContentCommentsDataAsync = (commentsData, callback) => {
+  console.log(commentsData)
   return async dispatch => {
     const request = new Request(
       'http://localhost:5000/blog/addComments',
       {
         method: 'POST',
-        body: contentCommentsData,
+        body: commentsData,
       }
     )
 
