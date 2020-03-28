@@ -342,8 +342,32 @@ export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
   }
 }
 
+
+//取得聊天室列表
+export const memberGetChatList = data => ({
+  type: 'MEMBER_GET_CHATLIST',
+  value: data,
+})
+
+export const memberGetChatListAsync = mylist => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/chatList?mylist=${mylist}`,
+      {
+        method: 'GET',
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(memberGetChatList(data))
+  }
+}
+
 //是否按下已過期按鈕
 export const switchButtonisEnable = isEnable => ({
   type: 'SWITCHBUTTON_ENABLE',
   value: !isEnable,
 })
+

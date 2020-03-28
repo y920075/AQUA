@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import swal from 'sweetalert2'
 import '../../style/CW_items.scss'
+
+import $ from 'jquery'
 // import { userRegisterAsync } from '../actions/index'
 
 import { memberCheckOutAsync } from '../../actions/order/order_Actions'
@@ -30,15 +32,14 @@ function ShoppingCart(props) {
   const [hasLoading, setHasLoading] = useState(false)
   const localCart = JSON.parse(localStorage.getItem('cart'))
 
+  const [newCoup, setNewCoup] = useState('')
   const [coupCode, setCouponCode] = useState('')
-
+  const [couptInput, setCouptInput] = useState({})
   const [rodalState, setRodal] = useState({
     visible: false,
   })
 
   const [couponChoose, setCouponChoose] = useState({})
-
-  console.log(couponChoose)
 
   console.log(mycartDisplay)
   // console.log(JSON.parse(localStorage.getItem('cart')).length)
@@ -75,6 +76,39 @@ function ShoppingCart(props) {
 
     event.target.classList.add('active-chin-check') //為被點擊的目標新增active
   }
+
+  function couponCheck(event) {
+    if (
+      couponChoose.order_coup_name == null &&
+      couponChoose.givi_coup_name == null &&
+      couponChoose.order_coup_code == null &&
+      couponChoose.givi_coup_code == null
+    ) {
+      delete couponChoose.order_coup_name
+      delete couponChoose.givi_coup_name
+      delete couponChoose.order_coup_code
+      delete couponChoose.givi_coup_code
+    } else if (
+      couponChoose.goods_coup_name == null &&
+      couponChoose.givi_coup_name == null &&
+      couponChoose.goods_coup_code == null &&
+      couponChoose.givi_coup_code == null
+    ) {
+      delete couponChoose.goods_coup_name
+      delete couponChoose.givi_coup_name
+      delete couponChoose.goods_coup_code
+      delete couponChoose.givi_coup_code
+    } else {
+      delete couponChoose.order_coup_name
+      delete couponChoose.goods_coup_name
+      delete couponChoose.order_coup_code
+      delete couponChoose.goods_coup_code
+    }
+    // console.log(couponChoose)
+    setCouptInput(couponChoose)
+  }
+
+  //設定完成傳到後端抓資料
 
   useEffect(() => {
     getCartFromLocalStorage()
@@ -135,6 +169,7 @@ function ShoppingCart(props) {
 
     //   }
   }
+  //生成買家特選的優惠券modal
   const coupTableData = props.userCouponData ? (
     Object.keys(props['userCouponData']).map(key => {
       if (key === 'CouponResultData') {
@@ -303,6 +338,7 @@ function ShoppingCart(props) {
   ) : (
     <Loading />
   )
+  // console.log(Object.keys(couponChoose))
 
   // handleDelete = product => {
   //   const cart = this.props.data.cart
@@ -312,6 +348,7 @@ function ShoppingCart(props) {
   //   document.body.style.overflow = 'auto'
   // }
 
+  console.log(newCoup)
   return (
     <>
       <Header />
@@ -361,14 +398,45 @@ function ShoppingCart(props) {
                 <br />
                 <div className="d-flex justify-content-between">
                   <span>輸入折扣碼</span>
-                  <input
-                    readOnly
-                    value={coupCode}
-                    type="text"
-                    name=""
-                    className="w-50"
-                    id=""
-                  />
+                  {couptInput.hasOwnProperty('goods_coup_name') ? (
+                    <input
+                      readOnly
+                      defaultValue={couptInput.goods_coup_code}
+                      type="text"
+                      name=""
+                      className="w-50"
+                      id=""
+                      onChange={e => setNewCoup(couptInput.goods_coup_code)}
+                    />
+                  ) : (
+                    <h2 hidden>沒有這種優惠券</h2>
+                  )}
+                  {couptInput.hasOwnProperty('order_coup_name') ? (
+                    <input
+                      readOnly
+                      defaultValue={couptInput.order_coup_code}
+                      type="text"
+                      name=""
+                      className="w-50"
+                      id=""
+                      onChange={e => setNewCoup(couptInput.order_coup_code)}
+                    />
+                  ) : (
+                    <h2 hidden>沒有這種優惠券</h2>
+                  )}
+                  {couptInput.hasOwnProperty('givi_coup_name') ? (
+                    <input
+                      readOnly
+                      defaultValue={couptInput.givi_coup_code}
+                      type="text"
+                      name=""
+                      className="w-50"
+                      id=""
+                      onChange={e => setNewCoup(couptInput.givi_coup_code)}
+                    />
+                  ) : (
+                    <h2 hidden>沒有這種優惠券</h2>
+                  )}
                 </div>
               </div>
               <div className="card-footer">
@@ -391,7 +459,7 @@ function ShoppingCart(props) {
         </div>
         <Rodal
           width="800"
-          height="500"
+          height="600"
           visible={rodalState.visible}
           onClose={event => hide(event)}
         >
@@ -411,6 +479,81 @@ function ShoppingCart(props) {
                   </thead>
                   <tbody>{coupTableData}</tbody>
                 </table>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <h2>您的選擇:</h2>
+                {(() => {
+                  if (
+                    couponChoose.order_coup_name == null &&
+                    couponChoose.givi_coup_name == null &&
+                    couponChoose.order_coup_code == null &&
+                    couponChoose.givi_coup_code == null
+                  ) {
+                    return (
+                      <div className="d-flex justify-content-around couponContent">
+                        <h5>優惠名:</h5>
+                        <h5>{couponChoose.goods_coup_name}</h5>
+                        <h5>優惠碼:</h5>
+                        <h5>{couponChoose.goods_coup_code}</h5>
+                        <div>
+                          <button
+                            onClick={event => {
+                              couponCheck()
+                            }}
+                            className="btn btn-primary chin_btn"
+                          >
+                            設定
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  } else if (
+                    couponChoose.goods_coup_name == null &&
+                    couponChoose.givi_coup_name == null &&
+                    couponChoose.goods_coup_code == null &&
+                    couponChoose.givi_coup_code == null
+                  ) {
+                    return (
+                      <div className="d-flex justify-content-between couponContent">
+                        <h5>優惠名:</h5>
+                        <h5>{couponChoose.order_coup_name}</h5>
+                        <h5>優惠碼:</h5>
+                        <h5>{couponChoose.order_coup_code}</h5>
+                        <div>
+                          <button
+                            onClick={event => {
+                              couponCheck()
+                            }}
+                            className="btn btn-primary chin_btn"
+                          >
+                            設定
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  } else {
+                    return (
+                      <div className="d-flex justify-content-around couponContent">
+                        <h5>優惠名:</h5>
+                        <h5>{couponChoose.givi_coup_name}</h5>
+                        <h5>優惠碼:</h5>
+                        <h5>{couponChoose.givi_coup_code}</h5>
+                        <div>
+                          <button
+                            onClick={event => {
+                              couponCheck()
+                            }}
+                            className="btn btn-primary chin_btn"
+                          >
+                            設定
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  }
+                })()}
               </div>
             </div>
           </div>
