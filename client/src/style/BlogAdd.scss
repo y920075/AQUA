@@ -5,53 +5,12 @@ $Lg: #e2e4e8;
 $Lb: #47c9e5;
 $O: #fa5d07;
 
-body {
-  height: 300vh;
-  background-color: #132948;
-}
-
-.navbar-shopping-cart-icon {
-  opacity: 0.6;
-  /* position: relative; */
-}
-
-#num {
-  position: relative;
-}
-#num::after {
-  position: absolute;
-  content: '0';
-  display: block;
-  width: 16px;
-  height: 16px;
-  /* border: 1px solid red; */
-  background-color: red;
-  border-radius: 50%;
-  color: white;
-  font-size: 0.9rem;
-  top: 5%;
-  right: 5%;
-}
-@media (min-width: 576px) {
-  /* .member */
-}
-
-
-// p {
-//   color: $Lg;
-//   font-size: 16px;
-// }
-
-
-.items-card img {
-  /* object-fit: ; */
-  width: 220px;
-}
 .titlebarFix {
   height: 80px;
   width: 100%;
   background-color: $Dbg;
 }
+
 .titlebar {
   ul {
     display: flex;
@@ -59,6 +18,7 @@ body {
     margin: 0;
     padding: 0;
   }
+
   height: 80px;
   margin-bottom: 3.125rem;
   background-color: $Lg;
@@ -70,6 +30,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     h2 {
       margin: 0;
     }
@@ -81,17 +42,20 @@ body {
     }
   }
 }
+
 .form-control,
 .custom-file-control,
 .is-focused .form-control,
 .is-focused .custom-file-control {
   background-image: linear-gradient(to top, $Lg 1px, rgba(0, 0, 0, 0) 1px);
 }
+
 .custom-select:focus {
   border-color: #ffffff;
   outline: 0;
   box-shadow: none;
 }
+
 .custom-control-label::before,
 .custom-file-label,
 .custom-select {
@@ -99,11 +63,12 @@ body {
 }
 
 .rao {
- 
+
   a {
     text-decoration: none;
     color: black;
   }
+
   .add {
     box-shadow: 0px 0px 5px 1px #000000;
     border-radius: 6px;
@@ -111,6 +76,7 @@ body {
     height: 475px;
     margin-bottom: 3.125rem;
     padding: 20px;
+
     h5 {
       font-weight: normal;
       color: $Lg;
@@ -121,9 +87,11 @@ body {
       padding: 5px 5px;
       margin-bottom: 16px;
     }
+
     ::placeholder {
       color: $Lg;
     }
+
     .addInput {
       font-weight: normal;
       color: $Lg;
@@ -133,6 +101,7 @@ body {
       margin-right: 10px;
       padding-left: 15px;
     }
+
     select {
       text-align: center;
       text-align-last: center;
@@ -141,10 +110,12 @@ body {
       width: 100px;
       border: $Lg 1px solid;
       border-radius: 6px;
+
       option {
         color: black;
       }
     }
+
     textarea {
       font-weight: normal;
       border: $Lg 1px solid;
@@ -154,28 +125,32 @@ body {
       overflow: scroll-right;
       padding: 15px;
     }
+
     .addTag {
+
       // width: 50px;
-      input{
+      input {
         // width: 100px;
         margin: 0;
         padding: 0;
       }
-      ::placeholder{
+
+      ::placeholder {
         color: $Lg;
       }
 
-   
-      .tagName1{
+
+      .tagName1 {
         width: 100px;
         text-align: center;
-        border-right: .5px $Lg solid ;
+        border-right: .5px $Lg solid;
         border-radius: 6px 0 0 6px;
       }
-      .tagName2{
+
+      .tagName2 {
         width: 100px;
         text-align: center;
-        border-left: none ;
+        border-left: none;
         border-radius: 0 6px 6px 0;
       }
 
@@ -186,35 +161,42 @@ body {
         width: 150px;
         border: $Lg solid 1px;
         border-radius: 6px;
-        &:hover{
+
+        &:hover {
           cursor: pointer;
         }
-        p{
+
+        p {
           margin: 10px 0 0 0;
           color: $Lg;
         }
-        input{
+
+        input {
           display: none;
         }
       }
-     img{
-       border-radius: 6px;
-      //  background-color: white;
-      border: 1px $Lg solid;
-     }
+
+      img {
+        border-radius: 6px;
+        //  background-color: white;
+        border: 1px $Lg solid;
+      }
     }
+
     .addSend {
       font-size: 16px;
       background-color: $Lbg;
       border: 1px $Lg solid;
       color: $Lg;
       padding: 10px 40px;
+
       &:hover {
         color: $Lbg;
         background-color: $Lg;
       }
     }
   }
+
   // .relatedPost {
   //   margin: 3.125rem 0px;
   //   color: $Lg;

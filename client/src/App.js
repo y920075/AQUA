@@ -36,7 +36,7 @@ import Home from './pages/Home'
 import Chat from './pages/chat/Chat'
 
 function App(props) {
-  console.log(props)
+  // console.log(props)
   return (
     <Router>
       <>

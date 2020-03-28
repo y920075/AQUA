@@ -441,32 +441,55 @@ export const customerMailData = data => ({
   type: 'MAIL_TRANSFER',
   value: data,
 })
-export const customerMailDataAsync = mailData => {
+export const customerMailDataAsync = (mailData, callback) => {
   return async dispatch => {
-    // {
-    //   "employee":{ "name":"John", "age":30, "city":"New York" }
-    //   }
     const json = JSON.stringify(mailData)
-    console.log(json)
     const request = new Request(
-      'http://localhost:5000/seller/customermanager/customer-mail',
+      'http://localhost:5000/seller/customermanager/customer-coupon-insert',
       {
         method: 'POST',
         body: json,
         headers: new Headers({
           Accept: 'application/json',
-
           'Content-Type': 'application/json',
         }),
       }
     )
-    console.log(JSON.stringify(mailData))
 
     const response = await fetch(request)
-    console.log(response)
     const data = await response.json()
     console.log(data)
+    callback()
+
     dispatch(customerMailData(data))
+  }
+}
+
+//對於前端輸入的優惠馬去後台抓取資料
+
+export const getNowCoupData = data => ({
+  type: 'NOWCOUPDATA',
+  value: data,
+})
+export const getNowCoupDataAsync = (getCoupData, callback) => {
+  return async dispatch => {
+    const request = new Request(
+      `http://localhost:5000/seller/getcoupon/usercouponget`,
+
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(getNowCoupData(data))
   }
 }
 
@@ -497,6 +520,7 @@ export const getSellerClassDataAsunc = (sort, page, isEnable) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }),
+      credentials: 'include',
     })
 
     const response = await fetch(request)
@@ -626,6 +650,7 @@ export const addClassDataAsunc = formData => {
     const request = new Request(`http://127.0.0.1:5000/seller/class`, {
       method: 'POST',
       body: fd,
+      credentials: 'include',
     })
 
     const response = await fetch(request)
@@ -646,6 +671,7 @@ export const delClassDataAsunc = classId => {
       `http://127.0.0.1:5000/seller/class/${classId}`,
       {
         method: 'DELETE',
+        credentials: 'include',
       }
     )
 
@@ -667,6 +693,7 @@ export const getSellerClassDetailDataAsync = classId => {
       `http://127.0.0.1:5000/seller/class/${classId}`,
       {
         method: 'GET',
+        credentials: 'include',
       }
     )
 
@@ -706,6 +733,7 @@ export const editClassDataAsunc = (formData, classId) => {
       {
         method: 'PUT',
         body: fd,
+        credentials: 'include',
       }
     )
 

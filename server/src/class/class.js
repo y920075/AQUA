@@ -43,6 +43,7 @@ router.get('/classtype/level',async (req,res)=>{
     level =   課程等級
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
     
     預計傳送回去的資料
     {
@@ -226,8 +227,8 @@ router.get('/class/:classId',(req,res)=>{
     現在人數由後台預設為0
 
     req.body.className = 課程名稱(50字內)
-    req.body.classTypeId = 課程類型
-    req.body.classLevelId = 課程等級
+    req.body.classTypeId = 課程類型編號
+    req.body.classLevelId = 課程等級編號
     req.body.classLocation = 課程地點(縣市)
     req.body.classFullLocation = 課程地點(完整)
     req.body.classStartDate = 開課日期(input type="datetime-local")
@@ -436,6 +437,7 @@ router.post('/seller/class',upload.single('classImg'),(req,res)=>{
     level =   課程等級
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否包含已過期資料
     req.session.seller_id = 賣家ID
 
     預計傳送回去的資料
@@ -560,7 +562,9 @@ router.get('/seller/class',(req,res)=>{
             {
                 className =             課程名稱
                 classType =             課程類型
+                classTypeId =           課程類型編號
                 classLevel =            課程等級
+                classLevelId =          課程等級編號
                 classDate =             開課日期
                 classLocation =         開課地點(縣市)
                 classFullLocation =     開課地點(完整)
@@ -905,7 +909,7 @@ router.delete('/seller/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.post('/member/class/:classId',upload.none(),(req,res)=>{
-    req.session.memberId = 'M20010002'
+    
     const data = {
         'status':401,
         'msg':'尚未登入'
@@ -983,6 +987,7 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
     level =   課程等級
     sort =    排序類型  (類型,方法) 
     page =    頁碼
+    expired = 是否要包含過期資料
     req.session.memberId = 會員編號
 
     預計傳送回去的資料
@@ -1013,7 +1018,7 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/class',(req,res)=>{
-    req.session.memberId = 'M20010002'
+    console.log(req.session)
     const data = {
         'status' : '401',
         'msg' : '尚未登入'
@@ -1106,7 +1111,7 @@ router.get('/member/class',(req,res)=>{
 */
 
 router.delete('/member/class/:classId',(req,res)=>{
-    req.session.memberId = 'M20010002'
+
     const data = {
         'status':404,
         'msg':'查無報名資料'

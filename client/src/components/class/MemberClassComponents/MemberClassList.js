@@ -84,7 +84,7 @@ function MemberClassList(props) {
                     </p>
                     <Link
                       className="btn btn-primary"
-                      to={'class/' + value.classId}
+                      to={'/class/' + value.classId}
                     >
                       詳細
                     </Link>

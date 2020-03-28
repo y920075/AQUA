@@ -46,6 +46,7 @@ export const getClassDataAsync = (type, level, sort, page, isEnable) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }),
+      credentials: 'include',
     })
 
     const response = await fetch(request)
@@ -91,6 +92,7 @@ export const memberJoinClassAsync = (classId, memberMemo) => {
       {
         method: 'POST',
         body: fd,
+        credentials: 'include',
       }
     )
 
@@ -121,6 +123,7 @@ export const memberGetClassDataAsync = (sort, page, isEnable) => {
 
     const request = new Request(`http://127.0.0.1:5000/member/class?${query}`, {
       method: 'GET',
+      credentials: 'include',
       headers: new Headers({
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -145,6 +148,7 @@ export const memberUnJoinClassAsync = classId => {
       `http://127.0.0.1:5000/member/class/${classId}`,
       {
         method: 'DELETE',
+        credentials: 'include',
       }
     )
 

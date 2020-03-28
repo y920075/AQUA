@@ -14,16 +14,11 @@ import '../../style/Rside.scss'
 function Rside(props) {
   const [blogData, setBlogData] = useState([])
 
-  // useEffect(() => {
-  //   props.getBlogDataAsync()
-  //   // props.getAsideDataAsync()
-  // }, [])
-
-  // function getBlogData(page) {
-  //   props.getBlogDataAsync(page)
-  // }
-
-  // console.log(props.blogData.result)
+  let tagNameData = [];
+  if(props.blogData.result && props.blogData.result.length){
+    tagNameData = [...props.blogData.result];
+    tagNameData = tagNameData.slice(0,10);
+  }
   return (
     <>
       <div className="col-md-4 rSide ">
@@ -69,20 +64,21 @@ function Rside(props) {
           <p className="justify-content-center d-flex">熱門標籤</p>
           <div>
             <ul>
-            {props.blogData.result ? (props.blogData.result.map((value , index)=>{
+            {tagNameData ? tagNameData.map((value , index)=>{
+              console.log(value)
             return (
+              
+              <>
               <li className="rounded-lg">
                 <Link href="#">{value.tagName1}</Link>
               </li>
-              )}
-            )) : ''}
-            {props.blogData.result ? (props.blogData.result.map((value , index)=>{
-            return (
               <li className="rounded-lg">
                 <Link href="#">{value.tagName2}</Link>
               </li>
+              </>
               )}
-            )) : ''}
+            ): ''}
+
             </ul>
           </div>
         </div>

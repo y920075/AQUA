@@ -29,11 +29,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `comment_blog` (
-  `B_commentid` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '編號',
-  `member_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '留言會員',
-  `blog_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文章ID',
-  `content` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '評論內容',
-  `commenttime` date NOT NULL COMMENT '留言時間'
+  `Bcommentid` int(11) NOT NULL COMMENT '評論編號',
+  `Blogid` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '評論文章id',
+  `memberid` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '評論會員id',
+  `memberName` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '評論會員名稱',
+  `commentdate` datetime NOT NULL COMMENT '評論時間',
+  `comment` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '評論'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -44,7 +45,17 @@ CREATE TABLE `comment_blog` (
 -- 資料表索引 `comment_blog`
 --
 ALTER TABLE `comment_blog`
-  ADD PRIMARY KEY (`B_commentid`);
+  ADD PRIMARY KEY (`Bcommentid`);
+
+--
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+--
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `comment_blog`
+--
+ALTER TABLE `comment_blog`
+  MODIFY `Bcommentid` int(11) NOT NULL AUTO_INCREMENT COMMENT '評論編號';
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

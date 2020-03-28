@@ -7,32 +7,21 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchImages } from '../../actions/location/Location_Action'
 export class Images extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      localimages: [],
-    }
-  }
   componentDidMount() {
     this.props.fetchImages()
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.LocusImages !== prevProps.LocusImages) {
-      const currentimageID = this.props.match.params
-      const locationimages = this.props.LocusImages.Divelocationimages
-      // console.log(locationimages)
-      this.setState({
-        localimages: locationimages.filter(
-          locationimages =>
-            locationimages.originalTitle === currentimageID.LocationID
-        ),
-      })
-    }
-  }
   render() {
+    const currentimageID = this.props.match.params
+    let { Divelocationimages = [] } = this.props.LocusImages
+    // console.log(locationimages)
+    let currentimages
+    currentimages = Divelocationimages.filter(
+      locationimages =>
+        locationimages.originalTitle === currentimageID.LocationID
+    )
     return (
       <div>
-        <ImageGallery items={this.state.localimages} />
+        <ImageGallery items={currentimages} />
       </div>
     )
   }

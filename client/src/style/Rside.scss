@@ -68,8 +68,10 @@ $O: #fa5d07;
       background-image: linear-gradient(to top, $O 3px, rgba(0, 0, 0, 0) 5px);
     }
     .btn {
+      width: 50px;
       background-color: $Lbg;
       box-shadow: 2px 2px 3px 1px #000000;
+      padding: 10px;
       i {
         width: 50px;
       }

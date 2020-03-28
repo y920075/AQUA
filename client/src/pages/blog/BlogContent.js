@@ -23,8 +23,17 @@ function BlogContent(props) {
   useEffect(() => {
     props.getBlogDataAsync()
     // props.getAsideDataAsync()
+
   }, [])
-  console.log(props.blogData.result)
+  // console.log(props.blogData.result)
+
+  let relatedPostData = [];
+  if(props.blogData.result && props.blogData.result.length){
+    relatedPostData = [...props.blogData.result];
+    relatedPostData.sort((_a,b)=>Math.random()-.5);
+    relatedPostData = relatedPostData.slice(0,3);
+  }
+
   
   return (
     <>
@@ -128,19 +137,19 @@ function BlogContent(props) {
               </div>
               <div className="relatedpostContent">
                 <ul>
-                {props.blogData.result ? props.blogData.result.map((value, index) => {
-                  Math.random(value.id)
-                  console.log(Math.random(value.id))
-                  return (
+                {relatedPostData ? relatedPostData.map((value, index) => {
+                  console.log(value)
+                    return (
+
                   <li>
                     <Link to="">
                       <figure>
-                      <img to="" src=""></img>
+                      <img to="" src={'http://localhost:5000/images/blogImg/'+ value.blogImages}/>
                       </figure>
                     </Link>
-                    <h5>{Math.random(value.blogTitle)}</h5>
+                    <h5>{value.blogTitle}</h5>
                   </li>
-                )}): ''}
+                  )}): ''}
                 </ul>
               </div>
             </div>

@@ -126,6 +126,7 @@ export const memberJoinEventAsync = (eventId, memberMemo) => {
       {
         method: 'POST',
         body: fd,
+        credentials: 'include',
       }
     )
 
@@ -171,6 +172,7 @@ export const memberGetEventDataAsync = (sort, page, nowClickTag, isEnable) => {
 
     const request = new Request(url, {
       method: 'GET',
+      credentials: 'include',
     })
 
     const response = await fetch(request)
@@ -191,6 +193,7 @@ export const delEventDataAsync = eventId => {
       `http://127.0.0.1:5000/member/event/${eventId}`,
       {
         method: 'DELETE',
+        credentials: 'include',
       }
     )
 
@@ -212,6 +215,7 @@ export const memberUnJoinEventAsync = eventId => {
       `http://127.0.0.1:5000/member/event/join/${eventId}`,
       {
         method: 'DELETE',
+        credentials: 'include',
       }
     )
 
@@ -246,6 +250,7 @@ export const addEventDataAsunc = formData => {
     const request = new Request(`http://127.0.0.1:5000/member/event`, {
       method: 'POST',
       body: fd,
+      credentials: 'include',
     })
 
     const response = await fetch(request)
@@ -266,6 +271,7 @@ export const getMemberEventDetailDataAsync = eventId => {
       `http://127.0.0.1:5000/member/event/self/${eventId}`,
       {
         method: 'GET',
+        credentials: 'include',
       }
     )
 
@@ -301,6 +307,7 @@ export const editEventDataAsunc = (formData, eventId) => {
       {
         method: 'PUT',
         body: fd,
+        credentials: 'include',
       }
     )
 
@@ -325,6 +332,7 @@ export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
       {
         method: 'DELETE',
         body: fd,
+        credentials: 'include',
       }
     )
 
@@ -333,6 +341,7 @@ export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
     dispatch(memberUnOtherJoinEvent(data))
   }
 }
+
 
 //取得聊天室列表
 export const memberGetChatList = data => ({
@@ -355,3 +364,10 @@ export const memberGetChatListAsync = mylist => {
     dispatch(memberGetChatList(data))
   }
 }
+
+//是否按下已過期按鈕
+export const switchButtonisEnable = isEnable => ({
+  type: 'SWITCHBUTTON_ENABLE',
+  value: !isEnable,
+})
+

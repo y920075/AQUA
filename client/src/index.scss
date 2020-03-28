@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+$color1: #132948;
+$color2: #31445f;
+$color3: #4e5f76;
+$color5: #f15a24;
+
 .banner {
   width: 100%;
   height: 370px;
@@ -35,6 +40,106 @@ code {
   @media screen and(max-width:540px) {
     // max-width: 375px;
   }
+
+  .navbar-rside {
+    .btn.btn-outline-light.btn-sm {
+      margin-bottom: 0;
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      background-color: #fff;
+      border: 1px solid $color5;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .navbar-cart {
+      width: 32px;
+      height: 32px;
+      position: relative;
+
+      .navbar-shopping-cart-icon {
+        transition: 0.3s;
+        opacity: 0.6;
+        width: 100%;
+        height: 100%;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      .cart-card {
+        width: 350px;
+        position: absolute;
+        top: 0;
+        right: -50%;
+        a {
+          color: $color3;
+          transition: 0.3s;
+          letter-spacing: 2px;
+          &:hover {
+            color: $color1;
+            text-decoration: none;
+          }
+        }
+        .card-body {
+          max-height: 300px;
+          overflow: auto;
+
+          .cart-item {
+            font-weight: 300;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+            letter-spacing: 1px;
+            .text-nowrap {
+              width: 235px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .del {
+              cursor: pointer;
+              &:hover {
+                font-weight: 500;
+              }
+            }
+          }
+          .row-info {
+            padding-left: 0.5rem;
+          }
+          figure {
+            width: 45px;
+            height: 45px;
+            border: 1px solid rgba($color: #000000, $alpha: 0.1);
+            margin-bottom: 0px;
+          }
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+
+      .cart-dot {
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        background-color: $color5;
+        border-radius: 50%;
+        color: #fff;
+        top: -5px;
+        right: -8px;
+
+        p {
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 0.5rem;
+          text-align: center;
+        }
+      }
+    }
+  }
 }
 
 div.collapse.navbar-collapse {
@@ -45,6 +150,7 @@ div.collapse.navbar-collapse {
     transition: 1s;
   }
 }
+
 .JY_navMenuShow {
   display: flex !important;
   max-height: 500px !important;
@@ -80,13 +186,83 @@ div.collapse.navbar-collapse {
       }
     }
 
-    &-location {}
+    &-btn {
+      color: $color5;
+      border: 2px solid $color5;
+      border-radius: 0.125rem;
+      padding: 4px 2rem;
 
-    &-event {}
+      &:hover {
+        color: #fff;
+        background-color: $color5;
+      }
+    }
 
-    &-class {}
+    &-location {
+      .container {
+        padding: 5rem 3rem;
+        position: relative;
+        border: 3px solid #fff;
 
-    &-footer {}
+        .index-btn {
+          position: absolute;
+          bottom: 30%;
+          right: 10%;
+        }
+
+        .display-2 {
+          position: absolute;
+          letter-spacing: 10px;
+          font-weight: 700;
+          z-index: 1;
+          top: 15%;
+          left: 10px;
+        }
+
+        .carousel {
+          width: 80%;
+
+          &:hover .slide .legend {
+            opacity: inherit;
+          }
+        }
+
+        .carousel .slide {
+          background: none;
+        }
+
+        .loca {
+          &-name {
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+            position: absolute;
+            bottom: 40%;
+            left: 5%;
+          }
+
+          &-weather {
+          }
+        }
+
+        .legend {
+          height: 200px;
+          bottom: 20px;
+          border-radius: 0.25rem;
+          background: #fff;
+        }
+      }
+    }
+
+    &-event {
+    }
+
+    &-class {
+    }
+
+    &-footer {
+    }
   }
-
 }
