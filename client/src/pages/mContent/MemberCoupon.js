@@ -144,6 +144,7 @@ function MemberCoupon(props) {
                 <div className="col-sm-6">
                   {<img
                     height="250"
+                    width="300"
                     src={
                       'http://localhost:5000/images/coup/' +
                       value.order_coup_img
@@ -152,6 +153,7 @@ function MemberCoupon(props) {
                   /> ? (
                     <img
                       height="250"
+                      width="300"
                       src={
                         'http://localhost:5000/images/coup/' +
                         value.order_coup_img
@@ -163,6 +165,7 @@ function MemberCoupon(props) {
                   )}
                   {<img
                     height="250"
+                    width="300"
                     src={
                       'http://localhost:5000/images/coup/' +
                       value.goods_coup_img
@@ -171,6 +174,7 @@ function MemberCoupon(props) {
                   /> ? (
                     <img
                       height="250"
+                      width="300"
                       src={
                         'http://localhost:5000/images/coup/' +
                         value.goods_coup_img
@@ -182,6 +186,7 @@ function MemberCoupon(props) {
                   )}
                   {<img
                     height="250"
+                    width="300"
                     src={
                       'http://localhost:5000/images/coup/' + value.givi_coup_img
                     }
@@ -189,6 +194,7 @@ function MemberCoupon(props) {
                   /> ? (
                     <img
                       height="250"
+                      width="300"
                       src={
                         'http://localhost:5000/images/coup/' +
                         value.givi_coup_img
