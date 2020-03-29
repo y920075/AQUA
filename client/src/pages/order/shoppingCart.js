@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-// import Swal from 'sweetalert2'
-import Swal from 'sweetalert2/src/sweetalert2.js'
+import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2/src/sweetalert2.js'
 import '../../style/CW_items.scss'
 
 // import { userRegisterAsync } from '../actions/index'
@@ -59,37 +59,61 @@ function ShoppingCart(props) {
   function checkOut() {
     if (localCart == null || localCart.length < 1) {
       Swal.fire({
-        title: 'Error!',
-        text: 'Do you want to continue',
-        icon: 'error',
-        confirmButtonText: 'Cool',
+        // title: 'Error!',
+        text: '購物車是空的喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
       })
     } else {
-      // alert('確定結帳嗎')
-      for (let i = 0; i < localCart.length; i++) {
-        console.log(localCart[i])
-        itemData.orderItemId = localCart[i].id
-        itemData.checkPrice = localCart[i].price
-        itemData.checkQty = localCart[i].amount
-        orderData.orderItems.push(itemData)
-        itemData = {}
-      }
-      // props.changeSteps(1)
-      console.log(orderData)
-      props.memberCheckOutAsync(orderData)
-      orderData.orderItems = []
+      Swal.fire({
+        // title: 'Error!',
+        text: `確定商品總金額 NT$！${sum(mycart)}`,
+        icon: 'info',
+        confirmButtonText: '確定',
+        showCancelButton: true,
+        cancelButtonText: '取消',
+      }).then(result => {
+        if (result.value === true) {
+          for (let i = 0; i < localCart.length; i++) {
+            console.log(localCart[i])
+            itemData.orderItemId = localCart[i].id
+            itemData.checkPrice = localCart[i].price
+            itemData.checkQty = localCart[i].amount
+            orderData.orderItems.push(itemData)
+            itemData = {}
+          }
+          // props.changeSteps(1)
+          console.log(orderData)
+          props.memberCheckOutAsync(orderData)
+          orderData.orderItems = []
+          // 購物完清掉 localstorage 購物車
+          localStorage.removeItem('cart')
+          window.location.href = '/member/checkout'
+        }
+      })
     }
   }
   // 點擊刪除
   function handleDelete(item) {
-    // const localCart = JSON.parse(localStorage.getItem('cart'))
-    // const index = localCart.indexOf(item)
-    const index = localCart.findIndex(arr => arr.id === item.id)
-    if (index !== -1) {
-      localCart.splice(index, 1)
-      localStorage.setItem('cart', JSON.stringify(localCart))
-    }
+    Swal.fire({
+      // title: 'Error!',
+      text: `確定刪除商品嗎?`,
+      icon: 'warning',
+      confirmButtonText: '確定',
+      showCancelButton: true,
+      cancelButtonText: '取消',
+    }).then(result => {
+      if (result.value) {
+        const index = localCart.findIndex(arr => arr.id === item.id)
+        if (index !== -1) {
+          localCart.splice(index, 1)
+          localStorage.setItem('cart', JSON.stringify(localCart))
+        }
+      }
+    })
   }
+  // const localCart = JSON.parse(localStorage.getItem('cart'))
+  // const index = localCart.indexOf(item)
   // localstorage 購物車設定給 mycart
   async function getCartFromLocalStorage() {
     setHasLoading(true)
@@ -249,6 +273,10 @@ function ShoppingCart(props) {
   //生成item類型的優惠券函數
   const handleItemSum = (items, newCoup) => {
     console.log(items)
+    // if (
+    //   newCoup.hasOwnProperty('goods_coup_name') &&
+    //   newCoup.order_coup_code.substr(0, 2) == 'PI' &&
+    // ) {}
   }
   const coupTableData = props.userCouponData ? (
     Object.keys(props['userCouponData']).map(key => {

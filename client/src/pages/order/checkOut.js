@@ -13,6 +13,7 @@ import Banner from '../../components/Banner'
 
 function CheckOut(props) {
   // let member_email, member_name
+  console.log(props)
   const sendmail = () => {
     let templateParams = {
       // userMail: `${member_email}`,
@@ -142,4 +143,12 @@ function CheckOut(props) {
   )
 }
 
-export default connect()(CheckOut)
+const mapStateToProps = store => {
+  return {
+    orderData: store.orderReducer.memberCheckOutResponse,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+
+export default connect(mapStateToProps)(CheckOut)

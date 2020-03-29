@@ -97,4 +97,43 @@
   li.page-item {
     cursor: pointer;
   }
+  .classCategoryList {
+    position: relative;
+    @media screen and (max-width: 540px) {
+      div {
+        background-color: white;
+        ul,
+        li,
+        span {
+          color: #132948;
+        }
+        h2{
+          display: none;
+        }
+        ul {
+          padding: 0;
+          .active {
+            color: #f15a24;
+          }
+          ul {
+            li {
+              // border-bottom: 1px solid #132948;
+            }
+          }
+        }
+        overflow: hidden;
+        border-radius: 0px 15px 15px 0px;
+        transform: translateX(-100%);
+        transition: 0.3s;
+        position: absolute;
+        padding: 15px;
+        top: 38px;
+        left: 0px;
+        z-index: 1;
+      }
+    }
+    .rwdMenuShow {
+      transform: translateX(0%);
+    }
+  }
 }

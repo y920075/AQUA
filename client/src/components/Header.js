@@ -4,6 +4,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 function Header(props) {
+  console.log(props)
   const { handleDelete } = props
   const [showCart, setShowCart] = useState(false)
   const [count, setCount] = useState(0)

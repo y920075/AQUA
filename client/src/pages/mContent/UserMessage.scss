@@ -69,7 +69,6 @@
       max-height: 500px;
       overflow: auto;
       position: relative;
-      // background-color: white;
       .startChat {
         position: absolute;
         top: 50%;
@@ -77,6 +76,7 @@
         transform: translate(-50%, -50%);
         p {
           font-size: 14px;
+          text-align: center;
         }
       }
 
