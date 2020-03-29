@@ -40,6 +40,7 @@ function ShoppingCart(props) {
 
   // 取得購物車
   const localCart = JSON.parse(localStorage.getItem('cart'))
+
   // 訂單資料初始
   const orderData = {
     orderMemberId: 'M123',
@@ -54,7 +55,7 @@ function ShoppingCart(props) {
   // }
   // 點擊結帳
   function checkOut() {
-    if (localCart && localCart.length < 1) {
+    if (localCart == null || localCart.length < 1) {
       alert(
         '購物車沒有商品'
         // {
@@ -157,9 +158,10 @@ function ShoppingCart(props) {
 
   const sum = items => {
     let total = 0
-
-    for (let i = 0; i < items.length; i++) {
-      total += items[i].amount * items[i].price
+    if (items != null) {
+      for (let i = 0; i < items.length; i++) {
+        total += items[i].amount * items[i].price
+      }
     }
     return total
   }

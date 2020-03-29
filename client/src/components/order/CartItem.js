@@ -1,14 +1,12 @@
 import React from 'react'
 
 function CartItem(props) {
-  // console.log('carditem', props)
-  const { handleDelete } = props
+  const { handleDelete, mycart } = props
+  console.log('carditem', { mycart })
 
   return (
     <>
-      {!props.mycart ? (
-        <h2>購物車是空的</h2>
-      ) : (
+      {mycart != null && mycart.length >= 1 ? (
         props.mycart.map((value, index) => {
           return (
             <>
@@ -57,6 +55,8 @@ function CartItem(props) {
             </>
           )
         })
+      ) : (
+        <h2>購物車是空的</h2>
       )}
     </>
   )
