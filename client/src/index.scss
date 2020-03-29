@@ -16,6 +16,7 @@ $color1: #132948;
 $color2: #31445f;
 $color3: #4e5f76;
 $color5: #f15a24;
+@import '~@sweetalert2/theme-material-ui/material-ui.scss';
 
 .banner {
   width: 100%;
@@ -76,15 +77,18 @@ $color5: #f15a24;
         position: absolute;
         top: 0;
         right: -50%;
+
         a {
           color: $color3;
           transition: 0.3s;
           letter-spacing: 2px;
+
           &:hover {
             color: $color1;
             text-decoration: none;
           }
         }
+
         .card-body {
           max-height: 300px;
           overflow: auto;
@@ -94,27 +98,33 @@ $color5: #f15a24;
             padding: 0.7rem 0;
             border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
             letter-spacing: 1px;
+
             .text-nowrap {
               width: 235px;
               overflow: hidden;
               text-overflow: ellipsis;
             }
+
             .del {
               cursor: pointer;
+
               &:hover {
                 font-weight: 500;
               }
             }
           }
+
           .row-info {
             padding-left: 0.5rem;
           }
+
           figure {
             width: 45px;
             height: 45px;
             border: 1px solid rgba($color: #000000, $alpha: 0.1);
             margin-bottom: 0px;
           }
+
           img {
             width: 100%;
             height: 100%;
@@ -243,8 +253,7 @@ div.collapse.navbar-collapse {
             left: 5%;
           }
 
-          &-weather {
-          }
+          &-weather {}
         }
 
         .legend {
@@ -256,13 +265,10 @@ div.collapse.navbar-collapse {
       }
     }
 
-    &-event {
-    }
+    &-event {}
 
-    &-class {
-    }
+    &-class {}
 
-    &-footer {
-    }
+    &-footer {}
   }
 }
