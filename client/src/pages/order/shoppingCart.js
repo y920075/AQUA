@@ -248,6 +248,10 @@ function ShoppingCart(props) {
   //生成item類型的優惠券函數
   const handleItemSum = (items, newCoup) => {
     console.log(items)
+    // if (
+    //   newCoup.hasOwnProperty('goods_coup_name') &&
+    //   newCoup.order_coup_code.substr(0, 2) == 'PI' &&
+    // ) {}
   }
   const coupTableData = props.userCouponData ? (
     Object.keys(props['userCouponData']).map(key => {
