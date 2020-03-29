@@ -14,7 +14,7 @@ import { getUserCouponDetaiAsync } from '../../actions/member/memberActions'
 
 //引入rodal
 import Rodal from 'rodal'
-// import '../../../node_modules/rodal/lib/rodal.css'
+import '../../../node_modules/rodal/lib/rodal.css'
 
 // import { getNowCoupDataAsync } from '../../actions/seller/index'
 
