@@ -134,11 +134,11 @@ function ShoppingCart(props) {
   // }
   function couponCheck(event) {
     //選錯優惠券跳錯誤訊息
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: '兩次密碼不同!',
-    })
+    // Swal.fire({
+    //   icon: 'error',
+    //   title: 'Oops...',
+    //   text: '兩次密碼不同!',
+    // })
     if (
       couponChoose.order_coup_name == null &&
       couponChoose.givi_coup_name == null &&
