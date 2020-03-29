@@ -9,7 +9,7 @@ const db = require(__dirname + '/../db_connect');
 
 //取得文章資料
 router.get('/blog/', (req, res)=>{
-    console.log(req.query)
+    // console.log(req.query)
     let data = {
         'status': 200,
         'msg': '請求成功',
