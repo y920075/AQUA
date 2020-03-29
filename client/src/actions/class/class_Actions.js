@@ -1,3 +1,5 @@
+import Cookie from 'js-cookie'
+
 //取得課程類型與等級
 export const getTypeLevelData = data => ({
   type: 'GET_TYPEDATA',
@@ -93,6 +95,9 @@ export const memberJoinClassAsync = (classId, memberMemo) => {
         method: 'POST',
         body: fd,
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 
@@ -127,6 +132,7 @@ export const memberGetClassDataAsync = (sort, page, isEnable) => {
       headers: new Headers({
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'access-token': Cookie.get('token'),
       }),
     })
 
@@ -149,6 +155,9 @@ export const memberUnJoinClassAsync = classId => {
       {
         method: 'DELETE',
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 

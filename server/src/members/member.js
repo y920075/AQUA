@@ -6,6 +6,7 @@ const upload = multer({ dest: 'tmp_uploads/' })
 const db = require(__dirname + '/../db_connect')
 const moment = require('moment-timezone')
 const memberRouter = express.Router()
+const { uuid } = require('uuidv4');
 
 
 // 會員註冊
@@ -38,9 +39,10 @@ memberRouter.post('/members/register', upload.none(), (req, res) => {
                     \`loginPwd\`,
                     \`avatar\`,
                     \`memberId\`,
-                    \`idd\`
-                    )
-                    VALUES (?, ?, ?, ?, ?, ?, ?)`
+                    \`idd\`,
+                    \`accessToken\`)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+                    //新增註冊的時候，一起存一個token進去
 
         db.queryAsync(sql, [
             req.body.fullName,
@@ -49,7 +51,8 @@ memberRouter.post('/members/register', upload.none(), (req, res) => {
             req.body.loginPwd,
             'DefaultImage.jpg',
             memberId,
-            idd
+            idd,
+            uuid()+uuid() //uuid產生的token
         ])
             .then(r => {
                 console.log('註冊成功')
@@ -68,7 +71,7 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
     console.log(req.body)
     //登入邏輯
     //1.撈出username和password
-    const sql_login = "SELECT `memberId`, `loginId`,`loginPwd`, `avatar` FROM `my_member`";
+    const sql_login = "SELECT `memberId`, `loginId`,`loginPwd`, `avatar`,`accessToken` FROM `my_member`";
 
     //2.資料綁定從前端傳過來的username和password
     let loginId = req.body.loginId;
@@ -81,11 +84,11 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
         password: "",//儲存password
         memberId: "",
         avatar: "",
+        token:"",//儲存token
     }
     //4.sql資料聯繫
     db.queryAsync(sql_login)
         .then(r => {
-            // res.json(r);
             //使用者從前端傳過來的資料進行與資料庫比對
             r.forEach((value, index) => {
                 if (loginId === value.loginId && loginPwd === value.loginPwd) {
@@ -94,14 +97,14 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
                     login_info.password = value.loginPwd;
                     login_info.memberId = value.memberId;
                     login_info.avatar = value.avatar;
-                    // login_info.idd = value.idd
+                    login_info.token = value.accessToken;
                 }
             })
             if (login_info.success) {
                 req.session.password = login_info.loginPwd;
                 req.session.username = login_info.loginId;
                 req.session.memberId = login_info.memberId;
-                console.log(req.session)
+                res.cookie('token',login_info.token,{maxAge:1200000}) //設定cookie給前端
                 res.json(login_info)//傳輸資料到前端
             } else {
                 res.json(login_info)
@@ -116,7 +119,7 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
 //會員更改資料
 memberRouter.get('/members/M20030003', (req, res) => {
     // console.log('會員修改')
-console.log(req)
+// console.log(req)
     const memberObj = {
         result:"",
         success:false,
@@ -148,6 +151,7 @@ console.log(req)
 })
 
 memberRouter.post('/members/M20030003', upload.single(), (req, res) => {
+    console.log(req.session)
     const memberObj = {
         result:"",
         success:false,

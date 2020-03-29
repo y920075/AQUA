@@ -26,10 +26,11 @@ io.on('connection', async function(socket){
 
           const message = sendMessageRequest.message
           const roomId = sendMessageRequest.roomId
+          const memberId = sendMessageRequest.memberId
           // const memberId = sendMessageRequest.memberId 
 
           const insertChatDataSql = `INSERT INTO \`chat_data\`( \`roomId\`, \`memberId\`, \`message\`) VALUES (?,?,?)`
-          await db.queryAsync(insertChatDataSql,[roomId,'M20010002',message])
+          await db.queryAsync(insertChatDataSql,[roomId,memberId,message])
 
           const chatDataSql = `SELECT * FROM \`chat_data\` WHERE \`roomId\` = '${roomId}'`
           const chatData = await db.queryAsync(chatDataSql)
@@ -38,7 +39,7 @@ io.on('connection', async function(socket){
 
           const ServerToClientMsgData = {
             roomId,
-            memberId:'M20010002',
+            memberId,
             chatData,
           }
 
@@ -73,7 +74,7 @@ io.on('connection', async function(socket){
 
         const ServerToClientMsgData = {
           roomId,
-          memberId:'M20010002',
+          memberId,
           chatData,
         }
         
