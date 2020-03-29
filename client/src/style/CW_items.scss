@@ -313,18 +313,20 @@ $color5: #f15a24;
               border-top-right-radius: calc(0.125rem - 1px);
               // padding: 0 0 0.938rem 0;
             }
+          }
+          &-info {
+            .item-name {
+            }
 
-            &-info {
-              .item-name {
-              }
+            .item-qty {
+            }
 
-              .item-qty {
-              }
+            .item-price {
+            }
 
-              .item-price {
-              }
-
-              .item-delete {
+            .item-delete {
+              .material-icons {
+                cursor: pointer;
               }
             }
           }

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import swal from 'sweetalert2'
 import '../../style/CW_items.scss'
 
-import $ from 'jquery'
 // import { userRegisterAsync } from '../actions/index'
-
+// 購物車寫入資料庫
 import { memberCheckOutAsync } from '../../actions/order/order_Actions'
 
 //得到買家的優惠券資料動作
@@ -15,7 +14,7 @@ import { getUserCouponDetaiAsync } from '../../actions/member/memberActions'
 
 //引入rodal
 import Rodal from 'rodal'
-import '../../../node_modules/rodal/lib/rodal.css'
+// import '../../../node_modules/rodal/lib/rodal.css'
 
 // import { getNowCoupDataAsync } from '../../actions/seller/index'
 
@@ -28,9 +27,7 @@ import Loading from '../../components/seller_back/components/components/Loading'
 
 function ShoppingCart(props) {
   const [mycart, setMycart] = useState([])
-  const [mycartDisplay, setMycartDisplay] = useState([])
   const [hasLoading, setHasLoading] = useState(false)
-  const localCart = JSON.parse(localStorage.getItem('cart'))
 
   const [newCoup, setNewCoup] = useState([])
 
@@ -39,32 +36,62 @@ function ShoppingCart(props) {
   const [rodalState, setRodal] = useState({
     visible: false,
   })
-
   const [couponChoose, setCouponChoose] = useState({})
 
-  console.log(mycartDisplay)
-  // console.log(JSON.parse(localStorage.getItem('cart')).length)
+  // 取得購物車
+  const localCart = JSON.parse(localStorage.getItem('cart'))
+  // 訂單資料初始
+  const orderData = {
+    orderMemberId: 'M123',
+    orderItems: [],
+  }
+  let itemData = {}
+  // for (let i = 0; i < localCart.length; i++) {
+  //   itemData.orderItemId = array[i].id;
+  //   itemData.checkPrice = array[i].amount;
+  //   itemData.checkQty = array[i].price;
+  //   orderData.orderItems.push(itemData)
+  // }
+  // 點擊結帳
   function checkOut() {
     if (localCart && localCart.length < 1) {
-      alert({
-        text: '購物車沒有商品',
-        icon: 'warning',
-        button: 'OK',
-      })
+      alert(
+        '購物車沒有商品'
+        // {
+        // text: '購物車沒有商品',
+        // icon: 'warning',
+        // button: 'OK',}
+      )
     } else {
+      // alert('確定結帳嗎')
+      for (let i = 0; i < localCart.length; i++) {
+        console.log(localCart[i])
+        itemData.orderItemId = localCart[i].id
+        itemData.checkPrice = localCart[i].price
+        itemData.checkQty = localCart[i].amount
+        orderData.orderItems.push(itemData)
+        itemData = {}
+      }
       // props.changeSteps(1)
-      // props.memberCheckOutAsync(cartData)
+      console.log(orderData)
+      props.memberCheckOutAsync(orderData)
+      orderData.orderItems = []
     }
   }
+  // 點擊刪除
+  function handleDelete(item) {
+    // const localCart = JSON.parse(localStorage.getItem('cart'))
+    // const index = localCart.indexOf(item)
+    const index = localCart.findIndex(arr => arr.id === item.id)
+    if (index !== -1) {
+      localCart.splice(index, 1)
+      localStorage.setItem('cart', JSON.stringify(localCart))
+    }
+  }
+  // localstorage 購物車設定給 mycart
   async function getCartFromLocalStorage() {
     setHasLoading(true)
-
-    let newCart = []
-    newCart = localStorage.getItem('cart')
-
-    console.log(JSON.parse(newCart))
-
-    setMycart(JSON.parse(newCart))
+    setMycart(localCart)
   }
 
   function typeInputActive(event) {
@@ -112,34 +139,10 @@ function ShoppingCart(props) {
   }
 
   //設定完成傳到後端抓資料
-
   useEffect(() => {
     getCartFromLocalStorage()
     props.getUserCouponDetaiAsync()
   }, [])
-
-  useEffect(() => {
-    setTimeout(() => {
-      setHasLoading(false)
-    }, 500)
-    if (mycart) {
-      let newMycartDisplay = [...mycartDisplay]
-      for (let i = 0; i < mycart.length; i++) {
-        const index = newMycartDisplay.findIndex(
-          value => value.id === mycart[i].id
-        )
-        if (index !== -1) {
-          console.log('findindex', index)
-          newMycartDisplay[index].amount++
-        } else {
-          const newItem = { amount: 1, ...mycart[i] }
-          newMycartDisplay = [...newMycartDisplay, newItem]
-        }
-      }
-      console.log('newMycartDisplay', newMycartDisplay)
-      setMycartDisplay(newMycartDisplay)
-    }
-  }, [mycart])
 
   //優惠券彈跳視窗函式
   //開啟
@@ -435,7 +438,7 @@ function ShoppingCart(props) {
 
   return (
     <>
-      <Header />
+      <Header handleDelete={handleDelete} />
       <Banner BannerImgSrc="/images/ClassBanner.jpg" />
       <div className="container CW">
         <div className="row CW-shoppingCart">
@@ -458,7 +461,7 @@ function ShoppingCart(props) {
                 </div>
               </div>
               <div className="card-body">
-                {<CartItem mycartDisplay={mycartDisplay} />}
+                {<CartItem mycart={mycart} handleDelete={handleDelete} />}
               </div>
             </div>
           </div>
@@ -473,7 +476,7 @@ function ShoppingCart(props) {
               <div className="check-main card-body">
                 <div className="d-flex justify-content-between">
                   <span>商品總計</span>
-                  <span>NT$ {sum(mycartDisplay)}</span>
+                  <span>NT$ {sum(mycart)}</span>
                 </div>
                 <div className="d-flex justify-content-between">
                   <span>折扣金額</span>
@@ -532,20 +535,20 @@ function ShoppingCart(props) {
               <div className="card-footer">
                 <div className="d-flex justify-content-between">
                   <h5>結帳總金額</h5>
-                  <h5>NT$ {sum(mycartDisplay)}</h5>
+                  <h5>NT$ {sum(mycart)}</h5>
                 </div>
                 <div className="d-flex justify-content-between">
                   <h5>折扣後金額</h5>
                   <h5>
                     NT$
                     {newCoup.hasOwnProperty('goods_coup_name')
-                      ? handleItemSum(mycartDisplay, newCoup)
+                      ? handleItemSum(mycart, newCoup)
                       : ''}
                     {newCoup.hasOwnProperty('order_coup_name')
-                      ? handleOrderSum(mycartDisplay, newCoup)
+                      ? handleOrderSum(mycart, newCoup)
                       : ''}
                     {newCoup.hasOwnProperty('givi_coup_name')
-                      ? handleOrderSum(sum(mycartDisplay), newCoup)
+                      ? handleOrderSum(sum(mycart), newCoup)
                       : ''}
                   </h5>
                 </div>
@@ -678,7 +681,10 @@ const mapStateToProps = store => {
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
   // return bindActionCreators({getUserCouponDetaiAsync,getNowCoupDataAsync}, dispatch)
-  return bindActionCreators({ getUserCouponDetaiAsync }, dispatch)
+  return bindActionCreators(
+    { memberCheckOutAsync, getUserCouponDetaiAsync },
+    dispatch
+  )
 }
 
 export default withRouter(

@@ -1,21 +1,23 @@
 import React ,{ useEffect, useState }from 'react'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
-import Rside from '../../components/blog/Rside'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
-import '../../style/BlogAdd.scss'
-import addImg from '../../image/imgicon.png'
+import {Link } from 'react-router-dom'
+
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { getBlogDataAsync } from '../../actions/blog/blog_Actions'
 
+
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import BlogRside from '../../components/blog/BlogRside'
+import BlogRelatedPost from '../../components/blog/BlogRelatedPost'
+
+
+import '../../style/BlogAdd.scss'
+import addImg from '../../image/imgicon.png'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import {
-  getBlogDataAsync,
-  // getAsideDataAsync,
-} from '../../actions/blog/blog_Actions'
 
 function BlogAdd(props) {
   const [blogData, setBlogData] = useState([])
@@ -52,10 +54,10 @@ function BlogAdd(props) {
           <h2>部落格</h2>
           <ul>
             <li>
-              <Link to="/blog">首頁</Link>
+              <Link to="/blog">首頁 </Link>
             </li>
             <li>
-              <Link to="">></Link>
+              <Link to=""> > </Link>
             </li>
             <li>
               <Link to="/blogadd">新增文章</Link>
@@ -69,7 +71,7 @@ function BlogAdd(props) {
           <div className=" col-md-8 ">
             <div className="add">
               <div>
-                <h5>新增</h5>
+                <p>新增</p>
               </div>
               <div className="d-flex form-group mb-3">
                 <input
@@ -103,7 +105,7 @@ function BlogAdd(props) {
                   className="form-control addInput tagName2"
                 />
                 <label class="  addImg ml-3 mr-1 ">
-                  <p>上傳檔案</p>
+                  <h6>上傳檔案</h6>
                   <input  className="inputavatar" type="file" onChange={(event) => handleChange(event)}   /> 
                 </label>
                 <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
@@ -114,36 +116,11 @@ function BlogAdd(props) {
               </div>
               {/* <CKEditor editor={ClassicEditor}/> */}
             </div>
-           
-            <div className="relatedPost">
-              <div className="relatedpostTitle">
-                <h5 className="mb-3">相關文章</h5>
-              </div>
-              <div className="relatedpostContent">
-                <ul>
-                {relatedPostData ? relatedPostData.map((value, index) => {
-                  console.log(value)
-                    return (
-
-                  <li>
-                    <Link to="">
-                      <figure>
-                      <img to="" src={'http://localhost:5000/images/blogImg/'+ value.blogImages}/>
-                      </figure>
-                    </Link>
-                    <h5>{value.blogTitle}</h5>
-                  </li>
-                  )}): ''}
-                </ul>
-              </div>
-            </div>
-            <div className="addHr">
-              <hr align="left" />
-            </div>
+            <BlogRelatedPost blogData={props.blogData}/>
           </div>
 
           {/* <!--rSide--> */}
-          <Rside blogData={props.blogData}/>
+          <BlogRside blogData={props.blogData}/>
         </div>
       </div>
     </>
