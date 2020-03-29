@@ -133,6 +133,12 @@ function ShoppingCart(props) {
   //   console.log(couponChoose)
   // }
   function couponCheck(event) {
+    //選錯優惠券跳錯誤訊息
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: '兩次密碼不同!',
+    })
     if (
       couponChoose.order_coup_name == null &&
       couponChoose.givi_coup_name == null &&
@@ -271,12 +277,47 @@ function ShoppingCart(props) {
   //生成買家特選的優惠券modal
 
   //生成item類型的優惠券函數
+  //使用計算物件值的函式sumObj
   const handleItemSum = (items, newCoup) => {
+    console.log(newCoup)
     console.log(items)
-    // if (
-    //   newCoup.hasOwnProperty('goods_coup_name') &&
-    //   newCoup.order_coup_code.substr(0, 2) == 'PI' &&
-    // ) {}
+    // let specificItemNum = 0
+    let inneritems
+    let innerAllAmount = 0
+    let ItemTotalPrice = 0
+
+    if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'III' &&
+      newCoup.itemType == '潛水配件'
+    ) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c005') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c005'
+          })
+          // console.log(x)
+        }
+      }
+      console.log(inneritems)
+      //計算陣列裡面的物件值
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+
+      // console.log(objAmount)
+      if (objAmount >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price * (newCoup.goods_pri_perc / 10)
+        }
+        return ItemTotalPrice
+      }
+    }
   }
   const coupTableData = props.userCouponData ? (
     Object.keys(props['userCouponData']).map(key => {
@@ -511,7 +552,17 @@ function ShoppingCart(props) {
                 </div>
                 <div className="d-flex justify-content-between">
                   <span>折扣金額</span>
-                  <span>-60</span>
+                  <span>
+                    {newCoup.hasOwnProperty('goods_coup_name')
+                      ? handleItemSum(mycart, newCoup) - sum(mycart)
+                      : ''}
+                    {newCoup.hasOwnProperty('order_coup_name')
+                      ? handleOrderSum(mycart, newCoup) - sum(mycart)
+                      : ''}
+                    {newCoup.hasOwnProperty('givi_coup_name')
+                      ? handleOrderSum(sum(mycart), newCoup) - sum(mycart)
+                      : ''}
+                  </span>
                 </div>
                 <br />
                 <div className="d-flex justify-content-between">
