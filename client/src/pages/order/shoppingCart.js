@@ -32,7 +32,8 @@ function ShoppingCart(props) {
   const [hasLoading, setHasLoading] = useState(false)
   const localCart = JSON.parse(localStorage.getItem('cart'))
 
-  const [newCoup, setNewCoup] = useState('')
+  const [newCoup, setNewCoup] = useState([])
+
   const [coupCode, setCouponCode] = useState('')
   const [couptInput, setCouptInput] = useState({})
   const [rodalState, setRodal] = useState({
@@ -55,7 +56,6 @@ function ShoppingCart(props) {
       // props.memberCheckOutAsync(cartData)
     }
   }
-
   async function getCartFromLocalStorage() {
     setHasLoading(true)
 
@@ -76,7 +76,9 @@ function ShoppingCart(props) {
 
     event.target.classList.add('active-chin-check') //為被點擊的目標新增active
   }
-
+  // function cartcalculate(event) {
+  //   console.log(couponChoose)
+  // }
   function couponCheck(event) {
     if (
       couponChoose.order_coup_name == null &&
@@ -106,6 +108,7 @@ function ShoppingCart(props) {
     }
     // console.log(couponChoose)
     setCouptInput(couponChoose)
+    setNewCoup(couponChoose)
   }
 
   //設定完成傳到後端抓資料
@@ -147,29 +150,100 @@ function ShoppingCart(props) {
   const hide = event => {
     setRodal({ visible: false })
   }
+  console.log(newCoup)
 
-  const sum = (items, coupCode) => {
+  const sum = items => {
     let total = 0
+
     for (let i = 0; i < items.length; i++) {
       total += items[i].amount * items[i].price
     }
     return total
+  }
+  //全單優惠的四種函數
+  //全單滿__件__打__折
+  //全單滿__件__減__元
+  //全單滿__元__減__元
+  //全單滿__元__打__折
+  const handleOrderSum = (items, newCoup) => {
+    console.log(items)
+    let totalPrice = 0
+    let itemsToal = 0
+    let priceToal = 0
+    if (
+      newCoup.hasOwnProperty('order_coup_name') &&
+      newCoup.order_coup_code.substr(0, 2) == 'PI'
+    ) {
+      console.log(newCoup.order_over)
+      for (let i = 0; i < items.length; i++) {
+        totalPrice += items[i].amount * items[i].price
+      }
+      if (totalPrice > newCoup.order_over) {
+        return parseInt(totalPrice * (newCoup.order_pri_perc / 10))
+      }
+    } else if (
+      newCoup.hasOwnProperty('order_coup_name') &&
+      newCoup.order_coup_code.substr(0, 2) == 'PM'
+    ) {
+      for (let i = 0; i < items.length; i++) {
+        totalPrice += items[i].amount * items[i].price
+      }
+      return parseInt(totalPrice - newCoup.order_pri_perc)
+    } else if (
+      newCoup.hasOwnProperty('order_coup_name') &&
+      newCoup.order_coup_code.substr(0, 2) == 'II'
+    ) {
+      for (let i = 0; i < items.length; i++) {
+        itemsToal += items[i].amount
+        priceToal += items[i].price
+      }
+      if (itemsToal >= newCoup.coup_over) {
+        totalPrice = itemsToal * priceToal * (newCoup.order_pri_perc / 10)
+      }
+      return parseInt(totalPrice)
+    } else if (
+      newCoup.hasOwnProperty('order_coup_name') &&
+      newCoup.order_coup_code.substr(0, 2) == 'IM'
+    ) {
+      for (let i = 0; i < items.length; i++) {
+        itemsToal += items[i].amount
+        priceToal += items[i].price
+      }
 
+      if (itemsToal >= newCoup.coup_over) {
+        totalPrice = itemsToal * priceToal - newCoup.order_pri_perc
+      }
+      return parseInt(totalPrice)
+    } else {
+      return totalPrice
+    }
+    // console.log(items)
+
+    // if (
+    //   newCoup.order_coup_code.substr(0, 2) == 'II' ||
+    //   newCoup.order_coup_code = undefined
+    // ) {
+    //}
+    // } else {
+    //   for (let i = 0; i < items.length; i++) {
+    //     total += items[i].amount * items[i].price
+    //   }
+    //   return total
+    // }
     //優惠券函式
     //第一種類的優惠券:全單優惠
-    //全單滿__件__打__折
-    //全單滿__件__減__元
-    //全單滿__元__減__元
-    //全單滿__元__打__折
+
     //  if(coupCode.substr(0,2) == "II" || coupCode.substr(0,2) == "PI" || coupCode.substr(0,2) == "PM" ||  coupCode.substr(0,2) == "PI"){
-
     //   }else if(coupCode.substr(0,3) == "III" || coupCode.substr(0,3) == "PII" || coupCode.substr(0,3) == "PMI" ||  coupCode.substr(0,3) == "IMI"){
-
     //   }else{
-
     //   }
   }
   //生成買家特選的優惠券modal
+
+  //生成item類型的優惠券函數
+  const handleItemSum = (items, newCoup) => {
+    console.log(items)
+  }
   const coupTableData = props.userCouponData ? (
     Object.keys(props['userCouponData']).map(key => {
       if (key === 'CouponResultData') {
@@ -191,6 +265,12 @@ function ShoppingCart(props) {
             givi_coup_end,
             goods_coup_end,
             order_coup_end,
+            goods_over,
+            order_over,
+            givi_over,
+            order_pri_perc,
+            goods_pri_perc,
+            itemType,
           } = value
           return (
             <tr
@@ -205,6 +285,12 @@ function ShoppingCart(props) {
                   goods_coup_code,
                   order_coup_code,
                   givi_coup_code,
+                  goods_over,
+                  order_over,
+                  givi_over,
+                  order_pri_perc,
+                  goods_pri_perc,
+                  itemType,
                 })
               }}
             >
@@ -338,7 +424,6 @@ function ShoppingCart(props) {
   ) : (
     <Loading />
   )
-  // console.log(Object.keys(couponChoose))
 
   // handleDelete = product => {
   //   const cart = this.props.data.cart
@@ -348,7 +433,6 @@ function ShoppingCart(props) {
   //   document.body.style.overflow = 'auto'
   // }
 
-  console.log(newCoup)
   return (
     <>
       <Header />
@@ -401,12 +485,14 @@ function ShoppingCart(props) {
                   {couptInput.hasOwnProperty('goods_coup_name') ? (
                     <input
                       readOnly
-                      defaultValue={couptInput.goods_coup_code}
+                      value={couptInput.goods_coup_code}
                       type="text"
                       name=""
                       className="w-50"
                       id=""
-                      onChange={e => setNewCoup(couptInput.goods_coup_code)}
+                      // onChange={e =>
+                      //   setNewCoup([...newCoup, couptInput.goods_coup_code])
+                      // }
                     />
                   ) : (
                     <h2 hidden>沒有這種優惠券</h2>
@@ -414,12 +500,14 @@ function ShoppingCart(props) {
                   {couptInput.hasOwnProperty('order_coup_name') ? (
                     <input
                       readOnly
-                      defaultValue={couptInput.order_coup_code}
+                      value={couptInput.order_coup_code}
                       type="text"
                       name=""
                       className="w-50"
                       id=""
-                      onChange={e => setNewCoup(couptInput.order_coup_code)}
+                      // onChange={e =>
+                      //   setNewCoup([...newCoup, couptInput.order_coup_code])
+                      // }
                     />
                   ) : (
                     <h2 hidden>沒有這種優惠券</h2>
@@ -427,12 +515,14 @@ function ShoppingCart(props) {
                   {couptInput.hasOwnProperty('givi_coup_name') ? (
                     <input
                       readOnly
-                      defaultValue={couptInput.givi_coup_code}
+                      value={couptInput.givi_coup_code}
                       type="text"
                       name=""
                       className="w-50"
                       id=""
-                      onChange={e => setNewCoup(couptInput.givi_coup_code)}
+                      // onChange={e =>
+                      //   setNewCoup([...newCoup, couptInput.givi_coup_code])
+                      // }
                     />
                   ) : (
                     <h2 hidden>沒有這種優惠券</h2>
@@ -442,7 +532,22 @@ function ShoppingCart(props) {
               <div className="card-footer">
                 <div className="d-flex justify-content-between">
                   <h5>結帳總金額</h5>
-                  <h5>NT$ {sum(mycartDisplay, coupCode)}</h5>
+                  <h5>NT$ {sum(mycartDisplay)}</h5>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <h5>折扣後金額</h5>
+                  <h5>
+                    NT$
+                    {newCoup.hasOwnProperty('goods_coup_name')
+                      ? handleItemSum(mycartDisplay, newCoup)
+                      : ''}
+                    {newCoup.hasOwnProperty('order_coup_name')
+                      ? handleOrderSum(mycartDisplay, newCoup)
+                      : ''}
+                    {newCoup.hasOwnProperty('givi_coup_name')
+                      ? handleOrderSum(sum(mycartDisplay), newCoup)
+                      : ''}
+                  </h5>
                 </div>
                 <br />
                 <button
@@ -544,6 +649,7 @@ function ShoppingCart(props) {
                           <button
                             onClick={event => {
                               couponCheck()
+                              // cartcalculate()
                             }}
                             className="btn btn-primary chin_btn"
                           >
