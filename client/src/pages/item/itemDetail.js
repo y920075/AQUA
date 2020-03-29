@@ -20,14 +20,19 @@ function ItemDetail(props) {
   // 加入購物車
   async function handleAdd(value) {
     setHasLoading(true)
-    const localCart = JSON.parse(localStorage.getItem('cart'))
-    if (localCart.some(item => item.id === value.id)) {
-      const index = localCart.findIndex(item => item.id === value.id)
-      localCart[index].amount += value.amount
-    } else {
+    const localCart = JSON.parse(localStorage.getItem('cart')) || []
+    if (localCart == null) {
       localCart.push({ ...value })
+      localStorage.setItem('cart', JSON.stringify(localCart))
+    } else {
+      if (localCart.some(item => item.id === value.id)) {
+        const index = localCart.findIndex(item => item.id === value.id)
+        localCart[index].amount += value.amount
+      } else {
+        localCart.push({ ...value })
+      }
+      localStorage.setItem('cart', JSON.stringify(localCart))
     }
-    localStorage.setItem('cart', JSON.stringify(localCart))
   }
 
   useEffect(() => {
