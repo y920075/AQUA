@@ -44,6 +44,9 @@ function App(props) {
         <Route path="/chatchatchat">
             <Chat />
           </Route>
+          <Route path="/blog/:id/edit">
+            <BlogEdit />
+          </Route>
           <Route path="/blog/:id">
             <BlogContent />
           </Route>
@@ -52,9 +55,6 @@ function App(props) {
           </Route>
           <Route path="/blogadd">
             <BlogAdd />
-          </Route>
-          <Route path="/blogedit">
-            <BlogEdit />
           </Route>
           <Route path="/seller">
             <SellerBack />
