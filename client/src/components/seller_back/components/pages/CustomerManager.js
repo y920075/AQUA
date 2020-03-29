@@ -45,10 +45,10 @@ function CustomerManager(props) {
     //找到所有代表等級的li元素
     let customerMenuList = document.querySelectorAll('tr.tr-chin td')
     customerMenuList.forEach(value => {
-      value.classList.remove('active-chin-td') //移除active
+      value.classList.remove('active-chin-user') //移除active
     })
 
-    event.target.classList.add('active-chin-td') //為被點擊的目標新增active
+    event.target.classList.add('active-chin-user') //為被點擊的目標新增active
   }
 
   function triggerDelete(index) {

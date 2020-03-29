@@ -52,7 +52,7 @@ function BlogAdd(props) {
           <h2>部落格</h2>
           <ul>
             <li>
-              <Link to="">首頁</Link>
+              <Link to="">文章列表</Link>
             </li>
             <li>
               <Link to=""> > </Link>

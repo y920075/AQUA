@@ -36,7 +36,6 @@ function Blog(props) {
       event.target.classList.add('active-rao') 
   }
 
-  //向伺服器取得優惠券資料
   function getCategoryNameData(event) {
     const CategoryName_id = $('li').find('span.active-rao')
       ? $('li').find('span.active-rao').attr('data-type')
@@ -85,24 +84,32 @@ function Blog(props) {
                   發文
                 </Link>
               </Zoom>
-              <li  className="nav-item" onClick={event => {
-                                                  typeCategoryNameActive(event)  
-                                                  getCategoryNameData() 
-                                                  event.stopPropagation()               
-                                                }}>                        
-                            <span   className="badge badge-pill categoryName nav-link"   data-type="">
-                              全部
-                            </span>
-                          </li>
+              <Zoom >
+                <li  className="nav-item" 
+                  onClick={event => {
+                          typeCategoryNameActive(event)  
+                          getCategoryNameData(event) 
+                          event.stopPropagation()               
+                            }}>                        
+                    <span   
+                      className="badge badge-pill categoryName nav-link"   
+                      data-type="">
+                       全部
+                    </span>
+                </li>
+              </Zoom>
               {categoryData
                 ? categoryData.map((value, index) => {
                     return (
                       <Zoom >
-                          <li  className="nav-item" onClick={event => {
-                                                  typeCategoryNameActive(event)  
-                                                  getCategoryNameData() 
-                                                  event.stopPropagation()               
-                                                }}>                        
+                          <li  
+                          className="nav-item" 
+                          onClick={event => {
+                                            typeCategoryNameActive(event)  
+                                            getCategoryNameData() 
+                                            event.stopPropagation()               
+                                          }} 
+                            >                        
                             <span   className="badge badge-pill categoryName nav-link" key={index}  data-type={value.categoryName}>
                               {value.categoryName}
                             </span>
