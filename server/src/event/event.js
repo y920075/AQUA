@@ -692,7 +692,6 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event/self', async (req,res)=>{
-
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -808,13 +807,11 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
-
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
     }
     if ( !req.session.memberId ) {
-        
         res.json(data)
     } else {
         const perPage = 8
@@ -955,13 +952,13 @@ router.get('/member/event/chatList',async (req,res)=>{
 
     const findMySelfEventSql = `SELECT \`eventId\`,\`eventName\`
     FROM \`event_data\` 
-    WHERE \`eventSponsor\` = 'M20010002' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
+    WHERE \`eventSponsor\` = '${req.session.memberId}' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
 
     const findMyJoinEventsql = `SELECT \`event_memeber\`.\`eventId\`,\`event_data\`.\`eventName\`
     FROM \`event_memeber\` 
     LEFT JOIN \`event_data\`
     ON \`event_data\`.\`eventId\` = \`event_memeber\`.\`eventId\`
-    WHERE \`memberId\` = 'M20010002' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
+    WHERE \`memberId\` = '${req.session.memberId}' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
 
     if ( req.query.mylist === '1' ) {
         mySelfEventData = await db.queryAsync(findMySelfEventSql)

@@ -1018,7 +1018,6 @@ router.post('/member/class/:classId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/class',(req,res)=>{
-    console.log(req.session)
     const data = {
         'status' : '401',
         'msg' : '尚未登入'

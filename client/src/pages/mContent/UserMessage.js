@@ -14,6 +14,7 @@ import Sweetalert from '../../components/class/SellerClassComponents/Sweetalert2
 function UserMessage(props) {
   const [ws, setWs] = useState(null)
   const [chatDataList, setChatDataList] = useState({})
+  const [memberId, setMemberId] = useState(localStorage.getItem('memberId'))
 
   useEffect(() => {
     setWs(io('http://localhost:5555'))
@@ -86,7 +87,7 @@ function UserMessage(props) {
     const sendMessageRequest = {
       roomId,
       message,
-      memberId: 'M20010002',
+      memberId,
     }
     ws.emit('ClientToServerMsg', sendMessageRequest)
     document.querySelector('input.messageInput').value = ''
@@ -102,10 +103,11 @@ function UserMessage(props) {
             .querySelector('ul.eventChatRoomList li.active')
             .getAttribute('data-roomId')
         : ''
+
       const sendMessageRequest = {
         roomId,
         message,
-        memberId: 'M20010002',
+        memberId,
       }
       ws.emit('ClientToServerMsg', sendMessageRequest)
       document.querySelector('input.messageInput').value = ''
@@ -123,10 +125,11 @@ function UserMessage(props) {
       .getAttribute('data-eventName')
 
     let roomId = event.target.getAttribute('data-roomId')
+
     if (roomId !== '') {
       const addRoomRequest = {
         roomId,
-        memberId: 'M20010002',
+        memberId,
       }
       ws.emit('addRoomRequest', addRoomRequest)
       console.log('已發送加入房間事件----', addRoomRequest)
@@ -186,7 +189,7 @@ function UserMessage(props) {
         <div className="msgArea">
           {chatDataList.chatData
             ? chatDataList.chatData.map((value, index) => {
-                if (value.memberId === 'M20010002') {
+                if (value.memberId === memberId) {
                   return (
                     <>
                       <div class="d-flex justify-content-end align-items-center">
