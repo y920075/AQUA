@@ -20,6 +20,7 @@ export const memberCheckOutAsync = orderData => {
     })
     const response = await fetch(request)
     const data = await response.json()
+    console.log(data)
     dispatch(memberCheckOut(data))
   }
 }

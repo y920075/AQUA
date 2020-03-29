@@ -2,6 +2,7 @@ const express =     require('express');
 const session =     require('express-session')
 const cors =        require('cors')
 const app =         express();
+const db = require('./db_connect')
 
 // 引入氣象局API寫入函式
 const getTIdeData = require('./location/gettideinfo')
@@ -30,6 +31,18 @@ app.use(session({
         maxAge: 1200000, // session的存活時間 單位毫秒
     }
 }))
+
+//根據前端傳送的token，去資料庫查詢會員
+app.use(async (req,res,next)=>{
+    const checkTokenSql  = `SELECT \`memberId\` FROM \`my_member\` WHERE accessToken = '${req.headers['access-token']}'`
+    const memberData = await db.queryAsync(checkTokenSql)
+    const memberId = await memberData.length>0 ? memberData[0].memberId : false 
+    if ( memberId ) {
+        req.session.memberId = memberId
+    }
+    next()
+})
+
 
 const whitelist = [
     'http://localhost:3000',

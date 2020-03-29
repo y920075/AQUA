@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2'
-
+import Cookie from 'js-cookie'
 //Register
 // action = {type, value}
 // type: ADD_VALUE, MINUS_VALUE
@@ -97,6 +97,7 @@ export const getuserDetailDataAsync = memberId => {
       headers: new Headers({
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'access-token': Cookie.get('token'),
       }),
     })
 
