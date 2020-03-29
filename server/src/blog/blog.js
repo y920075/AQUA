@@ -98,7 +98,7 @@ router.get('/blog/comments', (_req, res)=>{
 
 //新增評論資料
 router.post('/blog/addComments', upload.none(), (req, res)=>{
-    console.log(req.body)
+    // console.log(req.body)
     // res.json(req.body)
     // 先檢查輸入
     const comments = {
@@ -106,13 +106,13 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
         error:'',
         status:0,
         body:req.body,
-        commentsData: ""
+        // commentsData: ""
     };
 
     const sql ='INSERT INTO \`blog_comments\` (\`content\`) VALUES (?)'
 
     db.queryAsync(sql, [
-        req.body.cotentComments   //content
+        req.body.content   //content
         ])
 
     .then(r=>{
@@ -124,14 +124,17 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
         // res.redirect(req.baseUrl + '/list')
     })
     .catch(err=>{
-        console.log(err)
-        return res.json(err)
+        // console.log(err)
+         res.json(err)
     })
 
     
 })
 
-router.post('/add', upload.single('av'), (req, res)=>{
+//新增文章
+router.post('/add', upload.single('addImg'), (req, res)=>{
+    // console.log(req.body)
+
     const output ={
         success: false,
         error:'',
@@ -140,7 +143,8 @@ router.post('/add', upload.single('av'), (req, res)=>{
     }
 
 
-    const sql = "INSERT INTO `blog`(`categoryName`, `blogTitle`, `blogContent`, `tagName1`,`tagName2`, `blogImages`) VALUES(?, ?, ?, ?, ?, ?)";
+    const sql = `INSERT INTO \`blog\`( \`blogTitle\`,\`categoryName\`, \`blogContent\`, \`tagName1\`,\`tagName2\`, \`blogImages\`) VALUES(?, ?, ?, ?, ?, ?)`;
+
 
     if(req.file && req.file.originalname){
         switch (req.file.mimetype){
@@ -169,8 +173,8 @@ router.post('/add', upload.single('av'), (req, res)=>{
     }
 
     db.queryAsync(sql , [
-        req.body.categoryName,
         req.body.blogTitle,
+        req.body.categoryName,
         req.body.blogContent,
         req.body.tagName1,
         req.body.tagName2,
@@ -184,7 +188,7 @@ router.post('/add', upload.single('av'), (req, res)=>{
          res.json(output);
     })
     .catch(error=>{
-        console.log(error);
+        // console.log(error);
         return res.json(output);
     })
 })

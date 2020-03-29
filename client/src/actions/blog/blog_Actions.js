@@ -84,3 +84,31 @@ export const addContentCommentsDataAsync = (commentsData, callback) => {
     // callback()
   }
 }
+
+//新增文章
+export const addContentData = data => ({
+  type: 'ADD_CONTENTDATA',
+  value: data,
+})
+
+export const addContentDataAsync = (contentData, callback) => {
+  console.log(contentData)
+  return async dispatch => {
+    const request = new Request(
+      'http://localhost:5000/add',
+      {
+        method: 'POST',
+        body: contentData,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(addContentData(data))
+
+    // callback()
+  }
+}
+
