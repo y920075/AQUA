@@ -240,27 +240,29 @@ itemRouter.post('/member/checkout', (req, res)=>{
 
 
 
-itemRouter.post('/member/mycart', upload.none(), (req, res)=>{
-    console.log('賣家訂單新增')
-    const sql = `INSERT INTO \`orders\`(
+itemRouter.post('/member/orderInfo', (req, res)=>{
+    console.log('訂單寄件資訊')
+    const sql = `INSERT INTO \`recipient_info\`(
                 \`orderId\`, 
-                \`orderMemberId\`, 
-                \`orderItemId\`, 
-                \`checkPrice\`, 
-                \`checkQty\`, 
-                \`checkSubtotal\`) 
-                VALUES (?,?,?,?,?,?)`
+                \`recipName\`, 
+                \`addCode\`, 
+                \`addArea\`, 
+                \`address\`, 
+                \`phone\`, 
+                \`note\`) 
+                VALUES (?,?,?,?,?,?,?)`
 
     db.queryAsync(sql, [
-        req.body.itemName,
-        req.session.memberId, // mamber session
-        req.body.orderItemId,
-        req.body.checkPrice,
-        req.body.checkQty,
-        req.body.checkSubtotal
+        req.body.id,
+        req.body.name, // mamber session
+        req.body.addcode,
+        req.body.area,
+        req.body.address,
+        req.body.phone,
+        req.body.note
     ])
     .then(r=>{
-        console.log('新增訂單成功')
+        console.log('新增成功')
         return res.json(req.body)
         // res.redirect(req.baseUrl + '/list')
     })

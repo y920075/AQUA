@@ -19,6 +19,7 @@ import Items from './pages/item/itemList'
 import ItemDetail from './pages/item/itemDetail'
 import ShoppingCart from './pages/order/shoppingCart'
 import CheckOut from './pages/order/checkOut'
+import OrderCreated from './pages/order/orderCreated'
 
 //文章相關
 import Blog from './pages/blog/Blog'
@@ -41,7 +42,7 @@ function App(props) {
     <Router>
       <>
         <Switch>
-        <Route path="/chatchatchat">
+          <Route path="/chatchatchat">
             <Chat />
           </Route>
           <Route path="/blog/:id">
@@ -85,6 +86,9 @@ function App(props) {
           </Route>
           <Route path="/member/checkout">
             <CheckOut />
+          </Route>
+          <Route path="/member/created">
+            <OrderCreated />
           </Route>
 
           {/* Member Routes */}
