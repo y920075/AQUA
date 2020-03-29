@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2/src/sweetalert2.js'
 import '../../style/CW_items.scss'
 
 // import { userRegisterAsync } from '../actions/index'
@@ -14,7 +15,7 @@ import { getUserCouponDetaiAsync } from '../../actions/member/memberActions'
 
 //引入rodal
 import Rodal from 'rodal'
-// import '../../../node_modules/rodal/lib/rodal.css'
+import '../../../node_modules/rodal/lib/rodal.css'
 
 // import { getNowCoupDataAsync } from '../../actions/seller/index'
 
@@ -45,6 +46,7 @@ function ShoppingCart(props) {
   const orderData = {
     orderMemberId: 'M123',
     orderItems: [],
+    // checkSubtotal: handleOrderSum,
   }
   let itemData = {}
   // for (let i = 0; i < localCart.length; i++) {
@@ -56,13 +58,12 @@ function ShoppingCart(props) {
   // 點擊結帳
   function checkOut() {
     if (localCart == null || localCart.length < 1) {
-      alert(
-        '購物車沒有商品'
-        // {
-        // text: '購物車沒有商品',
-        // icon: 'warning',
-        // button: 'OK',}
-      )
+      Swal.fire({
+        title: 'Error!',
+        text: 'Do you want to continue',
+        icon: 'error',
+        confirmButtonText: 'Cool',
+      })
     } else {
       // alert('確定結帳嗎')
       for (let i = 0; i < localCart.length; i++) {

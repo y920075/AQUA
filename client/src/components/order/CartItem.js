@@ -2,7 +2,7 @@ import React from 'react'
 
 function CartItem(props) {
   const { handleDelete, mycart } = props
-  console.log('carditem', { mycart })
+  // console.log('carditem', { mycart })
 
   return (
     <>

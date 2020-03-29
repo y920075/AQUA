@@ -205,7 +205,7 @@ itemRouter.post('/member/checkout', (req, res)=>{
     db.queryAsync(total)
     .then(result=>{
         totalorder = 'O200401'+(result[0].num+1)
-        console.log(totalorder)
+        // console.log(totalorder)
 
         const sql = `INSERT INTO \`orders\`(
             \`orderId\`, 
@@ -226,6 +226,14 @@ itemRouter.post('/member/checkout', (req, res)=>{
                 '123'
             ])        
         }
+        return totalorder
+    })
+    .then(result=>{
+        console.log(result)
+        res.json({
+            'status' : 200,
+            'orderId': result
+        })
     })
 })
 
