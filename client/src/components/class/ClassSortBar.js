@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SwitchButton from '../event/MemberEventComponents/SwitchButton'
 
 /*
@@ -9,15 +9,42 @@ import SwitchButton from '../event/MemberEventComponents/SwitchButton'
   2020-03-26
 */
 function ClassSortBar(props) {
+  const [rwdMenuShow, setRwdMenuShow] = useState(false)
+
+  useEffect(() => {
+    if (rwdMenuShow) {
+      document
+        .querySelector('div.classCategoryList div')
+        .classList.add('rwdMenuShow')
+    } else {
+      document
+        .querySelector('div.classCategoryList div')
+        .classList.remove('rwdMenuShow')
+    }
+  }, [rwdMenuShow])
+
   const toggleSwitchButton = () => {
     props.setIsEnable(!props.isEnable)
   }
+
+  const handleRWDmenu = () => {}
+
   return (
     <>
       <div className="row">
-        <div className="col-xl-12 d-flex justify-content-end">
+        <div className="col-2">
+          <span
+            class="material-icons d-md-none"
+            onClick={() => {
+              setRwdMenuShow(!rwdMenuShow)
+            }}
+          >
+            filter_list
+          </span>
+        </div>
+        <div className="col-10 col-xl-12 d-flex justify-content-end">
           <div className="d-flex switchbutton-jy align-items-center justify-content-end">
-            <p>包含已過期資料</p>
+            <p>過期資料</p>
             <SwitchButton
               type="button"
               active={props.isEnable}

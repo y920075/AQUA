@@ -1,24 +1,49 @@
 import React, { Component, useState } from 'react'
-
+import Chart from './Chart'
 import { Line } from 'react-chartjs-2'
-
 export default class MainPage extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       data: {
-        labels: ['hwer', '1adas', 'qweeqw', 'qwe', 'ttert'],
+        labels: ['3/25', '3/26', '3/27', '3/28', '3/29'],
         datasets: [
           {
             label: 'Member1',
-            backgroundColor: 'rgba(78, 95 ,118, 0.5)',
+            backgroundColor: 'rgba(19, 41 ,72, 0.25)',
             data: [12, 15, 747, 123, 2, 3],
+            borderColor: 'rgb(255, 99, 132)',
           },
           {
             label: 'Member2',
-            backgroundColor: 'rgba(255, 0 ,255, 0.75)',
+            backgroundColor: 'rgba(241, 90 ,36, 1)',
             data: [12, 15, 77, 13, 2, 3],
+            borderColor: 'rgb(255, 99, 132)',
+          },
+        ],
+        maintainAspectRatio: false,
+      },
+      scales: {
+        xAxes: [
+          {
+            ticks: {
+              callback: function(label, index, labels) {
+                return label.toFixed(2) + '%'
+              },
+            },
+          },
+        ],
+        yAxes: [
+          {
+            ticks: {
+              callback: function(label, index, labels) {
+                return label
+              },
+              fontSize: 24,
+              fontColor: 'black',
+            },
+            display: true,
           },
         ],
       },
@@ -114,7 +139,10 @@ export default class MainPage extends Component {
                 responsive: true,
               }}
               data={this.state.data}
+              height={100}
+              width={500}
             />
+            <Chart />
           </div>
         </div>
       </div>

@@ -9,13 +9,13 @@ import categoryData from './category'
 
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
-// import Footer from '../../components/Footer'
 import BlogRside from '../../components/blog/BlogRside'
 import { Link } from 'react-router-dom'
 import '../../style/Blog.scss'
 import _ from 'lodash'
 import RcViewer from '@hanyk/rc-viewer'
 import Zoom from 'react-reveal/Zoom'
+import Jump from 'react-reveal/Jump'
 import sr from './ScrollReveal'
 import $ from 'jquery'
 
@@ -36,7 +36,6 @@ function Blog(props) {
       event.target.classList.add('active-rao') 
   }
 
-  //向伺服器取得優惠券資料
   function getCategoryNameData(event) {
     const CategoryName_id = $('li').find('span.active-rao')
       ? $('li').find('span.active-rao').attr('data-type')
@@ -61,7 +60,7 @@ function Blog(props) {
       // origin: 'bottom',
       duration: 2000,
       delay: 100,
-      distance: '500px',
+      distance: '350px',
     })
   }, [props.blogData])
 
@@ -72,7 +71,7 @@ function Blog(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="/./images/blog/banner.jpg" />
+      <Banner BannerImgSrc="/images/blog/banner.jpg"/>
       <div className="container rao">
         {/* <!--category--> */}
         <div className="row">
@@ -80,29 +79,37 @@ function Blog(props) {
             <div className="category  ">
              
               <ul className="d-flex justify-content-center">
-              <Zoom>
+              <Jump>
                 <Link to="/blogadd" className="badge badge-pill  addPost">
                   發文
                 </Link>
+              </Jump>
+              <Zoom >
+                <li  className="nav-item" 
+                  onClick={event => {
+                          typeCategoryNameActive(event)  
+                          getCategoryNameData(event) 
+                          event.stopPropagation()               
+                            }}>                        
+                    <span   
+                      className="badge badge-pill categoryName nav-link"   
+                      data-type="">
+                       全部
+                    </span>
+                </li>
               </Zoom>
-              <li  className="nav-item" onClick={event => {
-                                                  typeCategoryNameActive(event)  
-                                                  getCategoryNameData() 
-                                                  event.stopPropagation()               
-                                                }}>                        
-                            <span   className="badge badge-pill categoryName nav-link"   data-type="">
-                              全部
-                            </span>
-                          </li>
               {categoryData
                 ? categoryData.map((value, index) => {
                     return (
                       <Zoom >
-                          <li  className="nav-item" onClick={event => {
-                                                  typeCategoryNameActive(event)  
-                                                  getCategoryNameData() 
-                                                  event.stopPropagation()               
-                                                }}>                        
+                          <li  
+                          className="nav-item" 
+                          onClick={event => {
+                                            typeCategoryNameActive(event)  
+                                            getCategoryNameData() 
+                                            event.stopPropagation()               
+                                          }} 
+                            >                        
                             <span   className="badge badge-pill categoryName nav-link" key={index}  data-type={value.categoryName}>
                               {value.categoryName}
                             </span>
@@ -117,6 +124,7 @@ function Blog(props) {
         </div>
         {/* <!--card--> */}
         <div className="row justify-content-around">
+        <Zoom>
           <div
             className=" col-md-8 rounded-lg d-flex
   justify-content-around cardContent"
@@ -218,9 +226,11 @@ function Blog(props) {
                 : ''}
             </div>
           </div>
+          </Zoom>
           {/* <!--rSide--> */}
           <BlogRside blogData={props.blogData} />
         </div>
+        {/* <Footer /> */}
       </div>
     </>
   )

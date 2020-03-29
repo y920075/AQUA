@@ -71,7 +71,7 @@ function Class(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="./images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="./images/classImg/calssbanner.jpg" />
       <div className="container JYcontainer">
         <div className="row">
           <ClassListCategory

@@ -43,19 +43,19 @@ function BlogContent(props) {
     let error = false
     let errorMessages = []
 
-      // if (!cotentComments) {
-      //   error = true
-      //   errorMessages.push('評論內容沒填')
-      // }
+      if (!cotentComments) {
+        error = true
+        errorMessages.push('評論內容沒填')
+      }
 
       const addCommentsData = { 
         cotentComments
       }
     
       const commentsData_fd = new FormData()
-      commentsData_fd.append('cotentComments', addCommentsData.cotentComments)
+      commentsData_fd.append('content', addCommentsData.cotentComments)
     
-      props.addContentCommentsDataAsync(commentsData_fd)
+      props.addContentCommentsDataAsync(commentsData_fd, () => alert('成功新增'))
     
   }
 
@@ -88,17 +88,10 @@ function BlogContent(props) {
               return (
           <ul key = {index}>
             <li>
-              <Link to="/blog">首頁</Link>
+              <Link to="/blog">文章列表</Link>
             </li>
             <li>
-              <Link to="">></Link>
-            </li>
-      
-            <li>
-              <Link to="">{value.categoryName}</Link>
-            </li>
-            <li>
-              <Link to="">></Link>
+              <Link >></Link>
             </li>
             <li>
               <Link to={'/blog/'+value.id}>{value.blogTitle}</Link>
@@ -133,13 +126,19 @@ function BlogContent(props) {
                 </div>
                 <div className="postTag">
                   <ul>
-                    <li>
-                      <Link to="">{value.categoryName}</Link>
+                  <li>
+                      <Link to="">
+                        <i class="far fa-thumbs-up"></i>
+                      </Link>
+                      {value.blogLike}
                     </li>
                     <li>
                       <Link to="">
-                        <i className="far fa-comment"> 0</i>
+                      <i class="far fa-comment-dots"></i>                      
                       </Link>
+                    </li>
+                    <li>
+                      <Link to={'/blog/'+value.id+'/edit'}><i class="far fa-edit"></i></Link>
                     </li>
                   </ul>
                 </div>
@@ -205,12 +204,12 @@ function BlogContent(props) {
               </div>
               <div className="postcommentBody">
                 <textarea 
-                                type="text"
-
+                  type="text"
                   name="cotentComments"
                   onChange={event => setCotentComments(event.target.value)}
-                  className="col-md-12">
-                </textarea>
+                  className="col-md-12"
+                />
+                
               </div>
               <div className="d-flex justify-content-end">
                 <button 
