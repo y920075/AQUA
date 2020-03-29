@@ -41,8 +41,8 @@
           margin: 0;
           font-size: 14px;
           text-overflow: ellipsis;
-          white-space:nowrap;
-          overflow:hidden
+          white-space: nowrap;
+          overflow: hidden;
         }
       }
       .active {
@@ -90,8 +90,28 @@
           height: 100%;
         }
       }
-      .msgTime{
-        font-size: 10px;
+      .msgBox {
+        margin-top: 10px;
+        .mymessage {
+          padding: 5px 10px;
+          background-color: #e2e4e8;
+          border-radius: 10px;
+          margin-left: 5px;
+        }
+        .otherName{
+          margin: 0;
+          font-size: 12px;
+        }
+        .othermessage {
+          padding: 5px 10px;
+          background-color: #4e5f76;
+          border-radius: 10px;
+          color: #e2e4e8;
+          margin-right: 5px;
+        }
+        .msgTime {
+          font-size: 12px;
+        }
       }
     }
     .inputArea {
