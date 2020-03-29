@@ -18,20 +18,22 @@ io.on('connection', async function(socket){
         //取得 rooms 物件，查詢用戶是不是在room裡面發送訊息
         const rooms = socket.rooms
 
-        //將值取出來，尋找預設 id 外的值就能取到 join 的 id
+        //因為socket本身自帶一個roomId，所以rooms陣列長度小於等於1的話，表示沒有任何房間
         if( Object.keys(rooms).length <= 1 ){
           socket.emit('ServerToClientWarning','先選擇房間，才能發送訊息!')
           console.log('SOCKET.IO已提示客戶必須選擇房間才能發送訊息，並中斷本次溝通')
         } else {
 
-          const message = sendMessageRequest.message
           const roomId = sendMessageRequest.roomId
+          const loginId = sendMessageRequest.loginId
           const memberId = sendMessageRequest.memberId
-          // const memberId = sendMessageRequest.memberId 
+          const message = sendMessageRequest.message
 
-          const insertChatDataSql = `INSERT INTO \`chat_data\`( \`roomId\`, \`memberId\`, \`message\`) VALUES (?,?,?)`
-          await db.queryAsync(insertChatDataSql,[roomId,memberId,message])
+          //把接收到的訊息先保存進資料庫
+          const insertChatDataSql = `INSERT INTO \`chat_data\`( \`roomId\`,\`loginId\`, \`memberId\`, \`message\`) VALUES (?,?,?,?)`
+          await db.queryAsync(insertChatDataSql,[roomId,loginId,memberId,message])
 
+          //再一次取得該房間的所有訊息
           const chatDataSql = `SELECT * FROM \`chat_data\` WHERE \`roomId\` = '${roomId}'`
           const chatData = await db.queryAsync(chatDataSql)
 
@@ -44,7 +46,6 @@ io.on('connection', async function(socket){
           }
 
           socket.emit('ServerToClientMsgData', ServerToClientMsgData)
-          // io.sockets.in(room).emit('ServerToClientMsgData', ServerToClientMsgData)
           socket.to(roomId).emit('ServerToClientMsgData', ServerToClientMsgData)
           console.log(`SOCKET.IO已經發送訊息到客戶端`)
         }
@@ -79,9 +80,7 @@ io.on('connection', async function(socket){
         }
         
         socket.join(roomId)
-        //(1)發送給在同一個 room 中除了自己外的 Client
-        // socket.to(roomId).emit('addRoomResponse', `${memberId}已加入聊天室！`)
-        //(2)發送給在 room 中所有的 Client
+        //把全部訊息發送給在房間裡的所有人，在前端才分辨是誰發的
         io.sockets.in(roomId).emit('addRoomResponse', ServerToClientMsgData)
         console.log('SOCKET.IO已傳送該房間的歷史訊息給客戶端')
         

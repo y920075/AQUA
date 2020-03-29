@@ -15,21 +15,24 @@ function UserMessage(props) {
   const [ws, setWs] = useState(null)
   const [chatDataList, setChatDataList] = useState({})
   const [memberId, setMemberId] = useState(localStorage.getItem('memberId'))
+  const [loginId, setLoginId] = useState(localStorage.getItem('username'))
 
+  //一進入訊息管理就啟動連線
   useEffect(() => {
     setWs(io('http://localhost:5555'))
     props.memberGetChatListAsync()
   }, [])
 
+  //連線成功就開始監聽socket事件
   useEffect(() => {
     if (ws) {
-      //連線成功在 console 中打印訊息
       console.log('socket連線---已開啟!')
       //設定監聽
       initWebSocket()
     }
   }, [ws])
 
+  //離開訊息管理就斷線
   useEffect(() => {
     return () => {
       if (ws) {
@@ -39,22 +42,12 @@ function UserMessage(props) {
     }
   }, [ws])
 
-  const handleListActive = event => {
-    const eventChatRoomList = document.querySelectorAll(
-      'ul.eventChatRoomList li'
-    )
-
-    eventChatRoomList.forEach((value, index) => {
-      value.classList.remove('active')
-    })
-    event.target.classList.add('active')
-  }
-
   //--------------SOCKER客戶端監聽--------------//
   const initWebSocket = () => {
     ws.on('ServerToClientMsgData', ServerToClientMsgData => {
       setChatDataList(ServerToClientMsgData)
       console.log('客戶端已經收到SOCKET.IO的訊息', ServerToClientMsgData)
+      autoScrollButtom()
     })
 
     // ws.on('ServerToClientMsgData', ServerToClientMsgData => {
@@ -65,6 +58,7 @@ function UserMessage(props) {
       console.log('客戶端已經收到加入房間的響應訊息')
       setChatDataList(ServerToClientMsgData)
       console.log('客戶端已經將訊息設定到本地state')
+      autoScrollButtom()
     })
 
     ws.on('ServerToClientWarning', message => {
@@ -108,6 +102,7 @@ function UserMessage(props) {
         roomId,
         message,
         memberId,
+        loginId,
       }
       ws.emit('ClientToServerMsg', sendMessageRequest)
       document.querySelector('input.messageInput').value = ''
@@ -137,9 +132,36 @@ function UserMessage(props) {
   }
   //--------------SOCKER事件-------------------//
 
+  //----------------自訂事件--------------------//
+
+  //點擊聊天列表就加上active效果
+  const handleListActive = event => {
+    const eventChatRoomList = document.querySelectorAll(
+      'ul.eventChatRoomList li'
+    )
+
+    eventChatRoomList.forEach((value, index) => {
+      value.classList.remove('active')
+    })
+    event.target.classList.add('active')
+  }
+
+  //取得聊天室列表
   const handleChangeChatList = value => {
     props.memberGetChatListAsync(value)
   }
+
+  //自動滾動到聊天區域最底下，讓最新訊息顯示出來
+  const autoScrollButtom = () => {
+    const msgArea = document.querySelector('div.msgArea')
+    const shouldScroll =
+      msgArea.scrollTop + msgArea.clientHeight === msgArea.scrollHeight
+
+    if (!shouldScroll) {
+      msgArea.scrollTop = msgArea.scrollHeight
+    }
+  }
+  //----------------自訂事件--------------------//
 
   return (
     <div className="row messageContent">
@@ -192,11 +214,13 @@ function UserMessage(props) {
                 if (value.memberId === memberId) {
                   return (
                     <>
-                      <div class="d-flex justify-content-end align-items-center">
+                      <div class="msgBox d-flex justify-content-end align-items-center">
                         <span className="msgTime">
-                          {moment(value.created_at).format('hh:mm') + ' '}　
+                          {moment(value.created_at).format('hh:mm')}
                         </span>
-                        <p class="msgFromOther m-0">{value.message}</p>
+                        <div className="mymessage">
+                          <p class="msgFromMySelf m-0">{value.message}</p>
+                        </div>
                         <span>：</span>
                         <figure class="memberAvatar m-0">
                           <img
@@ -210,7 +234,7 @@ function UserMessage(props) {
                 } else {
                   return (
                     <>
-                      <div class="d-flex align-items-center">
+                      <div class="msgBox d-flex align-items-center">
                         <figure class="memberAvatar m-0">
                           <img
                             src="http://127.0.0.1:5000/images/memberImg/DefaultImage.jpg"
@@ -218,9 +242,14 @@ function UserMessage(props) {
                           />
                         </figure>
                         <span>：</span>
-                        <p class="msgFromOther m-0">{value.message}</p>
+                        <div>
+                          <p className="otherName">{value.loginId}</p>
+                          <div className="othermessage">
+                            <p class="msgFromMySelf m-0">{value.message}</p>
+                          </div>
+                        </div>
                         <span className="msgTime">
-                          {'　' + moment(value.created_at).format('hh:mm')}
+                          {moment(value.created_at).format('hh:mm')}
                         </span>
                       </div>
                     </>
@@ -231,7 +260,7 @@ function UserMessage(props) {
           <div className="startChat">
             <img
               className="startChatImg"
-              src="../images/logo/aquaLogo.png"
+              src="../images/logo/aquaLogoBig.png"
               alt=""
             />
             <p className="startChatMsg">選擇一個聊天室，開始聊天吧!</p>
