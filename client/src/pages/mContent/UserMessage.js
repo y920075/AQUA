@@ -260,7 +260,7 @@ function UserMessage(props) {
           <div className="startChat">
             <img
               className="startChatImg"
-              src="../images/logo/aquaLogo.png"
+              src="../images/logo/aquaLogoBig.png"
               alt=""
             />
             <p className="startChatMsg">選擇一個聊天室，開始聊天吧!</p>
