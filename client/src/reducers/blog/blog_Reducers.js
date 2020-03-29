@@ -30,11 +30,22 @@ const contentCommentsData = (state = {}, action) => {
   }
 }
 
+//新增文章
+const contentData = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_CONTENTDATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
 
 //合併多個reducer(歸納函式)，為了配合瀏覽器開發外掛而必須的
 const blogReducer = combineReducers({
   blogData,
   blogCommentsData,
   contentCommentsData,
+  contentData,
 })
 export { blogReducer }
