@@ -1,5 +1,6 @@
 .messageContent {
-  height: 100%;
+  margin-bottom: 50px;
+  height: 594px;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -71,7 +72,7 @@
       position: relative;
       .startChat {
         position: absolute;
-        top: 50%;
+        top: 62%;
         left: 50%;
         transform: translate(-50%, -50%);
         p {
@@ -92,22 +93,9 @@
       }
       .msgBox {
         margin-top: 10px;
-        .mymessage {
-          padding: 5px 10px;
-          background-color: #e2e4e8;
-          border-radius: 10px;
-          margin-left: 5px;
-        }
-        .otherName{
+        .otherName {
           margin: 0;
           font-size: 12px;
-        }
-        .othermessage {
-          padding: 5px 10px;
-          background-color: #4e5f76;
-          border-radius: 10px;
-          color: #e2e4e8;
-          margin-right: 5px;
         }
         .msgTime {
           font-size: 12px;
@@ -122,5 +110,51 @@
         color: #3f51b5;
       }
     }
+  }
+  .mymessage {
+    padding: 5px 10px;
+    margin: 0px 15px 0 10px;
+    position: relative;
+    background: #fff;
+    border-radius: 0.4em;
+  }
+
+  .mymessage:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 11px solid transparent;
+    border-left-color: #fff;
+    border-right: 0;
+    border-bottom: 0;
+    margin-top: -5.5px;
+    margin-right: -11px;
+  }
+
+  .othermessage {
+    position: relative;
+    background: #4e5f76;
+    border-radius: 0.4em;
+    padding: 5px 10px;
+    margin: 0px 10px 0 15px;
+    color: #e2e4e8;
+  }
+
+  .othermessage:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 11px solid transparent;
+    border-right-color: #4e5f76;
+    border-left: 0;
+    border-top: 0;
+    margin-top: -5.5px;
+    margin-left: -11px;
   }
 }

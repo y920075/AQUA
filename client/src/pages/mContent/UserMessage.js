@@ -21,6 +21,7 @@ function UserMessage(props) {
   useEffect(() => {
     setWs(io('http://localhost:5555'))
     props.memberGetChatListAsync()
+    require('../../style/JY-message.css')
   }, [])
 
   //連線成功就開始監聽socket事件
@@ -216,12 +217,11 @@ function UserMessage(props) {
                     <>
                       <div class="msgBox d-flex justify-content-end align-items-center">
                         <span className="msgTime">
-                          {moment(value.created_at).format('hh:mm')}
+                          {moment(value.created_at).format('HH:mm')}
                         </span>
                         <div className="mymessage">
                           <p class="msgFromMySelf m-0">{value.message}</p>
                         </div>
-                        <span>：</span>
                         <figure class="memberAvatar m-0">
                           <img
                             src="http://127.0.0.1:5000/images/memberImg/DefaultImage.jpg"
@@ -241,7 +241,6 @@ function UserMessage(props) {
                             alt=""
                           />
                         </figure>
-                        <span>：</span>
                         <div>
                           <p className="otherName">{value.loginId}</p>
                           <div className="othermessage">
@@ -249,7 +248,7 @@ function UserMessage(props) {
                           </div>
                         </div>
                         <span className="msgTime">
-                          {moment(value.created_at).format('hh:mm')}
+                          {moment(value.created_at).format('HH:mm')}
                         </span>
                       </div>
                     </>
@@ -258,11 +257,11 @@ function UserMessage(props) {
               })
             : ''}
           <div className="startChat">
-            <img
+            {/* <img
               className="startChatImg"
               src="../images/logo/aquaLogoBig.png"
               alt=""
-            />
+            /> */}
             <p className="startChatMsg">選擇一個聊天室，開始聊天吧!</p>
           </div>
         </div>
