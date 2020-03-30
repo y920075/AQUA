@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import Header from '../../components/Header'
-import Background from '../members/Background'
+// import Background from '../members/Background'
+// import registerimg from '../members/ClassBanner.jpg'
 import '../../style/HS.scss'
 
 
@@ -83,67 +84,71 @@ function MemberRegister(props) {
     }
 
     return <>
-        <Header />
-        <Background />
-        {/* <!-- register card --> */}
-        <div className="container hsregister">
+        <div className="entirepage-hs">
+            <Header />
+            {/* <Background /> */}
 
-            <div className="registercard-hs row d-flex align-items-center">
-                <div className="card col-md-6 mx-auto">
-                    {/* <!-- Default form register --> */}
-                    <form className="rgform text-center p-4" action="">
+            {/* <img src={registerimg}></img> */}
+            {/* <!-- register card --> */}
+            <div className="container hsregister">
 
-                        <p className="h4 mb-4">註冊</p>
+                <div className="registercard-hs row d-flex align-items-center">
+                    <div className="card col-md-6 mx-auto">
+                        {/* <!-- Default form register --> */}
+                        <form className="rgform text-center p-4" action="">
 
-                        {/* <!-- Full Name --> */}
-                        <input type="text" name="name" id="" className="form-control mb-4" placeholder="Name" onChange={e => setName(e.target.value)} />
+                            <p className="h4 mb-4">註冊</p>
 
-                        {/* <!-- E-mail --> */}
-                        <input type="email" id="" className="form-control mb-4" placeholder="E-mail" onChange={e => setEmail(e.target.value)} />
+                            {/* <!-- Full Name --> */}
+                            <input type="text" name="name" id="" className="form-control mb-4" placeholder="Name" onChange={e => setName(e.target.value)} />
 
-                        {/* Login Id */}
-                        <input type="text" name="username" id="" className="form-control mb-4" placeholder="Login ID" onChange={e => setUsername(e.target.value)} />
+                            {/* <!-- E-mail --> */}
+                            <input type="email" id="" className="form-control mb-4" placeholder="E-mail" onChange={e => setEmail(e.target.value)} />
 
-                        {/* <!-- Password --> */}
-                        <input type="password" name="password1" id="" className="form-control" placeholder="Password"
-                            aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword1(e.target.value)} />
-                        <small id="defaultRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
-                            At least 8 characters and 1 digit
+                            {/* Login Id */}
+                            <input type="text" name="username" id="" className="form-control mb-4" placeholder="Login ID" onChange={e => setUsername(e.target.value)} />
+
+                            {/* <!-- Password --> */}
+                            <input type="password" name="password1" id="" className="form-control" placeholder="Password"
+                                aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword1(e.target.value)} />
+                            <small id="defaultRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
+                                At least 8 characters and 1 digit
                         </small>
 
-                        {/* <!-- Re-enter password --> */}
-                        <input type="password" name="password2" id="" className="form-control" placeholder="Re-Enter Password"
-                            aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword2(e.target.value)} />
-                        <small id="" className="form-text text-muted mb-4">
-                            At least 8 characters and 1 digit
+                            {/* <!-- Re-enter password --> */}
+                            <input type="password" name="password2" id="" className="form-control" placeholder="Re-Enter Password"
+                                aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword2(e.target.value)} />
+                            <small id="" className="form-text text-muted mb-4">
+                                At least 8 characters and 1 digit
                         </small>
 
-                        {/* <!-- Phone number --> */}
-                        {/* <input type="text" id="" className="form-control" placeholder="Phone number"
+                            {/* <!-- Phone number --> */}
+                            {/* <input type="text" id="" className="form-control" placeholder="Phone number"
                             aria-describedby="defaultRegisterFormPhoneHelpBlock" onChange={e => setMobile(e.target.value)} /> */}
 
-                        {/* <!-- Sign up button --> */}
-                        <button className="btn btn-info my-4 btn-block" type="button" onClick={() => handleSubmit()}>立即註冊!</button>
+                            {/* <!-- Sign up button --> */}
+                            <button className="btn btn-info my-4 btn-block" type="button" onClick={() => handleSubmit()}>立即註冊!</button>
 
-                        {/* <!-- Social register --> */}
-                        <p>其他登入方式:</p>
+                            {/* <!-- Social register --> */}
+                            <p>其他登入方式:</p>
 
-                        <a href="#" className="otherlogin mx-2" role="button"><i className="otherlogin fab fa-facebook-f light-blue-text"></i></a>
-                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-twitter light-blue-text"></i></a>
-                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-linkedin-in light-blue-text"></i></a>
-                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-github light-blue-text"></i></a>
-                        <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-google light-blue-text"></i></a>
+                            <a href="#" className="otherlogin mx-2" role="button"><i className="otherlogin fab fa-facebook-f light-blue-text"></i></a>
+                            <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-twitter light-blue-text"></i></a>
+                            <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-linkedin-in light-blue-text"></i></a>
+                            <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-github light-blue-text"></i></a>
+                            <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-google light-blue-text"></i></a>
 
 
-                        <hr />
+                            <hr />
 
-                        {/* <!-- Terms of service --> */}
-                        <p>點擊
+                            {/* <!-- Terms of service --> */}
+                            <p>點擊
                             <em>立即註冊！</em> 即表示您同意我們的服務條款
                             <a className="agreementlink" href="" target="_blank">服務條款</a>
-                        </p>
-                    </form>
-                    {/* <!-- Default form register --> */}
+                            </p>
+                        </form>
+                        {/* <!-- Default form register --> */}
+                    </div>
                 </div>
             </div>
         </div>

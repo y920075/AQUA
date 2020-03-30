@@ -10,7 +10,7 @@ const db = mysql.createConnection({
   database: config.mysql.database,
   multipleStatements: true,
   dateStrings:true,
-  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
+  // socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
 
 });
 
