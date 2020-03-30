@@ -10,7 +10,8 @@ import categoryData from './category'
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import BlogRside from '../../components/blog/BlogRside'
-import { Link } from 'react-router-dom'
+import ScrollToTop from '../../components/blog/ScrollToTop'
+import { Link, withRouter } from 'react-router-dom'
 import '../../style/Blog.scss'
 import _ from 'lodash'
 import RcViewer from '@hanyk/rc-viewer'
@@ -247,4 +248,4 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ getBlogDataAsync }, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Blog)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Blog))

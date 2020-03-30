@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect,
+} from 'react-router-dom'
 import Swal from 'sweetalert2'
 import Header from '../../components/Header'
 import '../../style/HS.scss'
-
-
 
 function MemberRegister(props) {
   //set background img
@@ -12,7 +16,7 @@ function MemberRegister(props) {
   //     require('../../style/bg.css')
   // }, []);
 
-  //Register function 
+  //Register function
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
@@ -30,7 +34,7 @@ function MemberRegister(props) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: '兩次密碼不同!'
+        text: '兩次密碼不同!',
       })
     }
 
@@ -40,15 +44,11 @@ function MemberRegister(props) {
     const password = password1
     const userData = { name, email, username, password }
     sendRegisterDataToServer(userData, () => {
-      Swal.fire(
-        '註冊成功!',
-        'Redirect in 3 seconds...!',
-        'success'
-      )
-      setTimeout(function () {
+      Swal.fire('註冊成功!', 'Redirect in 3 seconds...!', 'success')
+      setTimeout(function() {
         window.location.href = './memberlogin'
-      }, 3000);
-    });
+      }, 3000)
+    })
   }
 
   async function sendRegisterDataToServer(userData, callback) {
@@ -58,8 +58,6 @@ function MemberRegister(props) {
     fd.append('loginId', userData.username)
     fd.append('loginPwd', userData.password)
     // fd.append('mobileNumber', userData.number)
-
-
 
     const request = new Request('http://localhost:5000/members/register', {
       method: 'POST',
@@ -76,76 +74,130 @@ function MemberRegister(props) {
     const data = await response.json()
     console.log(data)
     callback()
-
   }
 
-  return <>
-    <div className="entirepage-hs">
-      <Header />
-      {/* <!-- register card --> */}
-      <div className="container hsregister">
-        <div className="registercard-hs row d-flex align-items-center">
-          <div className="card col-md-6 mx-auto">
-            {/* <!-- Default form register --> */}
-            <form className="text-center p-4" action="">
+  return (
+    <>
+      <div className="entirepage-hs">
+        <Header />
+        {/* <!-- register card --> */}
+        <div className="container hsregister">
+          <div className="registercard-hs row d-flex align-items-center">
+            <div className="card col-md-6 mx-auto">
+              {/* <!-- Default form register --> */}
+              <form className="text-center p-4" action="">
+                <p className="h4 mb-4">註冊</p>
 
-              <p className="h4 mb-4">註冊</p>
+                {/* <!-- Full Name --> */}
+                <input
+                  type="text"
+                  name="name"
+                  id=""
+                  className="form-control mb-4"
+                  placeholder="Name"
+                  onChange={e => setName(e.target.value)}
+                />
 
-              {/* <!-- Full Name --> */}
-              <input type="text" name="name" id="" className="form-control mb-4" placeholder="Name" onChange={e => setName(e.target.value)} />
+                {/* <!-- E-mail --> */}
+                <input
+                  type="email"
+                  id=""
+                  className="form-control mb-4"
+                  placeholder="E-mail"
+                  onChange={e => setEmail(e.target.value)}
+                />
 
-              {/* <!-- E-mail --> */}
-              <input type="email" id="" className="form-control mb-4" placeholder="E-mail" onChange={e => setEmail(e.target.value)} />
+                {/* Login Id */}
+                <input
+                  type="text"
+                  name="username"
+                  id=""
+                  className="form-control mb-4"
+                  placeholder="Login ID"
+                  onChange={e => setUsername(e.target.value)}
+                />
 
-              {/* Login Id */}
-              <input type="text" name="username" id="" className="form-control mb-4" placeholder="Login ID" onChange={e => setUsername(e.target.value)} />
+                {/* <!-- Password --> */}
+                <input
+                  type="password"
+                  name="password1"
+                  id=""
+                  className="form-control"
+                  placeholder="Password"
+                  aria-describedby="defaultRegisterFormPasswordHelpBlock"
+                  onChange={e => setPassword1(e.target.value)}
+                />
+                <small
+                  id="defaultRegisterFormPasswordHelpBlock"
+                  className="form-text text-muted mb-4"
+                >
+                  At least 8 characters and 1 digit
+                </small>
 
-              {/* <!-- Password --> */}
-              <input type="password" name="password1" id="" className="form-control" placeholder="Password"
-                aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword1(e.target.value)} />
-              <small id="defaultRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
-                At least 8 characters and 1 digit
-                        </small>
+                {/* <!-- Re-enter password --> */}
+                <input
+                  type="password"
+                  name="password2"
+                  id=""
+                  className="form-control"
+                  placeholder="Re-Enter Password"
+                  aria-describedby="defaultRegisterFormPasswordHelpBlock"
+                  onChange={e => setPassword2(e.target.value)}
+                />
+                <small id="" className="form-text text-muted mb-4">
+                  At least 8 characters and 1 digit
+                </small>
 
-              {/* <!-- Re-enter password --> */}
-              <input type="password" name="password2" id="" className="form-control" placeholder="Re-Enter Password"
-                aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword2(e.target.value)} />
-              <small id="" className="form-text text-muted mb-4">
-                At least 8 characters and 1 digit
-                        </small>
-
-              {/* <!-- Phone number --> */}
-              {/* <input type="text" id="" className="form-control" placeholder="Phone number"
+                {/* <!-- Phone number --> */}
+                {/* <input type="text" id="" className="form-control" placeholder="Phone number"
                             aria-describedby="defaultRegisterFormPhoneHelpBlock" onChange={e => setMobile(e.target.value)} /> */}
 
-              {/* <!-- Sign up button --> */}
-              <button className="btn btn-info my-4 btn-block" type="button" onClick={() => handleSubmit()}>立即註冊!</button>
+                {/* <!-- Sign up button --> */}
+                <button
+                  className="btn btn-info my-4 btn-block"
+                  type="button"
+                  onClick={() => handleSubmit()}
+                >
+                  立即註冊!
+                </button>
 
-              {/* <!-- Social register --> */}
-              <p>其他登入方式:</p>
+                {/* <!-- Social register --> */}
+                <p>其他登入方式:</p>
 
-              <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-facebook-f light-blue-text"></i></a>
-              <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-twitter light-blue-text"></i></a>
-              <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-linkedin-in light-blue-text"></i></a>
-              <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-github light-blue-text"></i></a>
-              <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-google light-blue-text"></i></a>
+                <a href="#" className="mx-2 otherlogin" role="button">
+                  <i className="otherlogin fab fa-facebook-f light-blue-text"></i>
+                </a>
+                <a href="#" className="mx-2 otherlogin" role="button">
+                  <i className="otherlogin fab fa-twitter light-blue-text"></i>
+                </a>
+                <a href="#" className="mx-2 otherlogin" role="button">
+                  <i className="otherlogin fab fa-linkedin-in light-blue-text"></i>
+                </a>
+                <a href="#" className="mx-2 otherlogin" role="button">
+                  <i className="otherlogin fab fa-github light-blue-text"></i>
+                </a>
+                <a href="#" className="mx-2 otherlogin" role="button">
+                  <i className="otherlogin fab fa-google light-blue-text"></i>
+                </a>
 
+                <hr />
 
-              <hr />
-
-              {/* <!-- Terms of service --> */}
-              <p>點擊
-                            <em>立即註冊！</em> 即表示您同意我們的服務條款
-                            <a className="servicelink" href="" target="_blank">服務條款</a>
-              </p>
-            </form>
-            {/* <!-- Default form register --> */}
+                {/* <!-- Terms of service --> */}
+                <p>
+                  點擊
+                  <em>立即註冊！</em> 即表示您同意我們的服務條款
+                  <a className="servicelink" href="" target="_blank">
+                    服務條款
+                  </a>
+                </p>
+              </form>
+              {/* <!-- Default form register --> */}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </>
+    </>
+  )
 }
-
 
 export default MemberRegister

@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import Cookie from 'js-cookie'
 
 function Header(props) {
+<<<<<<< HEAD
+  //console.log(props)
+=======
   // console.log(props)
+>>>>>>> 33c533e40d89928ee7d9cdcf2ab32ad5330277b5
   const { handleDelete } = props
   const [showCart, setShowCart] = useState(false)
+  const [reload, setReload] = useState(false)
   const [count, setCount] = useState(0)
   const [mycart, setMycart] = useState([])
   const [mycartDisplay, setMycartDisplay] = useState([])
@@ -48,6 +54,18 @@ function Header(props) {
     getCartFromLocalStorage()
   }, [])
 
+  // useEffect(() => {
+  //   getCartFromLocalStorage()
+  //   setReload(false)
+  // }, [reload])
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setReload(true)
+  //     console.log(reload)
+  //   }, 1000)
+  // }, [])
+
   useEffect(() => {
     setTimeout(() => {
       setHasLoading(false)
@@ -59,7 +77,7 @@ function Header(props) {
           value => value.id === mycart[i].id
         )
         if (index !== -1) {
-          console.log('findindex', index)
+          //console.log('findindex', index)
           newMycartDisplay[index].amount++
         } else {
           const newItem = { amount: 1, ...mycart[i] }
@@ -207,14 +225,25 @@ function Header(props) {
 
             {/* member Login */}
             <div className="collapse navbar-collapse" id="navbarMember">
-              <Link to="/memberlogin">
-                <button type="button" className="btn btn-outline-light btn-sm">
-                  Login
+              {!Cookie.get('token') ? (
+                <Link to="/memberlogin">
+                  <button
+                    type="button"
+                    className="btn btn-outline-light btn-sm"
+                  >
+                    Login
+                  </button>
+                </Link>
+              ) : (
+                <button type="button" className="btn btn-light btn-sm">
+                  <i class="fas fa-door-open" style={{ fontSize: '20px' }}></i>
+                  {/* <i class="fas fa-sign-out-alt" style={{fontSize:'20px'}}></i> */}
                 </button>
-              </Link>
-              <div className="avatar" onClick={showMenu}>
+              )}
+
+              {/* <div className="avatar" onClick={showMenu}>
                 <img />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
