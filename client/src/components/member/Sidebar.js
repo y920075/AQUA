@@ -1,18 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import '../../style/HS.scss'
-
+// import kkk from '../../../public/images/member/nemp.jpg'
 function Sidebar(props) {
   return (
     <>
       {/* Sidebar */}
       <div>
-        <img
+        {/* <img
           className="rounded-circle avatar mb-5"
           src={'http://127.0.0.1:5000/images/memberImg/' + props.SidebarImgSrc}
           alt=""
-        ></img>
+        ></img> */}
       </div>
+      {/* <img className="rounded-circle avatar mb-5" src="../../../public/images/member/nemp.jpg" alt=""></img> */}
+      <img className="rounded-circle avatar mb-5" src="../" alt=""></img>
+
       <ul className="nav flex-column hssidebar" style={{ width: '150px' }}>
         <li className="nav-item">
           <Link className="nav-link sidebarlink-hs" to="/memberuser/homepage">
