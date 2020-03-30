@@ -64,8 +64,6 @@ export class Comment extends React.Component {
         title: '確定送出?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
         confirmButtonText: '送出',
         cancelButtonText: '取消',
       }).then(result => {
