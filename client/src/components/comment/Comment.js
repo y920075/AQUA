@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import '../../style/Comment.scss'
 import { withRouter } from 'react-router-dom'
-import SweetAlert from '../class/SellerClassComponents/Sweetalert2'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -71,13 +70,9 @@ export class Comment extends React.Component {
         cancelButtonText: '取消',
       }).then(result => {
         if (result.value) {
-          MySwal.fire('Deleted!', 'Your file has been deleted.', 'success')
-          this.setState({
-            pageid: currentparams,
-            memberid: 'M20010002',
-            membername: 'Anna Tulius',
-          })
+          MySwal.fire('送出成功!', '已成功送出評論', 'success')
           this.props.Submmitlocationcomment(sentcommentdata)
+          this.props.fetchLocationcomment()
         }
       })
     }
@@ -90,10 +85,7 @@ export class Comment extends React.Component {
               <div className="comments">
                 <div className="d-flex">
                   <Link to="">
-                    <img
-                      src="/images/divelocation/portrait_technique_0014.jpg"
-                      alt=""
-                    />
+                    <img src="/images/member/nemo.jpg" alt="" />
                   </Link>
                   <div>
                     <div className="d-flex sign align-items-end">
