@@ -5,11 +5,7 @@ import 'aos/dist/aos.css'
 import Cookie from 'js-cookie'
 
 function Header(props) {
-<<<<<<< HEAD
   //console.log(props)
-=======
-  // console.log(props)
->>>>>>> 33c533e40d89928ee7d9cdcf2ab32ad5330277b5
   const { handleDelete } = props
   const [showCart, setShowCart] = useState(false)
   const [reload, setReload] = useState(false)
