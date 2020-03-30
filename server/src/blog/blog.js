@@ -26,7 +26,7 @@ router.get('/blog/', (req, res)=>{
     let totalRows, totalPages
     let page = req.query.page ? parseInt(req.query.page) : 1
     data.page = page
-    const t_sql = "SELECT COUNT(1) num FROM `blog`";
+    const t_sql = "SELECT * FROM \`blog\`";
     db.queryAsync(t_sql)
         .then(result=>{
             totalRows = result[0].num; //總筆數
@@ -58,8 +58,8 @@ router.get('/blog/', (req, res)=>{
 
 .then(result=> {
     data.result = result
-    const newpostsql = `SELECT * FROM \`blog\` ORDER BY id DESC LIMIT ${(page-1)*perPage}, ${perPage}`;
-    
+    const newpostsql = `SELECT \`blog\`.\`menberId\`,\`blog\`.\`id\`,\`blog\`.\`blogId\`,\`blog\`.\`blogTitle\`,\`blog\`.\`categoryName\`,\`blog\`.\`blogContent\`,\`blog\`.\`tagName1\`,\`blog\`.\`tagName2\`,\`blog\`.\`blogImages\`,\`blog\`.\`blogLike\`,\`my_member\`.\`memberId\`,\`my_member\`.\`avatar\` FROM \`blog\` LEFT JOIN \`my_member\` ON \`blog\`.\`menberId\` = \`my_member\`.\`memberId\` ORDER BY \`blog\`.\`id\` DESC`;
+    // `SELECT  FROM \`blog\` ORDER BY id DESC LIMIT ${(page-1)*perPage}, ${perPage}`
     return db.queryAsync(newpostsql);
     
 })
@@ -112,7 +112,7 @@ router.get('/blog/comments', (_req, res)=>{
 
 //新增評論資料
 router.post('/blog/addComments', upload.none(), (req, res)=>{
-    // console.log(req.body)
+    console.log(req.body)
     // res.json(req.body)
     // 先檢查輸入
     const comments = {
@@ -123,10 +123,11 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
         // commentsData: ""
     };
 
-    const sql ='INSERT INTO \`blog_comments\` (\`content\`) VALUES (?)'
+    const sql ='INSERT INTO \`blog_comments\` (\`content\`, \`blogId\`) VALUES (?, ?)'
 
     db.queryAsync(sql, [
-        req.body.content   //content
+        req.body.content,   //content
+        req.body.sendId   
         ])
 
     .then(r=>{
@@ -148,6 +149,7 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
 //新增文章
 router.post('/add', upload.single('addImg'), (req, res)=>{
     // console.log(req.body)
+    req.session.menberId = "M20030099"
 
     const output ={
         success: false,
@@ -157,7 +159,7 @@ router.post('/add', upload.single('addImg'), (req, res)=>{
     }
 
 
-    const sql = `INSERT INTO \`blog\`( \`blogTitle\`,\`categoryName\`, \`blogContent\`, \`tagName1\`,\`tagName2\`, \`blogImages\`) VALUES(?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO \`blog\`( \`menberId\`, \`blogTitle\`,\`categoryName\`, \`blogContent\`, \`tagName1\`,\`tagName2\`, \`blogImages\`) VALUES(?, ?, ?, ?, ?, ?, ?)`;
 
 
     if(req.file && req.file.originalname){
@@ -187,6 +189,7 @@ router.post('/add', upload.single('addImg'), (req, res)=>{
     }
 
     db.queryAsync(sql , [
+        req.session.menberId,
         req.body.blogTitle,
         req.body.categoryName,
         req.body.blogContent,
