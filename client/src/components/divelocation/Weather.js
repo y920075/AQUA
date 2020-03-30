@@ -9,7 +9,6 @@ import {
   fetchWeeklyreport,
   fetchgetTidereport,
 } from '../../actions/location/Location_Action'
-
 export class Weather extends React.Component {
   componentDidMount() {
     this.props.fetchWeeklyreport()
@@ -107,7 +106,7 @@ export class Weather extends React.Component {
                 {currentweekweather.map((value, index) => {
                   return (
                     <tr>
-                      <td>{value.Date}</td>
+                      <td className="weekweatherdate">{value.Date}</td>
                       <td className="WeatherDescription">
                         {value.WeatherDescription}
                       </td>
