@@ -10,6 +10,7 @@ import { getItemDetailDataAsync } from '../../actions/item/item_Actions'
 //引入元件
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
+import Footer from '../../components/Footer'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ItemDetail(props) {
@@ -151,6 +152,7 @@ function ItemDetail(props) {
           ''
         )}
       </div>
+      <Footer />
     </>
   )
 }

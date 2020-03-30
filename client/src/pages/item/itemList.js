@@ -16,6 +16,7 @@ import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Aside from '../../components/item/Aside'
 import Pages from '../../components/item/Pages'
+import Footer from '../../components/Footer'
 // import Loading from '../../components'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 import ItemCard from '../../components/item/ItemCard'
@@ -121,6 +122,7 @@ function Items(props) {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }
