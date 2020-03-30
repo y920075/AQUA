@@ -37,7 +37,7 @@ function ClassDetailDataContent(props) {
         <>
           <h1>{props.classData.className}</h1>
           <div className="row d-flex classDataBox">
-            <div className="col-xl-5 classImgBox">
+            <div className="col-xl-6 classImgBox">
               <img
                 src={`http://127.0.0.1:5000/images/classImg/${props.classData.classImg}`}
                 alt=""
