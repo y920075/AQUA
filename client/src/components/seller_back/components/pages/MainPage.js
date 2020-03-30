@@ -10,16 +10,25 @@ export default class MainPage extends Component {
         labels: ['3/25', '3/26', '3/27', '3/28', '3/29'],
         datasets: [
           {
-            label: 'Member1',
+            label: 'harrison',
+            fill: false,
             backgroundColor: 'rgba(19, 41 ,72, 0.25)',
-            data: [12, 15, 747, 123, 2, 3],
+            data: [50, 55, 90, 123, 45, 10],
             borderColor: 'rgb(255, 99, 132)',
           },
           {
-            label: 'Member2',
+            label: 'Garry',
+            fill: false,
             backgroundColor: 'rgba(241, 90 ,36, 1)',
-            data: [12, 15, 77, 13, 2, 3],
+            data: [78, 80, 85, 75, 82, 80],
             borderColor: 'rgb(255, 99, 132)',
+          },
+          {
+            label: 'Ivy',
+            fill: false,
+            backgroundColor: 'rgba(241, 90 ,36, 1)',
+            data: [40, 59, 1, 33, 22, 45],
+            borderColor: 'rgb(0, 99, 132)',
           },
         ],
         maintainAspectRatio: false,
@@ -133,13 +142,14 @@ export default class MainPage extends Component {
           </section>
         </div>
         <div className="row">
-          <div className="col-sm-12">
+          <div className="col-sm-6">
+            <h2 className="text-center">購買率前三名顧客</h2>
             <Line
               options={{
                 responsive: true,
               }}
               data={this.state.data}
-              height={100}
+              height={300}
               width={500}
             />
             <Chart />

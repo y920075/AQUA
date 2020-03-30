@@ -4,6 +4,7 @@ import SwitchPercent from './SwitchPercent'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import Swal from 'sweetalert2'
 
 import { insertSellerNewInsertCouponAsync } from '../../../../actions/seller'
 import { cateData } from './itemType'
@@ -87,51 +88,61 @@ function CupItem(props) {
   }, [price.isEnable, minusorpercent.isEnable])
 
   const handleSubmit = e => {
-    let error = false
-    let errorMessages = []
+    // let error = false
+    // let errorMessages = []
 
     // const form = event.target;
     // const coup_data = new FormData(form);
 
     if (!coup_name) {
-      error = true
-      errorMessages.push('優惠名稱沒填')
-    }
-    if (!coupfile) {
-      error = true
-      errorMessages.push('優惠圖片沒上傳')
-    }
-    if (!coupOver) {
-      error = true
-      errorMessages.push('超過模式沒填')
-    }
-    if (!coupPercent) {
-      error = true
-      errorMessages.push('折扣模式沒填')
-    }
-    if (!coupStart) {
-      error = true
-      errorMessages.push('折扣模式沒填')
-    }
-    if (!coupStart) {
-      error = true
-      errorMessages.push('開始時間沒填')
-    }
-    if (!coupEnd) {
-      error = true
-      errorMessages.push('結束時間沒填')
-    }
-    if (coup_name.length < 25) {
-      error = true
-      errorMessages.push('優惠名稱不超過25個字')
-    }
-    if (coup_name.length > 5) {
-      error = true
-      errorMessages.push('優惠名稱需要超過5個字')
-    }
-    if (!coupTimes) {
-      error = true
-      errorMessages.push('優惠券使用次數沒填')
+      Swal.fire({
+        // title: 'Error!',
+        text: '優惠名欄位是空的喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+      })
+    } else if (!coupfile) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '優惠圖片沒上傳喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+      })
+    } else if (!coupOver) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '超過模式沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+      })
+    } else if (!coupPercent) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '折扣模式沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+      })
+    } else if (!coupStart) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '折扣開始時間沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+      })
+    } else if (!coupEnd) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '折扣結束時間沒填沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+      })
+    } else if (!coupTimes) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '優惠券使用次數沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+      })
     }
 
     const coupData = {
@@ -161,7 +172,35 @@ function CupItem(props) {
     coupon_fd.append('coup_end', coupData.coupEnd)
     coupon_fd.append('coup_times', coupData.coupTimes)
 
-    props.insertSellerNewInsertCouponAsync(coupon_fd, () => alert('成功新增'))
+    props.insertSellerNewInsertCouponAsync(coupon_fd, () => {
+      if (
+        coupData.coup_cate_id !== null &&
+        coupData.coupId !== null &&
+        coupData.coupCode !== null &&
+        coupData.item !== null &&
+        coupData.coup_name !== null &&
+        coupData.coupDataFiles !== null &&
+        coupData.coupOver !== null &&
+        coupData.coupPercent !== null &&
+        coupData.coupStart !== null &&
+        coupData.coupEnd !== null &&
+        coupData.coupTimes !== null
+      ) {
+        Swal.fire({
+          position: 'middle',
+          icon: 'success',
+          title: '新增成功呢！',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '難過的是...',
+          text: '有些錯誤發生,欄位是空的,請再檢查一次哦!',
+        })
+      }
+    })
   }
 
   return (
