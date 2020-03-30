@@ -1,6 +1,10 @@
 import React from 'react'
+import Cookie from 'js-cookie'
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+
+import ProtectedRoute from './utils/ProtectedRoute'
+
 import Divelocation from './pages/divelocation/Divelocation'
 //賣家後台page
 import SellerBack from '../src/components/seller_back/SellerBack'
@@ -19,6 +23,7 @@ import Items from './pages/item/itemList'
 import ItemDetail from './pages/item/itemDetail'
 import ShoppingCart from './pages/order/shoppingCart'
 import CheckOut from './pages/order/checkOut'
+import OrderCreated from './pages/order/orderCreated'
 
 //文章相關
 import Blog from './pages/blog/Blog'
@@ -41,7 +46,7 @@ function App(props) {
     <Router>
       <>
         <Switch>
-        <Route path="/chatchatchat">
+          <Route path="/chatchatchat">
             <Chat />
           </Route>
           <Route path="/blog/:id/edit">
@@ -86,11 +91,14 @@ function App(props) {
           <Route path="/member/checkout">
             <CheckOut />
           </Route>
+          <Route path="/member/created">
+            <OrderCreated />
+          </Route>
 
           {/* Member Routes */}
-          <Route path="/memberuser">
-            <MemberUser />
-          </Route>
+          <ProtectedRoute path="/memberuser">
+            <MemberUser isAuth={!!Cookie.get('token')} />
+          </ProtectedRoute>
           <Route path="/memberlogin">
             <MemberLogin />
           </Route>

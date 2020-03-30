@@ -88,7 +88,10 @@ function ShoppingCart(props) {
           orderData.orderItems = []
           // 購物完清掉 localstorage 購物車
           localStorage.removeItem('cart')
-          window.location.href = '/member/checkout'
+          // window.location.href = '/member/checkout'
+          props.history.push({
+            pathname: '/member/checkout',
+          })
         }
       })
     }
@@ -133,12 +136,6 @@ function ShoppingCart(props) {
   //   console.log(couponChoose)
   // }
   function couponCheck(event) {
-    //選錯優惠券跳錯誤訊息
-    // Swal.fire({
-    //   icon: 'error',
-    //   title: 'Oops...',
-    //   text: '兩次密碼不同!',
-    // })
     if (
       couponChoose.order_coup_name == null &&
       couponChoose.givi_coup_name == null &&
@@ -165,9 +162,20 @@ function ShoppingCart(props) {
       delete couponChoose.order_coup_code
       delete couponChoose.goods_coup_code
     }
+    Swal.fire({
+      // title: 'Error!',
+      text: `確定要設定所選擇的優惠嗎?`,
+      icon: 'warning',
+      confirmButtonText: '確定',
+      showCancelButton: true,
+      cancelButtonText: '取消',
+    }).then(result => {
+      if (result.value) {
+        setCouptInput(couponChoose)
+        setNewCoup(couponChoose)
+      }
+    })
     // console.log(couponChoose)
-    setCouptInput(couponChoose)
-    setNewCoup(couponChoose)
   }
 
   //設定完成傳到後端抓資料
@@ -286,11 +294,13 @@ function ShoppingCart(props) {
     let innerAllAmount = 0
     let ItemTotalPrice = 0
 
+    //只打算做兩種商品的四種折扣,所以是八種 PMI IMI III PII
     if (
       newCoup.hasOwnProperty('goods_coup_name') &&
       newCoup.goods_coup_code.substr(0, 3) == 'III' &&
       newCoup.itemType == '潛水配件'
     ) {
+      //特定商品超過件數打折
       for (let i = 0; i < items.length; i++) {
         if (items[i].itemCategoryId == 'c005') {
           // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
@@ -317,7 +327,42 @@ function ShoppingCart(props) {
         }
         return ItemTotalPrice
       }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'IMI' &&
+      newCoup.itemType == '潛水配件'
+    ) {
+      //以下是超過件數減價
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c005') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c005'
+          })
+          // console.log(x)
+        }
+      }
+      console.log(inneritems)
+      //計算陣列裡面的物件值
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+
+      // console.log(objAmount)
+      if (objAmount >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price - newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
     }
+    // else if(){
+
+    // }
   }
   const coupTableData = props.userCouponData ? (
     Object.keys(props['userCouponData']).map(key => {
@@ -511,7 +556,7 @@ function ShoppingCart(props) {
   return (
     <>
       <Header handleDelete={handleDelete} />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/ShoppingBanner.jpg" />
       <div className="container CW">
         <div className="row CW-shoppingCart">
           <div className="col-12 cart-header">{/* <Breadcrumb /> */}</div>

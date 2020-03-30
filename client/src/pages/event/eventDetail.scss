@@ -48,13 +48,33 @@
   .weatherBox {
     background-color: white;
     border-radius: 0.625rem;
-    padding: 0.625rem;
+    padding: 10px 0;
     margin-bottom: 30px;
-    // width: 995px;
+    overflow: hidden;
+    position: relative;
+    .arrow-left,.arrow-right{
+      display: none;
+      @media screen and (max-width:540px){
+        display: block;
+        position: absolute;
+        z-index: 1;
+        font-size: 30px;
+        height: calc(100%-20px);
+        color: #132948;
+        line-height: 276px;        
+      }
+    }
+    .arrow-right{
+      right: 0px;
+    }
+    .silderBox{
+      padding: 0;
+      transition: .5s;
+      transform: translateX(0px);
+      //範圍 0-650px
+    }
     .weatherInfo {
       display: flex;
-      // padding: 10px;
-      // max-width: 205px;
       flex-direction: column;
       align-items: center;
     }

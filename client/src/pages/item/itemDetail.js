@@ -6,10 +6,12 @@ import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
 
 import { getItemDetailDataAsync } from '../../actions/item/item_Actions'
+import { onClickUpdateAsync } from '../../actions/item/item_Actions'
 
 //引入元件
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
+import Footer from '../../components/Footer'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ItemDetail(props) {
@@ -34,10 +36,17 @@ function ItemDetail(props) {
       localStorage.setItem('cart', JSON.stringify(localCart))
     }
   }
-
+  //紀錄使用者到訪的資料
+  function recordClick() {
+    const clicknum = {
+      clicknum: 1,
+    }
+    props.onClickUpdateAsync(clicknum)
+  }
   useEffect(() => {
     const itemId = props.match.params.itemId
     props.getItemDetailDataAsync(itemId)
+    props.onClickUpdateAsync()
   }, [])
 
   useEffect(() => {
@@ -53,7 +62,7 @@ function ItemDetail(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/ItemBanner.jpg" />
       <div className="container CW">
         {itemData[0] ? (
           <div className="row CW-itemDetail">
@@ -116,6 +125,7 @@ function ItemDetail(props) {
                         price: `${itemData[0].itemPrice}`,
                         itemCategoryId: `${itemData[0].itemCategoryId}`,
                       })
+                      recordClick()
                     }}
                     className="addcart-btn btn btn-lg w-100"
                   >
@@ -151,17 +161,24 @@ function ItemDetail(props) {
           ''
         )}
       </div>
+      <Footer />
     </>
   )
 }
 
 const mapStateToProps = store => {
-  return { itemDetailData: store.itemReducer.itemDetailData }
+  return {
+    itemDetailData: store.itemReducer.itemDetailData,
+    clickUpdateData: store.itemReducer.clickUpdateData,
+  }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getItemDetailDataAsync }, dispatch)
+  return bindActionCreators(
+    { getItemDetailDataAsync, onClickUpdateAsync },
+    dispatch
+  )
 }
 
 export default withRouter(

@@ -1,7 +1,12 @@
 .footbody {
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   background-color: #31445f;
+  padding: 20px;
+  margin: 0;
+}
+.footlink{
+  margin-top: 10px;
 }
 .aqualogo {
   width: 100px;
@@ -14,4 +19,5 @@
 }
 .footbody p {
   color: white;
+  margin-top: 10px;
 }

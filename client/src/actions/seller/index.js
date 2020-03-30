@@ -493,6 +493,32 @@ export const getNowCoupDataAsync = (getCoupData, callback) => {
   }
 }
 
+//抓點擊次數
+export const getUserClickData = data => ({
+  type: 'GET_USER_CLICK',
+  value: data,
+})
+export const getUserClickDataAsync = (getCoupData, callback) => {
+  return async dispatch => {
+    const request = new Request(
+      `http://localhost:5000/seller/customermanager/user-click-data`,
+
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(getUserClickData(data))
+  }
+}
 //----------------------賣家中心課程相關action----------------
 
 //取得賣家自己的課程資料

@@ -45,10 +45,11 @@ router.post('/sentlocationcomment',upload.none(),(req,res)=>{
     let sqlStmt = [
         commentid,
         req.body.pageid,
-        req.body.memberID,
+        req.body.memberid,
         req.body.membername,
         req.body.commentitself,
     ]
+    console.log(sqlStmt)
     db.queryAsync(sql , sqlStmt)
 })
 module.exports = router;
