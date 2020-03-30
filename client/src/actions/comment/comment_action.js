@@ -47,15 +47,15 @@ export const Sentlocationcomment = data => ({
   value: data,
 })
 
-export const Submmitlocationcomment = sentcommentdata => {
-  console.log(sentcommentdata)
+export const Submmitlocationcomment = formData => {
+  console.log(formData)
   return async dispatch => {
     const fd = new FormData()
-    fd.append('pageid', sentcommentdata.pageid)
-    fd.append('memberID', sentcommentdata.memberid)
-    fd.append('membername', sentcommentdata.membername)
-    fd.append('commentitdelf', sentcommentdata.commentitdelf)
-
+    fd.append('pageid', formData.pageid)
+    fd.append('memberid', formData.memberid)
+    fd.append('membername', formData.membername)
+    fd.append('commentitself', formData.commentitself)
+    console.log(fd)
     const request = new Request(
       'http://localhost:5000/comment/sentlocationcomment',
       {
@@ -65,7 +65,6 @@ export const Submmitlocationcomment = sentcommentdata => {
     )
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(Sentlocationcomment(data))
   }
 }

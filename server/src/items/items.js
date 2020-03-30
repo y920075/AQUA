@@ -237,9 +237,7 @@ itemRouter.post('/member/checkout', (req, res)=>{
     })
 })
 
-
-
-
+// 訂單填寫收件資訊
 itemRouter.post('/member/orderInfo', (req, res)=>{
     console.log('訂單寄件資訊')
     const sql = `INSERT INTO \`recipient_info\`(
@@ -272,6 +270,32 @@ itemRouter.post('/member/orderInfo', (req, res)=>{
     })
 
 })
+
+// 訂單成立顯示訂單
+itemRouter.get('/member/checkout', (req, res)=>{
+    let orderId = req.query.id
+    console.log('訂單成立',orderId)
+    const sql = `SELECT \`orders\`.\`orderItemId\`, \`orders\`.\`checkPrice\`, \`orders\`.\`checkQty\`, \`orders\`.\`checkSubtotal\`, \`items\`.\`itemSize\`, \`items\`.\`itemSellerId\`,\`recipient_info\`.\`recipName\`,\`recipient_info\`.\`addArea\`,\`recipient_info\`.\`address\`,\`recipient_info\`.\`created_at\`,\`items\`.\`itemName\`
+    FROM \`orders\` 
+    LEFT JOIN \`items\` 
+    ON \`orders\`.\`orderItemId\` = \`items\`.\`itemId\` 
+    LEFT JOIN \`recipient_info\`
+    ON \`orders\`.\`orderId\` = \`recipient_info\`.\`orderId\`
+    WHERE \`orders\`.\`orderId\` = '${orderId}'`
+
+    db.queryAsync(sql)
+        .then(r=>{
+            console.log(r)
+            return res.status(200).json(r)
+            // res.render('edit', {row: r[0]})
+        })
+        .catch(err=>{
+            console.log(err)
+            return res.status(500).json(err)
+        })
+})
+
+
 
 //訂單明細新增
 itemRouter.post('/member/checkout', upload.none(), (req, res)=>{

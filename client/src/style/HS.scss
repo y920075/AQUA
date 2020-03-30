@@ -18,6 +18,10 @@ $white:#FFFFFF;
   color: $black;
 }
 
+.entirepage-hs{
+  background-image: url('../image/ClassBanner.jpg');
+}
+
 //Sidebar----------------------------------------
 .avatar{
     width: 130px;
@@ -31,17 +35,12 @@ $white:#FFFFFF;
 }
 
 // Login----------------------------------------
-.hslogin{
-  position: absolute;
-  top: 50px;
-  left: 170px;
-}
 .signincard-hs{
-    margin-top: 150px;
+    padding-top: 150px;
+    padding-bottom: 140px;
     opacity: .92;
 }
 .hslogin{
-    height: 70vh;
     a{
         color: $black;
         i{
@@ -60,19 +59,11 @@ $white:#FFFFFF;
 }
 
 //Register----------------------------------------
-.hsregister{
-  position: absolute;
-  left: 170px ;
-  top: 0;
-}
-
 .registerbg {
   width: 100%;
   height: 100%;
 }
-
 .hsregister {
-  height: 100vh;
   .btn.btn-info,
   .btn-info.custom-file-control::before {
     color: $aquacolordanger;
@@ -82,7 +73,8 @@ $white:#FFFFFF;
   }
 }
 .registercard-hs {
-  margin-top: 150px;
+  padding-top: 150px;
+  padding-bottom: 100px;
   opacity: 0.92;
 }
 
