@@ -58,7 +58,7 @@ router.get('/blog/', (req, res)=>{
 
 .then(result=> {
     data.result = result
-    const newpostsql = `SELECT \`blog\`.\`menberId\`,\`blog\`.\`id\`,\`blog\`.\`blogId\`,\`blog\`.\`blogTitle\`,\`blog\`.\`categoryName\`,\`blog\`.\`blogContent\`,\`blog\`.\`tagName1\`,\`blog\`.\`tagName2\`,\`blog\`.\`blogImages\`,\`blog\`.\`blogLike\`,\`my_member\`.\`memberId\`,\`my_member\`.\`avatar\`,\`blog\`.\`menberImg\` FROM \`blog\` LEFT JOIN \`my_member\` ON \`blog\`.\`menberId\` = \`my_member\`.\`memberId\` ORDER BY \`blog\`.\`id\` DESC`;
+    const newpostsql = `SELECT \`blog\`.\`menberId\`,\`blog\`.\`id\`,\`blog\`.\`blogId\`,\`blog\`.\`blogTitle\`,\`blog\`.\`categoryName\`,\`blog\`.\`blogContent\`,\`blog\`.\`tagName1\`,\`blog\`.\`tagName2\`,\`blog\`.\`blogImages\`,\`blog\`.\`blogLike\`,\`my_member\`.\`memberId\`,\`my_member\`.\`avatar\`,\`blog\`.\`memberImg\` FROM \`blog\` LEFT JOIN \`my_member\` ON \`blog\`.\`menberId\` = \`my_member\`.\`memberId\` ORDER BY \`blog\`.\`id\` DESC`;
     // `SELECT  FROM \`blog\` ORDER BY id DESC LIMIT ${(page-1)*perPage}, ${perPage}`
     return db.queryAsync(newpostsql);
     
@@ -150,7 +150,7 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
 router.post('/add', upload.single('addImg'), (req, res)=>{
     // console.log(req.body)
     req.session.menberId = "M20030099"
-    req.body.menberImg = "newPost3.jpg"
+    req.body.memberImg = "avatar2.jpg"
 
     const output ={
         success: false,
@@ -160,7 +160,7 @@ router.post('/add', upload.single('addImg'), (req, res)=>{
     }
 
 
-    const sql = `INSERT INTO \`blog\`( \`menberId\`, \`blogTitle\`,\`categoryName\`, \`blogContent\`, \`tagName1\`,\`tagName2\`, \`blogImages\`, \`menberImg\`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO \`blog\`( \`menberId\`, \`blogTitle\`,\`categoryName\`, \`blogContent\`, \`tagName1\`,\`tagName2\`, \`blogImages\`, \`memberImg\`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`;
 
 
     if(req.file && req.file.originalname){
@@ -197,7 +197,7 @@ router.post('/add', upload.single('addImg'), (req, res)=>{
         req.body.tagName1,
         req.body.tagName2,
         req.file.originalname,
-        req.body.menberImg 
+        req.body.memberImg 
         ])
 
     .then(r=>{
@@ -227,7 +227,7 @@ router.post('/del/:id', (req, res)=>{
 
 
 
-router.get('/edit/:id', (req, res)=>{
+router.get('/edit/:blogId', (req, res)=>{
     console.log('123')
     const id = req.params.id;
     const sql = `SELECT * FROM \`blog\` WHERE id=${id}`;
@@ -242,7 +242,7 @@ router.get('/edit/:id', (req, res)=>{
     //res.render('address-book/edit');
 });
 
-router.post('/edit/:id', upload.single('av'), (req, res)=>{
+router.post('/edit', upload.single('addImg'), (req, res)=>{
     const sql = `UPDATE \`blog\` SET \`blogTitle\`=?,\`categoryName\`=?,\`blogContent\`=?,\`tagName1\`=?,\`tagName2\`=?,\`blogImages\`=? WHERE id=?`;
 
     const output ={

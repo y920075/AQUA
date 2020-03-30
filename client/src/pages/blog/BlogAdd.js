@@ -171,7 +171,6 @@ function BlogAdd(props) {
                 <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
               </div>
                 <button 
-                  to="/blog"
                   onClick={e => {
                   e.preventDefault()
                   handleSubmit()
