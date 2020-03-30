@@ -150,6 +150,7 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
 router.post('/add', upload.single('addImg'), (req, res)=>{
     // console.log(req.body)
     req.session.menberId = "M20030099"
+    req.body.menberImg = "newPost2.jpg"
 
     const output ={
         success: false,

@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 -- 資料表結構 `blog_comments`
 --
 
-DROP TABLE IF EXISTS `blog_comments`;
 CREATE TABLE `blog_comments` (
   `commentsId` int(11) NOT NULL,
   `blogId` int(11) NOT NULL,
@@ -47,10 +46,7 @@ INSERT INTO `blog_comments` (`commentsId`, `blogId`, `mId`, `content`, `created_
 (3, 32, 0, '上一梯我有跟到，真的超美的喔。推薦大家(我不是工讀生XD', '2020-03-28 13:51:34'),
 (4, 32, 0, '這圖片太毒了拉 看了都想去', '2020-03-28 13:52:31'),
 (5, 32, 0, '.....只有我覺得圖片很噁嗎 這魚也太密集了吧', '2020-03-28 13:59:08'),
-(6, 32, 0, '+1...無法享受這圖片', '2020-03-28 13:59:31'),
-(20, 0, 0, '裝備aaaaa', '2020-03-29 02:48:34'),
-(29, 0, 0, '幹想睡', '2020-03-29 05:26:22'),
-(30, 0, 0, '雞巴拉', '2020-03-29 05:29:57');
+(6, 32, 0, '+1...無法享受這圖片', '2020-03-28 13:59:31');
 
 --
 -- 已傾印資料表的索引
@@ -70,7 +66,7 @@ ALTER TABLE `blog_comments`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `blog_comments`
 --
 ALTER TABLE `blog_comments`
-  MODIFY `commentsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `commentsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

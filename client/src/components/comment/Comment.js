@@ -2,12 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import '../../style/Comment.scss'
 import { withRouter } from 'react-router-dom'
-import SweetAlert from '../class/SellerClassComponents/Sweetalert2'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   fetchLocationcomment,
-  fetchBlogcomment,
   Submmitlocationcomment,
 } from '../../actions/comment/comment_action'
 import withReactContent from 'sweetalert2-react-content'
@@ -25,23 +23,13 @@ export class Comment extends React.Component {
   }
   componentDidMount() {
     this.props.fetchLocationcomment()
-    this.props.fetchBlogcomment()
   }
   render() {
     let { locationcomment = [] } = this.props.Locationcomments
     const currentparams = this.props.match.params.LocationID
     let commenthere
     /// ===5 為地區 else為文章
-    if (currentparams.length === 5) {
-      commenthere = locationcomment.filter(
-        id => id.Locationid === currentparams
-      )
-    } else {
-      commenthere = locationcomment.filter(
-        id => id.Locationid === currentparams
-      )
-    }
-
+    commenthere = locationcomment.filter(id => id.Locationid === currentparams)
     let pageid = this.state.pageid
     let memberid = this.state.memberid
     let membername = this.state.membername
@@ -65,23 +53,17 @@ export class Comment extends React.Component {
         title: '確定送出?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
         confirmButtonText: '送出',
         cancelButtonText: '取消',
       }).then(result => {
         if (result.value) {
-          MySwal.fire('Deleted!', 'Your file has been deleted.', 'success')
-          this.setState({
-            pageid: currentparams,
-            memberid: 'M20010002',
-            membername: 'Anna Tulius',
-          })
+          MySwal.fire('送出成功!', '已成功送出評論', 'success')
           this.props.Submmitlocationcomment(sentcommentdata)
+          this.props.fetchLocationcomment()
         }
       })
     }
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div>
         <div className="commentboard">
@@ -90,10 +72,7 @@ export class Comment extends React.Component {
               <div className="comments">
                 <div className="d-flex">
                   <Link to="">
-                    <img
-                      src="/images/divelocation/portrait_technique_0014.jpg"
-                      alt=""
-                    />
+                    <img src="/images/member/nemo.jpg" alt="" />
                   </Link>
                   <div>
                     <div className="d-flex sign align-items-end">
@@ -150,13 +129,12 @@ export class Comment extends React.Component {
 const mapStateToProps = store => {
   return {
     Locationcomments: store.commentReducer.Locationcomment,
-    Blogcomment: store.commentReducer.Blogcomment,
   }
 }
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { fetchLocationcomment, fetchBlogcomment, Submmitlocationcomment },
+    { fetchLocationcomment, Submmitlocationcomment },
     dispatch
   )
 }
