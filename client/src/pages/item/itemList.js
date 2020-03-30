@@ -71,7 +71,7 @@ function Items(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/ItemBanner.jpg" />
       <div className="container CW">
         <div className="row CW-itemList">
           <div className="col-3 aside d-none d-md-block">

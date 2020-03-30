@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import emailjs from 'emailjs-com'
@@ -41,10 +42,8 @@ function CheckOut(props) {
   orderInfo.note = note
   function post() {
     console.log(orderInfo)
+    // sendmail()
     props.memberCheckOutStep2Async(orderInfo)
-    props.history.push({
-      pathname: '/member/created',
-    })
   }
   // let member_email, member_name
   const sendmail = () => {
@@ -53,7 +52,7 @@ function CheckOut(props) {
       userEmail: `chuangwgfd@gmail.com`,
       // user:`${member_name}`,
       user: `振維`,
-      orderId: ``,
+      orderId: `${props.orderData.orderId}`,
       img:
         "<img src='http://127.0.0.1:5000/images/locationImg/L0001-1.png'></img>",
     }
@@ -251,7 +250,7 @@ function CheckOut(props) {
                     // sendmail
                   }
                 >
-                  完成訂單
+                  <Link to="/member/created">完成訂單</Link>
                 </button>
               </div>
             </div>

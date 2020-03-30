@@ -53,7 +53,7 @@ function ItemDetail(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/ItemBanner.jpg" />
       <div className="container CW">
         {itemData[0] ? (
           <div className="row CW-itemDetail">
