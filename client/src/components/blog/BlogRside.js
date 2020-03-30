@@ -25,11 +25,12 @@ function BlogRside(props) {
         <div className="newsPost  rounded-lg mb-5">
           {/* <!--newPost--> */}
           {props.blogData.newpost ? (props.blogData.newpost.map((value , index)=>{
+            console.log(props.blogData.newpost)
             if(index < 4)
             return (
           <div className="d-flex newpostLine">
             <figure className="newpostPic mr-3">
-              <img src="/images/blog/newPost2.jpg" />
+              <img src={"http://localhost:5000/images/memberImg/" + value.avatar} />
             </figure>
             <div className="newspostContent">
               <span className="d-flex test justify-content-start">
