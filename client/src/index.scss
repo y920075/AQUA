@@ -22,9 +22,14 @@ $color5: #f15a24;
   height: 370px;
   overflow: hidden;
   margin-bottom: 3.125rem;
+  position: relative;
 
   img {
     width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   @media screen and (max-width: 540px) {

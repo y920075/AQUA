@@ -11,6 +11,7 @@ import { onClickUpdateAsync } from '../../actions/item/item_Actions'
 //引入元件
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
+import Footer from '../../components/Footer'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ItemDetail(props) {
@@ -61,7 +62,7 @@ function ItemDetail(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/ItemBanner.jpg" />
       <div className="container CW">
         {itemData[0] ? (
           <div className="row CW-itemDetail">
@@ -160,6 +161,7 @@ function ItemDetail(props) {
           ''
         )}
       </div>
+      <Footer />
     </>
   )
 }

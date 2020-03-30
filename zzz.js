@@ -4,15 +4,13 @@ import Swal from 'sweetalert2'
 import Header from '../../components/Header'
 import '../../style/HS.scss'
 
-
-
 function MemberRegister(props) {
-  //set background img
+  // //set background img
   // useEffect(() => {
   //     require('../../style/bg.css')
   // }, []);
 
-  //Register function 
+  //Register function
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
@@ -30,53 +28,34 @@ function MemberRegister(props) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: '兩次密碼不同!'
+        text: '兩次密碼不同!',
       })
     }
 
-    setError(error)
-    if (error) return
-
-    const password = password1
-    const userData = { name, email, username, password }
-    sendRegisterDataToServer(userData, () => {
-      Swal.fire(
-        '註冊成功!',
-        'Redirect in 3 seconds...!',
-        'success'
-      )
-      setTimeout(function () {
-        window.location.href = './memberlogin'
-      }, 3000);
-    });
-  }
-
-  async function sendRegisterDataToServer(userData, callback) {
-    const fd = new FormData()
-    fd.append('fullName', userData.name)
-    fd.append('email', userData.email)
-    fd.append('loginId', userData.username)
-    fd.append('loginPwd', userData.password)
-    // fd.append('mobileNumber', userData.number)
+    async function sendRegisterDataToServer(userData, callback) {
+      const fd = new FormData()
+      fd.append('fullName', userData.name)
+      fd.append('email', userData.email)
+      fd.append('loginId', userData.username)
+      fd.append('loginPwd', userData.password)
+      // fd.append('mobileNumber', userData.number)
 
 
 
-    const request = new Request('http://localhost:5000/members/register', {
-      method: 'POST',
-      body: fd,
-      // headers: new Headers({
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      // }),
-    })
-
-    console.log(JSON.stringify(userData))
-
-    const response = await fetch(request)
-    const data = await response.json()
-    console.log(data)
-    callback()
-
+      const request = new Request('http://localhost:5000/members/register', {
+        method: 'POST',
+        body: fd,
+        // headers: new Headers({
+        //     Accept: 'application/json',
+        //     'Content-Type': 'application/json',
+        // }),
+      })
+      console.log(JSON.stringify(userData))
+      const response = await fetch(request)
+      const data = await response.json()
+      console.log(data)
+      callback()
+    }
   }
 
   return <>
@@ -84,10 +63,11 @@ function MemberRegister(props) {
       <Header />
       {/* <!-- register card --> */}
       <div className="container hsregister">
+
         <div className="registercard-hs row d-flex align-items-center">
           <div className="card col-md-6 mx-auto">
             {/* <!-- Default form register --> */}
-            <form className="text-center p-4" action="">
+            <form className="rgform text-center p-4" action="">
 
               <p className="h4 mb-4">註冊</p>
 
@@ -103,16 +83,12 @@ function MemberRegister(props) {
               {/* <!-- Password --> */}
               <input type="password" name="password1" id="" className="form-control" placeholder="Password"
                 aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword1(e.target.value)} />
-              <small id="defaultRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
-                At least 8 characters and 1 digit
-                        </small>
+              <small id="defaultRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">At least 8 characters and 1 digit </small>
 
               {/* <!-- Re-enter password --> */}
               <input type="password" name="password2" id="" className="form-control" placeholder="Re-Enter Password"
                 aria-describedby="defaultRegisterFormPasswordHelpBlock" onChange={e => setPassword2(e.target.value)} />
-              <small id="" className="form-text text-muted mb-4">
-                At least 8 characters and 1 digit
-                        </small>
+              <small id="" className="form-text text-muted mb-4">At least 8 characters and 1 digit</small>
 
               {/* <!-- Phone number --> */}
               {/* <input type="text" id="" className="form-control" placeholder="Phone number"
@@ -124,7 +100,7 @@ function MemberRegister(props) {
               {/* <!-- Social register --> */}
               <p>其他登入方式:</p>
 
-              <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-facebook-f light-blue-text"></i></a>
+              <a href="#" className="otherlogin mx-2" role="button"><i className="otherlogin fab fa-facebook-f light-blue-text"></i></a>
               <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-twitter light-blue-text"></i></a>
               <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-linkedin-in light-blue-text"></i></a>
               <a href="#" className="mx-2 otherlogin" role="button"><i className="otherlogin fab fa-github light-blue-text"></i></a>
@@ -136,7 +112,7 @@ function MemberRegister(props) {
               {/* <!-- Terms of service --> */}
               <p>點擊
                             <em>立即註冊！</em> 即表示您同意我們的服務條款
-                            <a className="servicelink" href="" target="_blank">服務條款</a>
+                            <a className="agreementlink" href="" target="_blank">服務條款</a>
               </p>
             </form>
             {/* <!-- Default form register --> */}
@@ -145,7 +121,6 @@ function MemberRegister(props) {
       </div>
     </div>
   </>
+
 }
-
-
 export default MemberRegister

@@ -37,6 +37,10 @@ import { combineReducers } from 'redux'
 const user = (state = {isAuth: false}, action) => {
   switch (action.type) {
     case 'USER_REGISTER':
+      // action = {a: 1, b:2,}
+      // {a: action.a, b: action.b, c:3,d:4}
+      // {...action, c:3,d:4} es6
+      // Object.assign({}, action); es5
       return { ...action.value, isAuth: true }
       // return action.value
     case 'USER_LOGIN':

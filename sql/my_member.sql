@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost:8889
--- 產生時間： 2020 年 03 月 25 日 06:59
+-- 產生時間： 2020 年 03 月 30 日 08:00
 -- 伺服器版本： 5.7.26
 -- PHP 版本： 7.4.2
 
@@ -67,7 +67,12 @@ INSERT INTO `my_member` (`id`, `idd`, `memberId`, `loginId`, `loginPwd`, `avatar
 (32, 22, 'M20010022', 'member123', 'member123', '20200122102500.jpg', 'Wanda', '女', '2020-01-01', 'random@gmail.com', '0999-999-999', 'earth', NULL, NULL, '2020-01-22 00:00:00', 'ACTIVE', 0, '銅牌小丑魚', '2020-01-22 02:25:00', '2020-01-22 02:25:00'),
 (33, 23, 'M20010023', 'member123', 'member123', '20200122112541.jpg', 'Xavier', '男', '2018-01-01', 'random@gmail.com', '0999-999-999', 'EarthLOL', NULL, NULL, '2020-01-22 00:00:00', 'ACTIVE', 500, '銅牌小丑魚', '2020-01-22 03:25:41', '2020-01-22 03:25:41'),
 (62, 1, 'M20030001', 'aaa', 'aaa', 'DefaultImage.jpg', 'aaa', NULL, NULL, 'aaa@gmail.com', NULL, NULL, NULL, NULL, '2020-03-24 14:35:19', NULL, NULL, NULL, '2020-03-24 14:35:19', '2020-03-24 14:35:19'),
-(63, 2, 'M20030002', 'bbb', 'bbb', 'DefaultImage.jpg', 'bbb', NULL, NULL, 'bbb@gmail.com', NULL, NULL, NULL, NULL, '2020-03-24 14:36:15', NULL, NULL, NULL, '2020-03-24 14:36:15', '2020-03-24 14:36:15');
+(63, 2, 'M20030002', 'bbb', 'bbb', 'DefaultImage.jpg', 'bbb', NULL, NULL, 'bbb@gmail.com', NULL, NULL, NULL, NULL, '2020-03-24 14:36:15', NULL, NULL, NULL, '2020-03-24 14:36:15', '2020-03-24 14:36:15'),
+(64, 3, 'M20030003', 'ccc', 'ccc', 'DefaultImgage.jpg', 'POOPP', NULL, NULL, 'lucky@gmail.com', '09123456789', '台北市大安區', NULL, NULL, '2020-03-25 16:33:37', NULL, NULL, NULL, '2020-03-25 16:33:37', '2020-03-29 14:34:54'),
+(65, 4, 'M20030004', 'haha', 'haha', 'DefaultImage.jpg', 'Harrison', NULL, NULL, 'h@gmail.com', NULL, NULL, NULL, NULL, '2020-03-25 20:09:21', NULL, NULL, NULL, '2020-03-25 20:09:21', '2020-03-25 20:09:21'),
+(66, 5, 'M20030005', 'fff', 'fff', 'DefaultImage.jpg', 'fff', NULL, NULL, 'fff@gmail.com', NULL, NULL, NULL, NULL, '2020-03-28 16:20:16', NULL, NULL, NULL, '2020-03-28 16:20:16', '2020-03-28 16:20:16'),
+(67, 6, 'M20030006', 'pp', 'pp', 'DefaultImage.jpg', 'pp', NULL, NULL, 'pp@gmail.com', NULL, NULL, NULL, NULL, '2020-03-28 17:12:38', NULL, NULL, NULL, '2020-03-28 17:12:38', '2020-03-28 17:12:38'),
+(69, 7, 'M20030007', 'lll', 'lll', 'DefaultImage.jpg', 'lll', NULL, NULL, 'll@gmail.com', NULL, NULL, NULL, NULL, '2020-03-29 13:40:54', NULL, NULL, NULL, '2020-03-29 13:40:54', '2020-03-29 13:40:54');
 
 --
 -- 已傾印資料表的索引
@@ -87,4 +92,4 @@ ALTER TABLE `my_member`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `my_member`
 --
 ALTER TABLE `my_member`
-  MODIFY `id` tinyint(100) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=64;
+  MODIFY `id` tinyint(100) NOT NULL AUTO_INCREMENT COMMENT '流水號', AUTO_INCREMENT=70;
