@@ -152,7 +152,7 @@ function BlogContent(props) {
                       </Link>
                     </li>
                     <li>
-                      <Link to={'/blog/'+value.id+'/edit'}><i class="far fa-edit"></i></Link>
+                      <Link to={'/blog/'+props.match.params.id+'/edit'}><i class="far fa-edit"></i></Link>
                     </li>
                   </ul>
                 </div>
@@ -191,12 +191,13 @@ function BlogContent(props) {
                 <h5>評論</h5>
             </div>
             {props.blogCommentsData.result ? props.blogCommentsData.result.map((value, index) => {
+              console.log(value)
               if( value.blogId==props.match.params.id)
                return (
             <>
               <div className="commentContent ">
                 <figure>
-                  <img src="../../images/blog/newPost2.jpg"   alt="image"/>
+                  <img src={"http://localhost:5000/images/blogImg/" + value.mImg }   alt="image"/>
                 </figure>
                 <div className="commmentBody p-2">
                   <div className="commentAuthor">
