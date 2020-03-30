@@ -22,7 +22,7 @@ export default class ChartRight extends Component {
             fill: false,
             backgroundColor: 'rgba(241, 90 ,36, 1)',
             data: [90, 20, 40, 75, 82, 53],
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 204, 0)',
           },
           {
             label: 'harrison',
