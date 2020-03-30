@@ -10,6 +10,8 @@ import {
   fetchBlogcomment,
   Submmitlocationcomment,
 } from '../../actions/comment/comment_action'
+import withReactContent from 'sweetalert2-react-content'
+import sweetalert from 'sweetalert2'
 
 export class Comment extends React.Component {
   constructor(props) {
@@ -57,13 +59,27 @@ export class Comment extends React.Component {
         membername,
         commentitself,
       }
-      SweetAlert.sendConfirm(
-        '確定要送出嗎?',
-        this.props.fetchLocationcomment(),
-        '',
-        this.props.Submmitlocationcomment,
-        sentcommentdata
-      )
+      const MySwal = withReactContent(sweetalert)
+
+      MySwal.fire({
+        title: '確定送出?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '送出',
+        cancelButtonText: '取消',
+      }).then(result => {
+        if (result.value) {
+          MySwal.fire('Deleted!', 'Your file has been deleted.', 'success')
+          this.setState({
+            pageid: currentparams,
+            memberid: 'M20010002',
+            membername: 'Anna Tulius',
+          })
+          this.props.Submmitlocationcomment(sentcommentdata)
+        }
+      })
     }
     console.log(this.state)
     return (

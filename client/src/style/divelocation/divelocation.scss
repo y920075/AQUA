@@ -21,6 +21,9 @@ $fontcolor: #FFFF;
 //divemap
 .divelocussection{
     margin: 100px 0 100px 0;
+    @media only screen and (max-width: 576px){
+        margin: 10px 0 10px 0;
+    }
 }
 .locationcard{
     background-color: $aquabackground;
@@ -48,14 +51,18 @@ $fontcolor: #FFFF;
     }
 }
 .regionwether{
-    min-height: 730px;
+    min-height: 100px;
+    overflow-x: auto;
+    max-width: 100%;
 }
 .nav-item{
     color: #FFFF !important;
 }
 .weathertable{
-    overflow: auto;
+    overflow-x: auto;
+    max-width: 100%;
     max-height: 100%;
+    table-layout: auto;
     thead{
         th{
             height: 50px;
@@ -67,11 +74,15 @@ $fontcolor: #FFFF;
     }
     tr{
         td{
+            white-space: normal !important;
             height: 50px;
             min-width: 150px;
             background-color: #31445F;
             text-align: center;
             color: #FFFF;
+        }
+        .weekweatherdate{
+            max-width: 150px; 
         }
         .WeatherDescription{
             text-align: left;
