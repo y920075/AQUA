@@ -13,22 +13,26 @@ import Banner from '../../components/Banner'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ItemDetail(props) {
-  console.log(props)
-  const [mycart, setMycart] = useState([])
+  // console.log(props)
   const [itemData, setItemData] = useState({})
   const [hasloading, setHasLoading] = useState(false)
 
-  async function updateCartToLocalStorage(value) {
+  // 加入購物車
+  async function handleAdd(value) {
     setHasLoading(true)
-
-    const currenyCart = JSON.parse(localStorage.getItem('cart')) || []
-
-    console.log('currentCart', currenyCart)
-
-    const newCart = [...currenyCart, value]
-    localStorage.setItem('cart', JSON.stringify(newCart))
-
-    console.log('newCart', newCart)
+    const localCart = JSON.parse(localStorage.getItem('cart')) || []
+    if (localCart == null) {
+      localCart.push({ ...value })
+      localStorage.setItem('cart', JSON.stringify(localCart))
+    } else {
+      if (localCart.some(item => item.id === value.id)) {
+        const index = localCart.findIndex(item => item.id === value.id)
+        localCart[index].amount += value.amount
+      } else {
+        localCart.push({ ...value })
+      }
+      localStorage.setItem('cart', JSON.stringify(localCart))
+    }
   }
 
   useEffect(() => {
@@ -46,9 +50,6 @@ function ItemDetail(props) {
       }
     }, 500)
   }, [props.itemDetailData])
-  const itemDetailData = props.itemDetailData.itemData
-  // console.log(itemDetailData[0].itemId)
-  console.log(itemData[0])
   return (
     <>
       <Header />
@@ -103,7 +104,7 @@ function ItemDetail(props) {
                     name=""
                     id=""
                     onClick={() => {
-                      updateCartToLocalStorage({
+                      handleAdd({
                         // id: {itemData.itemId},
                         // name: {itemData.itemName},
                         // amount: 1,

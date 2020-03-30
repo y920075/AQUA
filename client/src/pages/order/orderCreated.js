@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { getOrderDetailDataAsync } from '../../actions/order/order_Actions'
+
+import '../../style/CW_items.scss'
+
+import Header from '../../components/Header'
+import Banner from '../../components/Banner'
 
 function OrderCreated(props) {
+  useEffect(() => {
+    props.getOrderDetailDataAsync(props.orderId.orderId)
+  }, [])
+
   return (
     <>
+      <Header />
+      <Banner BannerImgSrc="/images/ShoppingBanner.jpg" />
       <div>
         <div className="col-12 order-wrapper">
           <div className="card">
@@ -11,7 +26,7 @@ function OrderCreated(props) {
             </div>
             <div className="card-body d-flex ">
               <div className="col">
-                <h6>訂單編號：1234547</h6>
+                <h6>訂單編號：{props.orderId.orderId}</h6>
                 <h6>訂購時間：2020-04-01 10:00</h6>
                 <h6>付款方式：信用卡</h6>
                 <h6>物流方式：宅配到家</h6>
@@ -69,4 +84,19 @@ function OrderCreated(props) {
   )
 }
 
-export default OrderCreated
+const mapStateToProps = store => {
+  return {
+    orderId: store.orderReducer.memberCheckOutResponse,
+    orderData: store.orderReducer.orderData,
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      getOrderDetailDataAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderCreated)

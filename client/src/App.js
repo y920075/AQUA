@@ -19,6 +19,7 @@ import Items from './pages/item/itemList'
 import ItemDetail from './pages/item/itemDetail'
 import ShoppingCart from './pages/order/shoppingCart'
 import CheckOut from './pages/order/checkOut'
+import OrderCreated from './pages/order/orderCreated'
 
 //文章相關
 import Blog from './pages/blog/Blog'
@@ -33,12 +34,20 @@ import MemberUser from './pages/members/MemberUser'
 
 import Home from './pages/Home'
 
+import Chat from './pages/chat/Chat'
+
 function App(props) {
   // console.log(props)
   return (
     <Router>
       <>
         <Switch>
+          <Route path="/chatchatchat">
+            <Chat />
+          </Route>
+          <Route path="/blog/:id/edit">
+            <BlogEdit />
+          </Route>
           <Route path="/blog/:id">
             <BlogContent />
           </Route>
@@ -47,9 +56,6 @@ function App(props) {
           </Route>
           <Route path="/blogadd">
             <BlogAdd />
-          </Route>
-          <Route path="/blogedit">
-            <BlogEdit />
           </Route>
           <Route path="/seller">
             <SellerBack />
@@ -80,6 +86,9 @@ function App(props) {
           </Route>
           <Route path="/member/checkout">
             <CheckOut />
+          </Route>
+          <Route path="/member/created">
+            <OrderCreated />
           </Route>
 
           {/* Member Routes */}

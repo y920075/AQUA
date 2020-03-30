@@ -1,18 +1,20 @@
 import React ,{ useEffect,useState } from 'react'
+import { Link } from 'react-router-dom'
+
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
-import {
-  getBlogDataAsync,
-  // getAsideDataAsync,
-} from '../../actions/blog/blog_Actions'
+import { getBlogDataAsync } from '../../actions/blog/blog_Actions'
 
 
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import Rside from '../../components/blog/Rside'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import BlogRside from '../../components/blog/BlogRside'
+import BlogRelatedPost from '../../components/blog/BlogRelatedPost'
+
+
+
+
 import '../../style/BlogEdit.scss'
 import addImg from '../../image/image.png'
 
@@ -50,10 +52,10 @@ function BlogAdd(props) {
           <h2>部落格</h2>
           <ul>
             <li>
-              <Link to="">首頁</Link>
+              <Link to="">文章列表</Link>
             </li>
             <li>
-              <Link to="">></Link>
+              <Link to=""> > </Link>
             </li>
             <li>
               <Link to="">修改文章</Link>
@@ -67,8 +69,12 @@ function BlogAdd(props) {
           <div className=" col-md-8 ">
             <div className="add">
               <div>
-                <h5>修改</h5>
+                <p>修改</p>
               </div>
+              {props.blogData.result ? (props.blogData.result.map((value , index)=>{
+              if( value.id==props.match.params.id)
+               return (
+                <>
               <div className="d-flex form-group mb-3">
                 <input
                   type="text"
@@ -100,7 +106,7 @@ function BlogAdd(props) {
                     className="form-control addInput tagName2"
                   />
                   <label class="  addImg ml-3 mr-1 ">
-                    <p>上傳圖片</p>
+                    <h6>更改圖片</h6>
                     <input  className="inputavatar" type="file" onChange={(event) => handleChange(event)}   /> 
                   </label>
                   <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
@@ -114,36 +120,19 @@ function BlogAdd(props) {
                   </button>
                   </div>
                 </div>    
-                </div>
-                <div className="relatedPost">
-              <div className="relatedpostTitle">
-                <h5 className="mb-3">相關文章</h5>
-              </div>
-              <div className="relatedpostContent">
-                <ul>
-                {relatedPostData ? relatedPostData.map((value, index) => {
-                  console.log(value)
-                    return (
-
-                  <li>
-                    <Link to="">
-                      <figure>
-                      <img to="" src={'http://localhost:5000/images/blogImg/'+ value.blogImages}/>
-                      </figure>
-                    </Link>
-                    <h5>{value.blogTitle}</h5>
-                  </li>
-                  )}): ''}
-                </ul>
-              </div>
+               </>
+                )}
+            )) : ''}
             </div>
+
+              <BlogRelatedPost blogData={props.blogData}/>
             <div className="addHr">
               <hr align="left" />
             </div>
           </div>
 
           {/* <!--rSide--> */}
-          <Rside />
+          <BlogRside />
         </div>
       </div>
     </>

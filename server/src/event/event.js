@@ -692,7 +692,6 @@ router.delete('/member/event/:eventId',upload.none(),(req,res)=>{
 */
 
 router.get('/member/event/self', async (req,res)=>{
-
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
@@ -808,13 +807,11 @@ router.get('/member/event/self/:eventId', async (req,res)=>{
 */
 
 router.get('/member/event/join',async (req,res)=>{
-
     let data = {
         'status' : 401,
         'msg' : '尚未登入'
     }
     if ( !req.session.memberId ) {
-        
         res.json(data)
     } else {
         const perPage = 8
@@ -940,6 +937,42 @@ router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
             res.json(data)
         }
     }
+})
+
+//會員取得聊天室列表(報名參加以及自己發起的)
+/*
+    開始日期超過7天之後的不列出，即表示聊天室只開放到過期之後7天
+    傳入參數
+    req.query.mylist 1 = 自己發起的 2 = 自己報名 預設為全部
+*/
+router.get('/member/event/chatList',async (req,res)=>{
+
+    let mySelfEventData = []
+    let myJoinEventData = []
+
+    const findMySelfEventSql = `SELECT \`eventId\`,\`eventName\`
+    FROM \`event_data\` 
+    WHERE \`eventSponsor\` = '${req.session.memberId}' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
+
+    const findMyJoinEventsql = `SELECT \`event_memeber\`.\`eventId\`,\`event_data\`.\`eventName\`
+    FROM \`event_memeber\` 
+    LEFT JOIN \`event_data\`
+    ON \`event_data\`.\`eventId\` = \`event_memeber\`.\`eventId\`
+    WHERE \`memberId\` = '${req.session.memberId}' AND DATEDIFF(NOW(),\`event_data\`.\`eventStartDate\`)<=7 `
+
+    if ( req.query.mylist === '1' ) {
+        mySelfEventData = await db.queryAsync(findMySelfEventSql)
+    } else if ( req.query.mylist === '2' ) {
+        myJoinEventData = await db.queryAsync(findMyJoinEventsql)
+    } else {
+        mySelfEventData = await db.queryAsync(findMySelfEventSql)
+        myJoinEventData = await db.queryAsync(findMyJoinEventsql)
+    }
+    
+    const result = [...myJoinEventData,...mySelfEventData]
+    res.json(result)
+    
+    
 })
 
 module.exports = router

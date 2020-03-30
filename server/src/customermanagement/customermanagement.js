@@ -373,7 +373,7 @@ router.get('/user-coupondata',(req,res)=>{
     \`coup01_allorder\`.\`coup_end\` AS order_coup_end,\`coup02_goods\`.\`coup_end\` AS goods_coup_end,\`coup03_givi\`.\`coup_end\` AS givi_coup_end,
     \`coup01_allorder\`.\`coup_img\` AS order_coup_img,\`coup02_goods\`.\`coup_img\` AS goods_coup_img,\`coup03_givi\`.\`coup_img\` AS givi_coup_img,
     \`coup01_allorder\`.\`coup_over\` AS order_over,\`coup02_goods\`.\`coup_over\` AS goods_over,\`coup03_givi\`.\`coup_over\` AS givi_over,
-    \`coup01_allorder\`.\`coup_PriOrPer\` AS order_pri_perc,\`coup02_goods\`.\`coup_PriOrPer\` AS goods_pri_perc
+    \`coup01_allorder\`.\`coup_PriOrPer\` AS order_pri_perc,\`coup02_goods\`.\`coup_PriOrPer\` AS goods_pri_perc,\`coup02_goods\`.\`itemTypeId\` AS itemType
     FROM \`couptomember\` 
     LEFT JOIN \`coup01_allorder\` ON \`couptomember\`.\`coup_code\` = \`coup01_allorder\`.\`coup_code\` 
     LEFT JOIN \`coup03_givi\` ON \`couptomember\`.\`coup_code\` = \`coup03_givi\`.\`coup_code\`

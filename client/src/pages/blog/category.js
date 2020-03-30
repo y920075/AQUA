@@ -1,7 +1,7 @@
 const categoryData= [
     {
         categoryId: 1,
-        categoryName: '全部'
+        categoryName: ''
     },
     {
         categoryId: 3,

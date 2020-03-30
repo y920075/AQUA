@@ -1,14 +1,13 @@
 import React from 'react'
 
 function CartItem(props) {
-  console.log('carditem', props)
+  const { handleDelete, mycart } = props
+  // console.log('carditem', { mycart })
 
   return (
     <>
-      {!props.mycartDisplay ? (
-        <h2>購物車是空的</h2>
-      ) : (
-        props.mycartDisplay.map((value, index) => {
+      {mycart != null && mycart.length >= 1 ? (
+        props.mycart.map((value, index) => {
           return (
             <>
               <div className="d-flex cart-item border-bottom" key={index}>
@@ -41,12 +40,23 @@ function CartItem(props) {
                   </div>
                 </div>
                 <div className="item-delete col-1 d-flex align-items-center">
-                  <i className="material-icons">close</i>
+                  <i
+                    className="material-icons"
+                    onClick={() =>
+                      handleDelete({
+                        id: `${value.id}`,
+                      })
+                    }
+                  >
+                    close
+                  </i>
                 </div>
               </div>
             </>
           )
         })
+      ) : (
+        <h2>購物車是空的</h2>
       )}
     </>
   )

@@ -1,0 +1,161 @@
+.messageContent {
+  margin-bottom: 50px;
+  height: 594px;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .chatRoomList {
+    background-color: #4e5f76;
+    list-style: none;
+    padding: 0;
+    overflow: auto;
+    height: 594px;
+    position: relative;
+    .chatListTitle {
+      background-color: #31445f;
+      padding: 15px;
+      color: white;
+      text-align: center;
+      p {
+        margin: 0;
+      }
+    }
+    .chatRoomSelect {
+      background-color: #4e5f76;
+      select {
+        color: rgba($color: #000000, $alpha: 0.6);
+        option {
+          background-color: #4e5f76;
+        }
+      }
+    }
+    ul {
+      padding: 0;
+      li {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+        padding: 7px;
+        color: rgba($color: #000000, $alpha: 0.6);
+        cursor: pointer;
+        p {
+          margin: 0;
+          font-size: 14px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+      .active {
+        color: rgba($color: #f15a24, $alpha: 1);
+        background-color: #e2e4e8;
+        border-right: 7px solid #31445f;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .viewArea {
+    background-color: #c4cad1;
+    padding: 0;
+    .chatEeventTitle {
+      background-color: #e2e4e8;
+      padding: 15px;
+    }
+    .msgArea {
+      padding: 15px;
+      width: 100%;
+      min-height: 500px;
+      max-height: 500px;
+      overflow: auto;
+      position: relative;
+      .startChat {
+        position: absolute;
+        top: 62%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        p {
+          font-size: 14px;
+          text-align: center;
+        }
+      }
+
+      .memberAvatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .msgBox {
+        margin-top: 10px;
+        .otherName {
+          margin: 0;
+          padding-left: 15px;
+          font-size: 12px;
+        }
+        .msgTime {
+          font-size: 12px;
+        }
+      }
+    }
+    .inputArea {
+      background-color: #e2e4e8;
+      .btn {
+        width: 100%;
+        margin: 0;
+        color: #3f51b5;
+      }
+    }
+  }
+  .mymessage {
+    padding: 5px 10px;
+    margin: 0px 15px 0 10px;
+    position: relative;
+    background: #fff;
+    border-radius: 0.4em;
+  }
+
+  .mymessage:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 11px solid transparent;
+    border-left-color: #fff;
+    border-right: 0;
+    border-bottom: 0;
+    margin-top: -5.5px;
+    margin-right: -11px;
+  }
+
+  .othermessage {
+    position: relative;
+    background: #4e5f76;
+    border-radius: 0.4em;
+    padding: 5px 10px;
+    margin: 0px 10px 0 15px;
+    color: #e2e4e8;
+  }
+
+  .othermessage:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 11px solid transparent;
+    border-right-color: #4e5f76;
+    border-left: 0;
+    border-top: 0;
+    margin-top: -5.5px;
+    margin-left: -11px;
+  }
+}

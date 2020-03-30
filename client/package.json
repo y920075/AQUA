@@ -23,7 +23,10 @@
     "leaflet": "^1.6.0",
     "mdbreact": "^4.25.4",
     "minimist": "^1.2.5",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
     "node-sass": "^4.13.1",
+    "prop-types": "^15.7.2",
     "rc-viewer": "0.0.9",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
@@ -44,6 +47,7 @@
     "redux-thunk": "^2.3.0",
     "rodal": "^1.8.1",
     "scrollreveal": "^4.0.6",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^5.0.1",
     "sweetalert2": "^9.10.5",
     "sweetalert2-react-content": "^3.0.1"

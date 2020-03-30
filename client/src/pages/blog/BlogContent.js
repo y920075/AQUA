@@ -1,31 +1,70 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router'
-import Header from '../../components/Header'
-import Banner from '../../components/Banner'
-import Footer from '../../components/Footer'
-import Rside from '../../components/blog/Rside'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
-import '../../style/BlogContent.scss'
-import '../../image/image.png'
-
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { getBlogDataAsync, getBlogCommentsDataAsync, addContentCommentsDataAsync } from '../../actions/blog/blog_Actions'
 
-import {
-  getBlogDataAsync,
-  // getAsideDataAsync,
-} from '../../actions/blog/blog_Actions'
+
+import Header from '../../components/Header'
+import Banner from '../../components/Banner'
+import Footer from '../../components/Footer'
+import BlogRside from '../../components/blog/BlogRside'
+import BlogRelatedPost from '../../components/blog/BlogRelatedPost'
+
+import '../../style/BlogContent.scss'
+import '../../image/image.png'
+import RcViewer from '@hanyk/rc-viewer'
+
+
+
 
 function BlogContent(props) {
+  //拿資料
   const [blogData, setBlogData] = useState([])
+  const [blogCommentsData, setBlogCommentsData] = useState([123])
+  const [contentCommentsData, setContentCommentsData] = useState([])
+  //新增評論
+  const [cotentComments,setCotentComments] = useState([])
 
+  const [error, setError] = useState(false)
+  const [errorMessages, setErrorMessages] = useState([])
   useEffect(() => {
     props.getBlogDataAsync()
-    // props.getAsideDataAsync()
-
+    props.getBlogCommentsDataAsync()
+    props.addContentCommentsDataAsync()
   }, [])
-  // console.log(props.blogData.result)
+  // console.log(getBlogCommentsDataAsync)
+
+
+
+  const handleSubmit = e=>{
+    let error = false
+    let errorMessages = []
+
+      if (!cotentComments) {
+        error = true
+        errorMessages.push('評論內容沒填')
+      }
+
+      const addCommentsData = { 
+        cotentComments
+      }
+    
+      const commentsData_fd = new FormData()
+      commentsData_fd.append('content', addCommentsData.cotentComments)
+    
+      props.addContentCommentsDataAsync(commentsData_fd, () => alert('成功新增'))
+    
+  }
+
+
+
+
+
+
+  // console.log(props.blogCommentsData)
 
   let relatedPostData = [];
   if(props.blogData.result && props.blogData.result.length){
@@ -49,17 +88,10 @@ function BlogContent(props) {
               return (
           <ul key = {index}>
             <li>
-              <Link to="/blog">首頁</Link>
+              <Link to="/blog">文章列表</Link>
             </li>
             <li>
-              <Link to="">></Link>
-            </li>
-      
-            <li>
-              <Link to="">{value.categoryName}</Link>
-            </li>
-            <li>
-              <Link to="">></Link>
+              <Link >></Link>
             </li>
             <li>
               <Link to={'/blog/'+value.id}>{value.blogTitle}</Link>
@@ -75,141 +107,126 @@ function BlogContent(props) {
 
         {/* <!--blogContent--> */}
         <div className="row postContent">
-        {props.blogData.result ? (props.blogData.result.map((value , index)=>{
-              if( value.id==props.match.params.id)
-              return (
-          <div className=" col-md-8 " key = {index}>
-            <div className="postImg">
-            <img to="" src={'http://localhost:5000/images/blogImg/'+ value.blogImages}></img>
-            </div>
-            <div className="postTitle">
-              {' '}
-              <Link to="">
-                <h2>{value.blogTitle}</h2>
-              </Link>
-            </div>
-            <div className="postNav mb-3 d-flex justify-content-between">
-              <div className="author">
-                <Link to="">AUQA</Link> -<time>{value.created_at.substring(0, 10)}</time>
-              </div>
-              <div className="postTag">
-                <ul>
-                  <li>
-                    <Link to="">{value.categoryName}</Link>
-                  </li>
-                  <li>
-                    <Link to="">
-                      <i className="far fa-comment"> 0</i>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="postBody">
-              <hr align="left" />
-              <p className="">
-              {value.blogContent}
-              </p>
-            </div>
-            <div className="postFooter">
-              <div className="">
-                <h5 className="mb-3">標籤</h5>
-              </div>
-              <div className="justify-content-between d-flex">
-                <ul>
-                  <li>
-                    <Link to="#" className="rounded-lg">
-                      {value.tagName1}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="#" className="rounded-lg">
-                    {value.tagName2}
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <hr align="left" />
-            </div>
-            <div className="relatedPost">
-              <div className="relatedpostTitle">
-                <h5 className="mb-3">相關文章</h5>
-              </div>
-              <div className="relatedpostContent">
-                <ul>
-                {relatedPostData ? relatedPostData.map((value, index) => {
-                  console.log(value)
-                    return (
 
+          <div className=" col-md-8 " >
+            {props.blogData.result ? (props.blogData.result.map((value , index)=>{
+              if( value.id==props.match.params.id)
+               return (
+            <div>
+                <figure className="postImg">
+                  <img src={'http://localhost:5000/images/blogImg/'+ value.blogImages}
+                  alt="image" />
+                </figure>
+              <div className="postTitle">
+                  <h2>{value.blogTitle}</h2>
+              </div>
+              <div className="postNav mb-3 d-flex justify-content-between">
+                <div className="author">
+                  <Link to="">AUQA</Link> -<time>{value.created_at.substring(0, 10)}</time>
+                </div>
+                <div className="postTag">
+                  <ul>
                   <li>
-                    <Link to="">
-                      <figure>
-                      <img to="" src={'http://localhost:5000/images/blogImg/'+ value.blogImages}/>
-                      </figure>
-                    </Link>
-                    <h5>{value.blogTitle}</h5>
-                  </li>
-                  )}): ''}
-                </ul>
+                      <Link to="">
+                        <i class="far fa-thumbs-up"></i>
+                      </Link>
+                      {value.blogLike}
+                    </li>
+                    <li>
+                      <Link to="">
+                      <i class="far fa-comment-dots"></i>                      
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={'/blog/'+value.id+'/edit'}><i class="far fa-edit"></i></Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="postBody">
+                <hr align="left" />
+                <p className="">
+                {value.blogContent}
+                </p>
+              </div>
+              <div className="postFooter">
+                <div className="">
+                  <h5 className="mb-3">標籤</h5>
+                </div>
+                <div className="justify-content-between d-flex">
+                  <ul>
+                    <li>
+                      <Link to="#" className="rounded-lg">
+                        {value.tagName1}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="rounded-lg">
+                      {value.tagName2}
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+                <hr align="left" />
               </div>
             </div>
+            )}
+            )) : ''}
+            <BlogRelatedPost blogData={props.blogData}/>
             <div className="comment mb-3">
-              <div className="commentTitle">
                 <h5>評論</h5>
-              </div>
+            </div>
+            {props.blogCommentsData.result ? props.blogCommentsData.result.map((value, index) => {
+               return (
+            <>
               <div className="commentContent ">
                 <figure>
-                  <img src="../../images/blog/newPost2.jpg" alt="" />
+                  <img src="../../images/blog/newPost2.jpg"   alt="image"/>
                 </figure>
                 <div className="commmentBody p-2">
                   <div className="commentAuthor">
-                    {' '}
                     <Link to="">AUQA</Link>
                   </div>
-                  <time>2020-3-14</time>
+                  <time>{value.created_at.substring(0, 16)}</time>
                   <div className="commmentbodyText">
-                    <p>
-                      從模具生產出來的氯丁橡膠發泡海綿原床是像床墊般一片一片，表面是光滑，但切開後裡面是佈滿許多氣孔(cell)的肉身。生產氯丁橡膠的工廠很多，例如日本Yamamoto、NJN、韓國Jako，還有臺灣的薛長興、南良。每個工廠生產的氯丁橡膠通常都會分許多型號，有著不同延展性、密度、強度等，成本不一樣，適合的用途也會不一樣。
+                    <p>{value.content}
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="commentContent ">
-                <figure>
-                  <img src="../../images/blog/newPost4.jpeg" alt="" />
-                </figure>
-                <div className="commmentBody p-2">
-                  <div className="commentAuthor">
-                    {' '}
-                    <Link to="">AUQA</Link>
-                  </div>
-                  <time>2020-3-14</time>
-                  <div className="commmentbodyText">
-                  <p>
-                    從模具生產出來的氯丁橡膠發泡海綿原床是像床墊般一片一片，表面是光滑，但切開後裡面是佈滿許多氣孔(cell)的肉身。生產氯丁橡膠的工廠很多，例如日本Yamamoto、NJN、韓國Jako，還有臺灣的薛長興、南良。每個工廠生產的氯丁橡膠通常都會分許多型號，有著不同延展性、密度、強度等，成本不一樣，適合的用途也會不一樣。從模具生產出來的氯丁橡膠發泡海綿原床是像床墊般一片一片，表面是光滑，但切開後裡面是佈滿許多氣孔(cell)的肉身。生產氯丁橡膠的工廠很多，例如日本Yamamoto、NJN、韓國Jako，還有臺灣的薛長興、南良。每個工廠生產的氯丁橡膠通常都會分許多型號，有著不同延展性、密度、強度等，成本不一樣，適合的用途也會不一樣。{' '}
-                  </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+           </>
+            )}
+            ) : ''}
+            <form name="cotentform" method="post">
             <div className="postComment">
               <div className="postcommentTitle">
                 <h5>發表評論</h5>
               </div>
               <div className="postcommentBody">
-                <textarea name="" id="" className="col-md-12"></textarea>
+                <textarea 
+                  type="text"
+                  name="cotentComments"
+                  onChange={event => setCotentComments(event.target.value)}
+                  className="col-md-12"
+                />
+                
               </div>
               <div className="d-flex justify-content-end">
-                <button className="badge badge-pill contentSend" type="button">
+                <button 
+                className="badge badge-pill contentSend" 
+                onClick={e => {
+                e.preventDefault()
+                handleSubmit(e)
+              }}
+                >
                   送出
                 </button>
               </div>
             </div>
+            </form>
+
           </div>
-          )}
-            )) : ''}
-          {/* <!--rSide--> */}
-          <Rside blogData={props.blogData}/>
+          <BlogRside blogData={props.blogData}/>
         </div>
       </div>
     </>
@@ -220,13 +237,14 @@ function BlogContent(props) {
 const mapStateToProps = store => {
   return {
     blogData: store.blogReducer.blogData,
-    // asideData: store.itemReducer.asideData,
+    blogCommentsData: store.blogReducer.blogCommentsData,
+    contentCommentsData: store.blogReducer.contentCommentsData
   }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getBlogDataAsync }, dispatch)
+  return bindActionCreators({ getBlogDataAsync, getBlogCommentsDataAsync, addContentCommentsDataAsync}, dispatch)
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogContent))
 // export default BlogContent

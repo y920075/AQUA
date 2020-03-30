@@ -1,3 +1,5 @@
+import Cookie from 'js-cookie'
+
 //取得活動列表資料
 export const getEventData = data => ({
   type: 'GET_EVENTDATA',
@@ -127,6 +129,9 @@ export const memberJoinEventAsync = (eventId, memberMemo) => {
         method: 'POST',
         body: fd,
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 
@@ -173,6 +178,9 @@ export const memberGetEventDataAsync = (sort, page, nowClickTag, isEnable) => {
     const request = new Request(url, {
       method: 'GET',
       credentials: 'include',
+      headers: new Headers({
+        'access-token': Cookie.get('token'),
+      }),
     })
 
     const response = await fetch(request)
@@ -194,6 +202,9 @@ export const delEventDataAsync = eventId => {
       {
         method: 'DELETE',
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 
@@ -216,6 +227,9 @@ export const memberUnJoinEventAsync = eventId => {
       {
         method: 'DELETE',
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 
@@ -251,6 +265,9 @@ export const addEventDataAsunc = formData => {
       method: 'POST',
       body: fd,
       credentials: 'include',
+      headers: new Headers({
+        'access-token': Cookie.get('token'),
+      }),
     })
 
     const response = await fetch(request)
@@ -272,6 +289,9 @@ export const getMemberEventDetailDataAsync = eventId => {
       {
         method: 'GET',
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 
@@ -308,6 +328,9 @@ export const editEventDataAsunc = (formData, eventId) => {
         method: 'PUT',
         body: fd,
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 
@@ -333,12 +356,40 @@ export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
         method: 'DELETE',
         body: fd,
         credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
       }
     )
 
     const response = await fetch(request)
     const data = await response.json()
     dispatch(memberUnOtherJoinEvent(data))
+  }
+}
+
+//取得聊天室列表
+export const memberGetChatList = data => ({
+  type: 'MEMBER_GET_CHATLIST',
+  value: data,
+})
+
+export const memberGetChatListAsync = mylist => {
+  return async dispatch => {
+    const request = new Request(
+      `http://127.0.0.1:5000/member/event/chatList?mylist=${mylist}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    dispatch(memberGetChatList(data))
   }
 }
 

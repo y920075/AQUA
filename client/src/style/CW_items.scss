@@ -2,6 +2,7 @@ $color1: #132948;
 $color2: #31445f;
 $color3: #4e5f76;
 $color5: #f15a24;
+@import '~@sweetalert2/theme-material-ui/material-ui.scss';
 
 .CW {
   .breadcrumb {
@@ -121,8 +122,7 @@ $color5: #f15a24;
           padding: 0.1rem 1rem;
         }
 
-        .rwd-card {
-        }
+        .rwd-card {}
       }
 
       &-wrapper {
@@ -166,11 +166,9 @@ $color5: #f15a24;
           }
 
           &-body {
-            .item-name {
-            }
+            .item-name {}
 
-            .item-price {
-            }
+            .item-price {}
           }
         }
       }
@@ -201,8 +199,7 @@ $color5: #f15a24;
     letter-spacing: 2px;
 
     .detail {
-      &-header {
-      }
+      &-header {}
 
       &-main {
         padding: 0 0.938rem;
@@ -238,20 +235,18 @@ $color5: #f15a24;
 
         .info {
           @media (max-width: 768px) {
+
             //變小時出現
             div {
               margin-top: 1rem;
             }
           }
 
-          &-header {
-          }
+          &-header {}
 
-          &-size {
-          }
+          &-size {}
 
-          &-qty {
-          }
+          &-qty {}
 
           &-btn {
             .addcart-btn {
@@ -281,10 +276,12 @@ $color5: #f15a24;
 
   &-shoppingCart {
     color: #132948;
+
     .chin_btn {
       background-color: #132948;
       color: white;
       border-radius: 1rem;
+
       &:hover {
         background-color: #f15a24;
       }
@@ -294,8 +291,7 @@ $color5: #f15a24;
       margin-bottom: 0;
     }
 
-    .cart-header {
-    }
+    .cart-header {}
 
     .table-wrapper {
       .card {
@@ -313,18 +309,18 @@ $color5: #f15a24;
               border-top-right-radius: calc(0.125rem - 1px);
               // padding: 0 0 0.938rem 0;
             }
+          }
 
-            &-info {
-              .item-name {
-              }
+          &-info {
+            .item-name {}
 
-              .item-qty {
-              }
+            .item-qty {}
 
-              .item-price {
-              }
+            .item-price {}
 
-              .item-delete {
+            .item-delete {
+              .material-icons {
+                cursor: pointer;
               }
             }
           }
@@ -333,6 +329,7 @@ $color5: #f15a24;
     }
 
     .check-wrapper {
+
       .card-header,
       .card-body,
       .card-footer {
@@ -366,8 +363,7 @@ $color5: #f15a24;
 
     .form-wrapper {
       .card {
-        &-header {
-        }
+        &-header {}
 
         &-body {
           .form-label {
@@ -391,8 +387,7 @@ $color5: #f15a24;
 
     .check-wrapper {
       .card {
-        &-header {
-        }
+        &-header {}
 
         &-body {
           label {
@@ -425,15 +420,12 @@ $color5: #f15a24;
     }
 
     .order {
-      &-header {
-      }
+      &-header {}
 
-      &-wrapper {
-      }
+      &-wrapper {}
 
       &-detail-wrapper {
-        .order-item {
-        }
+        .order-item {}
       }
     }
 
@@ -462,6 +454,7 @@ $color5: #f15a24;
     }
   }
 }
+
 .active-chin-check {
   // background: url(../../src/image/customer/sale-tag.png) 50px 50px no-repeat;
   background-size: 3rem 3rem;

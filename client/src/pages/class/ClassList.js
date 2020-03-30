@@ -35,7 +35,6 @@ function Class(props) {
   //取得初始資料
   useEffect(() => {
     props.getTypeLevelDataAsync()
-    props.getClassDataAsync()
   }, [])
 
   useEffect(() => {
@@ -71,7 +70,7 @@ function Class(props) {
   return (
     <>
       <Header />
-      <Banner BannerImgSrc="./images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="./images/classImg/calssbanner.jpg" />
       <div className="container JYcontainer">
         <div className="row">
           <ClassListCategory

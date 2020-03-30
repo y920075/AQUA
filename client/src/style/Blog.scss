@@ -27,13 +27,14 @@ $O: #fa5d07;
   .category {
     margin-bottom: 3.125rem;
 
-    a {
+    span, a {
       color: $Lg;
       background: $Lbg;
       padding: 5px 15px;
       margin: 5px 5px;
 
       &:hover {
+        cursor: pointer;
         background: $Lb;
         color: #000;
       }
@@ -58,8 +59,6 @@ $O: #fa5d07;
     perspective: 100px;
 
     .card {
-      // visibility: hidden;
-      font-weight: bold;
       color: $Dg;
       width: 21rem;
       margin-bottom: 50px;
@@ -67,7 +66,7 @@ $O: #fa5d07;
       transition: 0.5s;
 
       &:hover {
-        transform: matrix3d(0.99, 0, 0.00, 0, 0.00, 0.99, 0.00, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+        transform: matrix3d(0.995, 0, 0.00, 0, 0.00, 0.995, 0.00, 0, 0, 0, 1, 0, 0, 0, 0, 1);
         // transform: translateZ(-.4px);
         box-shadow: none;
         color: $Dg;
@@ -78,8 +77,11 @@ $O: #fa5d07;
       }
 
       .card-text {
-        font-weight: bold;
+        font-weight: 300;
         color: $Dg;
+        &:hover{
+          cursor:text
+        }
       }
 
       .card-body {
@@ -90,7 +92,6 @@ $O: #fa5d07;
         a {
           color: $Dg;
           text-decoration: none;
-          // font-weight: bold;
         }
 
         .card-title {
@@ -123,52 +124,6 @@ $O: #fa5d07;
       margin-bottom: 30px;
       order: -1;
     }
-  }
-
-  .page {
-    margin-top: 30px;
-
-    ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-
-      .ative {
-        background-color: $O;
-      }
-
-      li {
-        width: 30px;
-        height: 30px;
-        // border: 1px rgb(255, 255, 255) solid;
-        border-radius: 50%;
-        background-color: $Lbg;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        margin: 0 3px;
-
-        &:hover {
-          background-color: $O;
-        }
-
-        .ative {
-          background-color: $O;
-        }
-
-        a {
-          padding: 10px;
-          color: $Lg;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 576px) {
-    .page {
-      order: 1;
-    }
-
   }
 
 }
