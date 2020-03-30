@@ -5,46 +5,7 @@ $Lg: #e2e4e8;
 $Lb: #47c9e5;
 $O: #fa5d07;
 
-body {
-  height: 300vh;
-  background-color: #132948;
-}
 
-.navbar-shopping-cart-icon {
-  opacity: 0.6;
-  /* position: relative; */
-}
-
-#num {
-  position: relative;
-}
-#num::after {
-  position: absolute;
-  content: '0';
-  display: block;
-  width: 16px;
-  height: 16px;
-  /* border: 1px solid red; */
-  background-color: red;
-  border-radius: 50%;
-  color: white;
-  font-size: 0.9rem;
-  top: 5%;
-  right: 5%;
-}
-@media (min-width: 576px) {
-  /* .member */
-}
-
-// p {
-//   color: $Lg;
-//   font-size: 16px;
-// }
-
-.items-card img {
-  /* object-fit: ; */
-  width: 220px;
-}
 .titlebarFix {
   height: 80px;
   width: 100%;

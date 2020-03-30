@@ -1,6 +1,10 @@
 import React from 'react'
+import Cookie from 'js-cookie'
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+
+import ProtectedRoute from './utils/ProtectedRoute'
+
 import Divelocation from './pages/divelocation/Divelocation'
 //賣家後台page
 import SellerBack from '../src/components/seller_back/SellerBack'
@@ -92,9 +96,9 @@ function App(props) {
           </Route>
 
           {/* Member Routes */}
-          <Route path="/memberuser">
-            <MemberUser />
-          </Route>
+          <ProtectedRoute path="/memberuser">
+            <MemberUser isAuth={!!Cookie.get('token')} />
+          </ProtectedRoute>
           <Route path="/memberlogin">
             <MemberLogin />
           </Route>

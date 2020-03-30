@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 -- 資料表結構 `blog_category`
 --
 
-DROP TABLE IF EXISTS `blog_category`;
 CREATE TABLE `blog_category` (
   `categoryId` int(11) NOT NULL,
   `categoryName` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '類型名稱',

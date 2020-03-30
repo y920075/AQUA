@@ -32,12 +32,12 @@ function Home() {
       <div className="CW index" id="fullpage">
         <section className="index-video overflow-hidden">
           <div className="index-video-bg">
-            {/* <video
+            <video
               src="http://127.0.0.1:5000/video/indexvideo.mp4"
               loop
               autoPlay
               muted
-            ></video> */}
+            ></video>
           </div>
           <div className="index-video-title"></div>
           <div className="index-video-arrow"></div>

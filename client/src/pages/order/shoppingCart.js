@@ -342,7 +342,7 @@ function ShoppingCart(props) {
           // console.log(x)
         }
       }
-      console.log(inneritems)
+      // console.log(inneritems)
       //計算陣列裡面的物件值
       function countObj(array, key) {
         return array.reduce(function(r, a) {
@@ -356,6 +356,65 @@ function ShoppingCart(props) {
         for (let x = 0; x < items.length; x++) {
           ItemTotalPrice +=
             items[x].amount * items[x].price - newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'PMI' &&
+      newCoup.itemType == '潛水配件'
+    ) {
+      //特定商品超過金額減價
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c005') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c005'
+          })
+          // console.log(x)
+        }
+      }
+      console.log(inneritems)
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+      let objPrice = countObj(inneritems, 'price')
+      if (objAmount * objPrice >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price - newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'PII' &&
+      newCoup.itemType == '潛水配件'
+    ) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c005') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c005'
+          })
+          // console.log(x)
+        }
+      }
+      console.log(inneritems)
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+      let objPrice = countObj(inneritems, 'price')
+      if (objAmount * objPrice >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price * newCoup.goods_pri_perc
         }
         return ItemTotalPrice
       }

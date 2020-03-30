@@ -9,9 +9,9 @@ const getTIdeData = require('./location/gettideinfo')
 const getWeekDate =  require('./location/getweekweather')
 const getnowseastate = require('./location/getnowseastate')
 //執行資料自動寫入DB
-// getTIdeData()
-// getWeekDate()
-// getnowseastate()
+getTIdeData()
+getWeekDate()
+getnowseastate()
 //一小時
 setInterval(()=>{
     getnowseastate()
