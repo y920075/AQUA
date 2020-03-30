@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   fetchLocationcomment,
-  fetchBlogcomment,
   Submmitlocationcomment,
 } from '../../actions/comment/comment_action'
 import withReactContent from 'sweetalert2-react-content'
@@ -24,23 +23,13 @@ export class Comment extends React.Component {
   }
   componentDidMount() {
     this.props.fetchLocationcomment()
-    this.props.fetchBlogcomment()
   }
   render() {
     let { locationcomment = [] } = this.props.Locationcomments
     const currentparams = this.props.match.params.LocationID
     let commenthere
     /// ===5 為地區 else為文章
-    if (currentparams.length === 5) {
-      commenthere = locationcomment.filter(
-        id => id.Locationid === currentparams
-      )
-    } else {
-      commenthere = locationcomment.filter(
-        id => id.Locationid === currentparams
-      )
-    }
-
+    commenthere = locationcomment.filter(id => id.Locationid === currentparams)
     let pageid = this.state.pageid
     let memberid = this.state.memberid
     let membername = this.state.membername
@@ -74,7 +63,7 @@ export class Comment extends React.Component {
         }
       })
     }
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div>
         <div className="commentboard">
@@ -140,13 +129,12 @@ export class Comment extends React.Component {
 const mapStateToProps = store => {
   return {
     Locationcomments: store.commentReducer.Locationcomment,
-    Blogcomment: store.commentReducer.Blogcomment,
   }
 }
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { fetchLocationcomment, fetchBlogcomment, Submmitlocationcomment },
+    { fetchLocationcomment, Submmitlocationcomment },
     dispatch
   )
 }
