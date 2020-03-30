@@ -102,6 +102,15 @@ const getNowCoupData = (state = {}, action) => {
       return state
   }
 }
+
+const getClickData = (state = {}, action) => {
+  switch (action.type) {
+    case 'GET_USER_CLICK':
+      return action.value
+    default:
+      return state
+  }
+}
 // const memberEmail = (state = {}, action) => {
 //   switch (action.type) {
 //     case 'STORE_EMAIL':
@@ -217,6 +226,7 @@ const sellerReducer = combineReducers({
   customermailtransfer,
   getNowCoupData,
   sellerClassData,
+  getClickData,
   cityData,
   distData,
   typeDataForSeller,

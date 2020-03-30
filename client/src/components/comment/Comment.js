@@ -110,10 +110,7 @@ export class Comment extends React.Component {
           })}
           <div className="d-flex comments">
             <Link to="">
-              <img
-                src="/images/divelocation/portrait_technique_0014.jpg"
-                alt=""
-              />
+              <img src="/images/member/nemo.jpg" alt="" />
             </Link>
             <div className="inputarea">
               <form>

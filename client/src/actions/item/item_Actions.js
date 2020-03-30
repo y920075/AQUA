@@ -79,3 +79,33 @@ export const getItemDetailDataAsync = itemId => {
     dispatch(getItemDetailData(data))
   }
 }
+
+//點擊時更新資料庫的使用者點擊資料
+export const onClickUpdate = data => ({
+  type: 'CLICK_UPDATE',
+  value: data,
+})
+
+export const onClickUpdateAsync = updatedata => {
+  console.log(updatedata)
+  return async dispatch => {
+    const json = JSON.stringify(updatedata)
+    const request = new Request(
+      'http://127.0.0.1:5000/seller/customermanager/user-click-update',
+      {
+        method: 'POST',
+        body: json,
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    // console.log(data)
+    dispatch(onClickUpdate(data))
+  }
+}
+///user-click-update
