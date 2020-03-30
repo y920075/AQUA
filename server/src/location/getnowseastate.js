@@ -27,7 +27,7 @@ function getnowseastate(){
         const pureNEseastateinfo = NowNEseastateinfo.time
         const NEStationId = NowNEseastateinfo.stationId
         const NELocationName = NowNEseastateinfo.locationName
-        const NEobstime = pureNEseastateinfo.obsTime
+        const NEobstime = pureNEseastateinfo.obsTime.toString().split('+')[0]
         const NEseatemperature = (pureNEseastateinfo.weatherElement[8].elementValue.value * 0.1).toFixed(1).toString()
         const NEtemperature = (pureNEseastateinfo.weatherElement[7].elementValue.value * 0.1).toFixed(1).toString()
         const NEwaveheight = pureNEseastateinfo.weatherElement[9].elementValue.value
@@ -80,7 +80,7 @@ function getnowseastate(){
         const pureECseastateinfo = NowECseastateinfo.time
         const ECStationId = NowECseastateinfo.stationId
         const ECLocationName = NowECseastateinfo.locationName
-        const ECobstime = pureECseastateinfo.obsTime
+        const ECobstime = pureECseastateinfo.obsTime.toString().split('+')[0]
         const ECseatemperature = (pureECseastateinfo.weatherElement[8].elementValue.value * 0.1).toFixed(1).toString()
         const ECtemperature = (pureECseastateinfo.weatherElement[7].elementValue.value * 0.1).toFixed(1).toString()
         const ECwaveheight = pureECseastateinfo.weatherElement[9].elementValue.value
@@ -133,7 +133,7 @@ function getnowseastate(){
         const pureislandsseastateinfo = Nowislandsseastateinfo.time
         const islandsStationId = Nowislandsseastateinfo.stationId
         const islandsLocationName = Nowislandsseastateinfo.locationName
-        const islandsobstime = pureislandsseastateinfo.obsTime
+        const islandsobstime = pureislandsseastateinfo.obsTime.toString().split('+')[0]
         const islandsseatemperature = (pureislandsseastateinfo.weatherElement[8].elementValue.value * 0.1).toFixed(1).toString()
         const islandstemperature = (pureislandsseastateinfo.weatherElement[7].elementValue.value * 0.1).toFixed(1).toString()
         const islandswaveheight = pureislandsseastateinfo.weatherElement[9].elementValue.value
@@ -185,7 +185,7 @@ function getnowseastate(){
         const pureSCseastateinfo = NowSCseastateinfo.time
         const SCStationId = NowSCseastateinfo.stationId
         const SCLocationName = NowSCseastateinfo.locationName
-        const SCobstime = pureSCseastateinfo.obsTime
+        const SCobstime = pureSCseastateinfo.obsTime.toString().split('+')[0]
         const SCseatemperature = (pureSCseastateinfo.weatherElement[8].elementValue.value * 0.1).toFixed(1).toString()
         const SCtemperature = (pureSCseastateinfo.weatherElement[7].elementValue.value * 0.1).toFixed(1).toString()
         const SCwaveheight = pureSCseastateinfo.weatherElement[9].elementValue.value

@@ -25,7 +25,7 @@ function getweekDate(){
         const NEcapeweatherdata = NEcapedata[0].weatherElement
         const LocationName = NEcapedata[0].locationName
         for(i=0 ; i<14 ; i+=2){
-            let date = NEcapeweatherdata[0].time[i].startTime
+            let date = NEcapeweatherdata[0].time[i].startTime.toString().split('T')[0];
             let WeatherDescription =  NEcapeweatherdata[14].time[i].elementValue.value
             NEweekdata.push([
                 LocationName,
@@ -53,7 +53,7 @@ function getweekDate(){
         const ECcapeweatherdata = ECcapedata[0].weatherElement
         const LocationName = ECcapedata[0].locationName
         for(i=0 ; i<14 ; i+=2){
-            let date = ECcapeweatherdata[0].time[i].startTime
+            let date = ECcapeweatherdata[0].time[i].startTime.toString().split('T')[0];
             let WeatherDescription =  ECcapeweatherdata[14].time[i].elementValue.value
             ECweekdata.push([
                 LocationName,
@@ -82,7 +82,7 @@ function getweekDate(){
         const GIweatherdata = GIdata[0].weatherElement
         const GILocationName = GIdata[0].locationName
         for(i=0 ; i<14 ; i+=2){
-            let date = GIweatherdata[0].time[i].startTime
+            let date = GIweatherdata[0].time[i].startTime.toString().split('T')[0];
             let WeatherDescription =  GIweatherdata[14].time[i].elementValue.value
             islandsweekdata.push([
                 GILocationName,
@@ -96,7 +96,7 @@ function getweekDate(){
         const Iralaweatherdata = Iraladata[0].weatherElement
         const IralaLocationName = Iraladata[0].locationName
         for(i=0 ; i<14 ; i+=2){
-            let date = Iralaweatherdata[0].time[i].startTime
+            let date = Iralaweatherdata[0].time[i].startTime.toString().split('T')[0];
             let WeatherDescription =  Iralaweatherdata[14].time[i].elementValue.value
             islandsweekdata.push([
                 IralaLocationName,
@@ -123,7 +123,7 @@ function getweekDate(){
         const SCweatherdata = SCdata[0].weatherElement
         const LocationName = SCdata[0].locationName
         for(i=0 ; i<14 ; i+=2){
-            let date = SCweatherdata[0].time[i].startTime
+            let date = SCweatherdata[0].time[i].startTime.toString().split('T')[0];
             let WeatherDescription =  SCweatherdata[14].time[i].elementValue.value
             SCweekdata.push([
                 LocationName,
