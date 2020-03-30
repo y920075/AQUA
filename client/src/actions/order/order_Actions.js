@@ -47,6 +47,7 @@ export const memberCheckOutStep2Async = orderInfo => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(memberCheckOutStep2(data))
+    // window.location.href = '/member/created'
   }
 }
 
@@ -57,17 +58,22 @@ export const getOrderDetailData = data => ({
 
 export const getOrderDetailDataAsync = id => {
   console.log(id)
+  let query = `id=${id}`
   return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/member/checkout?${id}`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+    const request = new Request(
+      `http://127.0.0.1:5000/member/checkout?${query}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
+    console.log(data)
     dispatch(getOrderDetailData(data))
   }
 }
