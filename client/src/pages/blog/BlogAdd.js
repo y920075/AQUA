@@ -1,5 +1,5 @@
 import React ,{ useEffect, useState }from 'react'
-import {Link } from 'react-router-dom'
+import {Link,withRouter } from 'react-router-dom'
 
 
 import { connect } from 'react-redux'
@@ -171,9 +171,11 @@ function BlogAdd(props) {
                 <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
               </div>
                 <button 
+                  to="/blog"
                   onClick={e => {
                   e.preventDefault()
                   handleSubmit()
+                    props.history.push('/blog')
                   }}
                   className="badge badge-pill addSend" type="button"
                 >
@@ -205,5 +207,5 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ getBlogDataAsync, addContentDataAsync}, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(BlogAdd)
+export default withRouter( connect(mapStateToProps, mapDispatchToProps)(BlogAdd))
 // export default BlogAdd

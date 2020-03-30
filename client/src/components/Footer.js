@@ -18,7 +18,7 @@ function Footer() {
             關於AQUA
           </a>
         </div>
-        <p className="align-self-end col-sm-2">
+        <p className="align-self-end col-sm-3">
           Copyright © 2020 AQUA. All rights reserved.
         </p>
       </div>

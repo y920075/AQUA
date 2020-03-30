@@ -414,5 +414,38 @@ router.get('/user-coupondata',(req,res)=>{
  
 })
 
+router.post('/user-click-update',(req,res)=>{
+    console.log(req.body.clicknum)
+    const clickUpdateData = {
+        transferdata:req.body,
+        successful:false,
+        clickData:""
+    }
+    const update_click_sql = `UPDATE \`click_count\`
+                            SET \`click_total\` = \`click_total\` + ${req.body.clicknum}
+                            WHERE \`memberId\` = "M20010006"`
+    db.queryAsync(update_click_sql)
+     .then(result=>{
+        clickUpdateData.clickData = result
+        clickUpdateData.successful = true
+        res.json(clickUpdateData)
+     })
+})
+//從後端得到點擊次數
+router.get('/user-click-data',(req,res)=>{
+    const userClickData = {
+        transferdata:req.body,
+        successful:false,
+        userClick:""
+    }
+    const get_click_sql = `SELECT \`click_count\`.\`click_total\` FROM \`click_count\` WHERE \`click_count\`.\`memberId\` = "M20010006"`
+    db.queryAsync(get_click_sql)
+    .then(result=>{
+        userClickData.userClick = result
+        userClickData.successful = true
+       res.json(userClickData)
+    })
+
+})
 
 module.exports = router;
