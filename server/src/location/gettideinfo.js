@@ -126,7 +126,6 @@ function getTideDate(){
             const Lunardate = weekSCtideinfo[i].weatherElement[0].value
             const Tidalrange = weekSCtideinfo[i].weatherElement[1].value
             for(let e=0; e<dayTides.length; e++){
-                console.log('tideDate:', tideDate);
                 Tidedata.push([
                     SCStationId,
                     SCLocationName,

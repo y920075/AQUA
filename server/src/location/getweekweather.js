@@ -32,10 +32,8 @@ function getweekDate(){
                 date,
                 WeatherDescription,
             ])
-            // console.log(weekdata);
         }
         
-        // return console.log(weekdata);
         const deletedata = "DELETE FROM `location_weekweather` WHERE `locationName` = '貢寮區'"
         const sql = "INSERT INTO `location_weekweather` (`locationName`,`Date`,`WeatherDescription`) VALUES (?,?,?)"
             db.queryAsync(deletedata)
@@ -60,10 +58,8 @@ function getweekDate(){
                 date,
                 WeatherDescription,
             ])
-            // console.log(weekdata);
         }
         
-        // return console.log(ECweekdata);
         const deletedata = "DELETE FROM `location_weekweather` WHERE `locationName` = '豐濱鄉'"
         const sql = "INSERT INTO `location_weekweather` (`locationName`,`Date`,`WeatherDescription`) VALUES (?,?,?)"
             db.queryAsync(deletedata)
@@ -89,7 +85,6 @@ function getweekDate(){
                 date,
                 WeatherDescription,
             ])
-            // console.log(weekdata);
         }
         
         const Iraladata = allweekdata.filter(area => area.locationName === '蘭嶼鄉')
@@ -103,9 +98,7 @@ function getweekDate(){
                 date,
                 WeatherDescription,
             ])
-            // console.log(weekdata);
         }
-        // return console.log(islandsweekdata);
         const deletedata = "DELETE FROM `location_weekweather` WHERE `locationName` = '綠島鄉' OR `locationName` ='蘭嶼鄉'"
         const sql = "INSERT INTO `location_weekweather` (`locationName`,`Date`,`WeatherDescription`) VALUES (?,?,?)"
             db.queryAsync(deletedata)
@@ -130,10 +123,8 @@ function getweekDate(){
                 date,
                 WeatherDescription,
             ])
-            // console.log(weekdata);
         }
         
-        // return console.log(SCweekdata);
         const deletedata = "DELETE FROM `location_weekweather` WHERE `locationName` = '恆春鎮'"
         const sql = "INSERT INTO `location_weekweather` (`locationName`,`Date`,`WeatherDescription`) VALUES (?,?,?)"
             db.queryAsync(deletedata)
