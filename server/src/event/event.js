@@ -13,7 +13,7 @@ const router = express.Router();
 /*
     2020-03-10 注意事項
     取得經緯度的Google API key還沒輸入
-    要使用時 用API KEY 取代 'GOOGLE的APIKEY放這裡' 這段字
+    要使用時 用API KEY 取代 'GOOGLE的A1PIKEY放這裡' 這段字
 */
 
 
@@ -920,7 +920,7 @@ router.delete('/member/event/join/:eventId',upload.none(), async (req,res)=>{
 */
 
 router.delete('/member/event/unjoin/:eventId',upload.none(), async (req,res)=>{
-
+    
     let data = {
         'status' : 401,
         'msg' : '尚未登入'

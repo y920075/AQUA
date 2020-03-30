@@ -388,6 +388,7 @@ function MemberEditEvent(props) {
                             const memberId = event.target.getAttribute(
                               'data-memberId'
                             )
+                            console.log(memberId)
                             SweetAlert.sendConfirm(
                               '確定要取消嗎?',
                               setUnOtherJoinEventResponse,
