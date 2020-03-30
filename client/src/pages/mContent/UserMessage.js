@@ -83,6 +83,7 @@ function UserMessage(props) {
       roomId,
       message,
       memberId,
+      loginId,
     }
     ws.emit('ClientToServerMsg', sendMessageRequest)
     document.querySelector('input.messageInput').value = ''

@@ -88,7 +88,10 @@ function ShoppingCart(props) {
           orderData.orderItems = []
           // 購物完清掉 localstorage 購物車
           localStorage.removeItem('cart')
-          window.location.href = '/member/checkout'
+          // window.location.href = '/member/checkout'
+          props.history.push({
+            pathname: '/member/checkout',
+          })
         }
       })
     }
@@ -550,7 +553,7 @@ function ShoppingCart(props) {
   return (
     <>
       <Header handleDelete={handleDelete} />
-      <Banner BannerImgSrc="/images/ClassBanner.jpg" />
+      <Banner BannerImgSrc="/images/ShoppingBanner.jpg" />
       <div className="container CW">
         <div className="row CW-shoppingCart">
           <div className="col-12 cart-header">{/* <Breadcrumb /> */}</div>

@@ -14,8 +14,10 @@ router.get('/blog/', (req, res)=>{
         'status': 200,
         'msg': '請求成功',
         newpost:[],
-        result:[]
+        result:[],
+        menber_blog:[]
     }
+
     const searchType = req.query.blogInfoData ? `WHERE \`categoryName\`= "${req.query.blogInfoData}"`: '';
 
     const perPage = 50
@@ -37,6 +39,9 @@ router.get('/blog/', (req, res)=>{
             data.totalRows = totalRows
             data.totalPages = totalPages
             return db.queryAsync(sql);
+
+            // const menber_blogsql =`SELECT * FROM \`blog\` INNER JOIN \`my_member\` ON \`blog\`.\`menberId\` = \`my_member\`.\`memberId\`;
+            // return db.queryAsync(menber_blogsql);
         })
 
 .then(result=> {
@@ -44,6 +49,13 @@ router.get('/blog/', (req, res)=>{
     return db.queryAsync(categoryName_sql)
     
 })
+// .then(result=> {
+//     data.menber_blog = result
+//     const menber_blogsql = `SELECT \`blog\`.*,\`my_member\`.* FROM \`blog\` INNER JOIN \`my_member\` ON \`blog\`.\`menberId\` = \`my_member\`.\`memberId\``;
+//     return db.queryAsync(menber_blogsql);
+//     console.log(menber_blogsql)
+// })  
+
 .then(result=> {
     data.result = result
     const newpostsql = `SELECT * FROM \`blog\` ORDER BY id DESC LIMIT ${(page-1)*perPage}, ${perPage}`;
@@ -67,6 +79,8 @@ router.get('/blog/', (req, res)=>{
             return res.status(500).json(err)
         })
 })
+
+//取得測欄會員資料
 
 //取得評論資料
 router.get('/blog/comments', (_req, res)=>{
@@ -301,4 +315,3 @@ router.get('/admin1/:name?/:age?', (req, res)=>{
 })
 
 module.exports = router;
-

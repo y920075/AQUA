@@ -71,6 +71,10 @@ function BlogAdd(props) {
               <div>
                 <p>修改</p>
               </div>
+              {props.blogData.result ? (props.blogData.result.map((value , index)=>{
+              if( value.id==props.match.params.id)
+               return (
+                <>
               <div className="d-flex form-group mb-3">
                 <input
                   type="text"
@@ -102,7 +106,7 @@ function BlogAdd(props) {
                     className="form-control addInput tagName2"
                   />
                   <label class="  addImg ml-3 mr-1 ">
-                    <h6>上傳圖片</h6>
+                    <h6>更改圖片</h6>
                     <input  className="inputavatar" type="file" onChange={(event) => handleChange(event)}   /> 
                   </label>
                   <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
@@ -116,7 +120,11 @@ function BlogAdd(props) {
                   </button>
                   </div>
                 </div>    
-                </div>
+               </>
+                )}
+            )) : ''}
+            </div>
+
               <BlogRelatedPost blogData={props.blogData}/>
             <div className="addHr">
               <hr align="left" />

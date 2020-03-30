@@ -168,7 +168,7 @@ function BlogAdd(props) {
 
                   /> 
                 </label>
-                <img className="blah" src={ avatarFile ? avatarFile: addImg, imgFile} width="40" height="40" />
+                <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
               </div>
                 <button 
                   onClick={e => {

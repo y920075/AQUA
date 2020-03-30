@@ -82,8 +82,8 @@
       }
 
       .memberAvatar {
-        width: 30px;
-        height: 30px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         overflow: hidden;
         img {
@@ -95,6 +95,7 @@
         margin-top: 10px;
         .otherName {
           margin: 0;
+          padding-left: 15px;
           font-size: 12px;
         }
         .msgTime {

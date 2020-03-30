@@ -126,13 +126,19 @@ function BlogContent(props) {
                 </div>
                 <div className="postTag">
                   <ul>
-                    <li>
-                      <Link to="">{value.categoryName}</Link>
+                  <li>
+                      <Link to="">
+                        <i class="far fa-thumbs-up"></i>
+                      </Link>
+                      {value.blogLike}
                     </li>
                     <li>
                       <Link to="">
-                        <i className="far fa-comment"> 0</i>
+                      <i class="far fa-comment-dots"></i>                      
                       </Link>
+                    </li>
+                    <li>
+                      <Link to={'/blog/'+value.id+'/edit'}><i class="far fa-edit"></i></Link>
                     </li>
                   </ul>
                 </div>

@@ -213,7 +213,7 @@ body {
           cursor: pointer;
         }
 
-        p {
+        h6 {
           margin: 10px 0 0 0;
           color: $Lg;
           font-weight: 300;
@@ -225,7 +225,7 @@ body {
       }
       img {
         border-radius: 6px;
-        //  background-color: white;
+         background-color: white;
         border: 1px $Lg solid;
       }
     }

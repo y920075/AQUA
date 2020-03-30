@@ -35,7 +35,6 @@ function Class(props) {
   //取得初始資料
   useEffect(() => {
     props.getTypeLevelDataAsync()
-    props.getClassDataAsync()
   }, [])
 
   useEffect(() => {
