@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 import {
   customerGetAsync,
@@ -52,10 +53,23 @@ function CustomerManager(props) {
   }
 
   function triggerDelete(index) {
-    if (window.confirm('你確定要刪除這個顧客嗎?')) {
-      customerdata.splice(index, 1)
-      setCustomerMail([...customerdata])
-    }
+    Swal.fire({
+      // title: 'Error!',
+      text: `確定刪除傳送的顧客嗎?`,
+      icon: 'warning',
+      confirmButtonText: '確定',
+      showCancelButton: true,
+      cancelButtonText: '取消',
+    }).then(result => {
+      if (result.value) {
+        customerdata.splice(index, 1)
+        setCustomerMail([...customerdata])
+      }
+    })
+    // if (window.confirm('你確定要刪除這個顧客嗎?')) {
+    // customerdata.splice(index, 1)
+    // setCustomerMail([...customerdata])
+    // }
   }
   const handleTransferData = e => {
     const mailData = {
