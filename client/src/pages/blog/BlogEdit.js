@@ -1,5 +1,5 @@
 import React ,{ useEffect,useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 
 import { connect } from 'react-redux'
@@ -149,5 +149,5 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ getBlogDataAsync }, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(BlogAdd)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogAdd))
 // export default BlogAdd
