@@ -11,6 +11,8 @@ import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Footer from '../../components/Footer'
 import BlogRside from '../../components/blog/BlogRside'
+import ScrollToTop from '../../components/blog/ScrollToTop'
+
 import BlogRelatedPost from '../../components/blog/BlogRelatedPost'
 
 import '../../style/BlogContent.scss'
@@ -30,13 +32,20 @@ function BlogContent(props) {
 
   const [error, setError] = useState(false)
   const [errorMessages, setErrorMessages] = useState([])
+  const [sendId, setSendId] = useState(props.match.params.id)
+
+
   useEffect(() => {
     props.getBlogDataAsync()
     props.getBlogCommentsDataAsync()
     props.addContentCommentsDataAsync()
   }, [])
+
+
+
   // console.log(getBlogCommentsDataAsync)
 
+  console.log(props.match.params.id)
 
 
   const handleSubmit = e=>{
@@ -49,12 +58,15 @@ function BlogContent(props) {
       }
 
       const addCommentsData = { 
-        cotentComments
+        cotentComments,
+        sendId
       }
     
       const commentsData_fd = new FormData()
       commentsData_fd.append('content', addCommentsData.cotentComments)
-    
+      commentsData_fd.append('sendId', addCommentsData.sendId)
+
+      
       props.addContentCommentsDataAsync(commentsData_fd, () => alert('成功新增'))
     
   }
@@ -106,6 +118,8 @@ function BlogContent(props) {
       <div className="container rao">
 
         {/* <!--blogContent--> */}
+        <ScrollToTop>
+
         <div className="row postContent">
 
           <div className=" col-md-8 " >
@@ -177,6 +191,7 @@ function BlogContent(props) {
                 <h5>評論</h5>
             </div>
             {props.blogCommentsData.result ? props.blogCommentsData.result.map((value, index) => {
+              if( value.blogId==props.match.params.id)
                return (
             <>
               <div className="commentContent ">
@@ -209,7 +224,7 @@ function BlogContent(props) {
                   onChange={event => setCotentComments(event.target.value)}
                   className="col-md-12"
                 />
-                
+                <input type="hidden" name="sendId" value={props.match.params.id} />
               </div>
               <div className="d-flex justify-content-end">
                 <button 
@@ -217,6 +232,8 @@ function BlogContent(props) {
                 onClick={e => {
                 e.preventDefault()
                 handleSubmit(e)
+                window.location.reload('false')
+                // props.history.push('/blog/' + props.match.params.id)
               }}
                 >
                   送出
@@ -228,6 +245,8 @@ function BlogContent(props) {
           </div>
           <BlogRside blogData={props.blogData}/>
         </div>
+        </ScrollToTop>
+
       </div>
     </>
   )
