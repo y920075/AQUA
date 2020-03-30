@@ -147,7 +147,7 @@ function Coupon(props) {
       <div className="row mt-5 ml-5">
         {hasloading ? <Loading /> : <CouponDetail status={props} />}
       </div>
-      <div className="row mt-5 ml-5">
+      {/* <div className="row mt-5 ml-5">
         <nav aria-label="...">
           <ul className="pagination">
             <li className="page-item">
@@ -178,7 +178,7 @@ function Coupon(props) {
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
     </div>
   )
 }
