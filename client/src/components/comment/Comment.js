@@ -17,7 +17,7 @@ export class Comment extends React.Component {
     this.state = {
       pageid: this.props.match.params.LocationID,
       memberid: localStorage.getItem('memberId'),
-      membername: 'Anna Tulius',
+      membername: '',
       commentitself: '',
     }
   }
@@ -28,20 +28,9 @@ export class Comment extends React.Component {
     let { locationcomment = [] } = this.props.Locationcomments
     const currentparams = this.props.match.params.LocationID
     let commenthere
-    /// ===5 為地區 else為文章
     commenthere = locationcomment.filter(id => id.Locationid === currentparams)
 
     const sentcommentdatatodb = () => {
-      this.setState({
-        // pageid: currentparams,
-        // memberid: 'M20010002',
-        // membername: 'Anna Tulius',
-      })
-
-      // let pageid = this.state.pageid
-      // let memberid = this.state.memberid
-      // let membername = this.state.membername
-      // let commentitself = this.state.commentitself
       let sentcommentdata = {
         pageid: this.state.pageid,
         memberid: this.state.memberid,

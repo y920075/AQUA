@@ -9,8 +9,13 @@ import {
 
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import '../../style/BlogRside.scss'
+import { animation } from 'react-reveal/globals'
 
 function BlogRside(props) {
+
+  const re = e =>{
+    window.scrollTo(0, 0)
+  }
   const [blogData, setBlogData] = useState([])
   // console.log(props)
   let tagNameData = [];
@@ -81,8 +86,14 @@ function BlogRside(props) {
             </ul>
           </div>
         </div>
-        <button className="scrolltop">
-        <i class="fas fa-angle-up fa-2x	"></i>        </button>
+        <button 
+                className="scrolltop"
+                onClick={e => {
+                  re(e)
+              }}
+        >
+        <i class="fas fa-angle-up fa-2x	"></i>        
+        </button>
 
       </div>
 
