@@ -97,7 +97,11 @@ $O: #fa5d07;
     }
 
     li {
+      font-size: 18px;
       margin: 0 5px;
+      &:hover{
+        cursor: pointer;
+      }
     }
   }
 
@@ -163,6 +167,7 @@ $O: #fa5d07;
       perspective: 1000px;
 
       img {
+        height: 100%;
         width: 100%;
         transition: 0.3s;
 

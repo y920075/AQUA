@@ -416,7 +416,7 @@ router.post('/member/event',upload.single('eventImg'),async (req,res)=>{
             eventImg = 'noImg.jpg'
         }
 
-        const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
+        const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=AIzaSyC3kp9ZM2JgqNLY4_xNhQQNUNAF-UmogvA`
         )
         axios.get(url)
         .then(async response=>{
@@ -557,7 +557,7 @@ router.put('/member/event/:eventId',upload.single('eventImg'),async (req,res)=>{
         let eventType = await eventSql.getEventType(req.body.eventTypeId)
         let eventImgName = 'noImg.jpg';
         
-        const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=GOOGLE的APIKEY放這裡`
+        const url = encodeURI(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.eventFullLocation}&key=AIzaSyC3kp9ZM2JgqNLY4_xNhQQNUNAF-UmogvA`
         )
         axios.get(url)
         .then(async response=>{

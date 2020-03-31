@@ -107,7 +107,7 @@ class event {
                             \`event_data\`.\`eventFullLocation\`,\`event_data\`.\`eventSponsor\`,
                             \`event_data\`.\`eventStartDate\`,\`event_data\`.\`eventEndDate\`,\`event_data\`.\`eventDesc\`,
                             \`event_data\`.\`eventNeedPeople\`,\`event_data\`.\`eventNowPeople\`,
-                            \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`
+                            \`event_data\`.\`eventImg\`,\`my_member\`.\`loginId\`,\`event_data\`.\`eventLocation_lat\`,\`event_data\`.\`eventLocation_lng\`
                      FROM \`event_data\` 
                      LEFT JOIN \`my_member\`
                      ON \`event_data\`.\`eventSponsor\` = \`my_member\`.\`memberId\`

@@ -448,4 +448,24 @@ router.get('/user-click-data',(req,res)=>{
 
 })
 
+
+
+router.get('/user-total-data',(req,res)=>{
+    const totalData = {
+        transferdata:req.body,
+        successful:false,
+        total:""
+    }
+
+    const get_total_sql = `SELECT SUM(checkPrice) AS sum_total FROM orders`
+    db.queryAsync(get_total_sql)
+    .then(result=>{
+        totalData.total = result
+        totalData.successful = true
+       res.json(totalData)
+    })
+
+})
+
+
 module.exports = router;
