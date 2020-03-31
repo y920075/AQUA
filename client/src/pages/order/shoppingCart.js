@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Swal from 'sweetalert2'
+import noImg from '../../image/image.png'
 // import Swal from 'sweetalert2/src/sweetalert2.js'
 import '../../style/CW_items.scss'
 
@@ -193,7 +194,6 @@ function ShoppingCart(props) {
   const hide = event => {
     setRodal({ visible: false })
   }
-  console.log(newCoup)
 
   const sum = items => {
     let total = 0
@@ -287,8 +287,8 @@ function ShoppingCart(props) {
   //生成item類型的優惠券函數
   //使用計算物件值的函式sumObj
   const handleItemSum = (items, newCoup) => {
-    console.log(newCoup)
-    console.log(items)
+    // console.log(newCoup)
+    // console.log(items)
     // let specificItemNum = 0
     let inneritems
     let innerAllAmount = 0
@@ -418,6 +418,275 @@ function ShoppingCart(props) {
         }
         return ItemTotalPrice
       }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'III' &&
+      newCoup.itemType == '自由潛水蛙鞋'
+    ) {
+      //特定商品超過件數打折
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c001') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c001'
+          })
+          // console.log(x)
+        }
+      }
+      //計算陣列裡面的物件值
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+
+      // console.log(objAmount)
+      if (objAmount >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price * (newCoup.goods_pri_perc / 10)
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'PMI' &&
+      newCoup.itemType == '自由潛水蛙鞋'
+    ) {
+      //特定商品超過金額減價
+      // console.log(items)
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c001') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c001'
+          })
+          // console.log(x)
+        }
+      }
+      // console.log(inneritems)
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+      let objPrice = countObj(inneritems, 'price')
+      if (objAmount * objPrice >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price - newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'IMI' &&
+      newCoup.itemType == '自由潛水蛙鞋'
+    ) {
+      //以下是超過件數減價
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c001') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c001'
+          })
+          // console.log(x)
+        }
+      }
+      // console.log(inneritems)
+      //計算陣列裡面的物件值
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+
+      // console.log(objAmount)
+      if (objAmount >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price - newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'PII' &&
+      newCoup.itemType == '自由潛水蛙鞋'
+    ) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c001') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c001'
+          })
+          // console.log(x)
+        }
+      }
+      console.log(inneritems)
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+      let objPrice = countObj(inneritems, 'price')
+      if (objAmount * objPrice >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price * newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'III' &&
+      newCoup.itemType == '防寒衣'
+    ) {
+      //特定商品超過件數打折
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c004') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c004'
+          })
+          // console.log(x)
+        }
+      }
+      //計算陣列裡面的物件值
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+
+      // console.log(objAmount)
+      if (objAmount >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price * (newCoup.goods_pri_perc / 10)
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'PMI' &&
+      newCoup.itemType == '防寒衣'
+    ) {
+      //特定商品超過金額減價
+      // console.log(items)
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c004') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c004'
+          })
+          // console.log(x)
+        }
+      }
+      // console.log(inneritems)
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+      let objPrice = countObj(inneritems, 'price')
+      if (objAmount * objPrice >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price - newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'IMI' &&
+      newCoup.itemType == '防寒衣'
+    ) {
+      //以下是超過件數減價
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c004') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c004'
+          })
+          // console.log(x)
+        }
+      }
+      // console.log(inneritems)
+      //計算陣列裡面的物件值
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+
+      // console.log(objAmount)
+      if (objAmount >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price - newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    } else if (
+      newCoup.hasOwnProperty('goods_coup_name') &&
+      newCoup.goods_coup_code.substr(0, 3) == 'PII' &&
+      newCoup.itemType == '防寒衣'
+    ) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].itemCategoryId == 'c004') {
+          // console.log(items.find(x => x.itemCategoryId === 'c005').amount)
+          inneritems = items.filter(function(item, index, array) {
+            return item.itemCategoryId === 'c004'
+          })
+          // console.log(x)
+        }
+      }
+      console.log(inneritems)
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objAmount = countObj(inneritems, 'amount')
+      let objPrice = countObj(inneritems, 'price')
+      if (objAmount * objPrice >= newCoup.goods_over) {
+        for (let x = 0; x < items.length; x++) {
+          ItemTotalPrice +=
+            items[x].amount * items[x].price * newCoup.goods_pri_perc
+        }
+        return ItemTotalPrice
+      }
+    }
+  }
+  // c004 防寒衣
+  //生成givi的函式
+  const handleGivi = (items, newCoup) => {
+    console.log(newCoup)
+    console.log(items)
+    // const transferGivi = {}
+
+    if (newCoup.hasOwnProperty('givi_coup_name')) {
+      function countObj(array, key) {
+        return array.reduce(function(r, a) {
+          return r + a[key]
+        }, 0)
+      }
+      let objGiviAmount = countObj(items, 'amount')
+      if (objGiviAmount >= newCoup.givi_over) {
+        const transferGivi = {
+          givi_name: newCoup.givi_coup_name,
+          givi_img: newCoup.givi_coup_img,
+        }
+        return transferGivi
+      }
     }
   }
   const coupTableData = props.userCouponData ? (
@@ -467,6 +736,7 @@ function ShoppingCart(props) {
                   order_pri_perc,
                   goods_pri_perc,
                   itemType,
+                  givi_coup_img,
                 })
               }}
             >
@@ -722,6 +992,7 @@ function ShoppingCart(props) {
                 </div>
                 <div className="d-flex justify-content-between">
                   <h5>折扣後金額</h5>
+
                   <h5>
                     NT$
                     {newCoup.hasOwnProperty('goods_coup_name')
@@ -730,10 +1001,30 @@ function ShoppingCart(props) {
                     {newCoup.hasOwnProperty('order_coup_name')
                       ? handleOrderSum(mycart, newCoup)
                       : ''}
-                    {newCoup.hasOwnProperty('givi_coup_name')
-                      ? handleOrderSum(sum(mycart), newCoup)
-                      : ''}
                   </h5>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <h5>贈品名</h5>
+                  <p>
+                    {newCoup.hasOwnProperty('givi_coup_name')
+                      ? handleGivi(mycart, newCoup).givi_name
+                      : ''}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <h5>贈品圖片</h5>
+                  <div className="mr-4">
+                    <img
+                      width="30"
+                      height="30"
+                      src={
+                        newCoup.hasOwnProperty('givi_coup_name')
+                          ? 'http://localhost:5000/images/coup/' +
+                            handleGivi(mycart, newCoup).givi_img
+                          : noImg
+                      }
+                    />
+                  </div>
                 </div>
                 <br />
                 <button
