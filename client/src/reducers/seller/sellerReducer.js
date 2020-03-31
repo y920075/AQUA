@@ -211,6 +211,14 @@ const SellerClassDetailData = (state = {}, action) => {
   }
 }
 
+const totalPrice = (state = {}, action) => {
+  switch (action.type) {
+    case 'TOTAL_DATA':
+      return action.value
+    default:
+      return state
+  }
+}
 //----------------------賣家中心課程相關reducer----------------
 
 // 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
@@ -227,6 +235,7 @@ const sellerReducer = combineReducers({
   getNowCoupData,
   sellerClassData,
   getClickData,
+  totalPrice,
   cityData,
   distData,
   typeDataForSeller,
