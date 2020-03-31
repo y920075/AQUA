@@ -1,0 +1,28 @@
+.footbody {
+  width: 100%;
+  min-height: 100px;
+  background-color: #31445f;
+  padding: 20px;
+  margin: 0;
+}
+
+.footlink {
+  margin-top: 10px;
+}
+
+.aqualogo {
+  width: 100px;
+  height: 30px;
+  background-image: url(../image/aquaLogo.png);
+  background-repeat: no-repeat;
+}
+
+.footlink a {
+  color: white;
+}
+
+.footbody p {
+  color: white;
+  margin-top: 10px;
+}
+/*# sourceMappingURL=common.css.map */

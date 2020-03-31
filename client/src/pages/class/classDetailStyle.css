@@ -1,0 +1,138 @@
+.JY-container-detail {
+  color: white;
+}
+
+.JY-container-detail h1 {
+  font-size: 1.875rem;
+  text-align: center;
+  margin-bottom: 1.875rem;
+}
+
+.JY-container-detail .classDataBox {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.JY-container-detail .classImgBox {
+  height: 19.063rem;
+}
+
+.JY-container-detail .classImgBox > img {
+  width: 100%;
+  height: 100%;
+}
+
+.JY-container-detail .classInfoBox .icons {
+  vertical-align: middle;
+}
+
+.JY-container-detail .classInfoBox ul {
+  padding-left: 0;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  list-style: none;
+}
+
+.JY-container-detail .classInfoBox ul li {
+  margin-right: 2.5rem;
+}
+
+.JY-container-detail .classInfoBox .classPrice {
+  margin: 1.875rem auto;
+  color: #d2b319;
+}
+
+.JY-container-detail .classInfoBox .btn-join {
+  width: 15rem;
+  height: 2.563rem;
+  margin: 0 15%;
+}
+
+.JY-container-detail .shopName {
+  margin: 0.625rem 0px;
+  text-align: center;
+}
+
+.JY-container-detail .shopNameBox {
+  border-bottom: 2px solid white;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.JY-container-detail .coachTitle {
+  margin: 1.875rem 0;
+  text-align: center;
+}
+
+.JY-container-detail .coachList {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  overflow: hidden;
+  padding: 0px 0px 1.875rem 0px;
+  border-bottom: 2px solid white;
+}
+
+.JY-container-detail .coachList .coachInfo {
+  min-width: 11.875rem;
+  min-height: 15rem;
+  min-height: 14.938rem;
+  background-color: white;
+  border-radius: 0.625rem;
+  color: #132948;
+  padding: 0 0.625rem;
+  margin: 0.875rem;
+}
+
+.JY-container-detail .coachList .coachInfo .avatarBox {
+  overflow: hidden;
+  width: 4.688rem;
+  height: 4.688rem;
+  border-radius: 50%;
+  margin: 0.938rem auto;
+}
+
+.JY-container-detail .coachList .coachInfo .avatarBox > img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.JY-container-detail .coachList .coachInfo .coachName p {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.JY-container-detail .coachList .coachInfo .coachEducation p {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.JY-container-detail .classDesc {
+  width: 100%;
+  background-color: white;
+  padding: 0.938rem;
+  margin-bottom: 6.25rem;
+  border-radius: 0.625rem;
+}
+
+.JY-container-detail .classDesc pre {
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  color: #132948;
+  white-space: pre-wrap;
+  /*css-3*/
+  white-space: -moz-pre-wrap;
+  /*Mozilla,since1999*/
+  white-space: -pre-wrap;
+  /*Opera4-6*/
+  white-space: -o-pre-wrap;
+  /*Opera7*/
+  word-wrap: break-word;
+  /*InternetExplorer5.5+*/
+}
+/*# sourceMappingURL=classDetailStyle.css.map */

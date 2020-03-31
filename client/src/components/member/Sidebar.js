@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import '../../style/HS.scss'
 import { bindActionCreators } from 'redux'
 
-// import kkk from '../../../public/images/member/nemp.jpg'
-
 //引入action
 import { memberLogoutAsync } from '../../actions/member/memberActions'
 import { connect } from 'react-redux'
@@ -12,16 +10,13 @@ import { connect } from 'react-redux'
 function Sidebar(props) {
   return (
     <>
-      {/* Sidebar */}
       <div>
-        {/* <img
+        <img
           className="rounded-circle avatar mb-5"
           src={'http://127.0.0.1:5000/images/memberImg/' + props.SidebarImgSrc}
           alt=""
-        ></img> */}
+        ></img>
       </div>
-      {/* <img className="rounded-circle avatar mb-5" src="../../../public/images/member/nemp.jpg" alt=""></img> */}
-      <img className="rounded-circle avatar mb-5" src="../" alt=""></img>
 
       <ul className="nav flex-column hssidebar" style={{ width: '150px' }}>
         <li className="nav-item">
@@ -64,7 +59,7 @@ function Sidebar(props) {
         </li>
         <li className="nav-item">
           <Link className="nav-link sidebarlink-hs" to="/memberuser/coupon">
-            <i className="far fa-envelope"></i>優惠券
+            <i class="fas fa-ticket-alt"></i>優惠券
           </Link>
         </li>
         <li className="nav-item">

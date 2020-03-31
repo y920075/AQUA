@@ -1,0 +1,62 @@
+.commentboard .comments {
+  background-color: #4E5F76;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.commentboard .comments a img {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  margin: 10px;
+  margin-left: 30px;
+}
+
+.commentboard .sign {
+  margin-top: 5px;
+  margin-left: 20px;
+}
+
+.commentboard .sign h6 {
+  margin-left: 10px;
+}
+
+.commentboard .comentitself {
+  margin-top: 5px;
+  margin-left: 20px;
+  width: 100%;
+}
+
+.commentboard .comentitself .satis {
+  color: #ff0000;
+}
+
+.commentboard .comentitself p {
+  width: 96%;
+}
+
+.commentboard .comentitself textarea {
+  height: 100px;
+  width: 90%;
+  color: #FFF;
+  background-color: #4E5F76;
+  margin-bottom: 10px;
+}
+
+.commentboard .inputarea {
+  width: 100%;
+}
+
+.commentboard .inputarea .sentcomment {
+  width: 92%;
+}
+
+.commentboard .inputarea .sentcomment button {
+  color: #FFF;
+  background-color: #31445f;
+}
+
+.commentboard .score h6 {
+  margin-top: 5px;
+}
+/*# sourceMappingURL=Comment.css.map */

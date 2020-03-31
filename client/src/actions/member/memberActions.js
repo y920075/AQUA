@@ -1,14 +1,11 @@
 import Swal from 'sweetalert2'
 import Cookie from 'js-cookie'
+
 //Register
-// action = {type, value}
-// type: ADD_VALUE, MINUS_VALUE
-// ex. action = {type: 'ADD_VALUE', value: 10}
 export const userRegister = userData => ({
   type: 'USER_REGISTER',
   data: userData,
 })
-
 export const userRegisterAsync = (userData, callback) => {
   return async dispatch => {
     const request = new Request('http://localhost:5000/members/memberlogin', {
@@ -19,9 +16,7 @@ export const userRegisterAsync = (userData, callback) => {
         'Content-Type': 'application/json',
       }),
     })
-
     console.log(JSON.stringify(userData))
-
     const response = await fetch(request)
     const data = await response.json()
     console.log(data)
@@ -64,9 +59,9 @@ export const userLoginAsync = (userData, callback) => {
         dispatch(userLogin(userData))
         // alert('登入')
         Swal.fire('歡迎回來!', 'Redirect in 3 seconds...!', 'success')
-        setTimeout(function() {
+        setTimeout(function () {
           window.location.href = './memberuser/user'
-        }, 3000)
+        }, 2000)
       } else {
         Swal.fire({
           icon: 'error',
@@ -92,7 +87,7 @@ export const getuserDetailData = data => ({
 
 export const getuserDetailDataAsync = memberId => {
   return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/members/M20030003`, {
+    const request = new Request(`http://127.0.0.1:5000/members/`, {
       method: 'GET',
       headers: new Headers({
         Accept: 'application/json',
@@ -104,9 +99,41 @@ export const getuserDetailDataAsync = memberId => {
     const response = await fetch(request)
     const data = await response.json()
     dispatch(getuserDetailData(data))
-    console.log(getuserDetailData(data))
+    // console.log(getuserDetailData(data))
   }
 }
+
+//update user info
+export const updateuserDetailData = data => ({
+  type: 'CHANGE_INFO',
+  value: data,
+})
+
+export const updateuserDetailDataAsync = (formData, memberId) => {
+  return async dispatch => {
+    const fd = new FormData()
+    fd.append('fullName', formData.fullName)
+    fd.append('mobileNumber', formData.mobileNumber)
+    fd.append('email', formData.email)
+    fd.append('address', formData.address)
+    const request = new Request(
+      `http://127.0.0.1:5000/members/`,
+      {
+        method: 'POST',
+        body: fd,
+        credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
+      })
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(updateuserDetailData(data))
+    console.log(updateuserDetailData(data))
+  }
+}
+
 
 //從賣家那裏得到優惠券的使用資料
 export const getUserCouponDetail = data => ({
