@@ -30,17 +30,17 @@ function Order(props) {
   return (
     <>
       <div className="container CW">
-        {orderData ? (
+        {orderData.length > 0 ? (
           <>
             <div className="col-12 CW-sellerOrder">
               <div className="card">
                 <div className="card-header bg-light d-flex justify-content-between">
-                  <h6>訂單編號：戴靖選品</h6>
+                  <h6>訂單編號：{orderData[0].orderId}</h6>
                   <h6>訂單狀態：待出貨</h6>
                 </div>
                 <div className="card-body">
                   <div className="col-12 d-flex justify-content-between">
-                    <h6>賣家編號：{orderData[0].orderId}</h6>
+                    <h6>賣家編號：{orderData[0].orderMemberId}</h6>
                     <h6>訂購時間：{orderData[0].created_at}</h6>
                   </div>
                   <div className="col-12 d-flex justify-content-between">
@@ -49,7 +49,7 @@ function Order(props) {
                   </div>
                   <div className="col-12 d-flex justify-content-between">
                     <h6>收件人：{orderData[0].recipName}</h6>
-                    <h6>寄送地址：{orderData.address}</h6>
+                    <h6>寄送地址：{orderData[0].address}</h6>
                   </div>
                   <div className="col-12 d-flex justify-content-between">
                     <h6>備註：{orderData[0].note}</h6>
@@ -70,7 +70,7 @@ function Order(props) {
                     <div className="col-2">小計</div>
                   </div>
                   {orderData
-                    ? orderData.orderItems.map((value, index) => {
+                    ? orderData.map((value, index) => {
                         return (
                           <div
                             className="row py-3 border-bottom order-item"
@@ -117,7 +117,7 @@ function Order(props) {
 }
 const mapStateToProps = store => {
   return {
-    sellerOrderData: store.orderReducer.orderData,
+    sellerOrderData: store.orderReducer.sellerOrderData,
   }
 }
 const mapDispatchToProps = dispatch => {

@@ -318,8 +318,9 @@ itemRouter.get('/member/checkout', (req, res)=>{
 
 // 賣家訂單列表
 itemRouter.get('/seller/orders', (req, res)=>{
+    console.log('賣家訂單列表')
     const sellerId = 'S20010001'
-    const sql = `SELECT \`orders\`.\`orderItemId\`, \`orders\`.\`checkPrice\`, \`orders\`.\`checkQty\`, \`orders\`.\`checkSubtotal\`, \`items\`.\`itemSize\`, \`items\`.\`itemId\`,\`items\`.\`itemName\`,\`recipient_info\`.\`recipName\`,\`recipient_info\`.\`addArea\`,\`recipient_info\`.\`address\`,\`recipient_info\`.\`phone\`,\`recipient_info\`.\`note\`,\`recipient_info\`.\`created_at\`
+    const sql = `SELECT \`orders\`.\`orderId\`,\`orders\`.\`orderMemberId\`,\`orders\`.\`orderItemId\`, \`orders\`.\`checkPrice\`, \`orders\`.\`checkQty\`, \`orders\`.\`checkSubtotal\`, \`items\`.\`itemSize\`, \`items\`.\`itemId\`,\`items\`.\`itemName\`,\`recipient_info\`.\`recipName\`,\`recipient_info\`.\`addArea\`,\`recipient_info\`.\`address\`,\`recipient_info\`.\`phone\`,\`recipient_info\`.\`note\`,\`recipient_info\`.\`created_at\`
     FROM \`orders\` 
     LEFT JOIN \`items\` 
     ON \`orders\`.\`orderItemId\` = \`items\`.\`itemId\` 

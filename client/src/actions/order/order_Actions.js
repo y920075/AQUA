@@ -74,12 +74,14 @@ export const getOrderDetailDataAsync = id => {
   }
 }
 
+
 export const getSellerOrderListData = data => ({
   type: 'GET_SELLERORDERDATA',
   value: data,
 })
 
 export const getSellerOrderListDataAsync = () => {
+  console.log('請求賣家訂單列表')
   return async dispatch => {
     const request = new Request(`http://127.0.0.1:5000/seller/orders`, {
       method: 'GET',
@@ -91,6 +93,7 @@ export const getSellerOrderListDataAsync = () => {
 
     const response = await fetch(request)
     const data = await response.json()
+    console.log(data)
     dispatch(getSellerOrderListData(data))
   }
 }
