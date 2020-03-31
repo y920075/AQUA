@@ -112,3 +112,28 @@ export const addContentDataAsync = (contentData, callback) => {
   }
 }
 
+//更新文章
+export const editContentData = data => ({
+  type: 'EDIT_CONTENTDATA',
+  value: data,
+})
+export const editContentDataAsync = (contentData, callback) => {
+  console.log(contentData)
+  return async dispatch => {
+    const request = new Request(
+      'http://localhost:5000/edit',
+      {
+        method: 'POST',
+        body: contentData,
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(editContentData(data))
+
+    // callback()
+  }
+}

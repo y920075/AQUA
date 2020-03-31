@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getBlogDataAsync } from '../../actions/blog/blog_Actions'
+import { getBlogDataAsync, editContentDataAsync} from '../../actions/blog/blog_Actions'
 
 
 import Header from '../../components/Header'
@@ -23,7 +23,7 @@ function BlogAdd(props) {
   const [blogData, setBlogData] = useState([])
   useEffect(() => {
     props.getBlogDataAsync()
-    // props.getAsideDataAsync()
+    props.editContentDataAsync()
   }, [])
 
   let relatedPostData = [];
@@ -33,6 +33,30 @@ function BlogAdd(props) {
     relatedPostData = relatedPostData.slice(0,3);
   }
 
+    console.log(props.blogData.result)
+  let blogItem = null
+  let blogItemTitle = ""
+
+  if(props.blogData.result){
+    blogItem=props.blogData.result.find((value , index)=>
+    value.id==props.match.params.id)
+    blogItemTitle = blogItem.blogTitle
+  }
+
+  console.log("blogItem",blogItem)
+ 
+
+  const [editContentTitle, setEditContentTitle] = useState(blogItemTitle);
+  const [editContentCategory, setEditContentCategory] = useState("");
+  const [editContent, setEditContent] = useState("");
+  const [editTag1, setEditTag1] = useState("");
+  const [editTag2, setEditTag2] = useState("");
+  const [imgFile, setImgFile] =  useState(null)
+  const [imgDataFiles, setImgDataFiles] =  useState(null)
+  const handleImgChange = event => {
+    setImgFile(URL.createObjectURL(event.target.files[0]))
+    setImgDataFiles(event.target.files[0])
+  }
   const [avatarFile, setAvatarFile] = useState('');
   const [avatarDataFiles, setAvatarDataFiles] = useState('');
   const handleChange = (event) => {
@@ -42,30 +66,31 @@ function BlogAdd(props) {
       setAvatarDataFiles(event.target.files[0])
   }
 
-  // const handleSubmit = (event)=>{
+  const handleSubmit = (event)=>{
 
 
-//     const editContentData = { 
-//       editTitle,
-//       editCategoryName,
-//       editContent,
-//       editTag1,
-//       editTag2,
-//       editImgDataFiles,
-//     }
+    const editContentData = { 
+      editContentTitle,
+      editContentCategory,
+      editContent,
+      editTag1,
+      editTag2,
+      imgDataFiles,
+    }
   
-//     const editContentData_fd = new FormData()
-//     editContentData_fd.append('blogTitle', addContentData.editTitle)
-//     editContentData_fd.append('categoryName', addContentData.editCategoryName)
-//     editContentData_fd.append('blogContent', addContentData.editContent)
-//     editContentData_fd.append('tagName1', addContentData.editTag1)
-//     editContentData_fd.append('tagName2', addContentData.editTag2)
-//     editContentData_fd.append('addImg', addContentData.editImgDataFiles,
-//     )
+    const editContentData_fd = new FormData()
+    editContentData_fd.append('blogTitle', editContentData.editContentTitle)
+    editContentData_fd.append('categoryName', editContentData.editContentCategory)
+    editContentData_fd.append('blogContent', editContentData.editContent)
+    editContentData_fd.append('tagName1', editContentData.editTag1)
+    editContentData_fd.append('tagName2', editContentData.editTag2)
+    editContentData_fd.append('addImg', editContentData.imgDataFiles)
+    editContentData_fd.append('id', props.match.params.id)
+    
   
-//     props.addContentDataAsync(editContentData_fd, () => alert('成功新增'))
+    props.editContentDataAsync(editContentData_fd, () => alert('成功新增'))
   
-// }
+}
 
 
   return (
@@ -99,6 +124,7 @@ function BlogAdd(props) {
               </div>
               {props.blogData.result ? (props.blogData.result.map((value , index)=>{
               if( value.id==props.match.params.id)
+
                return (
                 <>
               <div className="d-flex form-group mb-3">
@@ -107,11 +133,14 @@ function BlogAdd(props) {
                   type="text"
                   placeholder="請輸入標題"
                   className="form-control editInput"
-                  defaultValue={value.blogTitle}
+                  Value={editContentTitle}
+                  onChange={event => setEditContentTitle(event.target.value)}
                 />
                 <select className="custom-select"              
                         defaultValue={value.categoryName}
                         name="editCategoryName"
+                        onChange={event => setEditContentCategory(event.target.value)}
+
                 >
                   <option value='心得'>心得</option>
                   <option value='閒聊'>閒聊</option>
@@ -125,7 +154,9 @@ function BlogAdd(props) {
                 className="form-control mb-3"
                 placeholder="請輸入內文"
                 defaultValue={value.blogContent}
-              ></textarea>
+                onChange={event => setEditContent(event.target.value)}
+              >
+              </textarea>
               <div className="addFooter d-flex justify-content-between algin-content-center">
                 <div className="addTag d-flex">
                   <input
@@ -134,6 +165,7 @@ function BlogAdd(props) {
                     placeholder="輸入標籤"
                     className="form-control editInput tagName1"
                     defaultValue={value.tagName1}
+                    onChange={event => setEditTag1(event.target.value)}
                   />
                   <input
                     name="editTag2"
@@ -141,6 +173,7 @@ function BlogAdd(props) {
                     placeholder="輸入標籤"
                     className="form-control editInput tagName2"
                     defaultValue={value.tagName2}
+                    onChange={event => setEditTag2(event.target.value)}
                   />
                   <label class="  addImg ml-3 mr-1 ">
                     <h6>更改圖片</h6>
@@ -148,7 +181,10 @@ function BlogAdd(props) {
                           name="editImg"
                           className="inputavatar" 
                           type="file" 
-                          onChange={(event) => handleChange(event)}   
+                          onChange={event => {
+                                    handleChange(event)
+                                    handleImgChange(event)                 
+                                    }}    
                     /> 
                   </label>
                   <img className="blah" 
@@ -159,11 +195,11 @@ function BlogAdd(props) {
                     刪除
                   </button>
                   <button 
-                          // onClick={e => {
-                          // e.preventDefault()
-                          // handleSubmit()
-                          //   props.history.push('/blog')
-                          // }}
+                          onClick={e => {
+                          e.preventDefault()
+                          handleSubmit()
+                            // props.history.push('/blog')
+                          }}
                           className="badge badge-pill editSend" 
                           type="button"
                   >
@@ -192,13 +228,13 @@ function BlogAdd(props) {
 const mapStateToProps = store => {
   return {
     blogData: store.blogReducer.blogData,
-    // asideData: store.itemReducer.asideData,
+    editContentData: store.blogReducer.editContentData,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getBlogDataAsync }, dispatch)
+  return bindActionCreators({ getBlogDataAsync, editContentDataAsync}, dispatch)
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogAdd))
 // export default BlogAdd
