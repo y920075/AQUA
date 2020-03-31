@@ -38,7 +38,7 @@ function Divelocation() {
           </div>
         </section>
         <section className="divelocussection divelocusinfos">
-          <h1>潛點資訊</h1>
+          <h1 className="locationh1">潛點資訊</h1>
           <div className="row">
             <div className="col-sm-6">
               <Images />
@@ -49,11 +49,11 @@ function Divelocation() {
           </div>
         </section>
         <section className="divelocussection regionwether">
-          <h1>地區天氣預報與實時海象</h1>
+          <h1 className="locationh1">地區天氣預報與實時海象</h1>
           <Weather />
         </section>
         <section className="divelocussection">
-          <h1>潛友評論</h1>
+          <h1 className="locationh1">潛友評論</h1>
           <Comment />
         </section>
       </div>

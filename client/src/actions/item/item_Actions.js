@@ -4,8 +4,8 @@ export const getItemData = data => ({
   value: data,
 })
 
-export const getItemDataAsync = (type, brand, price, page) => {
-  console.log('fetch itemlist c,b,pri,pag', type, brand, price, page)
+export const getItemDataAsync = (type, brand, price, sort, page) => {
+  console.log('fetch itemlist c,b,pri,pag', type, brand, price, sort, page)
   return async dispatch => {
     let query = []
 
@@ -13,6 +13,7 @@ export const getItemDataAsync = (type, brand, price, page) => {
     if (brand) query.push(`brand=${brand.trim()}`)
     if (price) query.push(`price=${price.trim()}`)
     if (page) query.push(`page=${page.trim()}`)
+    if (sort) query.push(`sort=${sort.trim()}`)
     if (query.length > 0) {
       query = query.join('&')
     } else {

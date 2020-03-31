@@ -1,0 +1,68 @@
+.JY-Seller-Class {
+  background-color: white;
+}
+
+.JY-Seller-Class .card {
+  font-size: 16px;
+  margin-top: 30px;
+}
+
+.JY-Seller-Class .card .card-title {
+  font-size: 22px;
+}
+
+.JY-Seller-Class .card .card-body {
+  padding: 10px;
+}
+
+.JY-Seller-Class .card .classSellerImgBox {
+  height: 260px;
+}
+
+.JY-Seller-Class .card .classSellerImgBox img {
+  width: 100%;
+  height: 100%;
+}
+
+.JY-Seller-Class .card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.JY-Seller-Class .card ul li {
+  margin-right: 20px;
+}
+
+.JY-Seller-Class .card .buttons {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.JY-Seller-Class .card .buttons .btn {
+  margin: 0 15px;
+}
+
+.JY-Seller-Class .addClassForm textarea {
+  resize: none;
+}
+
+.JY-Seller-Class .addClassForm .classDescBox {
+  height: 93%;
+}
+
+.JY-Seller-Class .addClassForm .classDescBox .form-control {
+  height: 100%;
+}
+
+.JY-Seller-Class .btn-box {
+  margin-top: 30px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.JY-Seller-Class .btn-box .btn {
+  width: 300px;
+}
+/*# sourceMappingURL=SellerClass.css.map */

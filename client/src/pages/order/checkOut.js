@@ -41,20 +41,24 @@ function CheckOut(props) {
   orderInfo.phone = phone
   orderInfo.note = note
   function post() {
-    console.log(orderInfo)
-    // sendmail()
+    // console.log(orderInfo)
+    sendmail()
     props.memberCheckOutStep2Async(orderInfo)
   }
   // let member_email, member_name
   const sendmail = () => {
     let templateParams = {
       // userMail: `${member_email}`,
-      userEmail: `chuangwgfd@gmail.com`,
+      userEmail: `mfeeaqua@gmail.com`,
       // user:`${member_name}`,
-      user: `振維`,
+      user: `Harry`,
       orderId: `${props.orderData.orderId}`,
-      img:
-        "<img src='http://127.0.0.1:5000/images/locationImg/L0001-1.png'></img>",
+      y: new Date().getFullYear,
+      m: new Date().getMonth,
+      d: new Date().getDate,
+      h: new Date().getHours,
+      mi: new Date().getMinutes,
+      golink: "<a href='http://127.0.0.1:3000/member/myorder'>前往我的訂單</a>",
     }
 
     let service_id = 'wei-gmail'

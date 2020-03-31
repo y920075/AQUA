@@ -30,6 +30,25 @@ itemRouter.get('/items', (req, res)=>{
     if (req.query.brand && req.query.brand != 'all') where.push(`\`itemBrandId\` ='${req.query.brand}'`)
     if (req.query.price) where.push(`\`itemPrice\` > ${req.query.price.split(",")[0]} AND \`itemPrice\` < ${req.query.price.split(",")[1]}`)
     if(where.length>0){where = 'AND '+where.join(' AND ')}else{where=''}
+    let sort 
+    switch (req.query.sort) {
+        case '0':
+            sort = `\`itemPrice\` DESC`
+            break;
+        case '1':
+            sort = `\`itemPrice\` ASC`
+            break;
+        case '2':
+            sort = `\`itemName\` ASC`
+            break;
+        case '3':
+            sort = `\`updated_at\` ASC`
+            break;
+    
+        default:
+            sort = `\`itemPrice\` DESC`
+            break;
+    }
     
     console.log(where)
     
@@ -48,7 +67,7 @@ itemRouter.get('/items', (req, res)=>{
                 if (page<1) page= 1
                 if (page>totalPages) page = totalRows
                     
-                const sql = `SELECT MIN(\`itemId\`) AS itemId, \`itemName\`, \`itemImg\`, \`itemCategoryId\`, \`itemTypeId\`, \`itemBrandId\`, \`itemPrice\`  FROM \`items\` WHERE \`itemStatus\` = 'active' ${where} GROUP BY \`itemName\` ORDER BY \`updated_at\` DESC LIMIT  ${(page-1)*perPage}, ${perPage}`
+                const sql = `SELECT MIN(\`itemId\`) AS itemId, \`itemName\`, \`itemImg\`, \`itemCategoryId\`, \`itemTypeId\`, \`itemBrandId\`, \`itemPrice\`  FROM \`items\` WHERE \`itemStatus\` = 'active' ${where} GROUP BY \`itemName\` ORDER BY ${sort} LIMIT  ${(page-1)*perPage}, ${perPage}`
 
                 return db.queryAsync(sql)
             }

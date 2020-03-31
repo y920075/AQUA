@@ -1,0 +1,19 @@
+.bgSet {
+  background: #132948;
+  border-radius: 2rem 2rem 0 0;
+}
+
+.bg-btn-chin {
+  background-color: #f15a24;
+}
+
+.active-chin {
+  color: #f8d409 !important;
+}
+
+.input-style-chin {
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+/*# sourceMappingURL=Coupon.css.map */
