@@ -411,7 +411,7 @@ function CupItem(props) {
             <div className="form-group my-3">
               <label htmlFor="nameInput">優惠起始時間:</label>
               <input
-                type="date"
+                type="datetime-local"
                 name="coup_start"
                 className="form-control my-3"
                 id="nameInput"
@@ -423,7 +423,7 @@ function CupItem(props) {
             <div className="form-group my-3">
               <label htmlFor="nameInput">優惠結束時間:</label>
               <input
-                type="date"
+                type="datetime-local"
                 name="coup_end"
                 className="form-control my-3"
                 id="nameInput"
