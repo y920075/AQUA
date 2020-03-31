@@ -31,8 +31,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `blog_comments` (
   `commentsId` int(11) NOT NULL,
   `blogId` int(11) NOT NULL,
-  `mId` int(11) NOT NULL,
+  `mId` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mImg` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -40,13 +41,11 @@ CREATE TABLE `blog_comments` (
 -- 傾印資料表的資料 `blog_comments`
 --
 
-INSERT INTO `blog_comments` (`commentsId`, `blogId`, `mId`, `content`, `created_at`) VALUES
-(1, 32, 0, '這魚群也太美了吧!!!', '2020-03-25 21:50:59'),
-(2, 32, 0, '好可惜今年來不及報名，明年我不會錯過的!', '2020-03-25 21:52:58'),
-(3, 32, 0, '上一梯我有跟到，真的超美的喔。推薦大家(我不是工讀生XD', '2020-03-28 13:51:34'),
-(4, 32, 0, '這圖片太毒了拉 看了都想去', '2020-03-28 13:52:31'),
-(5, 32, 0, '.....只有我覺得圖片很噁嗎 這魚也太密集了吧', '2020-03-28 13:59:08'),
-(6, 32, 0, '+1...無法享受這圖片', '2020-03-28 13:59:31');
+INSERT INTO `blog_comments` (`commentsId`, `blogId`, `mId`, `content`, `mImg`, `created_at`) VALUES
+(1, 32, 'M20030001', '這魚群也太美了吧!!!', 'avatar1.jpg', '2020-03-25 21:50:59'),
+(2, 32, 'M20030034', '好可惜今年來不及報名，明年我不會錯過的!', 'avatar5.jpg', '2020-03-25 21:52:58'),
+(5, 32, 'M20870001', '.....只有我覺得圖片很噁嗎 這魚也太密集了吧', 'avatar4.jpg', '2020-03-28 13:59:08'),
+(6, 32, 'M20034441', '+1...無法享受這圖片', 'avatar3.jpg', '2020-03-28 13:59:31');
 
 --
 -- 已傾印資料表的索引
@@ -66,7 +65,7 @@ ALTER TABLE `blog_comments`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `blog_comments`
 --
 ALTER TABLE `blog_comments`
-  MODIFY `commentsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `commentsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
