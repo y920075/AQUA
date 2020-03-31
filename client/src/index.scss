@@ -193,12 +193,15 @@ div.collapse.navbar-collapse {
 
   .index {
     scroll-behavior: smooth;
+
     &-video {
       height: 100vh;
       position: relative;
+
       &-bg {
         color: #555555;
       }
+
       &-arrow {
         text-align: center;
         position: absolute;
@@ -209,12 +212,15 @@ div.collapse.navbar-collapse {
         text-decoration: none;
         transition: 1.5s;
         cursor: pointer;
+
         &:hover {
           transform: translate(-50%, 0);
         }
+
         p {
           margin-bottom: 0rem;
         }
+
         span {
           font-size: 2rem;
         }
@@ -245,7 +251,7 @@ div.collapse.navbar-collapse {
 
         .index-btn {
           position: absolute;
-          bottom: 40%;
+          bottom: 49%;
           right: 10%;
         }
 
@@ -282,8 +288,7 @@ div.collapse.navbar-collapse {
             left: 5%;
           }
 
-          &-weather {
-          }
+          &-weather {}
         }
 
         .legend {
@@ -293,6 +298,8 @@ div.collapse.navbar-collapse {
           bottom: -20px;
           border-radius: 0.25rem;
           background: #fff;
+          opacity: 1;
+
           img {
             max-height: 240px;
             object-fit: contain;
@@ -303,9 +310,9 @@ div.collapse.navbar-collapse {
 
     &-event {
       .container {
-        padding: 7rem 9rem 3rem;
+        padding: 7rem 5rem 3rem;
         position: relative;
-        border: 3px solid #fff;
+        // border: 3px solid #fff;
 
         .display-2 {
           position: absolute;
@@ -319,11 +326,49 @@ div.collapse.navbar-collapse {
         .event-wrapper {
           .row {
             margin: 0;
+
+            .big-box {
+              padding: 0 0 0.25rem 0;
+
+              &-l {
+                padding-right: 0.25rem;
+              }
+
+              &-r {
+                padding-left: 0.25rem;
+              }
+            }
+
+            .box {
+              &-t {
+                padding-bottom: 0.25rem;
+              }
+
+              &-l {
+                padding-right: 0.25rem;
+              }
+
+              &-r {
+                padding-left: 0.25rem;
+              }
+
+              &-b {
+                padding-top: 0.25rem;
+              }
+            }
+
           }
+
           .col-6,
           .col-3 {
             padding: 0;
-            background-color: rgba($color: #fff, $alpha: 0.8);
+            transition: .5s;
+
+            &:hover {
+              transform: translateY(-5%);
+            }
+
+            // background-color: rgba($color: #fff, $alpha: 0.8);
           }
         }
       }
@@ -354,11 +399,14 @@ div.collapse.navbar-collapse {
             color: #000000;
             text-align: center;
             transition: 0.5s;
+
             &-body {
               background-color: #ddd;
             }
+
             &:hover {
               transform: translateY(-5%);
+
               &::before {
                 content: '';
                 background-color: $color5;
@@ -369,6 +417,7 @@ div.collapse.navbar-collapse {
                 height: 100%;
                 opacity: 0.5;
               }
+
               // opacity: 1;
             }
           }
@@ -376,7 +425,6 @@ div.collapse.navbar-collapse {
       }
     }
 
-    &-footer {
-    }
+    &-footer {}
   }
 }

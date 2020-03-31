@@ -4,6 +4,11 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Cookie from 'js-cookie'
 
+//引入action
+import { memberLogoutAsync } from '../actions/member/memberActions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 function Header(props) {
   //console.log(props)
   const { handleDelete } = props
@@ -231,7 +236,13 @@ function Header(props) {
                   </button>
                 </Link>
               ) : (
-                <button type="button" className="btn btn-light btn-sm">
+                <button
+                  type="button"
+                  className="btn btn-light btn-sm"
+                  onClick={() => {
+                    props.memberLogoutAsync()
+                  }}
+                >
                   <i class="fas fa-door-open" style={{ fontSize: '20px' }}></i>
                   {/* <i class="fas fa-sign-out-alt" style={{fontSize:'20px'}}></i> */}
                 </button>
@@ -248,4 +259,19 @@ function Header(props) {
   )
 }
 
-export default Header
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {}
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      memberLogoutAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

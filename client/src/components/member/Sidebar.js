@@ -1,20 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import '../../style/HS.scss'
-// import kkk from '../../../public/images/member/nemp.jpg'
+import { bindActionCreators } from 'redux'
+
+//引入action
+import { memberLogoutAsync } from '../../actions/member/memberActions'
+import { connect } from 'react-redux'
+
 function Sidebar(props) {
   return (
     <>
-      {/* Sidebar */}
       <div>
-        {/* <img
+        <img
           className="rounded-circle avatar mb-5"
           src={'http://127.0.0.1:5000/images/memberImg/' + props.SidebarImgSrc}
           alt=""
-        ></img> */}
+        ></img>
       </div>
-      {/* <img className="rounded-circle avatar mb-5" src="../../../public/images/member/nemp.jpg" alt=""></img> */}
-      <img className="rounded-circle avatar mb-5" src="../" alt=""></img>
 
       <ul className="nav flex-column hssidebar" style={{ width: '150px' }}>
         <li className="nav-item">
@@ -57,7 +59,7 @@ function Sidebar(props) {
         </li>
         <li className="nav-item">
           <Link className="nav-link sidebarlink-hs" to="/memberuser/coupon">
-            <i className="far fa-envelope"></i>優惠券
+            <i class="fas fa-ticket-alt"></i>優惠券
           </Link>
         </li>
         <li className="nav-item">
@@ -66,7 +68,14 @@ function Sidebar(props) {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link sidebarlink-hs" to="/">
+          <Link
+            className="nav-link sidebarlink-hs"
+            to="/"
+            onClick={event => {
+              event.preventDefault()
+              props.memberLogoutAsync()
+            }}
+          >
             <i className="fas fa-sign-out-alt"></i>登出
           </Link>
         </li>
@@ -75,4 +84,19 @@ function Sidebar(props) {
   )
 }
 
-export default Sidebar
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {}
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      memberLogoutAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

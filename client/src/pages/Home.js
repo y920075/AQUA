@@ -37,12 +37,12 @@ function Home() {
       <div className="CW index" id="fullpage">
         <section className="index-video overflow-hidden">
           <div className="index-video-bg">
-            {/* <video
+            <video
               src="http://127.0.0.1:5000/video/indexvideo.mp4"
               loop
               autoPlay
               muted
-            ></video> */}
+            ></video>
           </div>
           <div className="index-video-title"></div>
           <Link
@@ -56,15 +56,6 @@ function Home() {
             <p>SCROLL</p>
             <span className="material-icons">keyboard_arrow_down</span>
           </Link>
-          {/* <a
-            className="index-video-arrow"
-            href="#location"
-            onMouseOver={event => {
-              // event.target.classList.add('fadeOutDown')
-              // event.stopPropagation()
-            }}
-          >
-          </a> */}
         </section>
         <section id="location" className="index-location">
           <Element name="test1" className="element">
@@ -92,7 +83,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/locationImg/L0001-1.png"
+                    src="http://127.0.0.1:5000/images/homeImg/L0001.png"
                     alt=""
                   />
                   <h1
@@ -116,7 +107,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/locationImg/L0001-2.png"
+                    src="http://127.0.0.1:5000/images/homeImg/L0002.png"
                     alt=""
                   />
                   <h1
@@ -139,7 +130,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/locationImg/L0001-3.jpg"
+                    src="http://127.0.0.1:5000/images/homeImg/L0003.png"
                     alt=""
                   />
                   <h1
@@ -162,7 +153,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/locationImg/L0001-4.jpg"
+                    src="http://127.0.0.1:5000/images/homeImg/L0004.png"
                     alt=""
                   />
                   <h1
@@ -185,7 +176,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="3000"
                     data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/locationImg/L0002-2.jpg"
+                    src="http://127.0.0.1:5000/images/homeImg/L0005.png"
                     alt=""
                   />
                   <h1
@@ -223,42 +214,42 @@ function Home() {
             </h1>
             <div className="event-wrapper">
               <div className="row ">
-                <div className="col-6" data-aos="fade-up">
+                <div className="col-6 big-box big-box-l" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                    src="http://127.0.0.1:5000/images/homeImg/E0001.jpg"
                     alt=""
                   />
                 </div>
-                <div className="col-6" data-aos="fade-up">
+                <div className="col-6 big-box big-box-r" data-aos="fade-up">
                   <div className="row">
-                    <div className="col-6" data-aos="fade-up">
+                    <div className="col-6 box-t box-l" data-aos="fade-up">
                       <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                        src="http://127.0.0.1:5000/images/homeImg/E0001.jpg"
                         alt=""
                       />
                     </div>
-                    <div className="col-6" data-aos="fade-up">
-                      <img
+                    <div className="col-6 box-t box-r" data-aos="fade-up">
+                      {/* <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                        src="http://127.0.0.1:5000/images/homeImg/E0002.jpg"
                         alt=""
-                      />
+                      /> */}
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-6" data-aos="fade-up">
+                    <div className="col-6 box-b box-l" data-aos="fade-up">
                       <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                        src="http://127.0.0.1:5000/images/homeImg/E0002.jpg"
                         alt=""
                       />
                     </div>
-                    <div className="col-6" data-aos="fade-up">
+                    <div className="col-6 box-b box-r" data-aos="fade-up">
                       <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                        src="http://127.0.0.1:5000/images/homeImg/E0003.jpg"
                         alt=""
                       />
                     </div>
@@ -266,31 +257,31 @@ function Home() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-3" data-aos="fade-up">
+                <div className="col-3 box-b box-l" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                    src="http://127.0.0.1:5000/images/homeImg/E0004.jpg"
                     alt=""
                   />
                 </div>
-                <div className="col-3" data-aos="fade-up">
+                <div className="col-3 box-b box-l box-r" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                    src="http://127.0.0.1:5000/images/homeImg/E0005.jpg"
                     alt=""
                   />
                 </div>
-                <div className="col-3" data-aos="fade-up">
+                <div className="col-3 box-b box-l box-r" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                    src="http://127.0.0.1:5000/images/homeImg/E0006.jpg"
                     alt=""
                   />
                 </div>
-                <div className="col-3" data-aos="fade-up">
+                <div className="col-3 box-b box-r" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                    src="http://127.0.0.1:5000/images/homeImg/E0007.jpg"
                     alt=""
                   />
                 </div>
@@ -362,9 +353,7 @@ function Home() {
           </div>
         </section>
         <section className="index-footer">
-          <div className="container">
-            <h1>回饋</h1>
-          </div>
+          <div className="container">{/* <h1>回饋</h1> */}</div>
           <Footer />
         </section>
       </div>

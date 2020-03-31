@@ -1,0 +1,247 @@
+.titlebarFix {
+  height: 80px;
+  width: 100%;
+  background-color: #132948;
+}
+
+.titlebar {
+  font-weight: bold;
+  height: 80px;
+  margin-bottom: 3.125rem;
+  background-color: #e2e4e8;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.titlebar ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.titlebar p {
+  margin: 0;
+  font-size: 22px;
+}
+
+.titlebar .container {
+  color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.titlebar .container h2 {
+  margin: 0;
+}
+
+.titlebar .container a {
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.rao ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rao a {
+  text-decoration: none;
+  color: black;
+}
+
+.rao .postImg {
+  height: 490px;
+  margin-bottom: 3.125rem;
+}
+
+.rao .postImg img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-box-shadow: 0px 0px 5px 5px #000000;
+          box-shadow: 0px 0px 5px 5px #000000;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.rao .postTitle h2 {
+  margin-bottom: 16px;
+  font-weight: bold;
+  color: #fa5d07;
+}
+
+.rao .postNav {
+  color: #e2e4e8;
+}
+
+.rao .postNav a {
+  color: #e2e4e8;
+  font-weight: 300;
+}
+
+.rao .postNav a:hover {
+  color: #47c9e5;
+}
+
+.rao .postNav li {
+  margin: 0 5px;
+}
+
+.rao .postBody p {
+  margin: 16px 0;
+  color: #e2e4e8;
+  font-size: 16px;
+}
+
+.rao .postBody hr {
+  width: 83%;
+  background: #e2e4e8;
+}
+
+.rao .postFooter h5 {
+  color: #fa5d07;
+}
+
+.rao .postFooter a {
+  display: block;
+  color: #e2e4e8;
+  background-color: #485a71;
+  margin: 0 5px 5px 5px;
+  padding: 0px 10px;
+}
+
+.rao .postFooter a:hover {
+  color: black;
+  background-color: #e2e4e8;
+}
+
+.rao .postFooter hr {
+  width: 83%;
+  background: #e2e4e8;
+}
+
+.rao .comment h5 {
+  color: #fa5d07;
+  margin-bottom: 16px;
+}
+
+.rao .commentContent {
+  border-radius: 6px;
+  background: #485a71;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  margin-bottom: 8px;
+}
+
+.rao .commentContent figure {
+  margin: 8px;
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 0.5px solid black;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.rao .commentContent figure img {
+  width: 100%;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.rao .commentContent figure img:hover {
+  /* transform: scale(1.1); */
+  -webkit-transform: translateZ(100px);
+          transform: translateZ(100px);
+}
+
+.rao .commentContent .commmentBody {
+  width: 100%;
+}
+
+.rao .commentContent .commmentBody a {
+  color: #e2e4e8;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.rao .commentContent .commmentBody a:hover {
+  color: #47c9e5;
+}
+
+.rao .commentContent .commmentBody .commentAuthor {
+  color: #e2e4e8;
+}
+
+.rao .commentContent .commmentBody time {
+  color: #132948;
+}
+
+.rao .commentContent .commmentBody .commmentbodyText p {
+  color: #e2e4e8;
+  font-size: 16px;
+}
+
+.rao .postComment h5 {
+  color: #fa5d07;
+}
+
+.rao .postComment .postcommentBody {
+  border-radius: 6px;
+  background-color: #485a71;
+  height: 200px;
+}
+
+.rao .postComment textarea {
+  height: 200px;
+  background-color: #485a71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  overflow: scroll-right;
+  padding: 15px;
+}
+
+.rao .postComment textarea {
+  height: 200px;
+  background-color: #485a71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  overflow: scroll-right;
+  padding: 15px;
+}
+
+.rao .postComment .contentSend {
+  font-size: 16px;
+  margin: 16px 0;
+  background-color: #485a71;
+  border: none;
+  color: #e2e4e8;
+  padding: 10px 40px;
+}
+/*# sourceMappingURL=BlogContent.css.map */

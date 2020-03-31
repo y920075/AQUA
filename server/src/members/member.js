@@ -104,7 +104,7 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
                 req.session.password = login_info.loginPwd;
                 req.session.username = login_info.loginId;
                 req.session.memberId = login_info.memberId;
-                res.cookie('token',login_info.token,{maxAge:1200000}) //設定cookie給前端
+                res.cookie('token',login_info.token,{maxAge:12000000}) //設定cookie給前端
                 res.json(login_info)//傳輸資料到前端
             } else {
                 res.json(login_info)
@@ -117,13 +117,12 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
 
 
 //會員更改資料
-memberRouter.get('/members/M20030003', (req, res) => {
-    // console.log('會員修改')
+memberRouter.get('/members', (req, res) => {
 // console.log(req)
     const memberObj = {
         result:"",
         success:false,
-        memberId:"M20030003",
+        memberId:req.session.memberId,
     }
     const memberId = req.params.memberId
     const sql = `SELECT 
@@ -134,7 +133,7 @@ memberRouter.get('/members/M20030003', (req, res) => {
                 \`address\`,
                 \`memberId\`,
                 \`JoinDate\`
-                FROM \`my_member\` WHERE \`memberId\`='M20030003'`
+                FROM \`my_member\` WHERE \`memberId\`='${req.session.memberId}'`
 
     db.queryAsync(sql)
         .then(r => {
@@ -142,7 +141,6 @@ memberRouter.get('/members/M20030003', (req, res) => {
             memberObj.success = true;
             // return res.status(200).json(r)
             // res.render('edit', {row: r[0]})
-            
             return res.json(memberObj)
         })
         .catch(err => {
@@ -150,12 +148,12 @@ memberRouter.get('/members/M20030003', (req, res) => {
         })
 })
 
-memberRouter.post('/members/M20030003', upload.single(), (req, res) => {
+memberRouter.post('/members', upload.single(), (req, res) => {
     console.log(req.session)
     const memberObj = {
         result:"",
         success:false,
-        memberId:"M20030003",
+        memberId:req.session.memberId,
         avatar:"DefaultImgage.jpg"
     }
     const sql = `UPDATE \`my_member\` SET 
@@ -172,7 +170,8 @@ memberRouter.post('/members/M20030003', upload.single(), (req, res) => {
         req.body.mobileNumber,
         req.body.email,
         req.body.address,
-        memberObj.memberId
+        req.session.memberId
+        // memberObj.memberId
         // req.params.memberId
     ])
         .then(r => {
@@ -184,6 +183,15 @@ memberRouter.post('/members/M20030003', upload.single(), (req, res) => {
             console.log('修改資料失敗')
             return res.json(err)
         })
+})
+
+//會員登出
+memberRouter.post('/logout',(req,res)=>{
+    delete req.session.memberId
+    res.json({
+        status:201,
+        msg:'登出成功'
+    })
 })
 
 module.exports = memberRouter;
