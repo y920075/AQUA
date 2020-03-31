@@ -14,6 +14,7 @@ import { onClickUpdateAsync } from '../../actions/item/item_Actions'
 import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import Footer from '../../components/Footer'
+import Store from '../../components/item/Store'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 
 function ItemDetail(props) {
@@ -41,7 +42,7 @@ function ItemDetail(props) {
       text: `商品已加入購物車`,
       icon: 'info',
       confirmButtonText: '確定',
-  })
+    })
   }
   //紀錄使用者到訪的資料
   function recordClick() {
@@ -161,6 +162,7 @@ function ItemDetail(props) {
               </div>
               <div className="col-4 d-none d-md-block">
                 <h4>賣場介紹</h4>
+                <Store />
               </div>
             </div>
           </div>
