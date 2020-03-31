@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import SweetAlert from '../class/SellerClassComponents/Sweetalert2'
 
 //引入自訂元件
@@ -88,8 +89,14 @@ function EventDetailDataContent(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-12 weatherTitle">
+            <div className="col-12 weatherTitle d-flex justify-content-center">
               <h2>{props.eventData.eventFullLocation + ' 附近的天氣'}</h2>
+              <a
+                href={`https://www.windy.com/${props.eventData.eventLocation_lat}/${props.eventData.eventLocation_lng}waves?waves,24.112,121.841,8,m:el8ajyf`}
+                target="_blank"
+              >
+                查看更詳細的天氣
+              </a>
             </div>
           </div>
           <EventWeatherContent weatherData={props.weatherData} />

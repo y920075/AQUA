@@ -144,7 +144,7 @@ function EventMapList(props) {
                   googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyC3kp9ZM2JgqNLY4_xNhQQNUNAF-UmogvA`}
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={
-                    <div style={{ width: `100%`, height: `1200px` }} />
+                    <div style={{ width: `100%`, height: `800px` }} />
                   }
                   mapElement={<div style={{ height: `100%` }} />}
                 />
