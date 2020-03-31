@@ -4,6 +4,7 @@ import SwitchPercent from './SwitchPercent'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import Swal from 'sweetalert2'
 
 import { insertSellerNewInsertCouponAsync } from '../../../../actions/seller'
 function CupGivi(props) {
@@ -148,7 +149,35 @@ function CupGivi(props) {
     coupon_fd.append('coup_end', coupData.coupEnd)
     coupon_fd.append('coup_times', coupData.coupTimes)
 
-    props.insertSellerNewInsertCouponAsync(coupon_fd, () => alert('成功新增'))
+    props.insertSellerNewInsertCouponAsync(coupon_fd, () => {
+      if (
+        coupData.coup_cate_id !== null &&
+        coupData.givi_name !== null &&
+        coupData.coupId !== null &&
+        coupData.coupCode !== null &&
+        coupData.coup_name !== null &&
+        coupData.coupDataFiles !== null &&
+        coupData.coupOver !== null &&
+        coupData.givipiece !== null &&
+        coupData.coupStart !== null &&
+        coupData.coupEnd !== null &&
+        coupData.coupTimes !== null
+      ) {
+        Swal.fire({
+          position: 'middle',
+          icon: 'success',
+          title: '新增成功呢！',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '難過的是...',
+          text: '有些錯誤發生,欄位是空的,請再檢查一次哦!',
+        })
+      }
+    })
     // console.log(props.insertSellerNewInsertCouponAsync());
   }
 
@@ -299,7 +328,7 @@ function CupGivi(props) {
             <div className="form-group my-3">
               <label htmlFor="nameInput">優惠起始時間:</label>
               <input
-                type="date"
+                type="datetime-local"
                 name="coup_start"
                 className="form-control my-3"
                 id="nameInput"
@@ -311,7 +340,7 @@ function CupGivi(props) {
             <div className="form-group my-3">
               <label htmlFor="nameInput">優惠結束時間:</label>
               <input
-                type="date"
+                type="datetime-local"
                 name="coup_end"
                 className="form-control my-3"
                 id="nameInput"

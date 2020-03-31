@@ -1,20 +1,15 @@
 import { combineReducers } from 'redux'
 
-// register, login, logout, get userinfo 
-
+// register, login, logout, get userinfo
 const user = (state = { isAuth: false }, action) => {
   switch (action.type) {
     case 'USER_REGISTER':
       return { ...action.value, isAuth: true }
-    // return action.value
     case 'USER_LOGIN':
       return { ...action.value, isAuth: true }
-    // return action.value
     case 'USER_LOGOUT':
-      return { isAuth: false }
-    // return action.value
-    case "GET_USERINFO":
-      // return action.value
+      return { ...action.value, isAuth: false }
+    case 'GET_USERINFO':
       return { ...action.value, isAuth: true }
     default:
       return state

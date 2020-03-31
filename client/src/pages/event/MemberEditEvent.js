@@ -385,9 +385,10 @@ function MemberEditEvent(props) {
                           class="btn btn-warning"
                           data-memberId={value.memberId}
                           onClick={event => {
-                            const memberId = event.target.getAttribute(
-                              'data-memberId'
-                            )
+                            const memberId = document
+                              .querySelector('button.btn.btn-warning')
+                              .getAttribute('data-memberId')
+                            console.log(memberId)
                             SweetAlert.sendConfirm(
                               '確定要取消嗎?',
                               setUnOtherJoinEventResponse,
@@ -398,10 +399,7 @@ function MemberEditEvent(props) {
                             )
                           }}
                         >
-                          <i
-                            class="fas fa-user-minus"
-                            data-memberId={value.memberId}
-                          ></i>
+                          <i class="fas fa-user-minus"></i>
                         </button>
                       </div>
                     </div>

@@ -15,8 +15,8 @@ export class Comment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pageid: '',
-      memberid: '',
+      pageid: this.props.match.params.LocationID,
+      memberid: localStorage.getItem('memberId'),
       membername: '',
       commentitself: '',
     }
@@ -28,24 +28,14 @@ export class Comment extends React.Component {
     let { locationcomment = [] } = this.props.Locationcomments
     const currentparams = this.props.match.params.LocationID
     let commenthere
-    /// ===5 為地區 else為文章
     commenthere = locationcomment.filter(id => id.Locationid === currentparams)
-    let pageid = this.state.pageid
-    let memberid = this.state.memberid
-    let membername = this.state.membername
-    let commentitself = this.state.commentitself
-    const sentcommentdatatodb = () => {
-      this.setState({
-        pageid: currentparams,
-        memberid: 'M20010002',
-        membername: 'Anna Tulius',
-      })
 
+    const sentcommentdatatodb = () => {
       let sentcommentdata = {
-        pageid,
-        memberid,
-        membername,
-        commentitself,
+        pageid: this.state.pageid,
+        memberid: this.state.memberid,
+        membername: this.state.membername,
+        commentitself: this.state.commentitself,
       }
       const MySwal = withReactContent(sweetalert)
 
@@ -63,7 +53,7 @@ export class Comment extends React.Component {
         }
       })
     }
-    // console.log(this.state)
+    console.log(this.state)
     return (
       <div>
         <div className="commentboard">

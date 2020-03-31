@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+
 
 import { connect } from 'react-redux'
 import { bindActionCreators, $CombinedState } from 'redux'
@@ -11,7 +13,6 @@ import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 import BlogRside from '../../components/blog/BlogRside'
 import ScrollToTop from '../../components/blog/ScrollToTop'
-import { Link, withRouter } from 'react-router-dom'
 import '../../style/Blog.scss'
 import _ from 'lodash'
 import RcViewer from '@hanyk/rc-viewer'
@@ -21,6 +22,7 @@ import sr from './ScrollReveal'
 import $ from 'jquery'
 
 function Blog(props) {
+
 
   function typeCategoryNameActive(event){
       //找到Zoom 移除標籤
@@ -74,6 +76,8 @@ function Blog(props) {
       <Header />
       <Banner BannerImgSrc="/images/blog/banner.jpg"/>
       <div className="container rao">
+      <ScrollToTop>
+
         {/* <!--category--> */}
         <div className="row">
           <div className="col-sm-12 d-flex justify-content-center">
@@ -226,12 +230,15 @@ function Blog(props) {
                   })
                 : ''}
             </div>
+
           </div>
           </Zoom>
           {/* <!--rSide--> */}
           <BlogRside blogData={props.blogData} />
         </div>
         {/* <Footer /> */}
+        </ScrollToTop>
+
       </div>
     </>
   )

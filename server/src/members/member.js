@@ -104,7 +104,7 @@ memberRouter.post('/members/login', upload.none(), (req, res) => {
                 req.session.password = login_info.loginPwd;
                 req.session.username = login_info.loginId;
                 req.session.memberId = login_info.memberId;
-                res.cookie('token',login_info.token,{maxAge:1200000}) //設定cookie給前端
+                res.cookie('token',login_info.token,{maxAge:12000000}) //設定cookie給前端
                 res.json(login_info)//傳輸資料到前端
             } else {
                 res.json(login_info)
@@ -183,6 +183,15 @@ memberRouter.post('/members', upload.single(), (req, res) => {
             console.log('修改資料失敗')
             return res.json(err)
         })
+})
+
+//會員登出
+memberRouter.post('/logout',(req,res)=>{
+    delete req.session.memberId
+    res.json({
+        status:201,
+        msg:'登出成功'
+    })
 })
 
 module.exports = memberRouter;

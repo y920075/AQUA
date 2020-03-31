@@ -1,6 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import '../../style/HS.scss'
+import { bindActionCreators } from 'redux'
+
+//引入action
+import { memberLogoutAsync } from '../../actions/member/memberActions'
+import { connect } from 'react-redux'
+
 function Sidebar(props) {
   return (
     <>
@@ -62,7 +68,14 @@ function Sidebar(props) {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link sidebarlink-hs" to="/">
+          <Link
+            className="nav-link sidebarlink-hs"
+            to="/"
+            onClick={event => {
+              event.preventDefault()
+              props.memberLogoutAsync()
+            }}
+          >
             <i className="fas fa-sign-out-alt"></i>登出
           </Link>
         </li>
@@ -71,4 +84,19 @@ function Sidebar(props) {
   )
 }
 
-export default Sidebar
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {}
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      memberLogoutAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

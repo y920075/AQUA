@@ -26,7 +26,7 @@ function getTideDate(){
         const LocationName = NEtideinfo[0].locationName
         
         for(i=0 ; i<weekNEtideinfo.length ; i++){
-            let tideDate = weekNEtideinfo[i].validTime.startTime
+            let tideDate = weekNEtideinfo[i].validTime.startTime.toString().split('T')[0];
             const dayTides = weekNEtideinfo[i].weatherElement[2].time
             const Lunardate = weekNEtideinfo[i].weatherElement[0].value
             const Tidalrange = weekNEtideinfo[i].weatherElement[1].value
@@ -38,7 +38,7 @@ function getTideDate(){
                     Lunardate,
                     Tidalrange,
                     dayTides[e].weatherElement[0].value,
-                    dayTides[e].weatherElement[1].value,
+                    dayTides[e].weatherElement[1].value.toString().split('+')[0],
                     dayTides[e].weatherElement[2].elementValue.value,
                 ]);
                 // console.log( dayTides[e].weatherElement[2])
@@ -52,7 +52,7 @@ function getTideDate(){
         const ECStationId = ECtideinfo[0].stationId
         const ECLocationName = ECtideinfo[0].locationName 
         for(i=0 ; i<weekECtideinfo.length ; i++){
-            let tideDate = weekECtideinfo[i].validTime.startTime
+            let tideDate = weekECtideinfo[i].validTime.startTime.toString().split('T')[0];
             const dayTides = weekECtideinfo[i].weatherElement[2].time
             const Lunardate = weekECtideinfo[i].weatherElement[0].value
             const Tidalrange = weekECtideinfo[i].weatherElement[1].value
@@ -64,7 +64,7 @@ function getTideDate(){
                     Lunardate,
                     Tidalrange,
                     dayTides[e].weatherElement[0].value,
-                    dayTides[e].weatherElement[1].value,
+                    dayTides[e].weatherElement[1].value.toString().split('+')[0],
                     dayTides[e].weatherElement[2].elementValue.value,
                 ]);
             }
@@ -75,7 +75,7 @@ function getTideDate(){
         const GIStationId = GItideinfo[0].stationId
         const GILocationName = GItideinfo[0].locationName 
         for(i=0 ; i<weekGItideinfo.length ; i++){
-            let tideDate = weekGItideinfo[i].validTime.startTime
+            let tideDate = weekGItideinfo[i].validTime.startTime.toString().split('T')[0];
             const dayTides = weekGItideinfo[i].weatherElement[2].time
             const Lunardate = weekGItideinfo[i].weatherElement[0].value
             const Tidalrange = weekGItideinfo[i].weatherElement[1].value
@@ -87,7 +87,7 @@ function getTideDate(){
                     Lunardate,
                     Tidalrange,
                     dayTides[e].weatherElement[0].value,
-                    dayTides[e].weatherElement[1].value,
+                    dayTides[e].weatherElement[1].value.toString().split('+')[0],
                     dayTides[e].weatherElement[3].elementValue.value,
                 ]);
             }
@@ -98,7 +98,7 @@ function getTideDate(){
         const OStationId = Otideinfo[0].stationId
         const OLocationName = Otideinfo[0].locationName 
         for(i=0 ; i<weekOtideinfo.length ; i++){
-            let tideDate = weekOtideinfo[i].validTime.startTime
+            let tideDate = weekOtideinfo[i].validTime.startTime.toString().split('T')[0];
             const dayTides = weekOtideinfo[i].weatherElement[2].time
             const Lunardate = weekOtideinfo[i].weatherElement[0].value
             const Tidalrange = weekOtideinfo[i].weatherElement[1].value
@@ -110,7 +110,7 @@ function getTideDate(){
                     Lunardate,
                     Tidalrange,
                     dayTides[e].weatherElement[0].value,
-                    dayTides[e].weatherElement[1].value,
+                    dayTides[e].weatherElement[1].value.toString().split('+')[0],
                     dayTides[e].weatherElement[3].elementValue.value,
                 ]);
             }
@@ -121,7 +121,7 @@ function getTideDate(){
         const SCStationId = SCtideinfo[0].stationId
         const SCLocationName = SCtideinfo[0].locationName 
         for(i=0 ; i<weekSCtideinfo.length ; i++){
-            let tideDate = weekSCtideinfo[i].validTime.startTime
+            let tideDate = weekSCtideinfo[i].validTime.startTime.toString().split('T')[0];
             const dayTides = weekSCtideinfo[i].weatherElement[2].time
             const Lunardate = weekSCtideinfo[i].weatherElement[0].value
             const Tidalrange = weekSCtideinfo[i].weatherElement[1].value
@@ -133,12 +133,13 @@ function getTideDate(){
                     Lunardate,
                     Tidalrange,
                     dayTides[e].weatherElement[0].value,
-                    dayTides[e].weatherElement[1].value,
+                    dayTides[e].weatherElement[1].value.toString().split('+')[0],
                     dayTides[e].weatherElement[2].elementValue.value,
                 ]);
             }
         }
         // return console.log(Tidedata);
+        
         const deletedata = "DELETE FROM `tide`"
         const sql = "INSERT INTO `tide` (`StationId`,`LocationName`,`Date`,`Lunardate`,`Tidalrange`,`Tidetype`,`Tidetime`,`Tideheight`) VALUES (?,?,?,?,?,?,?,?)"
             db.queryAsync(deletedata)

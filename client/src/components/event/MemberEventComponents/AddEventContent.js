@@ -212,7 +212,7 @@ function AddEventContent(props) {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-12">
                   <label htmlFor="">活動日期</label>
                   <input
                     type="datetime-local"
@@ -223,7 +223,7 @@ function AddEventContent(props) {
                     }}
                   />
                 </div>
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-12">
                   <label htmlFor="">報名截止日期</label>
                   <input
                     type="datetime-local"
@@ -234,17 +234,6 @@ function AddEventContent(props) {
                     }}
                   />
                 </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="">上傳一張圖片</label>
-                <input
-                  type="file"
-                  name="classImg"
-                  className="form-control-file"
-                  onChange={event => {
-                    setEventImg(event.target.files[0]) //設定活動圖片到本地state
-                  }}
-                />
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -258,6 +247,20 @@ function AddEventContent(props) {
                     }}
                   />
                 </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="">上傳一張圖片</label>
+                <input
+                  type="file"
+                  name="classImg"
+                  className="form-control-file"
+                  onChange={event => {
+                    setEventImg(event.target.files[0]) //設定活動圖片到本地state
+                    document.getElementById(
+                      'blah-JY'
+                    ).src = window.URL.createObjectURL(event.target.files[0])
+                  }}
+                />
               </div>
             </form>
           </div>
@@ -273,6 +276,9 @@ function AddEventContent(props) {
                 }}
               ></textarea>
             </div>
+          </div>
+          <div className="col-12 d-flex justify-content-center mb-3">
+            <img src="" alt="" id="blah-JY" />
           </div>
           <div className="col-12 btn-box d-flex">
             <button
