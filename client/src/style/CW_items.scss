@@ -453,6 +453,8 @@ $color5: #f15a24;
       }
     }
   }
+
+  &-sellerOrder {}
 }
 
 .active-chin-check {
@@ -464,4 +466,7 @@ $color5: #f15a24;
   background-image: url(../../src/image/customer/sale-tag.png);
   transition: ease 0.5;
   // // border: 4px solid $aquacolortwo !important;
+
+
+
 }

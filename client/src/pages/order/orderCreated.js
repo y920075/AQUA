@@ -71,7 +71,7 @@ function OrderCreated(props) {
                           >
                             <div className="col">
                               <span className="d-md-none d-inline">
-                                名稱：{' '}
+                                名稱：{value.itemName}
                               </span>
                               {value.itemName}
                             </div>
@@ -83,13 +83,13 @@ function OrderCreated(props) {
                             </div>
                             <div className="col-md-2">
                               <span className="d-md-none d-inline">
-                                數量：{' '}
+                                數量：{value.checkQty}
                               </span>
                               {value.checkQty}
                             </div>
                             <div className="col-md-2">
                               <span className="d-md-none d-inline">
-                                小計：{' '}
+                                小計：NT${value.checkPrice}
                               </span>
                               NT${value.checkPrice}
                             </div>
@@ -97,22 +97,6 @@ function OrderCreated(props) {
                         )
                       })
                     : ''}
-
-                  <div className="row py-3 border-bottom order-item">
-                    <div className="col">
-                      <span className="d-md-none d-inline">名稱：</span> C4 -
-                      DEEP SPEARO碳纖維長蛙鞋
-                    </div>
-                    <div className="col-md-2">
-                      <span className="d-md-none d-inline">規格：</span>S size
-                    </div>
-                    <div className="col-md-2">
-                      <span className="d-md-none d-inline">數量：</span>1
-                    </div>
-                    <div className="col-md-2">
-                      <span className="d-md-none d-inline">小計：</span>NT$11000
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

@@ -95,7 +95,19 @@ $color5: #f15a24;
 
         .card-body {
           max-height: 300px;
-          overflow: auto;
+          // overflow: auto;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: 6%;
+            bottom: 100%;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #fff;
+          }
+
 
           .cart-item {
             font-weight: 300;

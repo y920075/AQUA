@@ -20,7 +20,6 @@ export const memberCheckOutAsync = orderData => {
     })
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(memberCheckOut(data))
     // window.location.href = '/member/checkout'
   }
@@ -33,7 +32,6 @@ export const memberCheckOutStep2 = data => ({
 })
 
 export const memberCheckOutStep2Async = orderInfo => {
-  console.log(orderInfo)
   orderInfo = JSON.stringify(orderInfo)
   return async dispatch => {
     const request = new Request(`http://127.0.0.1:5000/member/orderInfo`, {
@@ -57,7 +55,6 @@ export const getOrderDetailData = data => ({
 })
 
 export const getOrderDetailDataAsync = id => {
-  console.log(id)
   let query = `id=${id}`
   return async dispatch => {
     const request = new Request(
@@ -73,7 +70,27 @@ export const getOrderDetailDataAsync = id => {
 
     const response = await fetch(request)
     const data = await response.json()
-    console.log(data)
     dispatch(getOrderDetailData(data))
+  }
+}
+
+export const getSellerOrderListData = data => ({
+  type: 'GET_SELLERORDERDATA',
+  value: data,
+})
+
+export const getSellerOrderListDataAsync = () => {
+  return async dispatch => {
+    const request = new Request(`http://127.0.0.1:5000/seller/orders`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+    dispatch(getSellerOrderListData(data))
   }
 }
