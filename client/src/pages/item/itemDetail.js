@@ -3,6 +3,8 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import '../../style/CW_items.scss'
+import Swal from 'sweetalert2'
+import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
 
 import { getItemDetailDataAsync } from '../../actions/item/item_Actions'
@@ -35,6 +37,11 @@ function ItemDetail(props) {
       }
       localStorage.setItem('cart', JSON.stringify(localCart))
     }
+    Swal.fire({
+      text: `商品已加入購物車`,
+      icon: 'info',
+      confirmButtonText: '確定',
+  })
   }
   //紀錄使用者到訪的資料
   function recordClick() {
