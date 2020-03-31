@@ -932,9 +932,7 @@ function ShoppingCart(props) {
                     {newCoup.hasOwnProperty('order_coup_name')
                       ? handleOrderSum(mycart, newCoup) - sum(mycart)
                       : ''}
-                    {newCoup.hasOwnProperty('givi_coup_name')
-                      ? handleOrderSum(sum(mycart), newCoup) - sum(mycart)
-                      : ''}
+                    {newCoup.hasOwnProperty('givi_coup_name') ? 0 : ''}
                   </span>
                 </div>
                 <br />
