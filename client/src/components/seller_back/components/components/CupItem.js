@@ -100,6 +100,7 @@ function CupItem(props) {
         text: '優惠名欄位是空的喔！',
         icon: 'warning',
         confirmButtonText: '確定',
+        timer: 4000,
       })
     } else if (!coupfile) {
       Swal.fire({
@@ -107,6 +108,7 @@ function CupItem(props) {
         text: '優惠圖片沒上傳喔！',
         icon: 'warning',
         confirmButtonText: '確定',
+        timer: 4000,
       })
     } else if (!coupOver) {
       Swal.fire({
@@ -114,6 +116,7 @@ function CupItem(props) {
         text: '超過模式沒填喔！',
         icon: 'warning',
         confirmButtonText: '確定',
+        timer: 4000,
       })
     } else if (!coupPercent) {
       Swal.fire({
@@ -121,6 +124,7 @@ function CupItem(props) {
         text: '折扣模式沒填喔！',
         icon: 'warning',
         confirmButtonText: '確定',
+        timer: 4000,
       })
     } else if (!coupStart) {
       Swal.fire({
@@ -128,6 +132,7 @@ function CupItem(props) {
         text: '折扣開始時間沒填喔！',
         icon: 'warning',
         confirmButtonText: '確定',
+        timer: 4000,
       })
     } else if (!coupEnd) {
       Swal.fire({
@@ -135,6 +140,7 @@ function CupItem(props) {
         text: '折扣結束時間沒填沒填喔！',
         icon: 'warning',
         confirmButtonText: '確定',
+        timer: 4000,
       })
     } else if (!coupTimes) {
       Swal.fire({
@@ -142,6 +148,7 @@ function CupItem(props) {
         text: '優惠券使用次數沒填喔！',
         icon: 'warning',
         confirmButtonText: '確定',
+        timer: 4000,
       })
     }
 

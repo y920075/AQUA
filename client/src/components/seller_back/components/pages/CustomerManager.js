@@ -77,7 +77,15 @@ function CustomerManager(props) {
       couponData: childcoupon,
     }
 
-    props.customerMailDataAsync(mailData, () => alert('成功傳送'))
+    props.customerMailDataAsync(mailData, () =>
+      Swal.fire({
+        position: 'middle',
+        icon: 'success',
+        title: '新增成功呢！',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    )
   }
   console.log(customerdata)
 
