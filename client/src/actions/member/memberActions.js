@@ -133,3 +133,31 @@ export const getUserCouponDetaiAsync = usercoupondata => {
     dispatch(getUserCouponDetail(data))
   }
 }
+
+//登出
+export const memberLogout = data => ({
+  type: 'USER_LOGOUT',
+  value: data,
+})
+
+export const memberLogoutAsync = () => {
+  return async dispatch => {
+    const request = new Request(`http://127.0.0.1:5000/logout`, {
+      method: 'POST',
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log(data)
+    if (data.status === 201) {
+      localStorage.removeItem('username')
+      localStorage.removeItem('memberId')
+      Cookie.remove('token')
+      Swal.fire('登出成功!', 'Redirect in 1 seconds...!', 'success')
+      setTimeout(function() {
+        window.location.href = './memberuser/login'
+      }, 1000)
+    }
+    dispatch(memberLogout(data))
+  }
+}
