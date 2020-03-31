@@ -1512,10 +1512,10 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@sweetalert2/theme-material-ui@^3.1.4":
+"@sweetalert2/theme-minimal@^3.1.4":
   version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@sweetalert2/theme-material-ui/-/theme-material-ui-3.1.4.tgz#94ba71623d095e18869741fc39ba88c44cd579fb"
-  integrity sha512-1GIptXeM0KD3MHs3EV9o9qMR52ysCDk5nq0IAhJeXonpkhdhycH7y1pxNiT4wx2Dd289tBKGeblCvHQnEyunDA==
+  resolved "https://registry.yarnpkg.com/@sweetalert2/theme-minimal/-/theme-minimal-3.1.4.tgz#d714ae2231ffc9f1af793e0c4fd6a1b165303023"
+  integrity sha512-0AG5dXi1H+ui2zbZGMBlGgn+qSD9U4wcXw1YkcUD1ymE58apdKxEd4IWtRGOdGohZXEijwXJE/dh+ZRkNjRKvg==
 
 "@testing-library/dom@^6.15.0":
   version "6.16.0"
@@ -10042,7 +10042,7 @@ react-scripts@3.4.0:
   optionalDependencies:
     fsevents "2.1.2"
 
-react-scroll@1.7.16:
+react-scroll@1.7.16, react-scroll@^1.7.16:
   version "1.7.16"
   resolved "https://registry.yarnpkg.com/react-scroll/-/react-scroll-1.7.16.tgz#814f0b97ed171aad1f27e45dad16a8444817fec8"
   integrity sha512-f4M5AdL+3cw3MJ7c/T0hPMY2iHCeQLDXV13lRanAFQ6JIt9xyAdHCpTH9mLUQt9SQh4pRarD+Qc7KhU6qMx3Yg==

@@ -8,7 +8,7 @@
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "@ckeditor/ckeditor5-theme-lark": "^18.0.0",
     "@hanyk/rc-viewer": "0.0.3",
-    "@sweetalert2/theme-material-ui": "^3.1.4",
+    "@sweetalert2/theme-minimal": "^3.1.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

@@ -40,7 +40,7 @@ $color5: #f15a24;
     }
   }
 }
-.memberimg{
+.memberimg {
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -53,6 +53,47 @@ $color5: #f15a24;
   .navbar-rside {
     .btn.btn-outline-light.btn-sm {
       margin-bottom: 0;
+    }
+
+    .avatar-wrapper {
+      margin-bottom: 0;
+      position: relative;
+
+      .card {
+        &-body {
+          padding: 1rem;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: 6%;
+            bottom: 100%;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #fff;
+          }
+        }
+
+        text-align: center;
+        width: 150px;
+        position: absolute;
+        top: 10px;
+        right: 0;
+        a {
+          font-size: 1rem;
+          padding: 0.2rem;
+          text-decoration: none;
+          color: $color1;
+          &:hover {
+            background-color: #eeeeee;
+          }
+        }
+        .btn {
+          font-size: 1rem;
+          width: 100%;
+        }
+      }
     }
 
     .avatar {
@@ -110,7 +151,6 @@ $color5: #f15a24;
             border-right: 10px solid transparent;
             border-bottom: 10px solid #fff;
           }
-
 
           .cart-item {
             font-weight: 300;
@@ -303,7 +343,8 @@ div.collapse.navbar-collapse {
             left: 5%;
           }
 
-          &-weather {}
+          &-weather {
+          }
         }
 
         .legend {
@@ -371,13 +412,12 @@ div.collapse.navbar-collapse {
                 padding-top: 0.25rem;
               }
             }
-
           }
 
           .col-6,
           .col-3 {
             padding: 0;
-            transition: .5s;
+            transition: 0.5s;
 
             &:hover {
               transform: translateY(-5%);
@@ -440,6 +480,7 @@ div.collapse.navbar-collapse {
       }
     }
 
-    &-footer {}
+    &-footer {
+    }
   }
 }

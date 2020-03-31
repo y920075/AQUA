@@ -13,6 +13,7 @@ function Header(props) {
   //console.log(props)
   const { handleDelete } = props
   const [showCart, setShowCart] = useState(false)
+  const [showMemberMenu, setShowMemberMenu] = useState(false)
   const [reload, setReload] = useState(false)
   const [count, setCount] = useState(0)
   const [mycart, setMycart] = useState([])
@@ -32,6 +33,11 @@ function Header(props) {
   // shopping cart toggle menu
   async function showMenu(event) {
     setShowCart(!showCart)
+    event.stopPropagation()
+  }
+  // shopping cart toggle menu
+  async function showMenu2(event) {
+    setShowMemberMenu(!showMemberMenu)
     event.stopPropagation()
   }
   // close toggle by click window
@@ -157,7 +163,7 @@ function Header(props) {
           </div>
           <div className="navbar-rside d-flex">
             {/* cart icon */}
-            <div className="navbar-cart mr-3 align-self-center">
+            <div className="navbar-cart mr-4 align-self-end">
               <img
                 className="navbar-shopping-cart-icon"
                 src="../images/logo/cart_icon.png"
@@ -237,25 +243,40 @@ function Header(props) {
                 </Link>
               ) : (
                 <div>
-                  <Link to="/memberuser">
+                  <figure className="avatar-wrapper">
                     <img
                       className="memberimg"
-                      src={require('../image/memberImage/avatar.png')}
-                    ></img>
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-light btn-sm"
-                    onClick={() => {
-                      props.memberLogoutAsync()
-                    }}
-                  >
-                    <i
-                      class="fas fa-door-open"
-                      style={{ fontSize: '20px' }}
-                    ></i>
-                    {/* <i class="fas fa-sign-out-alt" style={{fontSize:'20px'}}></i> */}
-                  </button>
+                      src={require('../image/memberImage/avatarDefult.jpg')}
+                      onClick={showMenu2}
+                    />
+                    {showMemberMenu ? (
+                      <div class="card mt-5" data-aos="zoom-in-down">
+                        <div class="card-body">
+                          <div class="border-bottom pb-3 d-flex flex-column justify-content-center">
+                            <Link to="/memberuser">會員中心</Link>
+                            <Link to="/memberuser/order">我的訂單</Link>
+                            <Link to="/memberuser/class">我的課程</Link>
+                            <Link to="/memberuser/event">我的揪團</Link>
+                            <Link to="/memberuser/blog">我的文章</Link>
+                            <Link to="/memberuser/coupon">我的優惠券</Link>
+                          </div>
+
+                          <button
+                            type="button"
+                            className="btn btn-sm mt-3"
+                            onClick={() => {
+                              props.memberLogoutAsync()
+                            }}
+                          >
+                            登出
+                            {/* <i class="fas fa-sign-out-alt" style={{fontSize:'20px'}}></i> */}
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </figure>
                 </div>
               )}
 
