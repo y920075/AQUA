@@ -17,6 +17,7 @@ import BlogRelatedPost from '../../components/blog/BlogRelatedPost'
 
 import '../../style/BlogEdit.scss'
 import addImg from '../../image/image.png'
+import Swal from 'sweetalert2'
 
 
 function BlogAdd(props) {
@@ -36,23 +37,35 @@ function BlogAdd(props) {
     console.log(props.blogData.result)
   let blogItem = null
   let blogItemTitle = ""
+  let blogItemCategory= ""
+  let blogItemContent= ""
+  let blogItemTag1 = ""
+  let blogItemTag2 = ""
+  let blogItemImg = ""
 
   if(props.blogData.result){
     blogItem=props.blogData.result.find((value , index)=>
     value.id==props.match.params.id)
+    
     blogItemTitle = blogItem.blogTitle
+    blogItemCategory = blogItem.categoryName
+    blogItemContent = blogItem.blogContent
+    blogItemTag1 = blogItem.tagName1
+    blogItemTag2 = blogItem.tagName2
+    blogItemImg = blogItem.blogImages
   }
 
   console.log("blogItem",blogItem)
+  console.log()
  
 
   const [editContentTitle, setEditContentTitle] = useState(blogItemTitle);
-  const [editContentCategory, setEditContentCategory] = useState("");
-  const [editContent, setEditContent] = useState("");
-  const [editTag1, setEditTag1] = useState("");
-  const [editTag2, setEditTag2] = useState("");
+  const [editContentCategory, setEditContentCategory] = useState(blogItemCategory);
+  const [editContent, setEditContent] = useState(blogItemContent);
+  const [editTag1, setEditTag1] = useState(blogItemTag1);
+  const [editTag2, setEditTag2] = useState(blogItemTag2);
   const [imgFile, setImgFile] =  useState(null)
-  const [imgDataFiles, setImgDataFiles] =  useState(null)
+  const [imgDataFiles, setImgDataFiles] =  useState(blogItemImg)
   const handleImgChange = event => {
     setImgFile(URL.createObjectURL(event.target.files[0]))
     setImgDataFiles(event.target.files[0])
@@ -88,8 +101,18 @@ function BlogAdd(props) {
     editContentData_fd.append('id', props.match.params.id)
     
   
-    props.editContentDataAsync(editContentData_fd, () => alert('成功新增'))
-  
+    props.editContentDataAsync(editContentData_fd)
+
+    Swal.fire(
+      '修改成功!',
+      '',
+      'success'
+    )
+
+        setTimeout(function () {
+          window.location.href = '/blog'
+        }, 1500)
+
 }
 
 
@@ -133,17 +156,16 @@ function BlogAdd(props) {
                   type="text"
                   placeholder="請輸入標題"
                   className="form-control editInput"
-                  Value={editContentTitle}
+                  value={editContentTitle}
                   onChange={event => setEditContentTitle(event.target.value)}
                 />
                 <select className="custom-select"              
-                        defaultValue={value.categoryName}
+                        defaultValue={editContentCategory}
                         name="editCategoryName"
                         onChange={event => setEditContentCategory(event.target.value)}
-
                 >
-                  <option value='心得'>心得</option>
-                  <option value='閒聊'>閒聊</option>
+                  <option value='潛點'>潛點</option>
+                  <option value='情報'>情報</option>
                   <option value='討論'>討論</option>
                   <option value='裝備'>裝備</option>
                   <option value='教學'>教學</option>
@@ -153,7 +175,7 @@ function BlogAdd(props) {
                 name="editContent"
                 className="form-control mb-3"
                 placeholder="請輸入內文"
-                defaultValue={value.blogContent}
+                value={editContent}
                 onChange={event => setEditContent(event.target.value)}
               >
               </textarea>
@@ -164,7 +186,7 @@ function BlogAdd(props) {
                     type="text"
                     placeholder="輸入標籤"
                     className="form-control editInput tagName1"
-                    defaultValue={value.tagName1}
+                    value={editTag1}
                     onChange={event => setEditTag1(event.target.value)}
                   />
                   <input
@@ -172,12 +194,13 @@ function BlogAdd(props) {
                     type="text"
                     placeholder="輸入標籤"
                     className="form-control editInput tagName2"
-                    defaultValue={value.tagName2}
+                    value={editTag2}
                     onChange={event => setEditTag2(event.target.value)}
                   />
                   <label class="  addImg ml-3 mr-1 ">
                     <h6>更改圖片</h6>
                     <input  
+                          value={setImgDataFiles}
                           name="editImg"
                           className="inputavatar" 
                           type="file" 
@@ -198,7 +221,6 @@ function BlogAdd(props) {
                           onClick={e => {
                           e.preventDefault()
                           handleSubmit()
-                            // props.history.push('/blog')
                           }}
                           className="badge badge-pill editSend" 
                           type="button"

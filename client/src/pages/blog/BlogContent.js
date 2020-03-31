@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getBlogDataAsync, getBlogCommentsDataAsync, addContentCommentsDataAsync } from '../../actions/blog/blog_Actions'
+import { getBlogDataAsync, getBlogCommentsDataAsync, addContentCommentsDataAsync} from '../../actions/blog/blog_Actions'
 
 
 import Header from '../../components/Header'
@@ -34,7 +34,10 @@ function BlogContent(props) {
   const [errorMessages, setErrorMessages] = useState([])
   const [sendId, setSendId] = useState(props.match.params.id)
 
-
+  //按讚、收藏
+  const [like , setLike] = useState (0)
+  const [heart, setHeart] = useState (0)
+  
   useEffect(() => {
     props.getBlogDataAsync()
     props.getBlogCommentsDataAsync()
@@ -70,8 +73,12 @@ function BlogContent(props) {
       props.addContentCommentsDataAsync(commentsData_fd, () => alert('成功新增'))
     
   }
-
-
+  const likeCount = e =>{
+    setLike(like+1)
+  }
+  const heartCount = e =>{
+    setHeart(heart+1)
+  }
 
 
 
@@ -85,7 +92,7 @@ function BlogContent(props) {
     relatedPostData = relatedPostData.slice(0,3);
   }
 
-  
+  console.log(like)
   return (
     <>
       <Header />
@@ -140,11 +147,11 @@ function BlogContent(props) {
                 </div>
                 <div className="postTag">
                   <ul>
-                  <li>
-                      <Link to="">
-                        <i class="far fa-thumbs-up"></i>
-                      </Link>
-                      {value.blogLike}
+                    <li onClick={e => likeCount(e)}>
+                      <i class="far fa-thumbs-up"></i>{like}
+                    </li>
+                    <li onClick={e => heartCount(e)}>
+                      <i class="far fa-heart"></i>{heart}
                     </li>
                     <li>
                       <Link to="">
@@ -201,7 +208,7 @@ function BlogContent(props) {
                 </figure>
                 <div className="commmentBody p-2">
                   <div className="commentAuthor">
-                    <Link to="">AUQA</Link>
+                    <Link to="">{value.mId}</Link>
                   </div>
                   <time>{value.created_at.substring(0, 16)}</time>
                   <div className="commmentbodyText">
@@ -258,7 +265,7 @@ const mapStateToProps = store => {
   return {
     blogData: store.blogReducer.blogData,
     blogCommentsData: store.blogReducer.blogCommentsData,
-    contentCommentsData: store.blogReducer.contentCommentsData
+    contentCommentsData: store.blogReducer.contentCommentsData,
   }
 }
 

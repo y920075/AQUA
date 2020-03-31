@@ -109,25 +109,51 @@ router.get('/blog/comments', (_req, res)=>{
         return res.status(500).json(err)
     })
 })
+//新增按讚、收藏
+// router.post('/blog/like', upload.none(), (req, res)=>{
+//     console.log(req.body)
+//     const sql =`UPDATE \`blog\` SET \`blogLike\`= \`blogLike\`+ ${req.body.blogLike}=? WHERE id=?`
+    
+//     db.queryAsync(sql, [
+//         req.body.blogLike,
+//         req.body.id
+//         ])
+
+//     .then(result=>{
+//         // comments.status = 202;
+//         // comments.commentsData = r;
+//         // comments.success = true;
+//         console.log('新增資料寫入成功')
+//         return res.json(result)
+//     })
+//     .catch(err=>{
+//          console.log(err)
+//     })
+
+// })
+
 
 //新增評論資料
 router.post('/blog/addComments', upload.none(), (req, res)=>{
-    console.log(req.body)
-    // res.json(req.body)
+    res.json(req.body)
     // 先檢查輸入
+    req.session.mId = "M20030099"
+    req.body.mImg = "avatar2.jpg"
+
     const comments = {
         success:false,
         error:'',
         status:0,
         body:req.body,
-        // commentsData: ""
     };
 
-    const sql ='INSERT INTO \`blog_comments\` (\`content\`, \`blogId\`) VALUES (?, ?)'
+    const sql ='INSERT INTO \`blog_comments\` (\`mId`\, \`content\`, \`blogId\`, \`mImg`\) VALUES (?, ?, ?, ?)'
 
     db.queryAsync(sql, [
-        req.body.content,   //content
-        req.body.sendId   
+        req.session.mId,
+        req.body.content,   
+        req.body.sendId,    
+        req.body.mImg
         ])
 
     .then(r=>{
@@ -136,11 +162,9 @@ router.post('/blog/addComments', upload.none(), (req, res)=>{
         comments.success = true;
         console.log('新增資料寫入成功')
         return res.json(comments)
-        // res.redirect(req.baseUrl + '/list')
     })
     .catch(err=>{
-        // console.log(err)
-         res.json(err)
+        //  res.render(err)
     })
 
     
@@ -207,7 +231,6 @@ router.post('/add', upload.single('addImg'), (req, res)=>{
          res.json(output);
     })
     .catch(error=>{
-        // console.log(error);
         return res.json(output);
     })
 })
@@ -284,37 +307,7 @@ router.post('/del/:id', (req, res)=>{
 
 
 
-// router.get('/edit/:blogId', (req, res)=>{
-//     console.log('123')
-//     const id = req.params.id;
-//     const sql = `SELECT * FROM \`blog\` WHERE id=${id}`;
-//     db.queryAsync(sql)
-//         .then(result=>{
-//             console.log(result)
-//             return res.json(result)
-//         })
-//         .catch(error=>{
-//             res.redirect(req.baseUrl);
-//         })
-//     //res.render('address-book/edit');
-// });
 
-//CRUD
-
-/*
-
-/list
-/list/:page?
-
-/insert -get
-/insert -post
-
-/edit/:sid -get
-/edit/:sid -post
-
-/del -get
-
-*/
 
 router.get('/admin1/:name?/:age?', (req, res)=>{
     res.json(req.params);
