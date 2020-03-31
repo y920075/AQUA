@@ -30,7 +30,6 @@ function MemberRegister(props) {
     let error = false
     if (password1 !== password2) {
       error = true
-      // alert('兩次密碼寫的不同')
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -62,10 +61,6 @@ function MemberRegister(props) {
     const request = new Request('http://localhost:5000/members/register', {
       method: 'POST',
       body: fd,
-      // headers: new Headers({
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      // }),
     })
 
     console.log(JSON.stringify(userData))

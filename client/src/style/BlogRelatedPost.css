@@ -1,0 +1,39 @@
+.relatedPost {
+  margin: 3.125rem 0px;
+  color: #e2e4e8;
+  font-weight: 300;
+}
+
+.relatedPost ul a {
+  color: #e2e4e8;
+}
+
+.relatedPost ul li {
+  width: 230px;
+  margin: 0 10px;
+}
+
+.relatedPost ul li figure {
+  border: 1px solid #c4cad1;
+  border-radius: 6px;
+  padding: 5px;
+  margin: 0;
+  height: 160px;
+}
+
+.relatedPost ul li figure:hover {
+  -webkit-box-shadow: 0 0 2px 2px #fa5d07;
+          box-shadow: 0 0 2px 2px #fa5d07;
+  cursor: -webkit-zoom-in;
+  cursor: zoom-in;
+  border-radius: 6px;
+}
+
+.relatedPost ul li figure img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 6px;
+  height: 100%;
+  width: 100%;
+}
+/*# sourceMappingURL=BlogRelatedPost.css.map */

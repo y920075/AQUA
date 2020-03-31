@@ -1,0 +1,241 @@
+.otherlogin {
+  color: #000000;
+}
+
+.servicelink {
+  color: #F15A24;
+}
+
+.entirepage-hs {
+  background-image: url("../image/ClassBanner.jpg");
+  background-repeat: no-repeat;
+}
+
+.avatar {
+  width: 130px;
+  height: 130px;
+}
+
+.sidebarlink-hs {
+  color: #FFFFFF;
+}
+
+.sidebarlink-hs:hover {
+  color: #F15A24;
+}
+
+.signincard-hs {
+  padding-top: 150px;
+  padding-bottom: 140px;
+  opacity: .92;
+}
+
+.hslogin a {
+  color: #000000;
+}
+
+.hslogin a i {
+  color: #009688;
+}
+
+.hslogin .btn.btn-info, .hslogin .btn-info.custom-file-control::before {
+  color: #F15A24;
+}
+
+.hslogin .sellerlogin {
+  margin-top: 20px;
+}
+
+.hslogin .sellerlogin a {
+  color: #F15A24;
+}
+
+.registerbg {
+  width: 100%;
+  height: 100%;
+}
+
+.hsregister .btn.btn-info,
+.hsregister .btn-info.custom-file-control::before {
+  color: #F15A24;
+}
+
+.hsregister .agreementlink {
+  color: #F15A24;
+}
+
+.registercard-hs {
+  padding-top: 150px;
+  padding-bottom: 100px;
+  opacity: 0.92;
+}
+
+.hshomepage {
+  height: 150vh;
+}
+
+.inputavatar {
+  width: 250px;
+  height: 40px;
+}
+
+.btn.btn-primary,
+.btn-primary.custom-file-control::before {
+  color: #F15A24;
+}
+
+.btn.btn-primary:hover,
+.btn-primary.custom-file-control:hover::before {
+  color: #F15A24;
+}
+
+.infocard-hs {
+  margin-bottom: 30px;
+  opacity: 0.92;
+  border-radius: 10px;
+}
+
+.pagetitle-hs {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.hrline-hs {
+  height: 1px;
+  background: #c4cad1;
+  border: none;
+}
+
+.avatar-hs {
+  margin-top: 10px;
+  height: 140px;
+}
+
+.input-hs {
+  text-align: center;
+}
+
+.hsclass li a {
+  color: #FFFFFF;
+}
+
+.hsclass li a:hover {
+  color: #F15A24;
+}
+
+.orderimg-hs {
+  width: 150px;
+  height: 150px;
+  margin-top: 30px;
+  border-radius: 5px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.orderselection-hs {
+  width: 90px;
+}
+
+.hsorder li a {
+  color: #FFFFFF;
+}
+
+.hsorder li a:hover {
+  color: #F15A24;
+}
+
+.classselection-hs {
+  width: 90px;
+}
+
+.classimg-hs {
+  width: 150px;
+  height: 150px;
+  margin-top: 30px;
+  border-radius: 5px;
+}
+
+.hsevent li a {
+  color: #FFFFFF;
+}
+
+.hsevent li a:hover {
+  color: #F15A24;
+}
+
+.eventselection-hs {
+  width: 90px;
+}
+
+.eventContent-MEMBER-JY {
+  max-height: 340px;
+}
+
+.eventContent-MEMBER-JY .col-sm-5, .eventContent-MEMBER-JY .col-sm-7 {
+  max-height: 340px;
+}
+
+.eventimg-hs {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.eventimg-hs img {
+  width: 100%;
+  height: 100%;
+}
+
+.itemId-JY {
+  margin: 0;
+}
+
+.card-header-jy {
+  min-height: 50px;
+}
+
+.addClassForm {
+  background-color: white;
+}
+
+.addClassForm textarea {
+  resize: none;
+}
+
+.addClassForm .classDescBox {
+  height: 88.3%;
+}
+
+.addClassForm .classDescBox .form-control {
+  height: 100%;
+}
+
+.btn-box {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.btn-box .btn {
+  width: 300px;
+}
+
+.select-jy {
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.switchbutton-jy {
+  min-height: 40px;
+  margin-right: 15px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.switchbutton-jy p {
+  margin: 0 5px 0 0;
+}
+/*# sourceMappingURL=HS.css.map */

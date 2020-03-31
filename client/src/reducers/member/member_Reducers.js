@@ -1,57 +1,21 @@
 import { combineReducers } from 'redux'
 
-// 第一步：建立reducer
-// action = {type, value}
-// type: ADD_VALUE, MINUS_VALUE
-// ex. action = {type: 'ADD_VALUE', value: 10}
-// const counter = (state = 0, action) => {
-//     switch (action.type) {
-//         case 'ADD_VALUE':
-//             return state + action.value
-//         case 'MINUS_VALUE':
-//             return state - action.value
-//         case 'INIT_VALUE':
-//             return action.value
-//         default:
-//             return state
-//     }
-// }
+// register, login, logout, get userinfo 
 
-//登入
-// action = {type, value}
-// type: ADD_VALUE, MINUS_VALUE
-// ex. action = {type: 'ADD_VALUE', value: 10}
-// const user = (state = { isAuth: true }, action) => {
-//   switch (action.type) {
-//     case 'USER_REGISTER':
-//       return { ...action.data, isAuth: true }
-//     case 'USER_LOGIN':
-//       return { ...action.data, isAuth: true }
-//     case 'USER_LOGOUT':
-//       return { isAuth: false }
-//     default:
-//       return state
-//   }
-// }
-
-const user = (state = {isAuth: false}, action) => {
+const user = (state = { isAuth: false }, action) => {
   switch (action.type) {
     case 'USER_REGISTER':
-      // action = {a: 1, b:2,}
-      // {a: action.a, b: action.b, c:3,d:4}
-      // {...action, c:3,d:4} es6
-      // Object.assign({}, action); es5
       return { ...action.value, isAuth: true }
-      // return action.value
+    // return action.value
     case 'USER_LOGIN':
       return { ...action.value, isAuth: true }
-      // return action.value
+    // return action.value
     case 'USER_LOGOUT':
       return { isAuth: false }
-      // return action.value
+    // return action.value
     case "GET_USERINFO":
       // return action.value
-      return{...action.value, isAuth:true}
+      return { ...action.value, isAuth: true }
     default:
       return state
   }
@@ -66,6 +30,18 @@ const userData = (state = {}, action) => {
       return state
   }
 }
+
+// change user info
+const changeData = (state = {}, action) => {
+  switch (action.type) {
+    case 'CHANGE_INFO':
+      return action.value
+    default:
+      return state
+  }
+}
+
+
 //會員得到優惠券資料
 const userCouponData = (state = {}, action) => {
   switch (action.type) {
@@ -81,7 +57,8 @@ const memberReducer = combineReducers({
   // counter,
   userData,
   user,
-  userCouponData
+  userCouponData,
+  changeData
 })
 
 export { memberReducer }
