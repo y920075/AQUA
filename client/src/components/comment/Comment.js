@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   fetchLocationcomment,
-  fetchBlogcomment,
   Submmitlocationcomment,
 } from '../../actions/comment/comment_action'
 import withReactContent from 'sweetalert2-react-content'
@@ -16,47 +15,38 @@ export class Comment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pageid: '',
-      memberid: '',
-      membername: '',
+      pageid: this.props.match.params.LocationID,
+      memberid: localStorage.getItem('memberId'),
+      membername: 'Anna Tulius',
       commentitself: '',
     }
   }
   componentDidMount() {
     this.props.fetchLocationcomment()
-    this.props.fetchBlogcomment()
   }
   render() {
     let { locationcomment = [] } = this.props.Locationcomments
     const currentparams = this.props.match.params.LocationID
     let commenthere
     /// ===5 為地區 else為文章
-    if (currentparams.length === 5) {
-      commenthere = locationcomment.filter(
-        id => id.Locationid === currentparams
-      )
-    } else {
-      commenthere = locationcomment.filter(
-        id => id.Locationid === currentparams
-      )
-    }
+    commenthere = locationcomment.filter(id => id.Locationid === currentparams)
 
-    let pageid = this.state.pageid
-    let memberid = this.state.memberid
-    let membername = this.state.membername
-    let commentitself = this.state.commentitself
     const sentcommentdatatodb = () => {
       this.setState({
-        pageid: currentparams,
-        memberid: 'M20010002',
-        membername: 'Anna Tulius',
+        // pageid: currentparams,
+        // memberid: 'M20010002',
+        // membername: 'Anna Tulius',
       })
 
+      // let pageid = this.state.pageid
+      // let memberid = this.state.memberid
+      // let membername = this.state.membername
+      // let commentitself = this.state.commentitself
       let sentcommentdata = {
-        pageid,
-        memberid,
-        membername,
-        commentitself,
+        pageid: this.state.pageid,
+        memberid: this.state.memberid,
+        membername: this.state.membername,
+        commentitself: this.state.commentitself,
       }
       const MySwal = withReactContent(sweetalert)
 
@@ -140,13 +130,12 @@ export class Comment extends React.Component {
 const mapStateToProps = store => {
   return {
     Locationcomments: store.commentReducer.Locationcomment,
-    Blogcomment: store.commentReducer.Blogcomment,
   }
 }
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { fetchLocationcomment, fetchBlogcomment, Submmitlocationcomment },
+    { fetchLocationcomment, Submmitlocationcomment },
     dispatch
   )
 }

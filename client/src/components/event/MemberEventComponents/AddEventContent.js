@@ -212,7 +212,7 @@ function AddEventContent(props) {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-12">
                   <label htmlFor="">活動日期</label>
                   <input
                     type="datetime-local"
@@ -223,7 +223,7 @@ function AddEventContent(props) {
                     }}
                   />
                 </div>
-                <div className="form-group col-md-6">
+                <div className="form-group col-md-12">
                   <label htmlFor="">報名截止日期</label>
                   <input
                     type="datetime-local"

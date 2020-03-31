@@ -30,7 +30,7 @@ function BlogRside(props) {
             return (
           <div className="d-flex newpostLine">
             <figure className="newpostPic mr-3">
-              <img src={"http://localhost:5000/images/memberImg/" + value.avatar} />
+              <img src={"http://localhost:5000/images/memberImg/" + value.memberImg } />
             </figure>
             <div className="newspostContent">
               <span className="d-flex test justify-content-start">

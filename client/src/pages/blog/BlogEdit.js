@@ -1,5 +1,5 @@
 import React ,{ useEffect,useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 
 import { connect } from 'react-redux'
@@ -42,6 +42,32 @@ function BlogAdd(props) {
       setAvatarDataFiles(event.target.files[0])
   }
 
+  // const handleSubmit = (event)=>{
+
+
+//     const editContentData = { 
+//       editTitle,
+//       editCategoryName,
+//       editContent,
+//       editTag1,
+//       editTag2,
+//       editImgDataFiles,
+//     }
+  
+//     const editContentData_fd = new FormData()
+//     editContentData_fd.append('blogTitle', addContentData.editTitle)
+//     editContentData_fd.append('categoryName', addContentData.editCategoryName)
+//     editContentData_fd.append('blogContent', addContentData.editContent)
+//     editContentData_fd.append('tagName1', addContentData.editTag1)
+//     editContentData_fd.append('tagName2', addContentData.editTag2)
+//     editContentData_fd.append('addImg', addContentData.editImgDataFiles,
+//     )
+  
+//     props.addContentDataAsync(editContentData_fd, () => alert('成功新增'))
+  
+// }
+
+
   return (
     <>
       <Header />
@@ -52,7 +78,7 @@ function BlogAdd(props) {
           <h2>部落格</h2>
           <ul>
             <li>
-              <Link to="">文章列表</Link>
+              <Link to="/blog">文章列表</Link>
             </li>
             <li>
               <Link to=""> > </Link>
@@ -77,45 +103,70 @@ function BlogAdd(props) {
                 <>
               <div className="d-flex form-group mb-3">
                 <input
+                  name="editTitle"
                   type="text"
                   placeholder="請輸入標題"
-                  className="form-control addInput"
+                  className="form-control editInput"
+                  defaultValue={value.blogTitle}
                 />
-                <select className="custom-select">
-                  <option selected>類型</option>
-                  <option>心得</option>
-                  <option>閒聊</option>
-                  <option>討論</option>
-                  <option>裝備</option>
+                <select className="custom-select"              
+                        defaultValue={value.categoryName}
+                        name="editCategoryName"
+                >
+                  <option value='心得'>心得</option>
+                  <option value='閒聊'>閒聊</option>
+                  <option value='討論'>討論</option>
+                  <option value='裝備'>裝備</option>
+                  <option value='教學'>教學</option>
                 </select>
               </div>
               <textarea
+                name="editContent"
                 className="form-control mb-3"
                 placeholder="請輸入內文"
+                defaultValue={value.blogContent}
               ></textarea>
               <div className="addFooter d-flex justify-content-between algin-content-center">
                 <div className="addTag d-flex">
                   <input
+                    name="editTag1"
                     type="text"
                     placeholder="輸入標籤"
-                    className="form-control addInput tagName1"
+                    className="form-control editInput tagName1"
+                    defaultValue={value.tagName1}
                   />
                   <input
+                    name="editTag2"
                     type="text"
                     placeholder="輸入標籤"
-                    className="form-control addInput tagName2"
+                    className="form-control editInput tagName2"
+                    defaultValue={value.tagName2}
                   />
                   <label class="  addImg ml-3 mr-1 ">
                     <h6>更改圖片</h6>
-                    <input  className="inputavatar" type="file" onChange={(event) => handleChange(event)}   /> 
+                    <input  
+                          name="editImg"
+                          className="inputavatar" 
+                          type="file" 
+                          onChange={(event) => handleChange(event)}   
+                    /> 
                   </label>
-                  <img className="blah" src={ avatarFile ? avatarFile: addImg} width="40" height="40" />
+                  <img className="blah" 
+                  src={ avatarFile ? avatarFile:'http://localhost:5000/images/blogImg/'+ value.blogImages} width="40" height="40" />
                 </div>
                 <div>
                 <button className="badge badge-pill delete" type="button">
-                    送出
+                    刪除
                   </button>
-                  <button className="badge badge-pill editSend" type="button">
+                  <button 
+                          // onClick={e => {
+                          // e.preventDefault()
+                          // handleSubmit()
+                          //   props.history.push('/blog')
+                          // }}
+                          className="badge badge-pill editSend" 
+                          type="button"
+                  >
                     送出
                   </button>
                   </div>
@@ -149,5 +200,5 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ getBlogDataAsync }, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(BlogAdd)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogAdd))
 // export default BlogAdd
