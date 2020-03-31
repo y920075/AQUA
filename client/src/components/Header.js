@@ -236,16 +236,27 @@ function Header(props) {
                   </button>
                 </Link>
               ) : (
-                <button
-                  type="button"
-                  className="btn btn-light btn-sm"
-                  onClick={() => {
-                    props.memberLogoutAsync()
-                  }}
-                >
-                  <i class="fas fa-door-open" style={{ fontSize: '20px' }}></i>
-                  {/* <i class="fas fa-sign-out-alt" style={{fontSize:'20px'}}></i> */}
-                </button>
+                <div>
+                  <Link to="/memberuser">
+                    <img
+                      className="memberimg"
+                      src={require('../image/memberImage/avatar.png')}
+                    ></img>
+                  </Link>
+                  <button
+                    type="button"
+                    className="btn btn-light btn-sm"
+                    onClick={() => {
+                      props.memberLogoutAsync()
+                    }}
+                  >
+                    <i
+                      class="fas fa-door-open"
+                      style={{ fontSize: '20px' }}
+                    ></i>
+                    {/* <i class="fas fa-sign-out-alt" style={{fontSize:'20px'}}></i> */}
+                  </button>
+                </div>
               )}
 
               {/* <div className="avatar" onClick={showMenu}>
