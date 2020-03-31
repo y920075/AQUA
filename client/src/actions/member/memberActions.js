@@ -61,7 +61,7 @@ export const userLoginAsync = (userData, callback) => {
         Swal.fire('歡迎回來!', 'Redirect in 3 seconds...!', 'success')
         setTimeout(function () {
           window.location.href = './memberuser/user'
-        }, 3000)
+        }, 2000)
       } else {
         Swal.fire({
           icon: 'error',

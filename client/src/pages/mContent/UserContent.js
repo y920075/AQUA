@@ -28,9 +28,6 @@ function UserContent(props) {
     }
 
     // update user info 
-    // useEffect(() => {
-    //     props.updateuserDetailDataAsync(memberId)
-    // }, [])
     const [response, setResponse] = useState(false)
     const [memberId, setMemberId] = useState(props.match.params.memberId)
     const [fullName, setFullName] = useState('')
@@ -64,17 +61,11 @@ function UserContent(props) {
         const response = await fetch(request)
         const data = await response.json()
         console.log(data)
-
-        // Swal.fire(
-        //     '好棒棒!',
-        //     '更新成功!',
-        //     'success',
-        //     setResponse,
-        //     true,
-        //     props.updateUserDataAsync,
-        //     member_fd,
-        //     memberId
-        // )
+        Swal.fire(
+            '好棒棒!',
+            '更新成功!',
+            'success',
+        )
     }
 
     return (

@@ -46,7 +46,7 @@ function MemberRegister(props) {
       Swal.fire('註冊成功!', 'Redirect in 3 seconds...!', 'success')
       setTimeout(function() {
         window.location.href = './memberlogin'
-      }, 3000)
+      }, 2000)
     })
   }
 
