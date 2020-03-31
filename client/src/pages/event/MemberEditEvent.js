@@ -385,9 +385,9 @@ function MemberEditEvent(props) {
                           class="btn btn-warning"
                           data-memberId={value.memberId}
                           onClick={event => {
-                            const memberId = document
-                              .querySelector('button.btn.btn-warning')
-                              .getAttribute('data-memberId')
+                            const memberId = event.target.getAttribute(
+                              'data-memberId'
+                            )
                             console.log(memberId)
                             SweetAlert.sendConfirm(
                               '確定要取消嗎?',

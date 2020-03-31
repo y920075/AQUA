@@ -8,6 +8,8 @@ import { bindActionCreators } from 'redux'
 
 import { getUserClickDataAsync } from '../../../../actions/seller'
 
+import { getTotalDataAsync } from '../../../../actions/seller'
+
 class MainPage extends Component {
   constructor(props) {
     super(props)
@@ -66,6 +68,7 @@ class MainPage extends Component {
   }
   componentDidMount() {
     this.props.getUserClickDataAsync()
+    this.props.getTotalDataAsync()
   }
   // componentDidUpdate(props) {
   //   getUserClickDataAsync()
@@ -73,9 +76,11 @@ class MainPage extends Component {
   //   console.log(props.getClickData)
   // }
   render() {
-    console.log(this.props.getClickData)
+    // console.log(this.props.getClickData)
+    console.log(this.props.totalPrice)
 
     const clickdata = this.props.getClickData.userClick
+    const totalData = this.props.totalPrice.total
     return (
       <div className="conteiner">
         <div className="row">
@@ -93,7 +98,14 @@ class MainPage extends Component {
 
                   <div className="card-body text-nowrap">
                     <h2>總銷售額</h2>
-                    <h2 className="card-text">$135,000</h2>
+                    <h2 className="card-text">
+                      {/* $135,000 */}
+                      {totalData
+                        ? totalData.map((item, index) => {
+                            return item.sum_total
+                          }) + '元'
+                        : '$135,000'}
+                    </h2>
                     <div className="card-footer mb-3">
                       <i className="fas fa-sync mr-3"></i>
                       <span>更新</span>
@@ -167,12 +179,18 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = store => {
-  return { getClickData: store.sellerReducer.getClickData }
+  return {
+    getClickData: store.sellerReducer.getClickData,
+    totalPrice: store.sellerReducer.totalPrice,
+  }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ getUserClickDataAsync }, dispatch)
+  return bindActionCreators(
+    { getUserClickDataAsync, getTotalDataAsync },
+    dispatch
+  )
 }
 
 export default withRouter(
