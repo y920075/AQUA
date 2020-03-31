@@ -1,0 +1,19 @@
+.bg-image-chin {
+  background-image: url(../../../../../image/givinBackground.jpg);
+  background-size: cover;
+}
+
+.inpput-givi-chin input[type='text'] {
+  color: #132948;
+  background-color: wheat;
+}
+
+.inpput-givi-chin input[type='number'] {
+  color: #132948;
+  background-color: wheat;
+}
+
+.inpput-givi-chin button {
+  background-color: #132948 !important;
+}
+/*# sourceMappingURL=CoupAddGivi.css.map */

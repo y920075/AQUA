@@ -35,6 +35,7 @@ import BlogEdit from './pages/blog/BlogEdit'
 import MemberLogin from './pages/members/MemberLogin'
 import MemberRegister from './pages/members/MemberRegister'
 import MemberUser from './pages/members/MemberUser'
+import Membersellerlogin from './pages/members/Membersellerlogin'
 
 import Home from './pages/Home'
 
@@ -101,6 +102,9 @@ function App(props) {
           </ProtectedRoute>
           <Route path="/memberlogin">
             <MemberLogin />
+          </Route>
+          <Route path="/Membersellerlogin">
+            <Membersellerlogin />
           </Route>
           <Route path="/memberregister">
             <MemberRegister />

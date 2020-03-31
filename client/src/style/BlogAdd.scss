@@ -44,7 +44,10 @@ $O: #fa5d07;
   }
 }
 
-.form-control,
+
+
+.rao {
+  .form-control,
 .custom-file-control,
 .is-focused .form-control,
 .is-focused .custom-file-control {
@@ -62,8 +65,6 @@ $O: #fa5d07;
 .custom-select {
   transition: none;
 }
-
-.rao {
   font-weight: 300;
 
   a {

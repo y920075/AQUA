@@ -212,39 +212,10 @@ router.post('/add', upload.single('addImg'), (req, res)=>{
     })
 })
 
-
-
-
-
-router.post('/del/:id', (req, res)=>{
-    const sql = "DELETE FROM `blog` WHERE `id`=?";
-    db.queryAsync(sql, [req.params.id])
-    .then(r=>{
-        console.log(r);
-        res.json(r);
-    })
-})
-
-
-
-router.get('/edit/:blogId', (req, res)=>{
-    console.log('123')
-    const id = req.params.id;
-    const sql = `SELECT * FROM \`blog\` WHERE id=${id}`;
-    db.queryAsync(sql)
-        .then(result=>{
-            console.log(result)
-            return res.json(result)
-        })
-        .catch(error=>{
-            res.redirect(req.baseUrl);
-        })
-    //res.render('address-book/edit');
-});
-
+//更新文章
 router.post('/edit', upload.single('addImg'), (req, res)=>{
     const sql = `UPDATE \`blog\` SET \`blogTitle\`=?,\`categoryName\`=?,\`blogContent\`=?,\`tagName1\`=?,\`tagName2\`=?,\`blogImages\`=? WHERE id=?`;
-
+    console.log(req.body)
     const output ={
         success: false,
         error:'',
@@ -277,18 +248,20 @@ router.post('/edit', upload.single('addImg'), (req, res)=>{
     }else{
         res.send("66666666");
     }
-    db.queryAsync(sql , [
+    const abc=[
         req.body.blogTitle,
         req.body.categoryName,
         req.body.blogContent,
         req.body.tagName1,
         req.body.tagName2,
         req.file.originalname,
-        req.params.id
-    ])    
-
+        req.body.id
+    ]
+    db.queryAsync(sql , abc)
+console.log(abc)
     .then(r=>{
         console.log('修改資料更新成功')
+        console.log(r)
         return res.json(req.body)
         // res.redirect(req.baseUrl + '/list')
     })
@@ -297,6 +270,35 @@ router.post('/edit', upload.single('addImg'), (req, res)=>{
         return res.json(err)
     })
 })
+
+
+
+router.post('/del/:id', (req, res)=>{
+    const sql = "DELETE FROM `blog` WHERE `id`=?";
+    db.queryAsync(sql, [req.params.id])
+    .then(r=>{
+        console.log(r);
+        res.json(r);
+    })
+})
+
+
+
+// router.get('/edit/:blogId', (req, res)=>{
+//     console.log('123')
+//     const id = req.params.id;
+//     const sql = `SELECT * FROM \`blog\` WHERE id=${id}`;
+//     db.queryAsync(sql)
+//         .then(result=>{
+//             console.log(result)
+//             return res.json(result)
+//         })
+//         .catch(error=>{
+//             res.redirect(req.baseUrl);
+//         })
+//     //res.render('address-book/edit');
+// });
+
 //CRUD
 
 /*
