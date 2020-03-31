@@ -680,7 +680,9 @@ function ShoppingCart(props) {
         }, 0)
       }
       let objGiviAmount = countObj(items, 'amount')
-      if (objGiviAmount >= newCoup.givi_over) {
+      let objPrice = countObj(items, 'price')
+
+      if (objGiviAmount * objPrice >= newCoup.givi_over) {
         const transferGivi = {
           givi_name: newCoup.givi_coup_name,
           givi_img: newCoup.givi_coup_img,
@@ -930,9 +932,7 @@ function ShoppingCart(props) {
                     {newCoup.hasOwnProperty('order_coup_name')
                       ? handleOrderSum(mycart, newCoup) - sum(mycart)
                       : ''}
-                    {newCoup.hasOwnProperty('givi_coup_name')
-                      ? handleOrderSum(sum(mycart), newCoup) - sum(mycart)
-                      : ''}
+                    {newCoup.hasOwnProperty('givi_coup_name') ? 0 : ''}
                   </span>
                 </div>
                 <br />
@@ -1006,6 +1006,9 @@ function ShoppingCart(props) {
                 <div className="d-flex justify-content-between">
                   <h5>贈品名</h5>
                   <p>
+                    {/* {newCoup.hasOwnProperty('givi_coup_name')
+                      ? handleGivi(mycart, newCoup)
+                      : ''} */}
                     {newCoup.hasOwnProperty('givi_coup_name')
                       ? handleGivi(mycart, newCoup).givi_name
                       : ''}
