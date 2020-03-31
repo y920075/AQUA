@@ -25,6 +25,7 @@ function Items(props) {
   // console.log(props)
   const [itemData, setItemData] = useState([])
   const [asideData, setAsideData] = useState([])
+  // const [sort, setSort] = useState('0')
   const [hasloading, setHasLoading] = useState(false)
 
   useEffect(() => {
@@ -66,7 +67,8 @@ function Items(props) {
     const price = document.querySelector('.price-li.active')
       ? document.querySelector('.price-li.active').getAttribute('data-price')
       : ''
-    props.getItemDataAsync(type, brand, price, page)
+    const sort = document.querySelector('select[name="item-sort"]').value || '0'
+    props.getItemDataAsync(type, brand, price, sort, page)
   }
 
   return (
@@ -97,11 +99,21 @@ function Items(props) {
                   <label className="my-1 mr-2" htmlFor="item-sort">
                     排序方式
                   </label>
-                  <select className="custom-select my-1 mr-sm-2" id="item-sort">
-                    <option>依價格高至低</option>
-                    <option value="1">依價格低至高</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                  <select
+                    className="custom-select my-1 mr-sm-2"
+                    name="item-sort"
+                    onChange={() => {
+                      // setSort(e.target.value)
+                      getItemData()
+                      // console.log(sort)
+                    }}
+                  >
+                    <option value="0" selected>
+                      價格高至低
+                    </option>
+                    <option value="1">價格低至高</option>
+                    <option value="2">熱門程度高至低</option>
+                    <option value="3">新增時間最新</option>
                   </select>
                 </form>
               </div>
