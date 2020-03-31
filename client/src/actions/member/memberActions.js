@@ -63,10 +63,10 @@ export const userLoginAsync = (userData, callback) => {
         console.log(userData)
         dispatch(userLogin(userData))
         // alert('登入')
-        Swal.fire('歡迎回來!', 'Redirect in 3 seconds...!', 'success')
+        Swal.fire('歡迎回來!', 'Redirect in 1 seconds...!', 'success')
         setTimeout(function() {
           window.location.href = './memberuser/user'
-        }, 3000)
+        }, 1000)
       } else {
         Swal.fire({
           icon: 'error',

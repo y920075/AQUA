@@ -38,6 +38,7 @@ router.use(bodyParser.json());
 */
 
 router.get('/seller/coach/:id?',(req,res)=>{
+    req.session.seller_id = 'S20010001'
     const data = {
         'status':401,
         'msg':'尚未登入'
