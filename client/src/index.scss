@@ -40,7 +40,11 @@ $color5: #f15a24;
     }
   }
 }
-
+.memberimg{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
 .Header-Navbar {
   @media screen and(max-width:540px) {
     // max-width: 375px;
@@ -92,10 +96,21 @@ $color5: #f15a24;
             text-decoration: none;
           }
         }
-
         .card-body {
           max-height: 300px;
-          overflow: auto;
+          // overflow: auto;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            right: 6%;
+            bottom: 100%;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #fff;
+          }
+
 
           .cart-item {
             font-weight: 300;

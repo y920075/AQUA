@@ -207,7 +207,7 @@ function CupGivi(props) {
                 className="custom-select"
                 onChange={event => setGivi(event.target.value)}
               >
-                <option defaultValue="套用商品種類">套用商品種類</option>
+                <option defaultValue="套用贈品種類">套用贈品種類</option>
                 {props.givi.coupon['table6'] ? (
                   props.givi.coupon['table6'].map((item, index) => {
                     return (

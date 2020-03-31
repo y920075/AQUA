@@ -31,7 +31,7 @@ import EventSearchBar from '../../components/event/EventSearchBar'
 function EventMapList(props) {
   const [eventDataForMap, setEventDataForMap] = useState([]) //存放地圖專用資料
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
-  const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
+  const [isEnable, setIsEnable] = useState() //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
     props.getEventDataForMapAsync()
@@ -141,7 +141,7 @@ function EventMapList(props) {
               <div className="col-8">
                 <MyMapComponent
                   isMarkerShown
-                  googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`}
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyC3kp9ZM2JgqNLY4_xNhQQNUNAF-UmogvA`}
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={
                     <div style={{ width: `100%`, height: `1200px` }} />

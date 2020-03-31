@@ -51,4 +51,21 @@
   .switchbutton-jy{
     color: #495057;
   }
+  .coachCard-JY{
+    margin-bottom: 30px;
+    .card{
+      min-height: 400px;
+    }
+    li{
+      min-height: 24px;
+    }
+    .coachImgBox{
+      width: 100%;
+      height: 200px;
+      .card-img-top{
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 }

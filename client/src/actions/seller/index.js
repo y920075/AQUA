@@ -769,4 +769,26 @@ export const editClassDataAsunc = (formData, classId) => {
   }
 }
 
+//取得賣家的教練資訊
+export const getCoachData = data => ({
+  type: 'GET_COACH_DATA',
+  value: data,
+})
+
+export const getCoachDataAsunc = () => {
+  return async dispatch => {
+    const request = new Request(`http://localhost:5000/seller/coach`, {
+      method: 'GET',
+      headers: new Headers({
+        Accept: 'application/json',
+      }),
+    })
+
+    const response = await fetch(request)
+    const data = await response.json()
+
+    dispatch(getCoachData(data))
+  }
+}
+
 //----------------------賣家中心課程相關action----------------

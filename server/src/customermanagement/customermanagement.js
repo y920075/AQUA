@@ -196,7 +196,7 @@ router.get('/customer-search',(req,res)=>{
             }
         })
     }else if(searchComcus == "commonPercentHight"){
-        const customer_sql_three = `SELECT * FROM \`common_custom\` WHERE \`comcus_buy_perc\` > 50 AND \`comcus_visit_perc\` > 50`;
+        const customer_sql_three = `SELECT * FROM \`common_custom\` WHERE \`comcus_buy_perc\` >= 50 AND \`comcus_visit_perc\` >= 50`;
         
         db.queryAsync(customer_sql_three)
         // .then(result=>{
