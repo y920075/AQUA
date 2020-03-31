@@ -212,7 +212,7 @@ router.post('/insert_coup_data',upload.single("img"),(req,res)=>{
                         const insert_sql3 =  `INSERT INTO \`coup03_givi\` 
                         (\`coup_cate_id\`,\`seller_id\`,\`givi_name\`,\`coup_id\`,\`coup_code\`,\`coup_name\`, \`coup_img\`, 
                         \`coup_over\`,\`givi_piece\`,\`coup_start\`,\`coup_end\`,\`coup_times\`, \`created_at\`) 
-                        VALUES (? ,? ,? ,? , ? , ? , ? , ? , ? , ? , ? , ? , NOW());`;
+                        VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , NOW());`;
 
                         let imgFileName_3;
                         if ( req.file && req.file.originalname ) {
@@ -234,9 +234,9 @@ router.post('/insert_coup_data',upload.single("img"),(req,res)=>{
                         imgFileName_3,
                         req.body.coup_over,
                         req.body.givi_piece,
-                        req.body.coup_times,
                         req.body.coup_start,
                         req.body.coup_end,
+                        req.body.coup_times,
                         req.body.create_time,
                     ];
                     db.queryAsync(insert_sql3,insert_sql_Params3)
