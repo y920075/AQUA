@@ -34,24 +34,16 @@ import { combineReducers } from 'redux'
 //   }
 // }
 
-const user = (state = {isAuth: false}, action) => {
+const user = (state = { isAuth: false }, action) => {
   switch (action.type) {
     case 'USER_REGISTER':
-      // action = {a: 1, b:2,}
-      // {a: action.a, b: action.b, c:3,d:4}
-      // {...action, c:3,d:4} es6
-      // Object.assign({}, action); es5
       return { ...action.value, isAuth: true }
-      // return action.value
     case 'USER_LOGIN':
       return { ...action.value, isAuth: true }
-      // return action.value
     case 'USER_LOGOUT':
-      return { isAuth: false }
-      // return action.value
-    case "GET_USERINFO":
-      // return action.value
-      return{...action.value, isAuth:true}
+      return { ...action.value, isAuth: false }
+    case 'GET_USERINFO':
+      return { ...action.value, isAuth: true }
     default:
       return state
   }
@@ -81,7 +73,7 @@ const memberReducer = combineReducers({
   // counter,
   userData,
   user,
-  userCouponData
+  userCouponData,
 })
 
 export { memberReducer }
