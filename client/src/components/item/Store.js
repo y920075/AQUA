@@ -3,11 +3,12 @@ import React from 'react'
 function Store() {
   return (
     <>
-      <div className="row d-flex justify-content-between">
+      <hr />
+      <div className="row d-flex justify-content-between mb-3">
         <div className="col-5">
           <img src="http://127.0.0.1:5000/images/homeImg/D0001.jpg" />
         </div>
-        <div className="col-5">
+        <div className="col-5 d-flex flex-column justify-content-center mr-3">
           <h3>戴靖選品</h3>
           <img src="http://127.0.0.1:5000/images/homeImg/D0002.png" />
         </div>
