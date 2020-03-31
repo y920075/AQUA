@@ -62,7 +62,7 @@ const autoUpdateWeatherData = ()=>{
         await autoUpdateWeatherData()
     },10000)
 }
-//autoUpdateWeatherData()
+autoUpdateWeatherData()
 
 //取得類型
 router.get('/event/type', async (req,res)=>{

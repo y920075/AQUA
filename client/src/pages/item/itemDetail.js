@@ -160,7 +160,7 @@ function ItemDetail(props) {
                   來自義大利的複合材料製造商C4，創立於1986年，一開始研發的是自行車使用之碳纖維材料，隨後將這樣的材料技術延伸至自由潛水/水中漁獵的裝備；卓越的性能與粗獷的外型，受到許多專業玩家的喜愛。
                 </p>
               </div>
-              <div className="col-4 d-none d-md-block">
+              <div className="col-4 d-none d-md-block store">
                 <h4>賣場介紹</h4>
                 <Store />
               </div>

@@ -58,10 +58,10 @@ export const userLoginAsync = (userData, callback) => {
         console.log(userData)
         dispatch(userLogin(userData))
         // alert('登入')
-        Swal.fire('歡迎回來!', 'Redirect in 3 seconds...!', 'success')
-        setTimeout(function () {
+        Swal.fire('歡迎回來!', 'Redirect in 1 seconds...!', 'success')
+        setTimeout(function() {
           window.location.href = './memberuser/user'
-        }, 2000)
+        }, 1000)
       } else {
         Swal.fire({
           icon: 'error',
@@ -116,16 +116,14 @@ export const updateuserDetailDataAsync = (formData, memberId) => {
     fd.append('mobileNumber', formData.mobileNumber)
     fd.append('email', formData.email)
     fd.append('address', formData.address)
-    const request = new Request(
-      `http://127.0.0.1:5000/members/`,
-      {
-        method: 'POST',
-        body: fd,
-        credentials: 'include',
-        headers: new Headers({
-          'access-token': Cookie.get('token'),
-        }),
-      })
+    const request = new Request(`http://127.0.0.1:5000/members/`, {
+      method: 'POST',
+      body: fd,
+      credentials: 'include',
+      headers: new Headers({
+        'access-token': Cookie.get('token'),
+      }),
+    })
 
     const response = await fetch(request)
     const data = await response.json()
@@ -133,7 +131,6 @@ export const updateuserDetailDataAsync = (formData, memberId) => {
     console.log(updateuserDetailData(data))
   }
 }
-
 
 //從賣家那裏得到優惠券的使用資料
 export const getUserCouponDetail = data => ({

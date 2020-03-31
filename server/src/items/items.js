@@ -216,6 +216,7 @@ itemRouter.get('/member/orders', (req, res)=>{
 itemRouter.post('/member/checkout', (req, res)=>{
     console.log('訂單新增',req.body)
     const memberId = 'M20010002'
+    const sellerId = 'S20010001'
     const orderItems = req.body.orderItems 
     // 是陣列 裡面物件有 itemid checkprice checkty
 
@@ -224,16 +225,16 @@ itemRouter.post('/member/checkout', (req, res)=>{
     db.queryAsync(total)
     .then(result=>{
         totalorder = 'O200401'+(result[0].num+1)
-        // console.log(totalorder)
-
+        
         const sql = `INSERT INTO \`orders\`(
             \`orderId\`, 
             \`orderMemberId\`, 
             \`orderItemId\`, 
             \`checkPrice\`, 
             \`checkQty\`, 
-            \`checkSubtotal\`) 
-            VALUES (?,?,?,?,?,?)`
+            \`checkSubtotal\`, 
+            \`sellerId\`) 
+            VALUES (?,?,?,?,?,?,?)`
         for (let i = 0; i < orderItems.length; i++) {
             db.queryAsync(sql, [
                 totalorder,
@@ -242,7 +243,8 @@ itemRouter.post('/member/checkout', (req, res)=>{
                 orderItems[i].checkPrice,
                 orderItems[i].checkQty,
                 // orderItemId[i].checkSubtotal
-                '123'
+                '123',
+                sellerId
             ])        
         }
         return totalorder
@@ -301,6 +303,30 @@ itemRouter.get('/member/checkout', (req, res)=>{
     LEFT JOIN \`recipient_info\`
     ON \`orders\`.\`orderId\` = \`recipient_info\`.\`orderId\`
     WHERE \`orders\`.\`orderId\` = '${orderId}'`
+
+    db.queryAsync(sql)
+        .then(r=>{
+            console.log(r)
+            return res.status(200).json(r)
+            // res.render('edit', {row: r[0]})
+        })
+        .catch(err=>{
+            console.log(err)
+            return res.status(500).json(err)
+        })
+})
+
+// 賣家訂單列表
+itemRouter.get('/seller/orders', (req, res)=>{
+    console.log('賣家訂單列表')
+    const sellerId = 'S20010001'
+    const sql = `SELECT \`orders\`.\`orderId\`,\`orders\`.\`orderMemberId\`,\`orders\`.\`orderItemId\`, \`orders\`.\`checkPrice\`, \`orders\`.\`checkQty\`, \`orders\`.\`checkSubtotal\`, \`items\`.\`itemSize\`, \`items\`.\`itemId\`,\`items\`.\`itemName\`,\`recipient_info\`.\`recipName\`,\`recipient_info\`.\`addArea\`,\`recipient_info\`.\`address\`,\`recipient_info\`.\`phone\`,\`recipient_info\`.\`note\`,\`recipient_info\`.\`created_at\`
+    FROM \`orders\` 
+    LEFT JOIN \`items\` 
+    ON \`orders\`.\`orderItemId\` = \`items\`.\`itemId\` 
+    LEFT JOIN \`recipient_info\`
+    ON \`orders\`.\`orderId\` = \`recipient_info\`.\`orderId\`
+    WHERE \`orders\`.\`sellerId\` = '${sellerId}'`
 
     db.queryAsync(sql)
         .then(r=>{

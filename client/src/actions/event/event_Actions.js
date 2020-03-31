@@ -250,16 +250,9 @@ export const addEventData = data => ({
 export const addEventDataAsunc = formData => {
   return async dispatch => {
     const fd = new FormData()
-    fd.append('eventName', formData.eventName)
-    fd.append('eventTypeId', formData.eventTypeId)
-    fd.append('eventType', formData.eventType)
-    fd.append('eventLocation', formData.eventLocation)
-    fd.append('eventFullLocation', formData.eventFullLocation)
-    fd.append('eventStartDate', formData.eventStartDate)
-    fd.append('eventEndDate', formData.eventEndDate)
-    fd.append('eventDesc', formData.eventDesc)
-    fd.append('eventNeedPeople', formData.eventNeedPeople)
-    fd.append('eventImg', formData.eventImg)
+    for (let key in formData) {
+      fd.append(`${key}`, formData[key])
+    }
 
     const request = new Request(`http://127.0.0.1:5000/member/event`, {
       method: 'POST',
@@ -311,16 +304,9 @@ export const editEventData = data => ({
 export const editEventDataAsunc = (formData, eventId) => {
   return async dispatch => {
     const fd = new FormData()
-    fd.append('eventName', formData.eventName)
-    fd.append('eventTypeId', formData.eventTypeId)
-    fd.append('eventType', formData.eventType)
-    fd.append('eventLocation', formData.eventLocation)
-    fd.append('eventFullLocation', formData.eventFullLocation)
-    fd.append('eventStartDate', formData.eventStartDate)
-    fd.append('eventEndDate', formData.eventEndDate)
-    fd.append('eventDesc', formData.eventDesc)
-    fd.append('eventNeedPeople', formData.eventNeedPeople)
-    fd.append('eventImg', formData.eventImg)
+    for (let key in formData) {
+      fd.append(`${key}`, formData[key])
+    }
 
     const request = new Request(
       `http://127.0.0.1:5000/member/event/${eventId}`,

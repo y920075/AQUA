@@ -127,6 +127,14 @@ const getClickData = (state = {}, action) => {
 //       return state
 //   }
 // }
+const totalPrice = (state = {}, action) => {
+  switch (action.type) {
+    case 'TOTAL_DATA':
+      return action.value
+    default:
+      return state
+  }
+}
 
 //----------------------賣家中心課程相關reducer----------------
 
@@ -211,9 +219,9 @@ const SellerClassDetailData = (state = {}, action) => {
   }
 }
 
-const totalPrice = (state = {}, action) => {
+const SellerCoachData = (state = {}, action) => {
   switch (action.type) {
-    case 'TOTAL_DATA':
+    case 'GET_COACH_DATA':
       return action.value
     default:
       return state
@@ -244,6 +252,7 @@ const sellerReducer = combineReducers({
   delClassDataResponse,
   SellerClassDetailData,
   editClassDataResponse,
+  SellerCoachData,
 })
 
 export { sellerReducer }
