@@ -14,6 +14,7 @@ import { animation } from 'react-reveal/globals'
 function BlogRside(props) {
 
   const re = e =>{
+    // if( window.scrollTo(0, 700)< )
     window.scrollTo(0, 0)
   }
   const [blogData, setBlogData] = useState([])
@@ -30,7 +31,7 @@ function BlogRside(props) {
         <div className="newsPost  rounded-lg mb-5">
           {/* <!--newPost--> */}
           {props.blogData.newpost ? (props.blogData.newpost.map((value , index)=>{
-            console.log(props.blogData.newpost)
+            {/* console.log(props.blogData.newpost) */}
             if(index < 4)
             return (
           <div className="d-flex newpostLine">
