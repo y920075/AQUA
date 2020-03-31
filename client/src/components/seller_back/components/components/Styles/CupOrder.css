@@ -1,0 +1,22 @@
+.bgcolor-chin {
+  background-color: #132948;
+}
+
+.bgcolor-chin-2 {
+  background-color: #f15a24;
+}
+
+.text-color-chin {
+  color: white !important;
+}
+
+.input-style-chin {
+  text-align: center;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
+.input-text-middle-chin input[type='text'] {
+  text-align: center;
+}
+/*# sourceMappingURL=CupOrder.css.map */

@@ -1,0 +1,136 @@
+.rSide {
+  font-weight: 300;
+  padding: 0 0 0 40px;
+}
+
+.rSide p {
+  color: #fa5d07;
+}
+
+.rSide .newsPost {
+  background: #485a71;
+  -webkit-box-shadow: 0px 0px 5px 1px #000000;
+          box-shadow: 0px 0px 5px 1px #000000;
+  padding: 10px 10px 0 10px;
+}
+
+.rSide .newsPost .newpostLine {
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+.rSide .newsPost .newpostPic {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 0.5px solid black;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.rSide .newsPost .newpostPic img {
+  width: 100%;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.rSide .newsPost .newpostPic img:hover {
+  /* transform: scale(1.1); */
+  -webkit-transform: translateZ(100px);
+          transform: translateZ(100px);
+}
+
+.rSide .newsPost .newspostContent {
+  width: 250px;
+}
+
+.rSide .newsPost .newspostContent span a {
+  color: #e2e4e8;
+  background-color: #132948;
+  margin: 3px;
+  padding: 0px 10px 5px 10px;
+}
+
+.rSide .newsPost .newspostContent .newspostTitle {
+  margin-left: 5px;
+}
+
+.rSide .newsPost .newspostContent .newspostTitle a:hover {
+  color: #e2e4e8;
+}
+
+.rSide .search input {
+  padding-left: 10px;
+}
+
+.rSide .form-control,
+.rSide .custom-file-control,
+.rSide .is-focused .form-control,
+.rSide .is-focused .custom-file-control {
+  -webkit-box-shadow: 0px 2px 3px 1px #000000;
+          box-shadow: 0px 2px 3px 1px #000000;
+  border-radius: 6px 0px 0 6px;
+  background-color: #ffffff;
+  background-image: linear-gradient(to top, #fa5d07 3px, rgba(0, 0, 0, 0) 5px);
+}
+
+.rSide .btn {
+  width: 50px;
+  background-color: #485a71;
+  -webkit-box-shadow: 2px 2px 3px 1px #000000;
+          box-shadow: 2px 2px 3px 1px #000000;
+  padding: 10px;
+}
+
+.rSide .btn i {
+  width: 50px;
+}
+
+.rSide ul {
+  list-style: none;
+  padding: 10px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 350px;
+}
+
+.rSide ul li {
+  background-color: #485a71;
+  margin: 4px;
+}
+
+.rSide ul li:hover {
+  background-color: #e2e4e8;
+}
+
+.rSide ul li a {
+  padding: 0 12px;
+  color: #e2e4e8;
+}
+
+.rSide ul li a:hover {
+  color: #132948;
+}
+
+.rSide .scrolltop {
+  position: fixed;
+  right: 180px;
+  bottom: 10px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #e2e4e8;
+}
+
+@media screen and (max-width: 576px) {
+  .rSide {
+    padding: 20px;
+    margin-bottom: 30px;
+    -webkit-box-ordinal-group: 0;
+        -ms-flex-order: -1;
+            order: -1;
+  }
+}
+/*# sourceMappingURL=BlogRside.css.map */

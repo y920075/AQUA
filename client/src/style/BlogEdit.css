@@ -1,0 +1,174 @@
+.titlebarFix {
+  height: 80px;
+  width: 100%;
+  background-color: #132948;
+}
+
+.titlebar {
+  height: 80px;
+  margin-bottom: 3.125rem;
+  background-color: #e2e4e8;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.titlebar ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.titlebar .container {
+  color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.titlebar .container h2 {
+  margin: 0;
+}
+
+.titlebar .container a {
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.form-control,
+.custom-file-control,
+.is-focused .form-control,
+.is-focused .custom-file-control {
+  background-image: linear-gradient(to top, #e2e4e8 1px, rgba(0, 0, 0, 0) 1px);
+}
+
+.custom-select:focus {
+  border-color: #ffffff;
+  outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.custom-control-label::before,
+.custom-file-label,
+.custom-select {
+  -webkit-transition: none;
+  transition: none;
+}
+
+.rao a {
+  text-decoration: none;
+  color: black;
+}
+
+.rao .add {
+  -webkit-box-shadow: 0px 0px 5px 1px #000000;
+          box-shadow: 0px 0px 5px 1px #000000;
+  border-radius: 6px;
+  background-color: #485a71;
+  height: 475px;
+  margin-bottom: 3.125rem;
+  padding: 20px;
+}
+
+.rao .add p {
+  color: #e2e4e8;
+  width: 60px;
+  border: #e2e4e8 1px solid;
+  border-radius: 6px;
+  text-align: center;
+  padding: 5px 5px;
+  margin-bottom: 16px;
+}
+
+.rao .add ::-webkit-input-placeholder {
+  color: #e2e4e8;
+}
+
+.rao .add :-ms-input-placeholder {
+  color: #e2e4e8;
+}
+
+.rao .add ::-ms-input-placeholder {
+  color: #e2e4e8;
+}
+
+.rao .add ::placeholder {
+  color: #e2e4e8;
+}
+
+.rao .add .addInput {
+  font-weight: normal;
+  color: #e2e4e8;
+  width: 300px;
+  border: #e2e4e8 1px solid;
+  border-radius: 6px;
+  margin-right: 10px;
+  padding-left: 15px;
+}
+
+.rao .add select {
+  text-align: center;
+  text-align-last: center;
+  color: #e2e4e8;
+  width: 100px;
+  border: #e2e4e8 1px solid;
+  border-radius: 6px;
+}
+
+.rao .add select option {
+  color: black;
+}
+
+.rao .add textarea {
+  font-weight: normal;
+  border: #e2e4e8 1px solid;
+  border-radius: 6px;
+  height: 270px;
+  color: white;
+  overflow: scroll-right;
+  padding: 15px;
+}
+
+.rao .add .delete {
+  font-weight: 300;
+  font-size: 16px;
+  background-color: #485a71;
+  border: 1px red solid;
+  color: red;
+  padding: 10px 40px;
+}
+
+.rao .add .delete:hover {
+  background-color: red;
+  border: 1px red solid;
+  color: #ffffff;
+}
+
+.rao .add .editSend {
+  font-weight: 300;
+  font-size: 16px;
+  background-color: #485a71;
+  border: 1px #e2e4e8 solid;
+  color: #e2e4e8;
+  padding: 10px 40px;
+}
+
+.rao .add .editSend:hover {
+  color: #485a71;
+  background-color: #e2e4e8;
+}
+/*# sourceMappingURL=BlogEdit.css.map */
