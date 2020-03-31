@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Select from 'react-select'
 
 import SweetAlert from './Sweetalert2'
 
@@ -37,6 +38,7 @@ function AddClassContent(props) {
   const [classDesc, setClassDesc] = useState('')
   const [classMAXpeople, setClassMAXpeople] = useState('')
   const [classImg, setClassImg] = useState('')
+
   //儲存表單值的本地state
 
   //每當response改變時就秀出提示視窗

@@ -23,6 +23,16 @@ $white:#FFFFFF;
 
 .entirepage-hs{
   background-image: url('../image/ClassBanner.jpg');
+  background-repeat: no-repeat;
+  background-size: cover
+}
+.entirepagetwo-hs{
+  background-image: url('../image/L0020-1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 140px;
+  
+
 }
 
 //Sidebar----------------------------------------
@@ -39,8 +49,8 @@ $white:#FFFFFF;
 
 // Login----------------------------------------
 .signincard-hs{
-    padding-top: 150px;
-    padding-bottom: 140px;
+    padding-top: 250px;
+    padding-bottom: 300px;
     opacity: .92;
 }
 .hslogin{
@@ -76,8 +86,8 @@ $white:#FFFFFF;
   }
 }
 .registercard-hs {
-  padding-top: 150px;
-  padding-bottom: 100px;
+  padding-top: 250px;
+  padding-bottom: 130px;
   opacity: 0.92;
 }
 

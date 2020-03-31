@@ -12,6 +12,7 @@ import {
   getClassTypeLevelDataForSellerAsunc,
   addClassDataAsunc,
   delClassDataAsunc,
+  getCoachDataAsunc,
 } from '../../actions/seller/index'
 
 import ManageClassContent from '../../components/class/SellerClassComponents/ManageClassContent'
@@ -25,6 +26,7 @@ function SellerClass(props) {
   useEffect(() => {
     props.getSellerClassDataAsunc()
     props.getCityDataAsunc()
+    props.getCoachDataAsunc()
     props.getClassTypeLevelDataForSellerAsunc(true, false)
   }, [])
 
@@ -32,7 +34,6 @@ function SellerClass(props) {
   useEffect(() => {
     getSellerClassData()
   }, [isEnable])
-
 
   //向伺服器取得新資料
   const getSellerClassData = page => {
@@ -97,10 +98,13 @@ function SellerClass(props) {
                     levelData={props.levelDataForSeller}
                     addClassData={props.addClassDataAsunc}
                     addClassDataResponse={props.addClassDataResponse}
+                    SellerCoachData={props.SellerCoachData}
                   />
                 )
               case 3:
-                return <ManageCoachContent />
+                return (
+                  <ManageCoachContent SellerCoachData={props.SellerCoachData} />
+                )
               default:
                 return (
                   <ManageClassContent
@@ -130,6 +134,7 @@ const mapStateToProps = store => {
     levelDataForSeller: store.sellerReducer.levelDataForSeller,
     addClassDataResponse: store.sellerReducer.addClassDataResponse,
     delClassDataResponse: store.sellerReducer.delClassDataResponse,
+    SellerCoachData: store.sellerReducer.SellerCoachData,
   }
 }
 
@@ -143,6 +148,7 @@ const mapDispatchToProps = dispatch => {
       getClassTypeLevelDataForSellerAsunc,
       addClassDataAsunc,
       delClassDataAsunc,
+      getCoachDataAsunc,
     },
     dispatch
   )

@@ -211,6 +211,15 @@ const SellerClassDetailData = (state = {}, action) => {
   }
 }
 
+const SellerCoachData = (state = {}, action) => {
+  switch (action.type) {
+    case 'GET_COACH_DATA':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //----------------------賣家中心課程相關reducer----------------
 
 // 合併多個reducer (必要，為了要配合瀏覽器開發外掛使用)
@@ -235,6 +244,7 @@ const sellerReducer = combineReducers({
   delClassDataResponse,
   SellerClassDetailData,
   editClassDataResponse,
+  SellerCoachData,
 })
 
 export { sellerReducer }

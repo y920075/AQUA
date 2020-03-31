@@ -218,6 +218,7 @@ function ShoppingCart(props) {
       newCoup.hasOwnProperty('order_coup_name') &&
       newCoup.order_coup_code.substr(0, 2) == 'PI'
     ) {
+      //超過金額打折
       console.log(newCoup.order_over)
       for (let i = 0; i < items.length; i++) {
         totalPrice += items[i].amount * items[i].price
@@ -229,6 +230,7 @@ function ShoppingCart(props) {
       newCoup.hasOwnProperty('order_coup_name') &&
       newCoup.order_coup_code.substr(0, 2) == 'PM'
     ) {
+      //超過金額減價
       for (let i = 0; i < items.length; i++) {
         totalPrice += items[i].amount * items[i].price
       }
@@ -237,27 +239,50 @@ function ShoppingCart(props) {
       newCoup.hasOwnProperty('order_coup_name') &&
       newCoup.order_coup_code.substr(0, 2) == 'II'
     ) {
+      //超過件數打折
       for (let i = 0; i < items.length; i++) {
         itemsToal += items[i].amount
-        priceToal += items[i].price
+        // priceToal += items[i].price
       }
-      if (itemsToal >= newCoup.coup_over) {
-        totalPrice = itemsToal * priceToal * (newCoup.order_pri_perc / 10)
+      console.log(itemsToal)
+      // console.log(priceToal)
+
+      console.log(newCoup)
+
+      if (itemsToal >= newCoup.order_over) {
+        // totalPrice = itemsToal * priceToal * (newCoup.order_pri_perc / 10)
+        for (let f = 0; f < items.length; f++) {
+          totalPrice += items[f].amount * parseInt(items[f].price)
+          // console.log(items[f].amount)
+          // console.log(parseInt(items[f].price))
+        }
+        console.log(totalPrice)
+        return parseInt(totalPrice * (newCoup.order_pri_perc / 10))
       }
-      return parseInt(totalPrice)
     } else if (
       newCoup.hasOwnProperty('order_coup_name') &&
       newCoup.order_coup_code.substr(0, 2) == 'IM'
     ) {
+      //超過件數減價
       for (let i = 0; i < items.length; i++) {
         itemsToal += items[i].amount
-        priceToal += items[i].price
+        // priceToal += items[i].price
       }
+      console.log(itemsToal)
+      // console.log(priceToal)
 
-      if (itemsToal >= newCoup.coup_over) {
-        totalPrice = itemsToal * priceToal - newCoup.order_pri_perc
+      console.log(newCoup)
+
+      if (itemsToal >= newCoup.order_over) {
+        // totalPrice = itemsToal * priceToal * (newCoup.order_pri_perc / 10)
+        for (let f = 0; f < items.length; f++) {
+          totalPrice += items[f].amount * parseInt(items[f].price)
+          // console.log(items[f].amount)
+          // console.log(parseInt(items[f].price))
+        }
+        console.log(totalPrice)
+        return parseInt(totalPrice - newCoup.order_pri_perc)
       }
-      return parseInt(totalPrice)
     } else {
       return totalPrice
     }
