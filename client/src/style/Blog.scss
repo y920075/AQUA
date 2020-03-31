@@ -28,6 +28,8 @@ $O: #fa5d07;
     margin-bottom: 3.125rem;
 
     span, a {
+      font-weight: 300;
+      font-size: 16px;
       color: $Lg;
       background: $Lbg;
       padding: 5px 15px;
@@ -62,7 +64,7 @@ $O: #fa5d07;
       color: $Dg;
       width: 21rem;
       margin-bottom: 50px;
-      box-shadow: 2px 2px 7px 5px #000000;
+      box-shadow: 5px 2px 10px 2px #000000;
       transition: 0.5s;
 
       &:hover {
