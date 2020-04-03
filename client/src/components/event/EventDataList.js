@@ -8,10 +8,11 @@ function EventDataList(props) {
   return (
     <>
       <div className="row">
-        {props.eventData && props.eventData.length > 0 ? (
-          props.eventData.map((value, index) => {
+        {props.eventData.result && props.eventData.result.length > 0 ? (
+          props.eventData.result.map((value, index) => {
             // 變數 status = 判斷目前人數或時間決定顯示什麼
             let status = '火熱揪團中'
+            let newEventName = value.eventName
             let progress = (value.eventNowPeople / value.eventNeedPeople) * 100
 
             if (value.eventNeedPeople === value.eventNowPeople)
@@ -20,8 +21,12 @@ function EventDataList(props) {
             if (new Date(value.eventEndDate).getTime() < new Date().getTime())
               status = '已過期'
 
+            if (props.eventData.searchKeyword) {
+              console.log(newEventName.indexOf(props.eventData.searchKeyword))
+            }
+
             return (
-              <Fade bottom>
+              <Fade bottom key={index}>
                 <div className="col-xl-3 col-10 eventInfoBox" key={index}>
                   <div className="eventContentBox">
                     <div className="eventImgBox">
@@ -34,7 +39,7 @@ function EventDataList(props) {
                       />
                     </div>
                     <div className="eventDetailBox">
-                      <h2 className="eventTitle">{value.eventName}</h2>
+                      <h2 className="eventTitle">{newEventName}</h2>
                       <ul className="d-flex">
                         <li>
                           <img src="/images/eventImg/icons/type.svg" alt="" />

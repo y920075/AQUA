@@ -29,16 +29,16 @@ import { Link } from 'react-router-dom'
   2020-03-21
 */
 function EventList(props) {
-  const [hasloading, setHasLoading] = useState(false) //是否正在載入中
+  const [hasloading, setHasLoading] = useState(true) //是否正在載入中
 
   useEffect(() => {
-    props.getEventTypeDataAsync() //取得活動類型資料
+    props.getEventTypeDataAsync()
   }, [])
 
   //每次資料有變動就將新資料存進本地state
   useEffect(() => {
     //設定載入中為true
-    setHasLoading(true)
+    // setHasLoading(true)
     setTimeout(() => {
       if (props.eventData.status) {
         //確認有收到資料之後設定載入中為false
@@ -66,7 +66,11 @@ function EventList(props) {
       <Header />
       <Banner BannerImgSrc="./images/eventImg/eventBanner1.png" />
       <div className="d-flex justify-content-center">
-        <Link to="/eventmaplist" type="button" class="btn btn-outline-primary">
+        <Link
+          to="/eventmaplist"
+          type="button"
+          className="btn btn-outline-primary"
+        >
           用地圖查找
         </Link>
       </div>
@@ -81,7 +85,7 @@ function EventList(props) {
           <Loading />
         ) : (
           <>
-            <EventDataList eventData={props.eventData.result} />
+            <EventDataList eventData={props.eventData} />
             <EventPageButtons
               totalPages={props.eventData.totalPages}
               getDataFromServer={getEventData}
