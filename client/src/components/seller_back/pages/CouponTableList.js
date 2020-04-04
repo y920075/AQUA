@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
-import { customerUseAsync } from '../../../../actions/seller/index'
+import { customerUseAsync } from '../../../actions/seller'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import TagSvg from '../../../../image/customer/tickMenu.svg'
+import TagSvg from '../../../image/customer/tickMenu.svg'
 
 import './Style/CustomerMan.scss'
 

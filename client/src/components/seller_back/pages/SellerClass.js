@@ -12,7 +12,7 @@ import {
   getClassTypeLevelDataForSellerAsunc,
   addClassDataAsunc,
   delClassDataAsunc,
-} from '../../../../actions/seller/index'
+} from '../../../actions/seller/index'
 
 import ManageClassContent from './SellerClassComponents/ManageClassContent'
 import ManageCoachContent from './SellerClassComponents/ManageCoachContent'

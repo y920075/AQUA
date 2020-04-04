@@ -3,8 +3,8 @@ import Banner from '../components/Banner'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { getSellerOrderListDataAsync } from '../../../../actions/order/order_Actions'
-import '../../../../style/CW_items.scss'
+import { getSellerOrderListDataAsync } from '../../../actions/order/order_Actions'
+import '../../../style/CW_items.scss'
 
 function Order(props) {
   console.log(props)

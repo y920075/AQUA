@@ -6,9 +6,10 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { getUserClickDataAsync } from '../../../../actions/seller'
-
-import { getTotalDataAsync } from '../../../../actions/seller'
+import {
+  getUserClickDataAsync,
+  getTotalDataAsync,
+} from '../../../actions/seller/index'
 
 class MainPage extends Component {
   constructor(props) {
