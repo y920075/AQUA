@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import SweetAlert from '../../class/SellerClassComponents/Sweetalert2'
 
-import Loading from '../../class/Loading' //載入中圖示
-import EventPageButtons from '../EventPageButtons'
+//引入redux元件
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-/*
-  傳入參數
-  typeData = 類型資料
-  cityData = 全台城市資料
-  distData = 相對應地區資料
-  傳入方法
-  addEventDataResponse = 新增完成之後，後端回傳的資料
-  handleGetDistData = 處理取得地區資料的action
-  addEventDataAsunc = 新增活動資料的action
-
-  2020-03-26
-*/
+//引入action
+import {
+  getEventTypeDataAsync,
+  addEventDataAsync,
+} from '../../../actions/event/event_Actions'
+import {
+  getCityDataAsync,
+  getDistDataAsync,
+} from '../../../actions/seller/index'
 
 function AddEventContent(props) {
   const [addressCity, setAddressCity] = useState('') //儲存使用者選擇的縣市
@@ -34,18 +31,22 @@ function AddEventContent(props) {
   const [eventDesc, setEventDesc] = useState('')
   const [eventNeedPeople, setEventNeedPeople] = useState('')
   const [eventImg, setEventImg] = useState('')
-  //儲存表單值的本地state
+
+  useEffect(() => {
+    props.getEventTypeDataAsync()
+    props.getCityDataAsync()
+  }, [])
 
   //每當response改變時就秀出提示視窗
   useEffect(() => {
     if (response) {
-      if (props.addEventDataResponse.status === 201) {
+      if (props.memberActionResponse.status === 201) {
         SweetAlert.success('已成功新增一筆資料!')
         setResponse(false)
       } else {
         SweetAlert.errorAlert(
-          props.addEventDataResponse.status,
-          props.addEventDataResponse.msg
+          props.memberActionResponse.status,
+          props.memberActionResponse.msg
         )
         setResponse(false)
       }
@@ -79,7 +80,7 @@ function AddEventContent(props) {
       '確定要送出嗎?',
       setResponse,
       true,
-      props.addEventDataAsunc,
+      props.addEventDataAsync,
       EventFormData
     )
   }
@@ -107,7 +108,6 @@ function AddEventContent(props) {
                   <label htmlFor="">活動類型</label>
                   <select
                     name="classTypeId"
-                    id=""
                     className="form-control"
                     onChange={event => {
                       const index = event.target.selectedIndex
@@ -116,8 +116,8 @@ function AddEventContent(props) {
                     }}
                   >
                     <option value="">請選擇類型</option>
-                    {props.typeData.length > 0
-                      ? props.typeData.map((value, index) => {
+                    {props.eventTypeData.length > 0
+                      ? props.eventTypeData.map((value, index) => {
                           return (
                             <option value={value.eventTypeId} key={index}>
                               {value.eventTypeName}
@@ -132,11 +132,10 @@ function AddEventContent(props) {
               <div className="form-row">
                 <div className="form-group col-md-5">
                   <select
-                    name=""
                     className="form-control"
                     onChange={event => {
                       const city = event.target.value
-                      props.handleGetDistData(city) //取得相對應的地區資料
+                      props.getDistDataAsync(city) //取得相對應的地區資料
                       setAddressCity(city) //設定活動地點(縣市)到本地state
                       setAddressDist('')
                       setEventFullLocation('')
@@ -160,8 +159,6 @@ function AddEventContent(props) {
                 </div>
                 <div className="form-group col-md-5">
                   <select
-                    name=""
-                    id=""
                     className="form-control"
                     onChange={event => {
                       const dist = event.target.value
@@ -297,4 +294,27 @@ function AddEventContent(props) {
   )
 }
 
-export default AddEventContent
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    cityData: store.sellerReducer.cityData,
+    distData: store.sellerReducer.distData,
+    eventTypeData: store.eventReducer.eventTypeData,
+    memberActionResponse: store.eventReducer.memberActionResponse,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      addEventDataAsync,
+      getCityDataAsync,
+      getDistDataAsync,
+      getEventTypeDataAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddEventContent)

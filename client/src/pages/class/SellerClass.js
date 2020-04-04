@@ -6,13 +6,13 @@ import { bindActionCreators } from 'redux'
 
 //引入action
 import {
-  getSellerClassDataAsunc,
-  getCityDataAsunc,
-  getDistDataAsunc,
-  getClassTypeLevelDataForSellerAsunc,
-  addClassDataAsunc,
-  delClassDataAsunc,
-  getCoachDataAsunc,
+  getSellerClassDataAsync,
+  getCityDataAsync,
+  getDistDataAsync,
+  getClassTypeLevelDataForSellerAsync,
+  addClassDataAsync,
+  delClassDataAsync,
+  getCoachDataAsync,
 } from '../../actions/seller/index'
 
 import ManageClassContent from '../../components/class/SellerClassComponents/ManageClassContent'
@@ -24,10 +24,10 @@ function SellerClass(props) {
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
   useEffect(() => {
-    props.getSellerClassDataAsunc()
-    props.getCityDataAsunc()
-    props.getCoachDataAsunc()
-    props.getClassTypeLevelDataForSellerAsunc(true, false)
+    props.getSellerClassDataAsync()
+    props.getCityDataAsync()
+    props.getCoachDataAsync()
+    props.getClassTypeLevelDataForSellerAsync(true, false)
   }, [])
 
   //每次按鈕被點擊時，就取得新資料
@@ -39,7 +39,7 @@ function SellerClass(props) {
   const getSellerClassData = page => {
     //取得select的值，作為類型、等級的篩選參數
     const sort = document.querySelector('select[name="sort"]').value
-    props.getSellerClassDataAsunc(sort, page, isEnable)
+    props.getSellerClassDataAsync(sort, page, isEnable)
   }
 
   const handleNavActive = event => {
@@ -89,14 +89,14 @@ function SellerClass(props) {
                 return (
                   <AddClassContent
                     cityData={props.cityData}
-                    handleGetDistData={props.getDistDataAsunc}
+                    handleGetDistData={props.getDistDataAsync}
                     handleGetLevelData={
-                      props.getClassTypeLevelDataForSellerAsunc
+                      props.getClassTypeLevelDataForSellerAsync
                     }
                     distData={props.distData}
                     typeData={props.typeDataForSeller}
                     levelData={props.levelDataForSeller}
-                    addClassData={props.addClassDataAsunc}
+                    addClassData={props.addClassDataAsync}
                     addClassDataResponse={props.addClassDataResponse}
                     SellerCoachData={props.SellerCoachData}
                   />
@@ -110,7 +110,7 @@ function SellerClass(props) {
                   <ManageClassContent
                     sellerClassData={props.sellerClassData}
                     getSellerClassData={getSellerClassData}
-                    delClassDataAsunc={props.delClassDataAsunc}
+                    delClassDataAsync={props.delClassDataAsync}
                     delClassDataResponse={props.delClassDataResponse}
                     setIsEnable={setIsEnable}
                     isEnable={isEnable}
@@ -142,13 +142,13 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      getSellerClassDataAsunc,
-      getCityDataAsunc,
-      getDistDataAsunc,
-      getClassTypeLevelDataForSellerAsunc,
-      addClassDataAsunc,
-      delClassDataAsunc,
-      getCoachDataAsunc,
+      getSellerClassDataAsync,
+      getCityDataAsync,
+      getDistDataAsync,
+      getClassTypeLevelDataForSellerAsync,
+      addClassDataAsync,
+      delClassDataAsync,
+      getCoachDataAsync,
     },
     dispatch
   )

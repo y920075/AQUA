@@ -247,7 +247,7 @@ export const addEventData = data => ({
 })
 
 //formData = 傳送過來的表單值
-export const addEventDataAsunc = formData => {
+export const addEventDataAsync = formData => {
   return async dispatch => {
     const fd = new FormData()
     for (let key in formData) {
@@ -301,7 +301,7 @@ export const editEventData = data => ({
 })
 
 //formData = 傳送過來的表單值
-export const editEventDataAsunc = (formData, eventId) => {
+export const editEventDataAsync = (formData, eventId) => {
   return async dispatch => {
     const fd = new FormData()
     for (let key in formData) {

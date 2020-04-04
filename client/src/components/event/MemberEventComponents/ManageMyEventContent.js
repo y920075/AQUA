@@ -2,38 +2,32 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import SweetAlert from '../../class/SellerClassComponents/Sweetalert2' //自訂提示窗
 
+//引入redux元件
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+//引入action
+import {
+  memberGetEventDataAsync,
+  memberUnJoinEventAsync,
+  delEventDataAsync,
+} from '../../../actions/event/event_Actions'
+
 import Loading from '../../class/Loading' //載入中圖示
 import EventPageButtons from '../EventPageButtons' //頁面按鈕
 import SwitchButton from './SwitchButton' //切換過期資料按鈕
 
-/*
-  傳入參數
-    nowClickTag = 現在點擊的頁籤
-    memberEventDataSelf = 會員自己發起的所有活動資料/會員報名的所有活動資料 依據nowClickTag而有不同
-    delEventDataResponse = 會員刪除活動之後，後端回傳的資料
-    memberUnJoinEventResponse = 會員取消報名資後，後端回傳的資料
-    
-    傳入方法
-    delEventDataAsync = 刪除活動的action
-    memberGetEventDataAsync = 取得資料的action
-    memberUnJoinEventAsync = 取消報名的action
-  
-    2020-03-24
-*/
-
 function ManageMyEventContent(props) {
   const [hasLoading, setHasLoading] = useState(true) //是否載入中
   const [response, setResponse] = useState(false) //確認是否有收到刪除動作的response資料
-  const [unJoinResponse, setUnJoinResponse] = useState(false) //確認是否有收到取消報名動作的response資料
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
 
-  //每次點擊頁籤就提示載入中並取得新資料
+  //每次點擊頁籤按下切換按鈕就提示載入中並取得新資料
   useEffect(() => {
-    setHasLoading(true)
-    props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable)
-  }, [props.nowClickTag])
+    getMemberEventData()
+  }, [props.nowClickTag, isEnable])
 
-  //每次資料有變動就將新資料存進本地state
+  //每次資料有變動就提示載入中
   useEffect(() => {
     //設定載入中為true
     setHasLoading(true)
@@ -47,41 +41,19 @@ function ManageMyEventContent(props) {
   //每當response改變時就秀出提示視窗
   useEffect(() => {
     if (response) {
-      if (props.delEventDataResponse.status === 201) {
+      if (props.memberActionResponse.status === 201) {
         SweetAlert.success('已成功刪除一筆資料!')
         setResponse(false)
         props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable) //刪除完成的時候刷新一次資料
       } else {
         SweetAlert.errorAlert(
-          props.delEventDataResponse.status,
-          props.delEventDataResponse.msg
+          props.memberActionResponse.status,
+          props.memberActionResponse.msg
         )
         setResponse(false)
       }
     }
   }, [response])
-
-  //每當unJoinResponse改變時就秀出提示視窗
-  useEffect(() => {
-    if (unJoinResponse) {
-      if (props.memberUnJoinEventResponse.status === 201) {
-        SweetAlert.success('已成功取消報名!')
-        setUnJoinResponse(false)
-        props.memberGetEventDataAsync('', '', props.nowClickTag, isEnable) //取消報名完成的時候刷新一次資料
-      } else {
-        SweetAlert.errorAlert(
-          props.memberUnJoinEventResponse.status,
-          props.memberUnJoinEventResponse.msg
-        )
-        setUnJoinResponse(false)
-      }
-    }
-  }, [unJoinResponse])
-
-  //每次按鈕被點擊時，就取得新資料
-  useEffect(() => {
-    getMemberEventData()
-  }, [isEnable])
 
   //向伺服器取得新資料
   const getMemberEventData = page => {
@@ -153,7 +125,7 @@ function ManageMyEventContent(props) {
                               const eventId = value.eventId
                               SweetAlert.sendConfirm(
                                 '你確定要取消報名嗎?',
-                                setUnJoinResponse,
+                                setResponse,
                                 true,
                                 props.memberUnJoinEventAsync,
                                 eventId
@@ -274,4 +246,27 @@ function ManageMyEventContent(props) {
   )
 }
 
-export default ManageMyEventContent
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    memberEventDataSelf: store.eventReducer.memberEventDataSelf,
+    memberActionResponse: store.eventReducer.memberActionResponse,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      memberGetEventDataAsync,
+      memberUnJoinEventAsync,
+      delEventDataAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ManageMyEventContent)

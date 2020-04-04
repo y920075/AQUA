@@ -2,14 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import SweetAlert from '../../components/class/SellerClassComponents/Sweetalert2'
 
+//引入redux元件
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+//引入action
+import {
+  getMemberEventDetailDataAsync,
+  editEventDataAsync,
+  memberUnOtherJoinEventAsync,
+  getEventTypeDataAsync,
+} from '../../actions/event/event_Actions'
+import { getCityDataAsync, getDistDataAsync } from '../../actions/seller/index'
+
 function MemberEditEvent(props) {
   const [eventId, setEventId] = useState(props.match.params.eventId)
   const [addressCity, setAddressCity] = useState('') //儲存使用者選擇的縣市
   const [addressDist, setAddressDist] = useState('') //儲存使用者選擇的地區
   const [response, setResponse] = useState(false) //確認是否有收到response資料
-  const [unOtherJoinEventResponse, setUnOtherJoinEventResponse] = useState(
-    false
-  ) //確認是否有收到取消他人報名的response資料
 
   //儲存表單值的本地state
   const [eventName, setEventName] = useState('')
@@ -26,41 +36,26 @@ function MemberEditEvent(props) {
 
   useEffect(() => {
     props.getMemberEventDetailDataAsync(eventId)
+    props.getEventTypeDataAsync()
+    props.getCityDataAsync()
   }, [])
 
   //每當response改變時就秀出提示視窗
   useEffect(() => {
     if (response) {
-      if (props.editEventDataResponse.status === 201) {
-        SweetAlert.success('已成功修改一筆資料!')
+      if (props.memberActionResponse.status === 201) {
+        SweetAlert.success('已成功變更一筆資料!')
         setResponse(false)
         props.getMemberEventDetailDataAsync(eventId)
       } else {
         SweetAlert.errorAlert(
-          props.editEventDataResponse.status,
-          props.editEventDataResponse.msg
+          props.memberActionResponse.status,
+          props.memberActionResponse.msg
         )
         setResponse(false)
       }
     }
   }, [response])
-
-  //每當unOtherJoinEventResponse改變時就秀出提示視窗
-  useEffect(() => {
-    if (unOtherJoinEventResponse) {
-      if (props.memberUnOtherJoinEventResponse.status === 201) {
-        SweetAlert.success('已成功取消!')
-        setUnOtherJoinEventResponse(false)
-        props.getMemberEventDetailDataAsync(eventId)
-      } else {
-        SweetAlert.errorAlert(
-          props.memberUnOtherJoinEventResponse.status,
-          props.memberUnOtherJoinEventResponse.msg
-        )
-        setUnOtherJoinEventResponse(false)
-      }
-    }
-  }, [unOtherJoinEventResponse])
 
   //每當本地state[addressDist]改變時就setEventLocation
   useEffect(() => {
@@ -72,7 +67,7 @@ function MemberEditEvent(props) {
   //把取得的資料放進本地state
   useEffect(() => {
     if (props.memberEventDetailData.eventData) {
-      props.getDistDataAsunc(
+      props.getDistDataAsync(
         props.memberEventDetailData.eventData[0].eventLocation.substr(0, 3)
       )
 
@@ -117,7 +112,7 @@ function MemberEditEvent(props) {
       '確定要送出嗎?',
       setResponse,
       true,
-      props.editEventDataAsunc,
+      props.editEventDataAsync,
       EventFormData,
       eventId
     )
@@ -156,8 +151,8 @@ function MemberEditEvent(props) {
                   }}
                 >
                   <option value="">請選擇類型</option>
-                  {props.typeData.length > 0
-                    ? props.typeData.map((value, index) => {
+                  {props.eventTypeData.length > 0
+                    ? props.eventTypeData.map((value, index) => {
                         return (
                           <option
                             value={value.eventTypeId}
@@ -184,7 +179,7 @@ function MemberEditEvent(props) {
                   defaultValue=""
                   onChange={event => {
                     const city = event.target.value
-                    props.getDistDataAsunc(city) //取得相對應的地區資料
+                    props.getDistDataAsync(city) //取得相對應的地區資料
                     setAddressCity(city) //設定課程地點(縣市)到本地state
                     setAddressDist('')
                     setEventFullLocation('')
@@ -391,7 +386,7 @@ function MemberEditEvent(props) {
                             console.log(memberId)
                             SweetAlert.sendConfirm(
                               '確定要取消嗎?',
-                              setUnOtherJoinEventResponse,
+                              setResponse,
                               true,
                               props.memberUnOtherJoinEventAsync,
                               eventId,
@@ -431,4 +426,32 @@ function MemberEditEvent(props) {
   )
 }
 
-export default withRouter(MemberEditEvent)
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    cityData: store.sellerReducer.cityData,
+    distData: store.sellerReducer.distData,
+    eventTypeData: store.eventReducer.eventTypeData,
+    memberActionResponse: store.eventReducer.memberActionResponse,
+    memberEventDetailData: store.eventReducer.memberEventDetailData,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      getCityDataAsync,
+      getDistDataAsync,
+      getEventTypeDataAsync,
+      getMemberEventDetailDataAsync,
+      editEventDataAsync,
+      memberUnOtherJoinEventAsync,
+    },
+    dispatch
+  )
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(MemberEditEvent)
+)

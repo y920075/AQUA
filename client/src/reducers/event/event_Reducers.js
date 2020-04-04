@@ -40,16 +40,6 @@ const eventDetailData = (state = {}, action) => {
   }
 }
 
-//取得報名之後後端回傳的資料
-const memberJoinEventResponse = (state = {}, action) => {
-  switch (action.type) {
-    case 'APPLY_EVENT':
-      return action.value
-    default:
-      return state
-  }
-}
-
 //會員取得自己發起的活動資料
 const memberEventDataSelf = (state = {}, action) => {
   switch (action.type) {
@@ -60,30 +50,20 @@ const memberEventDataSelf = (state = {}, action) => {
   }
 }
 
-//會員刪除自己發起的活動資料之後，後端回傳的資料
-const delEventDataResponse = (state = {}, action) => {
-  switch (action.type) {
-    case 'DEL_EVENTDATA':
-      return action.value
-    default:
-      return state
-  }
-}
-
-//會員取消自己報名的活動之後，後端回傳的資料
-const memberUnJoinEventResponse = (state = {}, action) => {
-  switch (action.type) {
-    case 'UNJOIN_EVENT':
-      return action.value
-    default:
-      return state
-  }
-}
-
-//會員新增活動資料之後，後端回傳的資料
-const addEventDataResponse = (state = {}, action) => {
+//會員操作CRUD後，後端回傳的資料
+const memberActionResponse = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_EVENTDATA':
+      return action.value
+    case 'EDIT_EVENTDATA':
+      return action.value
+    case 'DEL_EVENTDATA':
+      return action.value
+    case 'APPLY_EVENT':
+      return action.value
+    case 'UNJOIN_EVENT':
+      return action.value
+    case 'UNJOIN_OTHER_EVENT':
       return action.value
     default:
       return state
@@ -99,27 +79,6 @@ const memberEventDetailData = (state = {}, action) => {
       return state
   }
 }
-
-//會員編輯資料之後，後端回傳的資料
-const editEventDataResponse = (state = {}, action) => {
-  switch (action.type) {
-    case 'EDIT_EVENTDATA':
-      return action.value
-    default:
-      return state
-  }
-}
-
-//會員取消其他人的報名
-const memberUnOtherJoinEventResponse = (state = {}, action) => {
-  switch (action.type) {
-    case 'UNJOIN_OTHER_EVENT':
-      return action.value
-    default:
-      return state
-  }
-}
-
 
 //會員取得聊天室列表
 const memberChatListData = (state = [], action) => {
@@ -150,12 +109,7 @@ const eventReducer = combineReducers({
   eventDetailData,
   memberEventDetailData,
   memberEventDataSelf,
-  delEventDataResponse,
-  addEventDataResponse,
-  editEventDataResponse,
-  memberJoinEventResponse,
-  memberUnJoinEventResponse,
-  memberUnOtherJoinEventResponse,
+  memberActionResponse,
   memberChatListData,
   isEnable,
 })
