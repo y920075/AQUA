@@ -9,14 +9,14 @@ import {
 } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 
-import Avajpg from '../../../../image/20180615_201523.jpg'
+import Avajpg from '../../../image/20180615_201523.jpg'
 import './Style/Info.scss'
 
 //redux相關
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sellerInfoAsync } from '../../../../actions/seller'
+import { sellerInfoAsync } from '../../../actions/seller/index'
 
 function Info(props) {
   //傳過來的props.seller_Inof是一個物件

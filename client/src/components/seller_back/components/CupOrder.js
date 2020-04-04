@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import './Styles/CupOrder.scss'
 import SwitchButton from './SwitchButton'
 import SwitchPercent from './SwitchPercent'
 import { Link, withRouter } from 'react-router-dom'
@@ -6,15 +7,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Swal from 'sweetalert2'
 
-import { insertSellerNewInsertCouponAsync } from '../../../../actions/seller'
-import { cateData } from './itemType'
+import { insertSellerNewInsertCouponAsync } from '../../../actions/seller/index'
+// import { getSellerNewInsertCouponAsync } from '../../../actions/index'
 
-function CupItem(props) {
+function CupOrder(props) {
   console.log(props)
-  console.log(cateData.typeData)
-  const [coup_cate_id, setCoup_cate_id] = useState('coup002')
-
-  const [item, setItem] = useState(null)
+  const [coup_cate_id, setCoup_cate_id] = useState('coup001')
 
   const [coup_name, setCoupName] = useState(null)
 
@@ -41,11 +39,11 @@ function CupItem(props) {
   const [coupTimes, setCoupTimes] = useState(0)
 
   //優惠碼
-  const codeItem = props.item.coupon['code2']
-  const [coupCode, setCoupCode] = useState(codeItem)
+  const code = props.order.coupon['code1']
+  const [coupCode, setCoupCode] = useState(code)
 
   //優惠id
-  const [coupId, setcoupId] = useState(props.item.coupon['coup_id'])
+  const [coupId, setcoupId] = useState(props.order.coupon['coup_id'])
 
   const [price, setPrice] = useState({
     isEnable: false,
@@ -53,8 +51,8 @@ function CupItem(props) {
   const [minusorpercent, setMinusorpercent] = useState({
     isEnable: false,
   })
-  const [error, setError] = useState(false)
-  const [errorMessages, setErrorMessages] = useState([])
+  // const [error, setError] = useState(false)
+  // const [errorMessages, setErrorMessages] = useState([])
   const inputstyle = {
     textAlign: 'right',
   }
@@ -62,8 +60,11 @@ function CupItem(props) {
     props.insertSellerNewInsertCouponAsync()
   }, [])
 
+  // console.log(props.order.coupon["overprice"])
   const handleCoupChange = event => {
+    console.log(event.target.files)
     setCoupFile(URL.createObjectURL(event.target.files[0]))
+    console.log(event.target.files[0])
     setCoupDataFiles(event.target.files[0])
   }
   const toggleSwitchButton = () => {
@@ -74,87 +75,132 @@ function CupItem(props) {
     // 修改 state
     setMinusorpercent({ isEnable: !minusorpercent.isEnable })
   }
-
   useEffect(() => {
     if (price.isEnable == true && minusorpercent.isEnable == true) {
-      setCoupCode('PMI' + codeItem)
+      setCoupCode('PM' + code)
     } else if (price.isEnable == false && minusorpercent.isEnable == true) {
-      setCoupCode('IMI' + codeItem)
+      setCoupCode('IM' + code)
     } else if (price.isEnable == true && minusorpercent.isEnable == false) {
-      setCoupCode('PII' + codeItem)
+      setCoupCode('PI' + code)
     } else {
-      setCoupCode('III' + codeItem)
+      setCoupCode('II' + code)
     }
   }, [price.isEnable, minusorpercent.isEnable])
+  // let input = ( <input
+  //             readOnly
+  //             type="text"
+  //             name="coup_code"
+  //             className="form-control my-3"
+  //             id="exampleInputPassword1"
+  //             defaultValue={"PM" + coupCode}
+  //             onChange={(event) => {setCoupCode(event.target.value)}}
+  //                />)
 
+  // if (price.isEnable == true && minusorpercent.isEnable == true) {
+  //   input = <input
+  //                     readOnly
+  //                     type="text"
+  //                     name="coup_code"
+  //                     className="form-control my-3"
+  //                     id="exampleInputPassword1"
+  //                     defaultValue={"PM" + coupCode}
+  //                     // onChange={(event) => {setCoupCode(event.target.value)}}
+  //                 />;
+  // } else if(price.isEnable == false && minusorpercent.isEnable == true){
+  //   input = <input
+  //           readOnly
+  //           type="text"
+  //           name="coup_code"
+  //           className="form-control my-3"
+  //           id="exampleInputPassword1"
+  //           defaultValue={"IM" + coupCode}
+
+  //       />;
+  // } else if(price.isEnable == true && minusorpercent.isEnable == false){
+  //   input = <input
+  //             readOnly
+  //             type="text"
+  //             name="coup_code"
+  //             className="form-control my-3"
+  //             id="exampleInputPassword1"
+  //             defaultValue={"PP" + coupCode}
+  //             // onChange={(event) => {setCoupCode(event.target.value)}}
+  //         />;
+  // }else {
+  //   input = <input
+  //           readOnly
+  //           type="text"
+  //           name="coup_code"
+  //           className="form-control my-3"
+  //           id="exampleInputPassword1"
+  //           defaultValue={"IP" + coupCode}
+  //           // onChange={(event) => {setCoupCode(event.target.value)}}
+  //       />;
+  // }
   const handleSubmit = e => {
-    // let error = false
-    // let errorMessages = []
+    let error = false
+    let errorMessages = []
 
     // const form = event.target;
     // const coup_data = new FormData(form);
 
+    // console.log(coup_data)
+
     if (!coup_name) {
-      Swal.fire({
-        // title: 'Error!',
-        text: '優惠名欄位是空的喔！',
-        icon: 'warning',
-        confirmButtonText: '確定',
-        timer: 4000,
-      })
-    } else if (!coupfile) {
-      Swal.fire({
-        // title: 'Error!',
-        text: '優惠圖片沒上傳喔！',
-        icon: 'warning',
-        confirmButtonText: '確定',
-        timer: 4000,
-      })
-    } else if (!coupOver) {
-      Swal.fire({
-        // title: 'Error!',
-        text: '超過模式沒填喔！',
-        icon: 'warning',
-        confirmButtonText: '確定',
-        timer: 4000,
-      })
-    } else if (!coupPercent) {
-      Swal.fire({
-        // title: 'Error!',
-        text: '折扣模式沒填喔！',
-        icon: 'warning',
-        confirmButtonText: '確定',
-        timer: 4000,
-      })
-    } else if (!coupStart) {
-      Swal.fire({
-        // title: 'Error!',
-        text: '折扣開始時間沒填喔！',
-        icon: 'warning',
-        confirmButtonText: '確定',
-        timer: 4000,
-      })
-    } else if (!coupEnd) {
-      Swal.fire({
-        // title: 'Error!',
-        text: '折扣結束時間沒填沒填喔！',
-        icon: 'warning',
-        confirmButtonText: '確定',
-        timer: 4000,
-      })
-    } else if (!coupTimes) {
-      Swal.fire({
-        // title: 'Error!',
-        text: '優惠券使用次數沒填喔！',
-        icon: 'warning',
-        confirmButtonText: '確定',
-        timer: 4000,
-      })
+      error = true
+      errorMessages.push('優惠名稱沒填')
+    }
+    if (!coupfile) {
+      error = true
+      errorMessages.push('優惠圖片沒上傳')
+    }
+    if (!coupOver) {
+      error = true
+      errorMessages.push('超過模式沒填')
+    }
+    if (!coupPercent) {
+      error = true
+      errorMessages.push('折扣模式沒填')
+    }
+    if (!coupStart) {
+      error = true
+      errorMessages.push('折扣模式沒填')
+    }
+    if (!coupStart) {
+      error = true
+      errorMessages.push('開始時間沒填')
+    }
+    if (!coupEnd) {
+      error = true
+      errorMessages.push('結束時間沒填')
+    }
+    if (coup_name.length < 25) {
+      error = true
+      errorMessages.push('優惠名稱不超過25個字')
+    }
+    if (coup_name.length > 5) {
+      error = true
+      errorMessages.push('優惠名稱需要超過5個字')
+    }
+    if (!coupTimes) {
+      error = true
+      errorMessages.push('優惠券使用次數沒填')
     }
 
+    console.log(
+      coup_cate_id,
+      coupId,
+      coup_name,
+      coupDataFiles,
+      coupCode,
+      coupOver,
+      coupPercent,
+      coupStart,
+      coupEnd,
+      coupTimes
+    )
     const coupData = {
       coup_cate_id,
-      item,
       coupId,
       coup_name,
       coupDataFiles,
@@ -170,7 +216,6 @@ function CupItem(props) {
     coupon_fd.append('coup_cate_id', coupData.coup_cate_id)
     coupon_fd.append('coup_id', coupData.coupId)
     coupon_fd.append('coup_code', coupData.coupCode)
-    coupon_fd.append('itemType', coupData.item)
     coupon_fd.append('coup_name', coupData.coup_name)
     coupon_fd.append('img', coupData.coupDataFiles)
     coupon_fd.append('coup_over', coupData.coupOver)
@@ -208,12 +253,13 @@ function CupItem(props) {
         })
       }
     })
+    // console.log(props.insertSellerNewInsertCouponAsync());
   }
 
   return (
-    <form name="form1">
-      <div className="container-fluid border-dark">
-        <div className="row text-center">
+    <form name="form1 input-style-chin">
+      <div className="container">
+        <div className="row">
           <div className="col-lg-6 input-style-chin">
             <div className="form-group my-3 input-text-middle-chin">
               <label htmlFor="nameInput">優惠券種類(無需自行輸入)</label>
@@ -227,28 +273,6 @@ function CupItem(props) {
                 defaultValue={coup_cate_id}
                 onChange={event => setCoup_cate_id(event.target.value)}
               />
-            </div>
-          </div>
-          <div className="col-lg-6 input-style-chin">
-            <div className="form-group my-3 input-text-middle-chin">
-              <select
-                name="itemType"
-                className="custom-select"
-                onChange={event => setItem(event.target.value)}
-              >
-                <option defaultValue="套用商品種類">套用商品種類</option>
-                {cateData ? (
-                  cateData.map((item, index) => {
-                    return (
-                      <option key={index} value={item.itemCategory}>
-                        {item.itemCategory}
-                      </option>
-                    )
-                  })
-                ) : (
-                  <h2>沒有從上層傳過來的資料</h2>
-                )}
-              </select>
             </div>
           </div>
         </div>
@@ -267,7 +291,6 @@ function CupItem(props) {
                 onChange={event => setcoupId(event.target.value)}
               />
             </div>
-
             <div className="form-group my-3">
               <label htmlFor="nameInput">優惠券名</label>
               <input
@@ -298,14 +321,15 @@ function CupItem(props) {
               <label htmlFor="exampleInputPassword1">
                 優惠券密碼(無需自行輸入)
               </label>
+
               <input
                 readOnly
                 type="text"
                 name="coup_code"
                 className="form-control my-3"
                 id="exampleInputPassword1"
+                // defaultValue={"PM" + coupCode}
                 value={coupCode}
-                // defaultValue={coupCode}
                 // onChange={(event) => {setCoupCode(event.target.value)}}
               />
             </div>
@@ -376,7 +400,7 @@ function CupItem(props) {
                     <span className="input-group-text">減</span>
                   </div>
                   <input
-                    name="coup_over"
+                    name="coup_percent"
                     style={inputstyle}
                     type="text"
                     className="form-control"
@@ -394,7 +418,7 @@ function CupItem(props) {
                     <span className="input-group-text">打</span>
                   </div>
                   <input
-                    name="coup_over"
+                    name="coup_percent"
                     style={inputstyle}
                     type="text"
                     className="form-control"
@@ -465,7 +489,6 @@ function CupItem(props) {
     </form>
   )
 }
-
 const mapStateToProps = store => {
   return { couponInsert: store.sellerReducer.couponInsert }
 }
@@ -475,4 +498,6 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({ insertSellerNewInsertCouponAsync }, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CupItem))
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CupOrder)
+)

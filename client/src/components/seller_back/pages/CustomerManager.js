@@ -6,14 +6,14 @@ import {
   customerGetAsync,
   customerUseAsync,
   customerMailDataAsync,
-} from '../../../../actions/seller/index'
+} from '../../../actions/seller/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import $ from 'jquery'
 import ProgressToMailBar from './ProgressToMailBar'
 
-import TagSvg from '../../../../image/customer/tickMenu.svg'
-import CrossSvg from '../../../../image/customer/cancel.svg'
+import TagSvg from '../../../image/customer/tickMenu.svg'
+import CrossSvg from '../../../image/customer/cancel.svg'
 import CouponTableList from './CouponTableList'
 import './Style/CustomerMan.scss'
 

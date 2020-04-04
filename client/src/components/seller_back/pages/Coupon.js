@@ -10,7 +10,7 @@ import './Style/AllSeller.scss'
 
 //redux相關
 
-import { getSellerCouponAsync } from '../../../../actions/seller/index'
+import { getSellerCouponAsync } from '../../../actions/seller/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 

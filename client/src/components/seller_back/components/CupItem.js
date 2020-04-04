@@ -6,12 +6,17 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Swal from 'sweetalert2'
 
-import { insertSellerNewInsertCouponAsync } from '../../../../actions/seller'
-function CupGivi(props) {
-  const [coup_cate_id, setCoup_cate_id] = useState('coup003')
+import { insertSellerNewInsertCouponAsync } from '../../../actions/seller/index'
+import { cateData } from './itemType'
+
+function CupItem(props) {
+  console.log(props)
+  console.log(cateData.typeData)
+  const [coup_cate_id, setCoup_cate_id] = useState('coup002')
+
+  const [item, setItem] = useState(null)
 
   const [coup_name, setCoupName] = useState(null)
-  const [givi_name, setGivi] = useState(null)
 
   //圖片的state鉤子
   const [coupfile, setCoupFile] = useState(null)
@@ -20,9 +25,9 @@ function CupGivi(props) {
 
   const [coupDataFiles, setCoupDataFiles] = useState(null)
   //優惠券超過模式
-  const [givipiece, setGiviPieceMode] = useState(null)
-  //折扣模式
   const [coupOver, setCoupOverMode] = useState(null)
+  //折扣模式
+  const [coupPercent, setCoupPercentMode] = useState(null)
 
   //優惠起始時間
 
@@ -36,10 +41,11 @@ function CupGivi(props) {
   const [coupTimes, setCoupTimes] = useState(0)
 
   //優惠碼
-  const [coupCode, setCoupCode] = useState(props.givi.coupon['code3'])
+  const codeItem = props.item.coupon['code2']
+  const [coupCode, setCoupCode] = useState(codeItem)
 
   //優惠id
-  const [coupId, setcoupId] = useState(props.givi.coupon['coup_id'])
+  const [coupId, setcoupId] = useState(props.item.coupon['coup_id'])
 
   const [price, setPrice] = useState({
     isEnable: false,
@@ -47,8 +53,8 @@ function CupGivi(props) {
   const [minusorpercent, setMinusorpercent] = useState({
     isEnable: false,
   })
-  // const [error, setError] = useState(false)
-  // const [errorMessages, setErrorMessages] = useState([])
+  const [error, setError] = useState(false)
+  const [errorMessages, setErrorMessages] = useState([])
   const inputstyle = {
     textAlign: 'right',
   }
@@ -56,11 +62,8 @@ function CupGivi(props) {
     props.insertSellerNewInsertCouponAsync()
   }, [])
 
-  // console.log(props.order.coupon["overprice"])
   const handleCoupChange = event => {
-    console.log(event.target.files)
     setCoupFile(URL.createObjectURL(event.target.files[0]))
-    console.log(event.target.files[0])
     setCoupDataFiles(event.target.files[0])
   }
   const toggleSwitchButton = () => {
@@ -72,65 +75,92 @@ function CupGivi(props) {
     setMinusorpercent({ isEnable: !minusorpercent.isEnable })
   }
 
+  useEffect(() => {
+    if (price.isEnable == true && minusorpercent.isEnable == true) {
+      setCoupCode('PMI' + codeItem)
+    } else if (price.isEnable == false && minusorpercent.isEnable == true) {
+      setCoupCode('IMI' + codeItem)
+    } else if (price.isEnable == true && minusorpercent.isEnable == false) {
+      setCoupCode('PII' + codeItem)
+    } else {
+      setCoupCode('III' + codeItem)
+    }
+  }, [price.isEnable, minusorpercent.isEnable])
+
   const handleSubmit = e => {
-    let error = false
-    let errorMessages = []
+    // let error = false
+    // let errorMessages = []
 
     // const form = event.target;
     // const coup_data = new FormData(form);
 
-    // console.log(coup_data)
-
     if (!coup_name) {
-      error = true
-      errorMessages.push('優惠名稱沒填')
-    }
-    if (!coupfile) {
-      error = true
-      errorMessages.push('優惠圖片沒上傳')
-    }
-    if (!coupOver) {
-      error = true
-      errorMessages.push('超過模式沒填')
-    }
-    if (!givipiece) {
-      error = true
-      errorMessages.push('折扣模式沒填')
-    }
-    if (!coupStart) {
-      error = true
-      errorMessages.push('折扣模式沒填')
-    }
-    if (!coupStart) {
-      error = true
-      errorMessages.push('開始時間沒填')
-    }
-    if (!coupEnd) {
-      error = true
-      errorMessages.push('結束時間沒填')
-    }
-    if (coup_name.length < 25) {
-      error = true
-      errorMessages.push('優惠名稱不超過25個字')
-    }
-    if (coup_name.length > 5) {
-      error = true
-      errorMessages.push('優惠名稱需要超過5個字')
-    }
-    if (!coupTimes) {
-      error = true
-      errorMessages.push('優惠券使用次數沒填')
+      Swal.fire({
+        // title: 'Error!',
+        text: '優惠名欄位是空的喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+        timer: 4000,
+      })
+    } else if (!coupfile) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '優惠圖片沒上傳喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+        timer: 4000,
+      })
+    } else if (!coupOver) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '超過模式沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+        timer: 4000,
+      })
+    } else if (!coupPercent) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '折扣模式沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+        timer: 4000,
+      })
+    } else if (!coupStart) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '折扣開始時間沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+        timer: 4000,
+      })
+    } else if (!coupEnd) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '折扣結束時間沒填沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+        timer: 4000,
+      })
+    } else if (!coupTimes) {
+      Swal.fire({
+        // title: 'Error!',
+        text: '優惠券使用次數沒填喔！',
+        icon: 'warning',
+        confirmButtonText: '確定',
+        timer: 4000,
+      })
     }
 
     const coupData = {
       coup_cate_id,
-      givi_name,
+      item,
       coupId,
-      coupCode,
       coup_name,
       coupDataFiles,
+      coupCode,
       coupOver,
-      givipiece,
+      coupPercent,
       coupStart,
       coupEnd,
       coupTimes,
@@ -138,13 +168,13 @@ function CupGivi(props) {
 
     const coupon_fd = new FormData()
     coupon_fd.append('coup_cate_id', coupData.coup_cate_id)
-    coupon_fd.append('givi_name', coupData.givi_name)
     coupon_fd.append('coup_id', coupData.coupId)
     coupon_fd.append('coup_code', coupData.coupCode)
+    coupon_fd.append('itemType', coupData.item)
     coupon_fd.append('coup_name', coupData.coup_name)
     coupon_fd.append('img', coupData.coupDataFiles)
     coupon_fd.append('coup_over', coupData.coupOver)
-    coupon_fd.append('givi_piece', coupData.givipiece)
+    coupon_fd.append('coup_percent', coupData.coupPercent)
     coupon_fd.append('coup_start', coupData.coupStart)
     coupon_fd.append('coup_end', coupData.coupEnd)
     coupon_fd.append('coup_times', coupData.coupTimes)
@@ -152,13 +182,13 @@ function CupGivi(props) {
     props.insertSellerNewInsertCouponAsync(coupon_fd, () => {
       if (
         coupData.coup_cate_id !== null &&
-        coupData.givi_name !== null &&
         coupData.coupId !== null &&
         coupData.coupCode !== null &&
+        coupData.item !== null &&
         coupData.coup_name !== null &&
         coupData.coupDataFiles !== null &&
         coupData.coupOver !== null &&
-        coupData.givipiece !== null &&
+        coupData.coupPercent !== null &&
         coupData.coupStart !== null &&
         coupData.coupEnd !== null &&
         coupData.coupTimes !== null
@@ -178,13 +208,12 @@ function CupGivi(props) {
         })
       }
     })
-    // console.log(props.insertSellerNewInsertCouponAsync());
   }
 
   return (
-    <form name="form1 input-style-chin">
-      <div className="container">
-        <div className="row">
+    <form name="form1">
+      <div className="container-fluid border-dark">
+        <div className="row text-center">
           <div className="col-lg-6 input-style-chin">
             <div className="form-group my-3 input-text-middle-chin">
               <label htmlFor="nameInput">優惠券種類(無需自行輸入)</label>
@@ -203,16 +232,16 @@ function CupGivi(props) {
           <div className="col-lg-6 input-style-chin">
             <div className="form-group my-3 input-text-middle-chin">
               <select
-                name="givi_name"
+                name="itemType"
                 className="custom-select"
-                onChange={event => setGivi(event.target.value)}
+                onChange={event => setItem(event.target.value)}
               >
-                <option defaultValue="套用贈品種類">套用贈品種類</option>
-                {props.givi.coupon['table6'] ? (
-                  props.givi.coupon['table6'].map((item, index) => {
+                <option defaultValue="套用商品種類">套用商品種類</option>
+                {cateData ? (
+                  cateData.map((item, index) => {
                     return (
-                      <option key={index} value={item.givi_name}>
-                        {item.givi_name}
+                      <option key={index} value={item.itemCategory}>
+                        {item.itemCategory}
                       </option>
                     )
                   })
@@ -238,6 +267,7 @@ function CupGivi(props) {
                 onChange={event => setcoupId(event.target.value)}
               />
             </div>
+
             <div className="form-group my-3">
               <label htmlFor="nameInput">優惠券名</label>
               <input
@@ -274,56 +304,109 @@ function CupGivi(props) {
                 name="coup_code"
                 className="form-control my-3"
                 id="exampleInputPassword1"
-                defaultValue={coupCode}
-                onChange={event => {
-                  setCoupCode(event.target.value)
-                }}
+                value={coupCode}
+                // defaultValue={coupCode}
+                // onChange={(event) => {setCoupCode(event.target.value)}}
               />
             </div>
           </div>
           <div className="mx-5"></div>
           <div className="col-sm-5 col-xl-5">
             <div className="form-group my-3">
-              <label htmlFor="exampleInputPassword1">設定贈品滿額條件:</label>
-
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">超過</span>
-                </div>
-                <input
-                  name="coup_over"
-                  style={inputstyle}
-                  type="text"
-                  onChange={event => {
-                    setCoupOverMode(event.target.value)
-                  }}
-                  className="form-control"
+              <div>
+                <SwitchButton
+                  type="button"
+                  active={price.isEnable}
+                  clicked={toggleSwitchButton}
                 />
-                <div className="input-group-append">
-                  <span className="input-group-text">元</span>
-                </div>
               </div>
+
+              <label htmlFor="exampleInputPassword1"></label>
+              {price.isEnable === true ? (
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">超過</span>
+                  </div>
+                  <input
+                    name="coup_over"
+                    style={inputstyle}
+                    type="text"
+                    className="form-control"
+                    onChange={event => {
+                      setCoupOverMode(event.target.value)
+                    }}
+                  />
+                  <div className="input-group-append">
+                    <span className="input-group-text">元</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">超過</span>
+                  </div>
+                  <input
+                    name="coup_over"
+                    style={inputstyle}
+                    type="text"
+                    onChange={event => {
+                      setCoupOverMode(event.target.value)
+                    }}
+                    className="form-control"
+                  />
+                  <div className="input-group-append">
+                    <span className="input-group-text">件</span>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="form-group my-3">
-              <label htmlFor="exampleInputPassword1">設定贈品贈送數目:</label>
-
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">送</span>
-                </div>
-                <input
-                  name="givi_piece"
-                  style={inputstyle}
-                  type="text"
-                  onChange={event => {
-                    setGiviPieceMode(event.target.value)
-                  }}
-                  className="form-control"
+              <div>
+                <SwitchPercent
+                  type="button"
+                  active={minusorpercent.isEnable}
+                  clicked={toggleSwitchButtonMinus}
                 />
-                <div className="input-group-append">
-                  <span className="input-group-text">件</span>
-                </div>
               </div>
+
+              <label htmlFor="exampleInputPassword1"></label>
+              {minusorpercent.isEnable === true ? (
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">減</span>
+                  </div>
+                  <input
+                    name="coup_over"
+                    style={inputstyle}
+                    type="text"
+                    className="form-control"
+                    onChange={event => {
+                      setCoupPercentMode(event.target.value)
+                    }}
+                  />
+                  <div className="input-group-append">
+                    <span className="input-group-text">元</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">打</span>
+                  </div>
+                  <input
+                    name="coup_over"
+                    style={inputstyle}
+                    type="text"
+                    className="form-control"
+                    onChange={event => {
+                      setCoupPercentMode(event.target.value)
+                    }}
+                  />
+                  <div className="input-group-append">
+                    <span className="input-group-text">折</span>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="form-group my-3">
               <label htmlFor="nameInput">優惠起始時間:</label>
@@ -382,6 +465,7 @@ function CupGivi(props) {
     </form>
   )
 }
+
 const mapStateToProps = store => {
   return { couponInsert: store.sellerReducer.couponInsert }
 }
@@ -391,4 +475,4 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({ insertSellerNewInsertCouponAsync }, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CupGivi))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CupItem))
