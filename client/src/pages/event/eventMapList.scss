@@ -29,6 +29,9 @@
     max-height: 1200px;
     overflow: auto;
     padding: 0;
+    .row{
+      max-height: 800px;
+    }
     .eventInfoBox {
       width: 255px;
       margin: 10px auto;

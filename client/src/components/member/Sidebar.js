@@ -8,6 +8,7 @@ import { memberLogoutAsync } from '../../actions/member/memberActions'
 import { connect } from 'react-redux'
 
 function Sidebar(props) {
+  console.log(props)
   return (
     <>
       <div>
