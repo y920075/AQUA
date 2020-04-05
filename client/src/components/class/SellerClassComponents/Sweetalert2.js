@@ -3,8 +3,6 @@ import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 
 class SweetAlert {
-  constructor() {}
-
   //送出前確認
   /*
     title = 提示窗的標題

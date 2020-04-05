@@ -8,10 +8,10 @@ import { bindActionCreators } from 'redux'
 //引入action
 import {
   getSellerClassDetailDataAsync,
-  getCityDataAsunc,
-  getDistDataAsunc,
-  getClassTypeLevelDataForSellerAsunc,
-  editClassDataAsunc,
+  getCityDataAsync,
+  getDistDataAsync,
+  getClassTypeLevelDataForSellerAsync,
+  editClassDataAsync,
 } from '../../actions/seller/index'
 
 import EditClassDataContent from '../../components/class/SellerClassComponents/EditClassDataContent'
@@ -21,8 +21,8 @@ function SellerEditClass(props) {
 
   useEffect(() => {
     props.getSellerClassDetailDataAsync(classId)
-    props.getCityDataAsunc()
-    props.getClassTypeLevelDataForSellerAsunc(true, false)
+    props.getCityDataAsync()
+    props.getClassTypeLevelDataForSellerAsync(true, false)
   }, [])
 
   return (
@@ -36,10 +36,10 @@ function SellerEditClass(props) {
           levelData={props.levelData}
           SellerClassDetailData={props.SellerClassDetailData}
           editClassDataResponse={props.editClassDataResponse}
-          editClassDataAsunc={props.editClassDataAsunc}
-          getDistDataAsunc={props.getDistDataAsunc}
-          getClassTypeLevelDataForSellerAsunc={
-            props.getClassTypeLevelDataForSellerAsunc
+          editClassDataAsync={props.editClassDataAsync}
+          getDistDataAsync={props.getDistDataAsync}
+          getClassTypeLevelDataForSellerAsync={
+            props.getClassTypeLevelDataForSellerAsync
           }
         />
       </div>
@@ -64,10 +64,10 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       getSellerClassDetailDataAsync,
-      getCityDataAsunc,
-      getDistDataAsunc,
-      getClassTypeLevelDataForSellerAsunc,
-      editClassDataAsunc,
+      getCityDataAsync,
+      getDistDataAsync,
+      getClassTypeLevelDataForSellerAsync,
+      editClassDataAsync,
     },
     dispatch
   )

@@ -1,22 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
-
-//引入redux元件
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-//引入action
-import {
-  memberGetEventDataAsync,
-  delEventDataAsync,
-  memberUnJoinEventAsync,
-  getEventTypeDataAsync,
-  addEventDataAsunc,
-  getMemberEventDetailDataAsync,
-  editEventDataAsunc,
-  memberUnOtherJoinEventAsync,
-} from '../../actions/event/event_Actions'
-import { getCityDataAsunc, getDistDataAsunc } from '../../actions/seller/index'
 
 //引入自訂元件
 import ManageMyEventContent from '../../components/event/MemberEventComponents/ManageMyEventContent'
@@ -24,18 +7,12 @@ import AddEventContent from '../../components/event/MemberEventComponents/AddEve
 import '../../style/HS.scss'
 import MemberEditEvent from './MemberEditEvent'
 
-function MemberEvent(props) {
+function MemberEvent() {
   const [nowClickTag, setNowClickTag] = useState(1)
-
-  useEffect(() => {
-    props.memberGetEventDataAsync('', '', nowClickTag)
-    props.getEventTypeDataAsync()
-    props.getCityDataAsunc()
-  }, [])
 
   const handleNavActive = event => {
     const navButtons = document.querySelectorAll('button.nav-item.nav-link')
-    navButtons.forEach((value, index) => {
+    navButtons.forEach(value => {
       value.classList.remove('active')
     })
     event.target.classList.add('active')
@@ -43,31 +20,12 @@ function MemberEvent(props) {
 
   return (
     <>
-      {/* <Banner BannerImgSrc="/images/member/coralreef.jpg" /> */}
-
       <div className="container hsevent jy-member-event">
         <div className="row">
           <div className="col-lg-12">
             <Switch>
               <Route path="/memberuser/event/edit/:eventId">
-                <MemberEditEvent
-                  cityData={props.cityData}
-                  distData={props.distData}
-                  typeData={props.eventTypeData}
-                  memberEventDetailData={props.memberEventDetailData}
-                  editEventDataResponse={props.editEventDataResponse}
-                  getMemberEventDetailDataAsync={
-                    props.getMemberEventDetailDataAsync
-                  }
-                  editEventDataAsunc={props.editEventDataAsunc}
-                  getDistDataAsunc={props.getDistDataAsunc}
-                  memberUnOtherJoinEventResponse={
-                    props.memberUnOtherJoinEventResponse
-                  }
-                  memberUnOtherJoinEventAsync={
-                    props.memberUnOtherJoinEventAsync
-                  }
-                />
+                <MemberEditEvent />
               </Route>
               <Route path="/memberuser/event">
                 <nav className="nav nav-pills nav-justified nav-pills-memberEvent">
@@ -103,32 +61,9 @@ function MemberEvent(props) {
                   switch (nowClickTag) {
                     case 1:
                     case 2:
-                      return (
-                        <ManageMyEventContent
-                          memberEventDataSelf={props.memberEventDataSelf}
-                          memberGetEventDataAsync={
-                            props.memberGetEventDataAsync
-                          }
-                          delEventDataAsync={props.delEventDataAsync}
-                          delEventDataResponse={props.delEventDataResponse}
-                          nowClickTag={nowClickTag}
-                          memberUnJoinEventAsync={props.memberUnJoinEventAsync}
-                          memberUnJoinEventResponse={
-                            props.memberUnJoinEventResponse
-                          }
-                        />
-                      )
+                      return <ManageMyEventContent nowClickTag={nowClickTag} />
                     case 3:
-                      return (
-                        <AddEventContent
-                          typeData={props.eventTypeData}
-                          cityData={props.cityData}
-                          distData={props.distData}
-                          handleGetDistData={props.getDistDataAsunc}
-                          addEventDataAsunc={props.addEventDataAsunc}
-                          addEventDataResponse={props.addEventDataResponse}
-                        />
-                      )
+                      return <AddEventContent />
                     default:
                   }
                 })()}
@@ -141,40 +76,4 @@ function MemberEvent(props) {
   )
 }
 
-// 取得Redux中store的值
-const mapStateToProps = store => {
-  return {
-    memberEventDataSelf: store.eventReducer.memberEventDataSelf,
-    delEventDataResponse: store.eventReducer.delEventDataResponse,
-    memberUnJoinEventResponse: store.eventReducer.memberUnJoinEventResponse,
-    eventTypeData: store.eventReducer.eventTypeData,
-    cityData: store.sellerReducer.cityData,
-    distData: store.sellerReducer.distData,
-    addEventDataResponse: store.eventReducer.addEventDataResponse,
-    memberEventDetailData: store.eventReducer.memberEventDetailData,
-    editEventDataResponse: store.eventReducer.editEventDataResponse,
-    memberUnOtherJoinEventResponse:
-      store.eventReducer.memberUnOtherJoinEventResponse,
-  }
-}
-
-// 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      memberGetEventDataAsync,
-      getEventTypeDataAsync,
-      getCityDataAsunc,
-      getDistDataAsunc,
-      getMemberEventDetailDataAsync,
-      memberUnJoinEventAsync,
-      delEventDataAsync,
-      addEventDataAsunc,
-      editEventDataAsunc,
-      memberUnOtherJoinEventAsync,
-    },
-    dispatch
-  )
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MemberEvent)
+export default MemberEvent

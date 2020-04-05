@@ -6,7 +6,7 @@ import emailjs from 'emailjs-com'
 import '../../style/CW_items.scss'
 // import { userRegisterAsync } from '../actions/index'
 
-import { getCityDataAsunc, getDistDataAsunc } from '../../actions/seller/index'
+import { getCityDataAsync, getDistDataAsync } from '../../actions/seller/index'
 import { memberCheckOutStep2Async } from '../../actions/order/order_Actions'
 
 //引入元件
@@ -28,8 +28,8 @@ function CheckOut(props) {
 
   // setArea(addressCity + addressDist)
   useEffect(() => {
-    props.getCityDataAsunc()
-    // props.getDistDataAsunc()
+    props.getCityDataAsync()
+    // props.getDistDataAsync()
   }, [])
 
   const orderInfo = {}
@@ -132,7 +132,7 @@ function CheckOut(props) {
                         className="form-control"
                         onChange={event => {
                           const city = event.target.value
-                          props.getDistDataAsunc(city) //取得相對應的地區資料
+                          props.getDistDataAsync(city) //取得相對應的地區資料
                           setAddressCity(city) //設定課程地點(縣市)到本地state
                           setAddressDist('')
                           // setClassFullLocation('')
@@ -277,8 +277,8 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      getCityDataAsunc,
-      getDistDataAsunc,
+      getCityDataAsync,
+      getDistDataAsync,
       memberCheckOutStep2Async,
     },
     dispatch

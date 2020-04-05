@@ -414,7 +414,7 @@ export const getSellerClassData = data => ({
   value: data,
 })
 
-export const getSellerClassDataAsunc = (sort, page, isEnable) => {
+export const getSellerClassDataAsync = (sort, page, isEnable) => {
   return async dispatch => {
     let query = []
 
@@ -449,7 +449,7 @@ export const getCityData = data => ({
   value: data,
 })
 
-export const getCityDataAsunc = () => {
+export const getCityDataAsync = () => {
   return async dispatch => {
     const request = new Request(`http://localhost:5000/city`, {
       method: 'GET',
@@ -472,7 +472,7 @@ export const getDistData = data => ({
   value: data,
 })
 
-export const getDistDataAsunc = city => {
+export const getDistDataAsync = city => {
   return async dispatch => {
     const request = new Request(`http://localhost:5000/dist?city=${city}`, {
       method: 'GET',
@@ -503,7 +503,7 @@ export const getClassLevelDataForSeller = data => ({
 //取得類別或等級資料資料
 //type = true or false
 //level = classTypeId
-export const getClassTypeLevelDataForSellerAsunc = (type, level) => {
+export const getClassTypeLevelDataForSellerAsync = (type, level) => {
   return async dispatch => {
     let query = ''
     if (type) query = `onlyType=${type}`
@@ -544,7 +544,7 @@ export const addClassData = data => ({
 
 //新增課程資料
 //formData = 傳送過來的表單值
-export const addClassDataAsunc = formData => {
+export const addClassDataAsync = formData => {
   return async dispatch => {
     const fd = new FormData()
     for (let key in formData) {
@@ -569,7 +569,7 @@ export const delClassData = data => ({
   value: data,
 })
 
-export const delClassDataAsunc = classId => {
+export const delClassDataAsync = classId => {
   return async dispatch => {
     const request = new Request(
       `http://127.0.0.1:5000/seller/class/${classId}`,
@@ -614,7 +614,7 @@ export const editClassData = data => ({
 })
 
 //formData = 傳送過來的表單值
-export const editClassDataAsunc = (formData, classId) => {
+export const editClassDataAsync = (formData, classId) => {
   return async dispatch => {
     const fd = new FormData()
     for (let key in formData) {
@@ -642,7 +642,7 @@ export const getCoachData = data => ({
   value: data,
 })
 
-export const getCoachDataAsunc = () => {
+export const getCoachDataAsync = () => {
   return async dispatch => {
     const request = new Request(`http://localhost:5000/seller/coach`, {
       method: 'GET',
