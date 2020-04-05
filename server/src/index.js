@@ -92,6 +92,9 @@ app.get('/try-db', (req, res)=> {
 app.use('/seller/coupon', require(__dirname+'/coupon/coupon') );
 app.use('/seller', require(__dirname+'/basic_information/basic_information') );
 
+// `http://localhost:5000/seller/itemmanager/item-total-data`,
+//賣家商品管理
+app.use('/seller/itemmanager', require(__dirname+'/itemmanager/itemmanager') );
 
 //引用顧客管理
 app.use('/seller/customermanager', require(__dirname+'/customermanagement/customermanagement') );
