@@ -4,7 +4,7 @@ import SweetAlert from '../../components/class/SellerClassComponents/Sweetalert2
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserCouponDetaiAsync } from '../../actions/member/memberActions'
-import Loading from '../../../src/components/seller_back/components/components/Loading'
+import Loading from '../../../src/components/seller_back/components/Loading'
 
 function MemberCoupon(props) {
   const [state, setState] = useState({})

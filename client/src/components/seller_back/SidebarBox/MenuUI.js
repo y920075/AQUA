@@ -65,6 +65,16 @@ function MenuUI() {
           <span className="hidden-sm-down text-white">顧客管理</span>
         </NavLink>
       </li>
+      <li className="nav-item text-white p-3 mb-2 sidebar-link">
+        <NavLink
+          activeClassName="active"
+          className="nav-link"
+          to="/seller/itemmanager"
+        >
+          <i class="fas fa-store-alt text-white mr-3"></i>
+          <span className="hidden-sm-down text-white">商品管理</span>
+        </NavLink>
+      </li>
     </ul>
   )
 }

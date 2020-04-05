@@ -25,7 +25,7 @@ import Header from '../../components/Header'
 import Banner from '../../components/Banner'
 // import Breadcrumb from '../../components/item/Breadcrumb'
 import CartItem from '../../components/order/CartItem'
-import Loading from '../../components/seller_back/components/components/Loading'
+import Loading from '../../../src/components/seller_back/components/Loading'
 
 function ShoppingCart(props) {
   const [mycart, setMycart] = useState([])

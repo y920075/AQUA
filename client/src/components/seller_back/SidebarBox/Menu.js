@@ -41,7 +41,7 @@ function Menu() {
           <Route path="/class">
             <Class />
           </Route>
-          <Route>
+          <Route path="/item">
             <Item />
           </Route>
         </Switch>

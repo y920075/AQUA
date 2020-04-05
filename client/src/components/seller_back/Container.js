@@ -18,7 +18,7 @@ import SellerEditClass from '../../pages/class/SellerEditClass'
 import SellerEdit from './components/SellerEdit'
 import CouponEdit from './components/CouponEdit'
 import CouponAddGivi from './components/CouponAddGivi'
-
+import ItemManager from './pages/ItemManager'
 import CouponAdd from './components/CouponAdd'
 function Container(props) {
   console.log(props)
@@ -69,7 +69,9 @@ function Container(props) {
               <Route path="/seller/coupon">
                 <Coupon />
               </Route>
-
+              <Route path="/seller/itemmanager">
+                <ItemManager />
+              </Route>
               <Route path="/seller/managecustomer">
                 <CustomerManager />
               </Route>

@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux'
 
 import { itemGetDataAsync } from '../../../actions/seller/index'
 
-function ItemManager(props) {}
+function ItemManager(props) {
+  return <div>這裡是商品管理</div>
+}
 const mapStateToProps = store => {
   return {
     ItemUpload: store.sellerReducer.ItemUpload,
