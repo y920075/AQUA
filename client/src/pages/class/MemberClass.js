@@ -6,10 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 //引入action
-import {
-  memberGetClassDataAsync,
-  memberUnJoinClassAsync,
-} from '../../actions/class/class_Actions'
+import { memberGetClassDataAsync } from '../../actions/class/class_Actions'
 
 /*
   從store接收的參數
@@ -29,10 +26,6 @@ import '../../style/HS.scss'
 function MemberClass(props) {
   const [hasLoading, setHasLoading] = useState(true) //是否載入中
   const [isEnable, setIsEnable] = useState(false) //是否按下 "包含已過期資料的按鈕"
-
-  useEffect(() => {
-    props.memberGetClassDataAsync()
-  }, [])
 
   //每次資料有變動就將新資料存進本地state
   useEffect(() => {
@@ -97,8 +90,6 @@ function MemberClass(props) {
               ) : (
                 <MemberClassList
                   memberClassData={props.memberClassData}
-                  memberUnJoinClassAsync={props.memberUnJoinClassAsync}
-                  memberUnJoinClassResponse={props.memberUnJoinClassResponse}
                   memberGetClassDataAsync={props.memberGetClassDataAsync}
                 />
               )}
@@ -125,7 +116,6 @@ function MemberClass(props) {
 const mapStateToProps = store => {
   return {
     memberClassData: store.classReducer.memberClassData,
-    memberUnJoinClassResponse: store.classReducer.memberUnJoinClassResponse,
   }
 }
 
@@ -134,7 +124,6 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       memberGetClassDataAsync,
-      memberUnJoinClassAsync,
     },
     dispatch
   )

@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import SweetAlert from './SellerClassComponents/Sweetalert2'
-/*
-  傳入參數
-  props.classData = 課程資料列表
-  props.classCoachData = 教練資料列表
-  memberJoinClassResponse = 會員報名完成之後，後端回傳的資料
+//引入redux元件
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-  傳入方法
-  memberJoinClassAsync = 會員報名用的action
-  2020-03-23
-*/
+//引入action
+import { memberJoinClassAsync } from '../../actions/class/class_Actions'
+
 function ClassDetailDataContent(props) {
   const [response, setResponse] = useState(false) //確認是否有收到response資料
 
   //每當response改變時就秀出提示視窗
   useEffect(() => {
     if (response) {
-      if (props.memberJoinClassResponse.status === 201) {
+      if (props.memberClassActionResponse.status === 201) {
         SweetAlert.success('報名成功!')
         setResponse(false)
       } else {
         SweetAlert.errorAlert(
-          props.memberJoinClassResponse.status,
-          props.memberJoinClassResponse.msg
+          props.memberClassActionResponse.status,
+          props.memberClassActionResponse.msg
         )
         setResponse(false)
       }
@@ -190,4 +187,19 @@ function ClassDetailDataContent(props) {
   )
 }
 
-export default ClassDetailDataContent
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    memberClassActionResponse: store.classReducer.memberClassActionResponse,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ memberJoinClassAsync }, dispatch)
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ClassDetailDataContent)

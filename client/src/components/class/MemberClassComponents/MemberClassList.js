@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import SweetAlert from '../SellerClassComponents/Sweetalert2' //自訂提示窗
 
-/*
-  傳入參數
-  memberClassData = 會員報名的所有課程資料
-  memberUnJoinClassResponse = 會員取消報名之後，後端回傳的資料
-  傳入方法
-  memberUnJoinClassAsync = 會員取消報名的動作
-  memberGetClassDataAsync = 取得新資料的動作
-  2020-03-25
-*/
+//引入redux元件
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+//引入action
+import { memberUnJoinClassAsync } from '../../../actions/class/class_Actions'
 
 function MemberClassList(props) {
   const [response, setResponse] = useState(false) //確認是否有收到取消報名動作的response資料
@@ -18,14 +15,14 @@ function MemberClassList(props) {
   //每當response改變時就秀出提示視窗
   useEffect(() => {
     if (response) {
-      if (props.memberUnJoinClassResponse.status === 201) {
+      if (props.memberClassActionResponse.status === 201) {
         SweetAlert.success('已成功取消報名!')
         setResponse(false)
         props.memberGetClassDataAsync()
       } else {
         SweetAlert.errorAlert(
-          props.memberUnJoinClassResponse.status,
-          props.memberUnJoinClassResponse.msg
+          props.memberClassActionResponse.status,
+          props.memberClassActionResponse.msg
         )
         setResponse(false)
       }
@@ -110,4 +107,21 @@ function MemberClassList(props) {
   )
 }
 
-export default MemberClassList
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    memberClassActionResponse: store.classReducer.memberClassActionResponse,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      memberUnJoinClassAsync,
+    },
+    dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MemberClassList)
