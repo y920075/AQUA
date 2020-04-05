@@ -136,6 +136,16 @@ const totalPrice = (state = {}, action) => {
   }
 }
 
+//----------------------商品專區相關reducer----------------
+const ItemUpload = (state = {}, action) => {
+  switch (action.type) {
+    case 'UPLOADED_ITEM':
+      return action.value
+    default:
+      return state
+  }
+}
+
 //----------------------賣家中心課程相關reducer----------------
 
 const sellerClassData = (state = {}, action) => {
@@ -244,6 +254,7 @@ const sellerReducer = combineReducers({
   sellerClassData,
   getClickData,
   totalPrice,
+  ItemUpload,
   cityData,
   distData,
   typeDataForSeller,

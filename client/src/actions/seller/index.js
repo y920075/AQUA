@@ -379,6 +379,33 @@ export const getTotalDataAsync = () => {
     dispatch(getTotalData(data))
   }
 }
+export const itemGetData = data => ({
+  type: 'ITEM_DATA',
+  value: data,
+})
+
+export const itemGetDataAsync = data => {
+  return async dispatch => {
+    const request = new Request(
+      `http://localhost:5000/seller/itemmanager/item-total-data`,
+
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
+
+    const response = await fetch(request)
+    const data = await response.json()
+    console.log('res data', data)
+
+    dispatch(itemGetData(data))
+  }
+}
+
 //----------------------賣家中心課程相關action----------------
 
 //取得賣家自己的課程資料

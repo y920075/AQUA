@@ -9,6 +9,7 @@ import Coupon from '../pages/Coupon'
 import Message from '../pages/Message'
 import Order from '../pages/Order'
 import Class from '../pages/Class'
+import Item from '../pages/Item'
 
 function Menu() {
   //login=true表示會員有登入
@@ -39,6 +40,9 @@ function Menu() {
           </Route>
           <Route path="/class">
             <Class />
+          </Route>
+          <Route>
+            <Item />
           </Route>
         </Switch>
       </>
