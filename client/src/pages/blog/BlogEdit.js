@@ -56,7 +56,7 @@ function BlogAdd(props) {
   }
 
   console.log("blogItem",blogItem)
-  console.log()
+  console.log(blogItemImg)
  
 
   const [editContentTitle, setEditContentTitle] = useState(blogItemTitle);

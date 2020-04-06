@@ -80,7 +80,6 @@ router.get('/blog/', (req, res)=>{
         })
 })
 
-//取得測欄會員資料
 
 //取得評論資料
 router.get('/blog/comments', (_req, res)=>{
@@ -109,28 +108,7 @@ router.get('/blog/comments', (_req, res)=>{
         return res.status(500).json(err)
     })
 })
-//新增按讚、收藏
-// router.post('/blog/like', upload.none(), (req, res)=>{
-//     console.log(req.body)
-//     const sql =`UPDATE \`blog\` SET \`blogLike\`= \`blogLike\`+ ${req.body.blogLike}=? WHERE id=?`
-    
-//     db.queryAsync(sql, [
-//         req.body.blogLike,
-//         req.body.id
-//         ])
 
-//     .then(result=>{
-//         // comments.status = 202;
-//         // comments.commentsData = r;
-//         // comments.success = true;
-//         console.log('新增資料寫入成功')
-//         return res.json(result)
-//     })
-//     .catch(err=>{
-//          console.log(err)
-//     })
-
-// })
 
 
 //新增評論資料
@@ -296,14 +274,14 @@ console.log(abc)
 
 
 
-router.post('/del/:id', (req, res)=>{
-    const sql = "DELETE FROM `blog` WHERE `id`=?";
-    db.queryAsync(sql, [req.params.id])
-    .then(r=>{
-        console.log(r);
-        res.json(r);
-    })
-})
+// router.post('/del/:id', (req, res)=>{
+//     const sql = "DELETE FROM `blog` WHERE `id`=?";
+//     db.queryAsync(sql, [req.params.id])
+//     .then(r=>{
+//         console.log(r);
+//         res.json(r);
+//     })
+// })
 
 
 
