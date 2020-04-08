@@ -6,10 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 //引入action
-import {
-  getEventDetailDataAsync,
-  memberJoinEventAsync,
-} from '../../actions/event/event_Actions'
+import { getEventDetailDataAsync } from '../../actions/event/event_Actions'
 
 //引入自訂元件
 import Header from '../../components/Header' //導航列
@@ -21,8 +18,6 @@ import EventDetailDataContent from '../../components/event/EventDetailDataConten
 //store參數 props.eventDetailData = 活動詳細資料
 //2020-03-21
 function EventDetail(props) {
-  const [eventData, setEventData] = useState([]) //存放活動詳細資料的state
-  const [weatherData, setWeatherData] = useState([]) //存放天氣資料的state
   const [hasloading, setHasLoading] = useState(false) //是否正在載入中
 
   //取得資料
@@ -38,16 +33,7 @@ function EventDetail(props) {
     //0.5秒後判斷是否有成功載入資料
     setTimeout(() => {
       if (props.eventDetailData.status) {
-        const nowEventData = props.eventDetailData.eventData
-          ? props.eventDetailData.eventData[0]
-          : ''
-
-        const nowWeatherData = props.eventDetailData.weather_data
-          ? props.eventDetailData.weather_data
-          : ''
         setHasLoading(false)
-        setEventData(nowEventData) //將活動資料設定到本地state
-        setWeatherData(nowWeatherData) //將天氣資料設定到本地state
       }
     }, 500)
   }, [props.eventDetailData])
@@ -61,10 +47,16 @@ function EventDetail(props) {
           <Loading />
         ) : (
           <EventDetailDataContent
-            eventData={eventData}
-            weatherData={weatherData}
-            memberJoinEventAsync={props.memberJoinEventAsync}
-            memberJoinEventResponse={props.memberJoinEventResponse}
+            eventData={
+              props.eventDetailData.eventData
+                ? props.eventDetailData.eventData[0]
+                : ''
+            }
+            weatherData={
+              props.eventDetailData.weather_data
+                ? props.eventDetailData.weather_data
+                : ''
+            }
           />
         )}
         <Footer />
@@ -77,16 +69,12 @@ function EventDetail(props) {
 const mapStateToProps = store => {
   return {
     eventDetailData: store.eventReducer.eventDetailData,
-    memberJoinEventResponse: store.eventReducer.memberJoinEventResponse,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    { getEventDetailDataAsync, memberJoinEventAsync },
-    dispatch
-  )
+  return bindActionCreators({ getEventDetailDataAsync }, dispatch)
 }
 
 export default withRouter(

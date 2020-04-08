@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import SweetAlert from '../class/SellerClassComponents/Sweetalert2'
+
+//引入redux元件
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+//引入action
+import { memberJoinEventAsync } from '../../actions/event/event_Actions'
 
 //引入自訂元件
 import EventWeatherContent from './EventWeatherContent' //天氣資料的框框
 
-//傳入參數 props.eventData = 活動詳細資料
-//傳入參數 props.weatherData = 當地天氣資料
-//2020-03-21
 function EventDetailDataContent(props) {
   const [progress, setProgress] = useState(0) //計算進度條用的state
-
   const [response, setResponse] = useState(false) //確認是否有收到response資料
 
   //每當response改變時就秀出提示視窗
   useEffect(() => {
     if (response) {
-      if (props.memberJoinEventResponse.status === 201) {
+      if (props.memberActionResponse.status === 201) {
         SweetAlert.success('報名成功!')
         setResponse(false)
       } else {
         SweetAlert.errorAlert(
-          props.memberJoinEventResponse.status,
-          props.memberJoinEventResponse.msg
+          props.memberActionResponse.status,
+          props.memberActionResponse.msg
         )
         setResponse(false)
       }
@@ -158,4 +160,19 @@ function EventDetailDataContent(props) {
   )
 }
 
-export default EventDetailDataContent
+// 取得Redux中store的值
+const mapStateToProps = store => {
+  return {
+    memberActionResponse: store.eventReducer.memberActionResponse,
+  }
+}
+
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ memberJoinEventAsync }, dispatch)
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EventDetailDataContent)
