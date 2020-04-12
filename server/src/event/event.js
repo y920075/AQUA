@@ -23,25 +23,13 @@ router.use(bodyParser.json());
 
 // 自動更新天氣資訊
 const autoUpdateWeatherData = ()=>{
-    const del = `DELETE FROM \`weather_data\` WHERE \`eventStartDate\` < DATE_FORMAT(NOW(),'%Y-%m-%d')`
     const sql = `SELECT * FROM \`weather_data\` WHERE DATE_FORMAT(\`weatherData_updated_at\`,'%Y-%m-%d')< DATE_FORMAT(NOW(),'%Y-%m-%d') AND \`eventStartDate\` >= DATE_FORMAT(NOW(),'%Y-%m-%d')`
     const nowDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     setTimeout( async ()=>{
-        console.log(`----------------------------------------------`)
-        // console.log(`${nowDate} 自動更新天氣資訊`)
-        // console.log(`${nowDate} 刪除已過活動日期資料中...`)
-        // await db.queryAsync(del).then(result=>{
-        //     if(result.affectedRows>0){
-        //         console.log(`${nowDate} 刪除完成，共刪除${result.affectedRows}筆資料`)
-        //     } else {
-        //         console.log(`${nowDate} 沒有未過期資料`)
-        //     }
-        // })
-        console.log(`${nowDate} 搜索過期天氣資料中...`)
         await db.queryAsync(sql)
             .then( async result=>{
                 if ( result.length>0 ) {
-                    console.log(`${nowDate} 搜索完成，啟動更新程序`)
+                    console.log(`${nowDate} 啟動更新程序`)
                     for ( let i=0 ; i<result.length ; i++ ) {
                         const id = result[i].eventId
                         const lat = parseFloat(result[i].location_lat)
@@ -55,8 +43,6 @@ const autoUpdateWeatherData = ()=>{
                                     WHERE \`eventId\` = '${id}'`
                         await db.queryAsync(update).then(result=>console.log(`${nowDate} 編號 : ${id} 更新完成`))
                     }
-                } else {
-                    console.log(`${nowDate} 沒有過期資料`)
                 }
             })
         await autoUpdateWeatherData()

@@ -7,6 +7,7 @@ const db = require(__dirname + '/../db_connect')
 const moment = require('moment-timezone')
 const memberRouter = express.Router()
 const { uuid } = require('uuidv4');
+const passport = require('../../config/passport')
 
 
 // 會員註冊
@@ -64,6 +65,11 @@ memberRouter.post('/members/register', upload.none(), (req, res) => {
             })
     });
 })
+
+memberRouter.get('/auth/facebook',passport.authenticate('facebook'))
+memberRouter.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/memberuser/user',
+                                      failureRedirect: 'http://localhost:3000/memberlogin' }));
 
 
 //會員登入

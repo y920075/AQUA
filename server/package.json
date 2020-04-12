@@ -29,6 +29,8 @@
     "mysql": "^2.18.1",
     "nightmare": "^3.0.2",
     "nodemailer": "^6.4.6",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
     "uuidv4": "^6.0.6"
   }
 }

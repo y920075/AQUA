@@ -3,6 +3,7 @@ const session =     require('express-session')
 const cors =        require('cors')
 const app =         express();
 const db = require('./db_connect')
+const passport = require('../config/passport')
 
 // 引入氣象局API寫入函式
 const getTIdeData = require('./location/gettideinfo')
@@ -31,6 +32,8 @@ app.use(session({
         maxAge: 1200000, // session的存活時間 單位毫秒
     }
 }))
+app.use(passport.initialize());
+app.use(passport.session());
 
 //根據前端傳送的token，去資料庫查詢會員
 app.use(async (req,res,next)=>{
