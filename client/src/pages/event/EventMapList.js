@@ -141,7 +141,7 @@ function EventMapList(props) {
               <div className="col-8">
                 <MyMapComponent
                   isMarkerShown
-                  googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyC3kp9ZM2JgqNLY4_xNhQQNUNAF-UmogvA`}
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=GOOGLE的A1PIKEY放這裡`}
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={
                     <div style={{ width: `100%`, height: `800px` }} />
