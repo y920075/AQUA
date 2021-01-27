@@ -14,7 +14,7 @@
     "@testing-library/user-event": "^7.1.2",
     "acorn": "^7.1.1",
     "aos": "^2.3.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "emailjs-com": "^2.4.1",
