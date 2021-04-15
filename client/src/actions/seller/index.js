@@ -1,13 +1,13 @@
 //賣家資料相關
 //從後端用get方法在前端連接
 
-export const sellerInfo = data => ({
+export const sellerInfo = (data) => ({
   type: 'SELLER_INFO',
   value: data,
 })
 
 export const sellerInfoAsync = (sellerInfoData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request('http://localhost:5000/seller/basic_info', {
       method: 'GET',
       headers: new Headers({
@@ -28,13 +28,13 @@ export const sellerInfoAsync = (sellerInfoData, callback) => {
 
 //從後端用get方法擷取seller的資料前端進行編輯
 
-export const sellerEdit = data => ({
+export const sellerEdit = (data) => ({
   type: 'SELLER_EDIT',
   value: data,
 })
 
 export const sellerEditAsync = (sellerEDData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       // 'http://localhost:5000/seller/edit/:seller_id',
       'http://localhost:5000/seller/edit/S20010001',
@@ -59,13 +59,13 @@ export const sellerEditAsync = (sellerEDData, callback) => {
 }
 
 // //使用者更新個人資料動作函數
-export const sellerUpdate = sellerData => ({
+export const sellerUpdate = (sellerData) => ({
   type: 'SELLER_UPDATE',
   data: sellerData,
 })
 
 export const sellerUpdateAsync = (sellerData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       'http://localhost:5000/seller/edit/:seller_id',
       {
@@ -88,13 +88,13 @@ export const sellerUpdateAsync = (sellerData, callback) => {
 }
 
 //取得優惠券類型資料
-export const getSellerNewCoupon = couponData => ({
+export const getSellerNewCoupon = (couponData) => ({
   type: 'COUPON_ALL_GET',
   value: couponData,
 })
 //coup_cate_id=優惠券類型&coup_over=滿多少錢贈送贈品&givi_piece=贈送多少贈品&sort=排序類型(類型,方法)&page=頁碼
-export const getSellerCouponAsync = coup_cate_id => {
-  return async dispatch => {
+export const getSellerCouponAsync = (coup_cate_id) => {
+  return async (dispatch) => {
     let query = []
     if (coup_cate_id) query.push(`coup_cate_id=${coup_cate_id.trim()}`)
     console.log(coup_cate_id)
@@ -122,7 +122,7 @@ export const getSellerCouponAsync = coup_cate_id => {
 
 // //取得新增頁面優惠券類型
 
-export const getSellerNewInsertCoupon = couponGetDataInsert => ({
+export const getSellerNewInsertCoupon = (couponGetDataInsert) => ({
   type: 'COUPON_GET_INSERT',
   value: couponGetDataInsert,
 })
@@ -131,7 +131,7 @@ export const getSellerNewInsertCouponAsync = (
   getcouponInsertData,
   callback
 ) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       'http://localhost:5000/seller/coupon/insert_coup',
       {
@@ -154,13 +154,13 @@ export const getSellerNewInsertCouponAsync = (
 }
 
 // //優惠券新增動作函數
-export const insertSellerNewInsertCoupon = coupInsertData => ({
+export const insertSellerNewInsertCoupon = (coupInsertData) => ({
   type: 'COUPON_INSERT',
   value: coupInsertData,
 })
 export const insertSellerNewInsertCouponAsync = (coupFormData, callback) => {
   console.log(coupFormData)
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       'http://localhost:5000/seller/coupon/insert_coup_data',
       {
@@ -181,13 +181,13 @@ export const insertSellerNewInsertCouponAsync = (coupFormData, callback) => {
 
 //贈品新增動作函數
 
-export const addGiviData = data => ({
+export const addGiviData = (data) => ({
   type: 'ADD_GIVIDATA',
   value: data,
 })
-export const addGiviDataAsync = GiviFormData => {
+export const addGiviDataAsync = (GiviFormData) => {
   console.log(GiviFormData)
-  return async dispatch => {
+  return async (dispatch) => {
     const givi_fd = new FormData()
     givi_fd.append('givi_cate_id', GiviFormData.givi_cate_id)
     givi_fd.append('givi_name', GiviFormData.givi_name)
@@ -210,13 +210,13 @@ export const addGiviDataAsync = GiviFormData => {
 }
 //常客管理動作函數
 //get
-export const customerGet = data => ({
+export const customerGet = (data) => ({
   type: 'CUSTOMER_GET',
   value: data,
 })
 
 export const customerGetAsync = (customerData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let query = []
     if (customerData) query.push(`searchType=${customerData.trim()}`)
     console.log(query[0])
@@ -241,12 +241,12 @@ export const customerGetAsync = (customerData, callback) => {
   }
 }
 
-export const customerUse = data => ({
+export const customerUse = (data) => ({
   type: 'CUSTOMER_USE',
   value: data,
 })
 export const customerUseAsync = (customerData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       `http://localhost:5000/seller/customermanager/customer-coupon-use`,
 
@@ -269,12 +269,12 @@ export const customerUseAsync = (customerData, callback) => {
 
 //mail動作
 
-export const customerMailData = data => ({
+export const customerMailData = (data) => ({
   type: 'MAIL_TRANSFER',
   value: data,
 })
 export const customerMailDataAsync = (mailData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const json = JSON.stringify(mailData)
     const request = new Request(
       'http://localhost:5000/seller/customermanager/customer-coupon-insert',
@@ -299,12 +299,12 @@ export const customerMailDataAsync = (mailData, callback) => {
 
 //對於前端輸入的優惠馬去後台抓取資料
 
-export const getNowCoupData = data => ({
+export const getNowCoupData = (data) => ({
   type: 'NOWCOUPDATA',
   value: data,
 })
 export const getNowCoupDataAsync = (getCoupData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       `http://localhost:5000/seller/getcoupon/usercouponget`,
 
@@ -326,12 +326,12 @@ export const getNowCoupDataAsync = (getCoupData, callback) => {
 }
 
 //抓點擊次數
-export const getUserClickData = data => ({
+export const getUserClickData = (data) => ({
   type: 'GET_USER_CLICK',
   value: data,
 })
 export const getUserClickDataAsync = (getCoupData, callback) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       `http://localhost:5000/seller/customermanager/user-click-data`,
 
@@ -353,13 +353,13 @@ export const getUserClickDataAsync = (getCoupData, callback) => {
 }
 
 //抓總銷售額
-export const getTotalData = data => ({
+export const getTotalData = (data) => ({
   type: 'TOTAL_DATA',
   value: data,
 })
 
 export const getTotalDataAsync = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
       `http://localhost:5000/seller/customermanager/user-total-data`,
 
@@ -379,13 +379,13 @@ export const getTotalDataAsync = () => {
     dispatch(getTotalData(data))
   }
 }
-export const itemGetData = data => ({
+export const itemGetData = (data) => ({
   type: 'ITEM_DATA',
   value: data,
 })
 
-export const itemGetDataAsync = data => {
-  return async dispatch => {
+export const itemGetDataAsync = (data) => {
+  return async (dispatch) => {
     const request = new Request(
       `http://localhost:5000/seller/itemmanager/item-total-data`,
 
@@ -409,13 +409,13 @@ export const itemGetDataAsync = data => {
 //----------------------賣家中心課程相關action----------------
 
 //取得賣家自己的課程資料
-export const getSellerClassData = data => ({
+export const getSellerClassData = (data) => ({
   type: 'GET_SELLER_CLASSDATA',
   value: data,
 })
 
 export const getSellerClassDataAsync = (sort, page, isEnable) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let query = []
 
     if (sort) query.push(`sort=${sort.trim()}`)
@@ -444,13 +444,13 @@ export const getSellerClassDataAsync = (sort, page, isEnable) => {
 }
 
 //取得全台縣市資料
-export const getCityData = data => ({
+export const getCityData = (data) => ({
   type: 'GET_CITY_DATA',
   value: data,
 })
 
 export const getCityDataAsync = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(`http://localhost:5000/city`, {
       method: 'GET',
       headers: new Headers({
@@ -467,13 +467,13 @@ export const getCityDataAsync = () => {
 }
 
 //取得全台地區資料
-export const getDistData = data => ({
+export const getDistData = (data) => ({
   type: 'GET_DIST_DATA',
   value: data,
 })
 
-export const getDistDataAsync = city => {
-  return async dispatch => {
+export const getDistDataAsync = (city) => {
+  return async (dispatch) => {
     const request = new Request(`http://localhost:5000/dist?city=${city}`, {
       method: 'GET',
       headers: new Headers({
@@ -490,12 +490,12 @@ export const getDistDataAsync = city => {
 }
 
 //取得類別資料
-export const getClassTypeDataForSeller = data => ({
+export const getClassTypeDataForSeller = (data) => ({
   type: 'GET_CLASSTYPEDATA_FORSELLER',
   value: data,
 })
 //取得等級資料
-export const getClassLevelDataForSeller = data => ({
+export const getClassLevelDataForSeller = (data) => ({
   type: 'GET_CLASSLEVELDATA_FORSELLER',
   value: data,
 })
@@ -504,7 +504,7 @@ export const getClassLevelDataForSeller = data => ({
 //type = true or false
 //level = classTypeId
 export const getClassTypeLevelDataForSellerAsync = (type, level) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let query = ''
     if (type) query = `onlyType=${type}`
     if (level) query = `getLevel=${level}`
@@ -537,25 +537,28 @@ export const getClassTypeLevelDataForSellerAsync = (type, level) => {
 }
 
 //新增課程資料
-export const addClassData = data => ({
+export const addClassData = (data) => ({
   type: 'ADD_CLASSDATA',
   value: data,
 })
 
 //新增課程資料
 //formData = 傳送過來的表單值
-export const addClassDataAsync = formData => {
-  return async dispatch => {
+export const addClassDataAsync = (formData) => {
+  return async (dispatch) => {
     const fd = new FormData()
     for (let key in formData) {
       fd.append(`${key}`, formData[key])
     }
 
-    const request = new Request(`http://127.0.0.1:5000/seller/class`, {
-      method: 'POST',
-      body: fd,
-      credentials: 'include',
-    })
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/seller/class`,
+      {
+        method: 'POST',
+        body: fd,
+        credentials: 'include',
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -564,15 +567,15 @@ export const addClassDataAsync = formData => {
 }
 
 //刪除課程資料
-export const delClassData = data => ({
+export const delClassData = (data) => ({
   type: 'DEL_CLASSDATA',
   value: data,
 })
 
-export const delClassDataAsync = classId => {
-  return async dispatch => {
+export const delClassDataAsync = (classId) => {
+  return async (dispatch) => {
     const request = new Request(
-      `http://127.0.0.1:5000/seller/class/${classId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/seller/class/${classId}`,
       {
         method: 'DELETE',
         credentials: 'include',
@@ -586,15 +589,15 @@ export const delClassDataAsync = classId => {
 }
 
 //取得單一筆詳細資料
-export const getSellerClassDetailData = data => ({
+export const getSellerClassDetailData = (data) => ({
   type: 'GET_CLASSDETAILDATA_FORSELLER',
   value: data,
 })
 
-export const getSellerClassDetailDataAsync = classId => {
-  return async dispatch => {
+export const getSellerClassDetailDataAsync = (classId) => {
+  return async (dispatch) => {
     const request = new Request(
-      `http://127.0.0.1:5000/seller/class/${classId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/seller/class/${classId}`,
       {
         method: 'GET',
         credentials: 'include',
@@ -608,21 +611,21 @@ export const getSellerClassDetailDataAsync = classId => {
 }
 
 //編輯課程資料
-export const editClassData = data => ({
+export const editClassData = (data) => ({
   type: 'EDIT_CLASSDATA',
   value: data,
 })
 
 //formData = 傳送過來的表單值
 export const editClassDataAsync = (formData, classId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const fd = new FormData()
     for (let key in formData) {
       fd.append(`${key}`, formData[key])
     }
 
     const request = new Request(
-      `http://127.0.0.1:5000/seller/class/${classId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/seller/class/${classId}`,
       {
         method: 'PUT',
         body: fd,
@@ -637,13 +640,13 @@ export const editClassDataAsync = (formData, classId) => {
 }
 
 //取得賣家的教練資訊
-export const getCoachData = data => ({
+export const getCoachData = (data) => ({
   type: 'GET_COACH_DATA',
   value: data,
 })
 
 export const getCoachDataAsync = () => {
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(`http://localhost:5000/seller/coach`, {
       method: 'GET',
       headers: new Headers({

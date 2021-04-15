@@ -1,12 +1,12 @@
 //取得商品列表資料
-export const getItemData = data => ({
+export const getItemData = (data) => ({
   type: 'GET_ITEMDATA',
   value: data,
 })
 
 export const getItemDataAsync = (type, brand, price, sort, page) => {
   console.log('fetch itemlist c,b,pri,pag', type, brand, price, sort, page)
-  return async dispatch => {
+  return async (dispatch) => {
     let query = []
 
     if (type) query.push(`type=${type.trim()}`)
@@ -21,13 +21,16 @@ export const getItemDataAsync = (type, brand, price, sort, page) => {
     }
     console.log('query', query)
 
-    const request = new Request(`http://127.0.0.1:5000/items?${query}`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/items?${query}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -36,21 +39,24 @@ export const getItemDataAsync = (type, brand, price, sort, page) => {
   }
 }
 
-export const getAsideData = data => ({
+export const getAsideData = (data) => ({
   type: 'GET_ASIDEDATA',
   value: data,
 })
 
 export const getAsideDataAsync = () => {
   // console.log('fetch aside')
-  return async dispatch => {
-    const request = new Request('http://127.0.0.1:5000/itemaside', {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+  return async (dispatch) => {
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/itemaside`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -59,21 +65,24 @@ export const getAsideDataAsync = () => {
   }
 }
 
-export const getItemDetailData = data => ({
+export const getItemDetailData = (data) => ({
   type: 'GET_ITEMDETAILDATA',
   value: data,
 })
 
-export const getItemDetailDataAsync = itemId => {
+export const getItemDetailDataAsync = (itemId) => {
   console.log('fetch itemdetail', itemId)
-  return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/items/${itemId}`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+  return async (dispatch) => {
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/items/${itemId}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -82,17 +91,17 @@ export const getItemDetailDataAsync = itemId => {
 }
 
 //點擊時更新資料庫的使用者點擊資料
-export const onClickUpdate = data => ({
+export const onClickUpdate = (data) => ({
   type: 'CLICK_UPDATE',
   value: data,
 })
 
-export const onClickUpdateAsync = updatedata => {
+export const onClickUpdateAsync = (updatedata) => {
   console.log(updatedata)
-  return async dispatch => {
+  return async (dispatch) => {
     const json = JSON.stringify(updatedata)
     const request = new Request(
-      'http://127.0.0.1:5000/seller/customermanager/user-click-update',
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/seller/customermanager/user-click-update`,
       {
         method: 'POST',
         body: json,

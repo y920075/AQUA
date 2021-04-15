@@ -1,32 +1,28 @@
-const mysql = require('mysql');
-const config = require('../config/dev_config');
-const bluebird = require('bluebird');
-
+const mysql = require("mysql");
+const bluebird = require("bluebird");
 
 const db = mysql.createConnection({
-  host: config.mysql.host,
-  user: config.mysql.user,
-  password: config.mysql.password,
-  database: config.mysql.database,
+  port: process.env.DB_PORT,
+  host: process.env.DB_HOST_IP,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
   multipleStatements: true,
-  dateStrings:true,
-  // socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
-
+  dateStrings: true,
 });
 
-// db.on('error',(event)=>{
-//     //透過這個on事件捕捉錯誤處理
-//     //假設db連線crush掉,讓其他的部分也能運作
-//     console.log(event);
-// });
+db.on("error", (event) => {});
 
-db.connect(err=>{
-    if(err) {
-      console.log(err)
-        console.log('connecting error');
-    }else {
-        console.log('connecting success');
-      }
+db.connect((err) => {
+  if (err) {
+    console.log("----連線發生錯誤,錯誤訊息如下:");
+    console.log(err.message);
+    console.log("----連線發生錯誤,錯誤訊息到此結束");
+  } else {
+    console.log(
+      `db 連線成功! host: ${process.env.DB_HOST_IP},port: ${process.env.DB_PORT}`
+    );
+  }
 });
 
 bluebird.promisifyAll(db);

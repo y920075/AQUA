@@ -45,7 +45,7 @@ function UserMessage(props) {
 
   //--------------SOCKER客戶端監聽--------------//
   const initWebSocket = () => {
-    ws.on('ServerToClientMsgData', ServerToClientMsgData => {
+    ws.on('ServerToClientMsgData', (ServerToClientMsgData) => {
       setChatDataList(ServerToClientMsgData)
       console.log('客戶端已經收到SOCKET.IO的訊息', ServerToClientMsgData)
       autoScrollButtom()
@@ -55,14 +55,14 @@ function UserMessage(props) {
     //   setChatDataList(ServerToClientMsgData)
     // })
 
-    ws.on('addRoomResponse', ServerToClientMsgData => {
+    ws.on('addRoomResponse', (ServerToClientMsgData) => {
       console.log('客戶端已經收到加入房間的響應訊息')
       setChatDataList(ServerToClientMsgData)
       console.log('客戶端已經將訊息設定到本地state')
       autoScrollButtom()
     })
 
-    ws.on('ServerToClientWarning', message => {
+    ws.on('ServerToClientWarning', (message) => {
       Sweetalert.errorAlert('404', message)
       console.log(message)
     })
@@ -91,7 +91,7 @@ function UserMessage(props) {
   }
 
   //傳送訊息事件(使用Enter)
-  const sendMessageUseEnter = event => {
+  const sendMessageUseEnter = (event) => {
     if (event.key === 'Enter') {
       const message = document.querySelector('input.messageInput').value
       const roomId = document.querySelector('ul.eventChatRoomList li.active')
@@ -113,7 +113,7 @@ function UserMessage(props) {
   }
 
   //選擇房間事件
-  const changeRoom = event => {
+  const changeRoom = (event) => {
     document.querySelector('div.startChat').style.display = 'none'
     document.querySelector(
       'div.chatEeventTitle'
@@ -137,7 +137,7 @@ function UserMessage(props) {
   //----------------自訂事件--------------------//
 
   //點擊聊天列表就加上active效果
-  const handleListActive = event => {
+  const handleListActive = (event) => {
     const eventChatRoomList = document.querySelectorAll(
       'ul.eventChatRoomList li'
     )
@@ -149,7 +149,7 @@ function UserMessage(props) {
   }
 
   //取得聊天室列表
-  const handleChangeChatList = value => {
+  const handleChangeChatList = (value) => {
     props.memberGetChatListAsync(value)
   }
 
@@ -175,7 +175,7 @@ function UserMessage(props) {
           <div className="px-3 chatRoomSelect">
             <select
               className="form-control"
-              onChange={event => {
+              onChange={(event) => {
                 const value = event.target.value
                 handleChangeChatList(value)
               }}
@@ -194,7 +194,7 @@ function UserMessage(props) {
                     <li
                       data-roomId={value.eventId}
                       data-eventName={value.eventName}
-                      onClick={event => {
+                      onClick={(event) => {
                         handleListActive(event)
                         changeRoom(event)
                       }}
@@ -225,7 +225,7 @@ function UserMessage(props) {
                         </div>
                         <figure class="memberAvatar m-0">
                           <img
-                            src="http://127.0.0.1:5000/images/memberImg/DefaultImage.jpg"
+                            src="http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/memberImg/DefaultImage.jpg"
                             alt=""
                           />
                         </figure>
@@ -238,7 +238,7 @@ function UserMessage(props) {
                       <div class="msgBox d-flex align-items-center">
                         <figure class="memberAvatar m-0">
                           <img
-                            src="http://127.0.0.1:5000/images/memberImg/DefaultImage.jpg"
+                            src="http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/memberImg/DefaultImage.jpg"
                             alt=""
                           />
                         </figure>
@@ -272,7 +272,7 @@ function UserMessage(props) {
               type="text"
               className="form-control messageInput"
               placeholder="說點什麼...."
-              onKeyPress={event => {
+              onKeyPress={(event) => {
                 sendMessageUseEnter(event)
               }}
             />
@@ -296,14 +296,14 @@ function UserMessage(props) {
 }
 
 // 取得Redux中store的值
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {
     memberChatListData: store.eventReducer.memberChatListData,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ memberGetChatListAsync }, dispatch)
 }
 

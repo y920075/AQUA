@@ -131,7 +131,7 @@ function MemberEditEvent(props) {
                 className="form-control"
                 placeholder="15字以內"
                 defaultValue={eventName}
-                onChange={event => {
+                onChange={(event) => {
                   setEventName(event.target.value) //設定課程名稱到本地state
                 }}
               />
@@ -143,7 +143,7 @@ function MemberEditEvent(props) {
                   name="eventTypeId"
                   className="form-control"
                   defaultValue=""
-                  onChange={event => {
+                  onChange={(event) => {
                     const type = event.target.value
                     const index = event.target.selectedIndex
                     setEventTypeId(type)
@@ -177,7 +177,7 @@ function MemberEditEvent(props) {
                 <select
                   className="form-control"
                   defaultValue=""
-                  onChange={event => {
+                  onChange={(event) => {
                     const city = event.target.value
                     props.getDistDataAsync(city) //取得相對應的地區資料
                     setAddressCity(city) //設定課程地點(縣市)到本地state
@@ -211,7 +211,7 @@ function MemberEditEvent(props) {
                 <select
                   className="form-control"
                   defaultValue=""
-                  onChange={event => {
+                  onChange={(event) => {
                     const dist = event.target.value
                     setAddressDist(dist) //設定課程地區到本地state
                     setEventFullLocation('')
@@ -258,7 +258,7 @@ function MemberEditEvent(props) {
                   className="form-control"
                   placeholder=""
                   defaultValue={eventFullLocation}
-                  onChange={event => {
+                  onChange={(event) => {
                     setEventFullLocation(
                       addressCity + addressDist + event.target.value
                     ) //設定活動地點(完整)到本地state
@@ -274,7 +274,7 @@ function MemberEditEvent(props) {
                   name="eventStartDate"
                   className="form-control"
                   defaultValue={eventStartDate}
-                  onChange={event => {
+                  onChange={(event) => {
                     setEventStartDate(event.target.value) //設定活動日期到本地state
                   }}
                 />
@@ -288,7 +288,7 @@ function MemberEditEvent(props) {
                   name="EventEndDate"
                   className="form-control"
                   defaultValue={eventEndDate}
-                  onChange={event => {
+                  onChange={(event) => {
                     setEventEndDate(event.target.value) //設定報名截止日期到本地state
                   }}
                 />
@@ -302,7 +302,7 @@ function MemberEditEvent(props) {
                   name="classMAXpeople"
                   className="form-control"
                   defaultValue={eventNeedPeople}
-                  onChange={event => {
+                  onChange={(event) => {
                     setEventNeedPeople(event.target.value) //設定徵求人數到本地state
                   }}
                 />
@@ -314,7 +314,7 @@ function MemberEditEvent(props) {
                 type="file"
                 name="eventImg"
                 className="form-control-file"
-                onChange={event => {
+                onChange={(event) => {
                   setEventImg(event.target.files[0]) //設定活動圖片到本地state
                 }}
               />
@@ -328,7 +328,7 @@ function MemberEditEvent(props) {
                 name="eventDesc"
                 rows="5"
                 defaultValue={eventDesc}
-                onChange={event => {
+                onChange={(event) => {
                   setEventDesc(event.target.value) //設定活動說明到本地state
                 }}
               ></textarea>
@@ -350,7 +350,7 @@ function MemberEditEvent(props) {
                     <div className="avatar">
                       <img
                         class="card-img-top"
-                        src="http://127.0.0.1:5000/images/memberImg/DefaultImage.jpg"
+                        src="http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/memberImg/DefaultImage.jpg"
                         alt="avatar"
                       />
                     </div>
@@ -379,7 +379,7 @@ function MemberEditEvent(props) {
                           type="button"
                           class="btn btn-warning"
                           data-memberId={value.memberId}
-                          onClick={event => {
+                          onClick={(event) => {
                             const memberId = event.target.getAttribute(
                               'data-memberId'
                             )
@@ -427,7 +427,7 @@ function MemberEditEvent(props) {
 }
 
 // 取得Redux中store的值
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {
     cityData: store.sellerReducer.cityData,
     distData: store.sellerReducer.distData,
@@ -438,7 +438,7 @@ const mapStateToProps = store => {
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       getCityDataAsync,

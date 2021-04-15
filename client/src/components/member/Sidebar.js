@@ -14,7 +14,10 @@ function Sidebar(props) {
       <div>
         <img
           className="rounded-circle avatar mb-5"
-          src={'http://127.0.0.1:5000/images/memberImg/' + props.SidebarImgSrc}
+          src={
+            `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/memberImg/` +
+            props.SidebarImgSrc
+          }
           alt=""
         ></img>
       </div>
@@ -72,7 +75,7 @@ function Sidebar(props) {
           <Link
             className="nav-link sidebarlink-hs"
             to="/"
-            onClick={event => {
+            onClick={(event) => {
               event.preventDefault()
               props.memberLogoutAsync()
             }}
@@ -86,12 +89,12 @@ function Sidebar(props) {
 }
 
 // 取得Redux中store的值
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {}
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       memberLogoutAsync,

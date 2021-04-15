@@ -36,7 +36,7 @@ function ClassDetailDataContent(props) {
           <div className="row d-flex classDataBox">
             <div className="col-xl-6 classImgBox">
               <img
-                src={`http://127.0.0.1:5000/images/classImg/${props.classData.classImg}`}
+                src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/classImg/${props.classData.classImg}`}
                 alt=""
               />
             </div>
@@ -133,13 +133,13 @@ function ClassDetailDataContent(props) {
           <h2 className="coachTitle">師資陣容</h2>
           <div className="row d-flex coachList">
             {props.classCoachData
-              ? props.classCoachData.map(value => {
+              ? props.classCoachData.map((value) => {
                   return (
                     <div className=" coachInfo">
                       <div className="avatarBox">
                         <img
                           src={
-                            'http://127.0.0.1:5000/images/coachImg/' +
+                            `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/coachImg/` +
                             value.classCoachImg
                           }
                           alt=""
@@ -188,14 +188,14 @@ function ClassDetailDataContent(props) {
 }
 
 // 取得Redux中store的值
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {
     memberClassActionResponse: store.classReducer.memberClassActionResponse,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ memberJoinClassAsync }, dispatch)
 }
 

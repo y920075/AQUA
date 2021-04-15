@@ -1,23 +1,26 @@
 // 會員購物車結帳
-export const memberCheckOut = data => ({
+export const memberCheckOut = (data) => ({
   type: 'NEW_ORDER',
   value: data,
 })
 
-export const memberCheckOutAsync = orderData => {
+export const memberCheckOutAsync = (orderData) => {
   orderData = JSON.stringify(orderData)
-  return async dispatch => {
+  return async (dispatch) => {
     // const cartJson = new FormData()
     // console.log(orderData)
 
-    const request = new Request(`http://127.0.0.1:5000/member/checkout`, {
-      method: 'POST',
-      body: orderData,
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/checkout`,
+      {
+        method: 'POST',
+        body: orderData,
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
     const response = await fetch(request)
     const data = await response.json()
     dispatch(memberCheckOut(data))
@@ -26,22 +29,25 @@ export const memberCheckOutAsync = orderData => {
 }
 
 // 會員購物填寫收件資訊
-export const memberCheckOutStep2 = data => ({
+export const memberCheckOutStep2 = (data) => ({
   type: 'ORDER_INFO',
   value: data,
 })
 
-export const memberCheckOutStep2Async = orderInfo => {
+export const memberCheckOutStep2Async = (orderInfo) => {
   orderInfo = JSON.stringify(orderInfo)
-  return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/member/orderInfo`, {
-      method: 'POST',
-      body: orderInfo,
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+  return async (dispatch) => {
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/orderInfo`,
+      {
+        method: 'POST',
+        body: orderInfo,
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
     const response = await fetch(request)
     const data = await response.json()
     dispatch(memberCheckOutStep2(data))
@@ -49,16 +55,16 @@ export const memberCheckOutStep2Async = orderInfo => {
   }
 }
 
-export const getOrderDetailData = data => ({
+export const getOrderDetailData = (data) => ({
   type: 'GET_ORDERDETAILDATA',
   value: data,
 })
 
-export const getOrderDetailDataAsync = id => {
+export const getOrderDetailDataAsync = (id) => {
   let query = `id=${id}`
-  return async dispatch => {
+  return async (dispatch) => {
     const request = new Request(
-      `http://127.0.0.1:5000/member/checkout?${query}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/checkout?${query}`,
       {
         method: 'GET',
         headers: new Headers({
@@ -74,22 +80,24 @@ export const getOrderDetailDataAsync = id => {
   }
 }
 
-
-export const getSellerOrderListData = data => ({
+export const getSellerOrderListData = (data) => ({
   type: 'GET_SELLERORDERDATA',
   value: data,
 })
 
 export const getSellerOrderListDataAsync = () => {
   console.log('請求賣家訂單列表')
-  return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/seller/orders`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+  return async (dispatch) => {
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/seller/orders`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()

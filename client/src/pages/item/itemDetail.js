@@ -30,8 +30,8 @@ function ItemDetail(props) {
       localCart.push({ ...value })
       localStorage.setItem('cart', JSON.stringify(localCart))
     } else {
-      if (localCart.some(item => item.id === value.id)) {
-        const index = localCart.findIndex(item => item.id === value.id)
+      if (localCart.some((item) => item.id === value.id)) {
+        const index = localCart.findIndex((item) => item.id === value.id)
         localCart[index].amount += value.amount
       } else {
         localCart.push({ ...value })
@@ -79,24 +79,24 @@ function ItemDetail(props) {
               <div className="col-md-2 lightbox-aside">
                 <img
                   className="lightbox-aside-img"
-                  src={`http://127.0.0.1:5000/images/itemImg/${itemData[0].itemImg}`}
+                  src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/itemImg/${itemData[0].itemImg}`}
                   alt=""
                 />
                 <img
                   className="lightbox-aside-img"
-                  src={`http://127.0.0.1:5000/images/itemImg/${itemData[0].itemImg}`}
+                  src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/itemImg/${itemData[0].itemImg}`}
                   alt=""
                 />
                 <img
                   className="lightbox-aside-img"
-                  src={`http://127.0.0.1:5000/images/itemImg/${itemData[0].itemImg}`}
+                  src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/itemImg/${itemData[0].itemImg}`}
                   alt=""
                 />
               </div>
               <div className="col-md-6 order-md-0 lightbox-main">
                 <img
                   className="lightbox-aside-img"
-                  src={`http://127.0.0.1:5000/images/itemImg/${itemData[0].itemImg}`}
+                  src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/itemImg/${itemData[0].itemImg}`}
                   alt=""
                 />
               </div>
@@ -175,7 +175,7 @@ function ItemDetail(props) {
   )
 }
 
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {
     itemDetailData: store.itemReducer.itemDetailData,
     clickUpdateData: store.itemReducer.clickUpdateData,
@@ -183,7 +183,7 @@ const mapStateToProps = store => {
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     { getItemDetailDataAsync, onClickUpdateAsync },
     dispatch

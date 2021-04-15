@@ -1,13 +1,13 @@
 import Cookie from 'js-cookie'
 
 //取得活動列表資料
-export const getEventData = data => ({
+export const getEventData = (data) => ({
   type: 'GET_EVENTDATA',
   value: data,
 })
 
 export const getEventDataAsync = (type, q, sort, page, isEnable) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let query = []
 
     if (type) query.push(`type=${type.trim()}`)
@@ -21,13 +21,16 @@ export const getEventDataAsync = (type, q, sort, page, isEnable) => {
       query = ''
     }
 
-    const request = new Request(`http://127.0.0.1:5000/event?${query}`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/event?${query}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -36,13 +39,13 @@ export const getEventDataAsync = (type, q, sort, page, isEnable) => {
 }
 
 //取得活動列表資料(地圖用)
-export const getEventDataForMap = data => ({
+export const getEventDataForMap = (data) => ({
   type: 'GET_EVENTDATA_MAP',
   value: data,
 })
 
 export const getEventDataForMapAsync = (type, q, sort, isEnable) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let query = []
 
     if (type) query.push(`type=${type.trim()}`)
@@ -55,13 +58,16 @@ export const getEventDataForMapAsync = (type, q, sort, isEnable) => {
       query = ''
     }
 
-    const request = new Request(`http://127.0.0.1:5000/event/map?${query}`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/event/map?${query}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -70,20 +76,23 @@ export const getEventDataForMapAsync = (type, q, sort, isEnable) => {
 }
 
 //取得活動類型資料
-export const getEventTypeData = data => ({
+export const getEventTypeData = (data) => ({
   type: 'GET_EVENT_TYPEDATA',
   value: data,
 })
 
 export const getEventTypeDataAsync = () => {
-  return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/event/type`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+  return async (dispatch) => {
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/event/type`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -92,20 +101,23 @@ export const getEventTypeDataAsync = () => {
 }
 
 //取得活動詳細資料
-export const getEventDetailData = data => ({
+export const getEventDetailData = (data) => ({
   type: 'GET_EVENT_DETAIL_DATA',
   value: data,
 })
 
-export const getEventDetailDataAsync = eventId => {
-  return async dispatch => {
-    const request = new Request(`http://127.0.0.1:5000/event/${eventId}`, {
-      method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }),
-    })
+export const getEventDetailDataAsync = (eventId) => {
+  return async (dispatch) => {
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/event/${eventId}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -114,17 +126,17 @@ export const getEventDetailDataAsync = eventId => {
 }
 
 //會員報名一筆活動
-export const memberJoinEvent = data => ({
+export const memberJoinEvent = (data) => ({
   type: 'APPLY_EVENT',
   value: data,
 })
 
 export const memberJoinEventAsync = (eventId, memberMemo) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const fd = new FormData()
     fd.append('memberMemo', memberMemo)
     const request = new Request(
-      `http://127.0.0.1:5000/member/event/join/${eventId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/join/${eventId}`,
       {
         method: 'POST',
         body: fd,
@@ -142,13 +154,13 @@ export const memberJoinEventAsync = (eventId, memberMemo) => {
 }
 
 //會員取得自己發起的活動資料
-export const memberGetEventDataSelf = data => ({
+export const memberGetEventDataSelf = (data) => ({
   type: 'GET_MEMBER_EVENT_SELF',
   value: data,
 })
 
 export const memberGetEventDataAsync = (sort, page, nowClickTag, isEnable) => {
-  return async dispatch => {
+  return async (dispatch) => {
     let url = null
 
     let query = []
@@ -167,10 +179,10 @@ export const memberGetEventDataAsync = (sort, page, nowClickTag, isEnable) => {
     // 2 = 取得會員報名的活動
     switch (nowClickTag) {
       case 1:
-        url = `http://127.0.0.1:5000/member/event/self?${query}`
+        url = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/self?${query}`
         break
       case 2:
-        url = `http://127.0.0.1:5000/member/event/join?${query}`
+        url = `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/join?${query}`
         break
       default:
     }
@@ -190,15 +202,15 @@ export const memberGetEventDataAsync = (sort, page, nowClickTag, isEnable) => {
 }
 
 //會員刪除自己發起的活動資料
-export const delEventData = data => ({
+export const delEventData = (data) => ({
   type: 'DEL_EVENTDATA',
   value: data,
 })
 
-export const delEventDataAsync = eventId => {
-  return async dispatch => {
+export const delEventDataAsync = (eventId) => {
+  return async (dispatch) => {
     const request = new Request(
-      `http://127.0.0.1:5000/member/event/${eventId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/${eventId}`,
       {
         method: 'DELETE',
         credentials: 'include',
@@ -215,15 +227,15 @@ export const delEventDataAsync = eventId => {
 }
 
 //會員取消報名活動
-export const memberUnJoinEvent = data => ({
+export const memberUnJoinEvent = (data) => ({
   type: 'UNJOIN_EVENT',
   value: data,
 })
 
-export const memberUnJoinEventAsync = eventId => {
-  return async dispatch => {
+export const memberUnJoinEventAsync = (eventId) => {
+  return async (dispatch) => {
     const request = new Request(
-      `http://127.0.0.1:5000/member/event/join/${eventId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/join/${eventId}`,
       {
         method: 'DELETE',
         credentials: 'include',
@@ -241,27 +253,30 @@ export const memberUnJoinEventAsync = eventId => {
 }
 
 //會員新增一筆活動資料
-export const addEventData = data => ({
+export const addEventData = (data) => ({
   type: 'ADD_EVENTDATA',
   value: data,
 })
 
 //formData = 傳送過來的表單值
-export const addEventDataAsync = formData => {
-  return async dispatch => {
+export const addEventDataAsync = (formData) => {
+  return async (dispatch) => {
     const fd = new FormData()
     for (let key in formData) {
       fd.append(`${key}`, formData[key])
     }
 
-    const request = new Request(`http://127.0.0.1:5000/member/event`, {
-      method: 'POST',
-      body: fd,
-      credentials: 'include',
-      headers: new Headers({
-        'access-token': Cookie.get('token'),
-      }),
-    })
+    const request = new Request(
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event`,
+      {
+        method: 'POST',
+        body: fd,
+        credentials: 'include',
+        headers: new Headers({
+          'access-token': Cookie.get('token'),
+        }),
+      }
+    )
 
     const response = await fetch(request)
     const data = await response.json()
@@ -270,15 +285,15 @@ export const addEventDataAsync = formData => {
 }
 
 //取得單一筆詳細資料
-export const getMemberEventDetailData = data => ({
+export const getMemberEventDetailData = (data) => ({
   type: 'GET_EVENTDETAILDATA_FORMEMBER',
   value: data,
 })
 
-export const getMemberEventDetailDataAsync = eventId => {
-  return async dispatch => {
+export const getMemberEventDetailDataAsync = (eventId) => {
+  return async (dispatch) => {
     const request = new Request(
-      `http://127.0.0.1:5000/member/event/self/${eventId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/self/${eventId}`,
       {
         method: 'GET',
         credentials: 'include',
@@ -295,21 +310,21 @@ export const getMemberEventDetailDataAsync = eventId => {
 }
 
 //編輯活動資料
-export const editEventData = data => ({
+export const editEventData = (data) => ({
   type: 'EDIT_EVENTDATA',
   value: data,
 })
 
 //formData = 傳送過來的表單值
 export const editEventDataAsync = (formData, eventId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const fd = new FormData()
     for (let key in formData) {
       fd.append(`${key}`, formData[key])
     }
 
     const request = new Request(
-      `http://127.0.0.1:5000/member/event/${eventId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/${eventId}`,
       {
         method: 'PUT',
         body: fd,
@@ -327,17 +342,17 @@ export const editEventDataAsync = (formData, eventId) => {
 }
 
 //會員取消其他人的報名
-export const memberUnOtherJoinEvent = data => ({
+export const memberUnOtherJoinEvent = (data) => ({
   type: 'UNJOIN_OTHER_EVENT',
   value: data,
 })
 
 export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const fd = new FormData()
     fd.append('memberId', memberId)
     const request = new Request(
-      `http://127.0.0.1:5000/member/event/unjoin/${eventId}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/unjoin/${eventId}`,
       {
         method: 'DELETE',
         body: fd,
@@ -355,15 +370,15 @@ export const memberUnOtherJoinEventAsync = (eventId, memberId) => {
 }
 
 //取得聊天室列表
-export const memberGetChatList = data => ({
+export const memberGetChatList = (data) => ({
   type: 'MEMBER_GET_CHATLIST',
   value: data,
 })
 
-export const memberGetChatListAsync = mylist => {
-  return async dispatch => {
+export const memberGetChatListAsync = (mylist) => {
+  return async (dispatch) => {
     const request = new Request(
-      `http://127.0.0.1:5000/member/event/chatList?mylist=${mylist}`,
+      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/member/event/chatList?mylist=${mylist}`,
       {
         method: 'GET',
         headers: new Headers({
@@ -380,7 +395,7 @@ export const memberGetChatListAsync = mylist => {
 }
 
 //是否按下已過期按鈕
-export const switchButtonisEnable = isEnable => ({
+export const switchButtonisEnable = (isEnable) => ({
   type: 'SWITCHBUTTON_ENABLE',
   value: !isEnable,
 })

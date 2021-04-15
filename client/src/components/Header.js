@@ -81,7 +81,7 @@ function Header(props) {
       let newMycartDisplay = [...mycartDisplay]
       for (let i = 0; i < mycart.length; i++) {
         const index = newMycartDisplay.findIndex(
-          value => value.id === mycart[i].id
+          (value) => value.id === mycart[i].id
         )
         if (index !== -1) {
           //console.log('findindex', index)
@@ -188,7 +188,7 @@ function Header(props) {
                             <figure>
                               <img
                                 className=""
-                                src={`http://127.0.0.1:5000/images/itemImg/${value.img}`}
+                                src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/itemImg/${value.img}`}
                               />
                             </figure>
                             <div className="d-flex flex-column row-info">
@@ -292,12 +292,12 @@ function Header(props) {
 }
 
 // 取得Redux中store的值
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {}
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       memberLogoutAsync,

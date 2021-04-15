@@ -56,7 +56,7 @@ function ManageMyEventContent(props) {
   }, [response])
 
   //向伺服器取得新資料
-  const getMemberEventData = page => {
+  const getMemberEventData = (page) => {
     //取得select的值，作為類型、等級的篩選參數
     const sort = document.querySelector('select[name="sort"]').value
     props.memberGetEventDataAsync(sort, page, props.nowClickTag, isEnable)
@@ -191,7 +191,7 @@ function ManageMyEventContent(props) {
                                       : false
                                   }
                                   data-id={value.eventId}
-                                  onClick={event => {
+                                  onClick={(event) => {
                                     const eventId = event.target.getAttribute(
                                       'data-id'
                                     )
@@ -217,7 +217,7 @@ function ManageMyEventContent(props) {
                           <img
                             className="eventimg-hs"
                             src={
-                              'http://127.0.0.1:5000/images/eventImg/' +
+                              `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/eventImg/` +
                               value.eventImg
                             }
                             alt=""
@@ -247,7 +247,7 @@ function ManageMyEventContent(props) {
 }
 
 // 取得Redux中store的值
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {
     memberEventDataSelf: store.eventReducer.memberEventDataSelf,
     memberActionResponse: store.eventReducer.memberActionResponse,
@@ -255,7 +255,7 @@ const mapStateToProps = store => {
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       memberGetEventDataAsync,

@@ -91,7 +91,8 @@ function MemberClassList(props) {
                   <img
                     className="eventimg-hs"
                     src={
-                      'http://127.0.0.1:5000/images/classImg/' + value.classImg
+                      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/classImg/` +
+                      value.classImg
                     }
                     alt=""
                   />
@@ -108,14 +109,14 @@ function MemberClassList(props) {
 }
 
 // 取得Redux中store的值
-const mapStateToProps = store => {
+const mapStateToProps = (store) => {
   return {
     memberClassActionResponse: store.classReducer.memberClassActionResponse,
   }
 }
 
 // 指示dispatch要綁定哪些action creators
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       memberUnJoinClassAsync,

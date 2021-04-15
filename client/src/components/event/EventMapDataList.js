@@ -27,7 +27,7 @@ function EventDataList(props) {
                     <div className="eventImgBox col-7">
                       <img
                         src={
-                          'http://127.0.0.1:5000/images/eventImg/' +
+                          `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/eventImg/` +
                           value.eventImg
                         }
                         alt=""

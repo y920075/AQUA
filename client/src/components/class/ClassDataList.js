@@ -22,7 +22,8 @@ function ClassDataList(props) {
                 <div className="col-xl-7 col-12 classImgBox">
                   <img
                     src={
-                      'http://127.0.0.1:5000/images/classImg/' + value.classImg
+                      `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/classImg/` +
+                      value.classImg
                     }
                     alt=""
                   />

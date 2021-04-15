@@ -38,7 +38,7 @@ function Home() {
         <section className="index-video overflow-hidden">
           <div className="index-video-bg">
             <video
-              src="http://127.0.0.1:5000/video/indexvideo.mp4"
+              src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/video/indexvideo.mp4`}
               loop
               autoPlay
               muted
@@ -83,7 +83,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/homeImg/L0001.png"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/L0001.png`}
                     alt=""
                   />
                   <h1
@@ -96,7 +96,7 @@ function Home() {
                   </h1>
                   <div className="legend">
                     <img
-                      src="http://127.0.0.1:5000/images/locationImg/W0001.png"
+                      src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/locationImg/W0001.png`}
                       alt=""
                     />
                   </div>
@@ -107,7 +107,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/homeImg/L0002.png"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/L0002.png`}
                     alt=""
                   />
                   <h1
@@ -120,7 +120,7 @@ function Home() {
                   </h1>
                   <p className="legend">
                     <img
-                      src="http://127.0.0.1:5000/images/locationImg/W0002.png"
+                      src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/locationImg/W0002.png`}
                       alt=""
                     />
                   </p>
@@ -130,7 +130,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/homeImg/L0003.png"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/L0003.png`}
                     alt=""
                   />
                   <h1
@@ -143,7 +143,7 @@ function Home() {
                   </h1>
                   <p className="legend">
                     <img
-                      src="http://127.0.0.1:5000/images/locationImg/W0003.png"
+                      src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/locationImg/W0003.png`}
                       alt=""
                     />
                   </p>
@@ -153,7 +153,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="2000"
                     // data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/homeImg/L0004.png"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/L0004.png`}
                     alt=""
                   />
                   <h1
@@ -166,7 +166,7 @@ function Home() {
                   </h1>
                   <p className="legend">
                     <img
-                      src="http://127.0.0.1:5000/images/locationImg/W0004.png"
+                      src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/locationImg/W0004.png`}
                       alt=""
                     />
                   </p>
@@ -176,7 +176,7 @@ function Home() {
                     data-aos="fade-up"
                     data-aos-duration="3000"
                     data-aos-delay="500"
-                    src="http://127.0.0.1:5000/images/homeImg/L0005.png"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/L0005.png`}
                     alt=""
                   />
                   <h1
@@ -189,7 +189,7 @@ function Home() {
                   </h1>
                   <p className="legend">
                     <img
-                      src="http://127.0.0.1:5000/images/locationImg/W0005.png"
+                      src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/locationImg/W0005.png`}
                       alt=""
                     />
                   </p>
@@ -217,7 +217,7 @@ function Home() {
                 <div className="col-6 big-box big-box-l" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/E0001.jpg"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0001.jpg`}
                     alt=""
                   />
                 </div>
@@ -226,14 +226,14 @@ function Home() {
                     <div className="col-6 box-t box-l" data-aos="fade-up">
                       <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/E0001.jpg"
+                        src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0001.jpg`}
                         alt=""
                       />
                     </div>
                     <div className="col-6 box-t box-r" data-aos="fade-up">
                       {/* <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/E0002.jpg"
+                        src="http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0002.jpg"
                         alt=""
                       /> */}
                     </div>
@@ -242,14 +242,14 @@ function Home() {
                     <div className="col-6 box-b box-l" data-aos="fade-up">
                       <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/E0002.jpg"
+                        src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0002.jpg`}
                         alt=""
                       />
                     </div>
                     <div className="col-6 box-b box-r" data-aos="fade-up">
                       <img
                         className="card-img-top"
-                        src="http://127.0.0.1:5000/images/homeImg/E0003.jpg"
+                        src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0003.jpg`}
                         alt=""
                       />
                     </div>
@@ -260,28 +260,28 @@ function Home() {
                 <div className="col-3 box-b box-l" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/E0004.jpg"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0004.jpg`}
                     alt=""
                   />
                 </div>
                 <div className="col-3 box-b box-l box-r" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/E0005.jpg"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0005.jpg`}
                     alt=""
                   />
                 </div>
                 <div className="col-3 box-b box-l box-r" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/E0006.jpg"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0006.jpg`}
                     alt=""
                   />
                 </div>
                 <div className="col-3 box-b box-r" data-aos="fade-up">
                   <img
                     className="card-img-top"
-                    src="http://127.0.0.1:5000/images/homeImg/E0007.jpg"
+                    src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/E0007.jpg`}
                     alt=""
                   />
                 </div>
@@ -308,7 +308,7 @@ function Home() {
               >
                 <img
                   className="card-img-top"
-                  src="http://127.0.0.1:5000/images/homeImg/C0001.png"
+                  src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/C0001.png`}
                   alt=""
                 />
                 <div className="card-body">
@@ -324,7 +324,7 @@ function Home() {
               >
                 <img
                   className="card-img-top"
-                  src="http://127.0.0.1:5000/images/homeImg/C0002.png"
+                  src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/C0002.png`}
                   alt=""
                 />
                 <div className="card-body">
@@ -340,7 +340,7 @@ function Home() {
               >
                 <img
                   className="card-img-top"
-                  src="http://127.0.0.1:5000/images/homeImg/C0003.png"
+                  src={`http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/homeImg/C0003.png`}
                   alt=""
                 />
                 <div className="card-body">

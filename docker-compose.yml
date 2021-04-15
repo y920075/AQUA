@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+  service_aqua_db:
+    container_name: aqua_db
+    build:
+      context: ./db
+    image: aqua_db:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE_NAME}
+    volumes:
+      - ./db/sql:/docker-entrypoint-initdb.d
+    networks:
+      net:
+        ipv4_address: ${DB_HOST_IP}
+  service_aqua_backend:
+    container_name: aqua_backend
+    build:
+      context: ./server
+    image: aqua_backend:latest
+    environment:
+      - DB_HOST_IP=${DB_HOST_IP}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DB_PORT=${DB_PORT}
+      - EXPRESS_PORT=5000
+      - WEB_PORT=${WEB_PORT}
+    ports:
+      - "5000:5000"
+      - "5555:5555"
+    command: ./wait-for-it.sh ${DB_HOST_IP}:3306 -- npm start
+    networks:
+      net:
+        ipv4_address: 172.20.0.3
+    depends_on:
+      - service_aqua_db
+  service_aqua_frontend:
+    container_name: aqua_frontend
+    build:
+      context: ./client
+    image: aqua_frontend:latest
+    environment:
+      - REACT_APP_API_HOST=localhost
+      - REACT_APP_API_PORT=5000
+    ports:
+      - "${WEB_PORT}:3000"
+networks:
+  net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24

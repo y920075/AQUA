@@ -19,7 +19,7 @@ function ItemCard(props) {
               <img
                 className="list-card-img-top"
                 src={
-                  `http://127.0.0.1:5000/images/itemImg/${value.itemImg}`
+                  `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/itemImg/${value.itemImg}`
                   // + value.itemImg
                 }
                 alt=""

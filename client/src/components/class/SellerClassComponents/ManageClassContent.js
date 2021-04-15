@@ -58,7 +58,7 @@ function ManageClassContent(props) {
   }
 
   //刪除資料的事件
-  const delClassData = classId => {
+  const delClassData = (classId) => {
     SweetAlert.sendConfirm(
       '確定要刪除嗎?',
       setResponse,
@@ -112,7 +112,7 @@ function ManageClassContent(props) {
                         <div className="classSellerImgBox card-img-top">
                           <img
                             src={
-                              'http://127.0.0.1:5000/images/classImg/' +
+                              `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/images/classImg/` +
                               value.classImg
                             }
                             alt=""
@@ -178,7 +178,7 @@ function ManageClassContent(props) {
                                   ? true
                                   : false
                               }
-                              onClick={event => {
+                              onClick={(event) => {
                                 const classId = event.target.getAttribute(
                                   'data-id'
                                 )
