@@ -45,6 +45,8 @@ services:
       - REACT_APP_API_PORT=5000
     ports:
       - "${WEB_PORT}:3000"
+    depends_on:
+      - service_aqua_backend
 networks:
   net:
     driver: bridge
