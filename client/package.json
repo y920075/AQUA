@@ -24,7 +24,7 @@
     "lodash": "^4.17.21",
     "mdbreact": "^4.25.4",
     "minimist": "^1.2.6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.28",
     "prop-types": "^15.7.2",
     "rc-viewer": "0.0.9",
