@@ -21,7 +21,7 @@ docker-compose up
 ```
 
 然後前往 `http://localhost:8000` ，即可看到畫面。
-//img.youtube.com/vi/xPW3W4aGD0Y/0.jpg)](http://www.youtube.com/watch?v=xPW3W4aGD0Y "AQUA-揪團聊天室展示")
+
 
 ## 已知 Bug
 
