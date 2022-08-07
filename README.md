@@ -21,15 +21,7 @@ docker-compose up
 ```
 
 然後前往 `http://localhost:8000` ，即可看到畫面。
-
-## 揪團功能展示
-
-1. AQUA-揪團首頁及地圖展示  
-   [![AQUA-揪團首頁及地圖展示](http://img.youtube.com/vi/RL8RmWDP3Mw/0.jpg)](http://www.youtube.com/watch?v=RL8RmWDP3Mw "AQUA-揪團首頁及地圖展示")
-2. AQUA-揪團報名及新增、刪除、修改展示  
-   [![AQUA-揪團報名及新增、刪除、修改展示](http://img.youtube.com/vi/9FPbrApRsQU/0.jpg)](http://www.youtube.com/watch?v=9FPbrApRsQU "AQUA-揪團報名及新增、刪除、修改展示")
-3. AQUA-揪團聊天室展示  
-   [![AQUA-揪團聊天室展示](http://img.youtube.com/vi/xPW3W4aGD0Y/0.jpg)](http://www.youtube.com/watch?v=xPW3W4aGD0Y "AQUA-揪團聊天室展示")
+//img.youtube.com/vi/xPW3W4aGD0Y/0.jpg)](http://www.youtube.com/watch?v=xPW3W4aGD0Y "AQUA-揪團聊天室展示")
 
 ## 已知 Bug
 
