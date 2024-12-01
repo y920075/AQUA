@@ -9,9 +9,6 @@
     "@ckeditor/ckeditor5-theme-lark": "^18.0.0",
     "@hanyk/rc-viewer": "0.0.3",
     "@sweetalert2/theme-minimal": "^3.1.4",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "acorn": "^7.1.1",
     "aos": "^2.3.4",
     "axios": "^0.21.2",
@@ -76,5 +73,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "7.10.1",
+    "@babel/preset-react": "7.10.1"
   }
 }

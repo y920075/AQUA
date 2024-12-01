@@ -46,7 +46,7 @@ $color5: #f15a24;
   border-radius: 50%;
 }
 .Header-Navbar {
-  @media screen and(max-width:540px) {
+  @media screen and (max-width: 540px) {
     // max-width: 375px;
   }
 
@@ -214,8 +214,8 @@ $color5: #f15a24;
 div.collapse.navbar-collapse {
   @media screen and (max-width: 540px) {
     display: flex !important;
-    max-height: 0;
     overflow: hidden;
+    max-height: 0;
     transition: 1s;
   }
 }

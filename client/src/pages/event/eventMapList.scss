@@ -29,7 +29,7 @@
     max-height: 1200px;
     overflow: auto;
     padding: 0;
-    .row{
+    .row {
       max-height: 800px;
     }
     .eventInfoBox {
@@ -120,7 +120,7 @@
         }
       }
 
-      @media screen and(max-width:540px) {
+      @media screen and (max-width: 540px) {
         // padding:0 8px;
       }
       @import './progress.scss';
@@ -140,7 +140,7 @@
     text-align: center;
     color: white;
   }
-  .eventMapListBoxDisplatNone{
+  .eventMapListBoxDisplatNone {
     display: none;
   }
 }
