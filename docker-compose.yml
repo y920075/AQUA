@@ -24,10 +24,10 @@ services:
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_NAME=${DATABASE_NAME}
       - DB_PORT=${DB_PORT}
-      - EXPRESS_PORT=5000
+      - EXPRESS_PORT=7700
       - WEB_PORT=${WEB_PORT}
     ports:
-      - "5000:5000"
+      - "7700:7700"
       - "5555:5555"
     command: ./wait-for-it.sh ${DB_HOST_IP}:3306 -- npm start
     networks:
@@ -39,10 +39,10 @@ services:
     container_name: aqua_frontend
     build:
       context: ./client
+      args:
+        - REACT_APP_API_HOST=localhost
+        - REACT_APP_API_PORT=7700
     image: aqua_frontend:latest
-    environment:
-      - REACT_APP_API_HOST=localhost
-      - REACT_APP_API_PORT=5000
     ports:
       - "${WEB_PORT}:3000"
     depends_on:
